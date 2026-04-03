@@ -562,10 +562,18 @@ function renderTierSection(id,icon,label,color,games,defaultOpen){
 
 // ── Best Bets ─────────────────────────────────────────────────────────────────
 function renderBestBets(){
-  const bets=GAMES.filter(g=>g.game_date===TODAY&&maxConf(g)>=65).sort((a,b)=>maxConf(b)-maxConf(a));
+  const all=GAMES.filter(g=>g.game_date===TODAY&&maxConf(g)>=65).sort((a,b)=>maxConf(b)-maxConf(a));
+  // Dedupe: if same away+home team appear more than once (doubleheader), keep only the first
+  const seen=new Set();
+  const bets=[];
+  for(const g of all){
+    const key=g.away_team+'|'+g.home_team;
+    if(!seen.has(key)){seen.add(key);bets.push(g);}
+    if(bets.length>=3) break;
+  }
   const el=document.getElementById('best-bets-wrap');
   if(!bets.length){el.innerHTML='';return;}
-  el.innerHTML=`<div class="best-bets-header">Best Bets Today — ${bets.length} High Confidence Pick${bets.length>1?'s':''}</div>`+bets.map(renderCard).join('');
+  el.innerHTML=`<div class="best-bets-header">Best Bets Today — Top ${bets.length} High Confidence Pick${bets.length>1?'s':''}</div>`+bets.map(renderCard).join('');
 }
 
 // ── Today ─────────────────────────────────────────────────────────────────────
