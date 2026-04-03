@@ -827,6 +827,13 @@ async function fetchESPNLineup(idx){
       return null;
     }
 
+    function oddsToImplied(price){
+      // Convert American odds to implied probability %
+      if(price==null)return null;
+      if(price>0)return(100/(price+100)*100).toFixed(1);
+      return(Math.abs(price)/(Math.abs(price)+100)*100).toFixed(1);
+    }
+
     function fmtOdds(name){
       const o=matchOdds(name);
       if(o==null)return'—';
@@ -849,12 +856,16 @@ async function fetchESPNLineup(idx){
             ${hasOdds?'<th class="lm-th-odds" title="Best available sportsbook odds to hit a HR">Odds</th>':''}
           </tr></thead>
           <tbody>
-            ${players.map((p,i)=>`<tr>
+            ${players.map((p,i)=>{
+              const price=matchOdds(p.name);
+              const impl=oddsToImplied(price);
+              return`<tr>
               <td class="lm-bat-num">${i+1}</td>
               <td class="lm-player-name">${p.name}</td>
               <td>${p.pos?`<span class="lm-player-pos">${p.pos}</span>`:''}</td>
-              <td class="lm-hr-pct">${p.hrPct!=null?p.hrPct+'%':'—'}</td>
-              ${hasOdds?`<td class="lm-hr-odds">${fmtOdds(p.name)}</td>`:''}`).join('')}
+              <td class="lm-hr-pct">${impl!=null?impl+'%':'—'}</td>
+              ${hasOdds?`<td class="lm-hr-odds">${fmtOdds(p.name)}</td>`:''}</tr>`;
+            }).join('')}
           </tbody>
         </table>
       </div>`;
@@ -922,63 +933,7 @@ async function fetchESPNLineup(idx){
       return;
     }
 
-    // Step 3: fetch HR stats for each batter — tries ESPN core API then site API
-    async function fetchHRStats(player){
-      if(!player.id)return;
-      // Helper: extract hr+pa from a flat stats array
-      function calcFromStats(stats){
-        if(!stats||!stats.length)return null;
-        const get=n=>{
-          const s=stats.find(x=>x.name===n||x.abbreviation===n||(x.displayName||'').replace(/\s/g,'').toLowerCase()===n.toLowerCase());
-          if(!s)return 0;
-          const v=s.value!=null?s.value:s.displayValue;
-          return+v||0;
-        };
-        const hr=get('homeRuns')||get('HR')||get('homers')||0;
-        const pa=get('plateAppearances')||get('PA')||get('atBats')||get('AB')||0;
-        if(pa<10)return null;
-        const pct=(1-Math.pow(1-hr/pa,4.3))*100;
-        return pct.toFixed(1);
-      }
-      // Walk any object looking for a stats array inside a batting/hitting category
-      function extractStats(obj){
-        if(!obj||typeof obj!=='object')return null;
-        if(Array.isArray(obj)){
-          for(const item of obj){const r=extractStats(item);if(r)return r;}
-          return null;
-        }
-        // If this is a category with stats, check if it's batting-related
-        if(Array.isArray(obj.stats)){
-          const nm=(obj.name||obj.displayName||'').toLowerCase();
-          if(!nm||/bat|hit|off/i.test(nm)){
-            const r=calcFromStats(obj.stats);if(r!=null)return r;
-          }
-        }
-        // Recurse into categories / splits
-        for(const key of['categories','splits','groups']){
-          if(obj[key]){const r=extractStats(obj[key]);if(r)return r;}
-        }
-        return null;
-      }
-      try{
-        // First try the ESPN core stats API (richer data)
-        const urls=[
-          `https://sports.core.api.espn.com/v2/sports/baseball/leagues/mlb/seasons/2026/athletes/${player.id}/statistics/0?lang=en&region=us`,
-          `https://site.api.espn.com/apis/site/v2/sports/baseball/mlb/athletes/${player.id}/stats`
-        ];
-        for(const url of urls){
-          try{
-            const r=await fetch(url);
-            if(!r.ok)continue;
-            const d=await r.json();
-            const result=extractStats(d);
-            if(result!=null){player.hrPct=result;return;}
-          }catch(e){continue;}
-        }
-      }catch(e){}
-    }
-
-    // Step 4: fetch sportsbook HR prop odds from The Odds API
+    // Step 3: fetch sportsbook HR prop odds from The Odds API
     async function fetchHROdds(){
       if(!ODDS_KEY)return{};
       try{
@@ -1005,13 +960,9 @@ async function fetchESPNLineup(idx){
       }catch(e){return{};}
     }
 
-    // Run all fetches in parallel
-    const allBatters=[...awayLineup,...homeLineup];
-    const [oddsMap]=await Promise.all([
-      fetchHROdds(),
-      ...allBatters.map(p=>fetchHRStats(p))
-    ]);
-
+    // Show lineup immediately, then enrich with odds
+    buildLineupCols(awayLineup,homeLineup,{});
+    const oddsMap=await fetchHROdds();
     buildLineupCols(awayLineup,homeLineup,oddsMap);
   }catch(err){
     showError('Could not load from ESPN: '+err.message);
