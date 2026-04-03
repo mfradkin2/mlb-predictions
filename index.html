@@ -810,15 +810,15 @@ async function fetchESPNLineup(idx){
       </div>`;
   }
 
-  function buildLineupCols(awayPlayers,homePlayers,oddsMap){
+  function buildLineupCols(awayPlayers,homePlayers,oddsMap,hrMap){
     const hasOdds=oddsMap&&Object.keys(oddsMap).length>0;
 
-    function matchOdds(name){
-      if(!oddsMap)return null;
-      if(name in oddsMap)return oddsMap[name];
+    function fuzzyMatch(name,map){
+      if(!map)return null;
+      if(name in map)return map[name];
       const norm=s=>s.toLowerCase().replace(/[^a-z\s]/g,'').trim();
       const pn=norm(name);
-      for(const[k,v]of Object.entries(oddsMap)){
+      for(const[k,v]of Object.entries(map)){
         if(norm(k)===pn)return v;
         const pl=pn.split(' ').pop();
         const kl=norm(k).split(' ').pop();
@@ -827,17 +827,16 @@ async function fetchESPNLineup(idx){
       return null;
     }
 
-    function oddsToImplied(price){
-      // Convert American odds to implied probability %
-      if(price==null)return null;
-      if(price>0)return(100/(price+100)*100).toFixed(1);
-      return(Math.abs(price)/(Math.abs(price)+100)*100).toFixed(1);
-    }
-
     function fmtOdds(name){
-      const o=matchOdds(name);
+      const o=fuzzyMatch(name,oddsMap);
       if(o==null)return'—';
       return o>0?'+'+o:''+o;
+    }
+
+    function fmtHR(name){
+      const v=fuzzyMatch(name,hrMap);
+      if(v==null)return'—';
+      return v+'%';
     }
 
     function lineupCol(label,players){
@@ -856,16 +855,12 @@ async function fetchESPNLineup(idx){
             ${hasOdds?'<th class="lm-th-odds" title="Best available sportsbook odds to hit a HR">Odds</th>':''}
           </tr></thead>
           <tbody>
-            ${players.map((p,i)=>{
-              const price=matchOdds(p.name);
-              const impl=oddsToImplied(price);
-              return`<tr>
+            ${players.map((p,i)=>`<tr>
               <td class="lm-bat-num">${i+1}</td>
               <td class="lm-player-name">${p.name}</td>
               <td>${p.pos?`<span class="lm-player-pos">${p.pos}</span>`:''}</td>
-              <td class="lm-hr-pct">${impl!=null?impl+'%':'—'}</td>
-              ${hasOdds?`<td class="lm-hr-odds">${fmtOdds(p.name)}</td>`:''}</tr>`;
-            }).join('')}
+              <td class="lm-hr-pct">${fmtHR(p.name)}</td>
+              ${hasOdds?`<td class="lm-hr-odds">${fmtOdds(p.name)}</td>`:''}</tr>`).join('')}
           </tbody>
         </table>
       </div>`;
@@ -960,10 +955,45 @@ async function fetchESPNLineup(idx){
       }catch(e){return{};}
     }
 
-    // Show lineup immediately, then enrich with odds
-    buildLineupCols(awayLineup,homeLineup,{});
-    const oddsMap=await fetchHROdds();
-    buildLineupCols(awayLineup,homeLineup,oddsMap);
+    // Step 4: fetch season HR stats from MLB Stats API (free, CORS-friendly)
+    async function fetchMLBHRStats(){
+      if(!g.game_pk)return{};
+      try{
+        // Get player IDs from boxscore
+        const bsR=await fetch(`https://statsapi.mlb.com/api/v1/game/${g.game_pk}/boxscore`);
+        if(!bsR.ok)return{};
+        const bs=await bsR.json();
+        const ids=new Set();
+        for(const side of['away','home']){
+          const ps=bs.teams&&bs.teams[side]&&bs.teams[side].players?Object.values(bs.teams[side].players):[];
+          ps.forEach(p=>p.person&&p.person.id&&ids.add(p.person.id));
+        }
+        if(!ids.size)return{};
+        // Fetch season hitting stats for all players in one call
+        const stR=await fetch(`https://statsapi.mlb.com/api/v1/people?personIds=${[...ids].join(',')}&hydrate=stats(group=hitting,type=season,season=2026)`);
+        if(!stR.ok)return{};
+        const sd=await stR.json();
+        const map={};
+        for(const person of(sd.people||[])){
+          const name=person.fullName;
+          if(!name)continue;
+          const seasonStats=(person.stats||[]).find(s=>s.type&&s.type.displayName==='season'&&s.group&&s.group.displayName==='hitting');
+          const stat=seasonStats&&seasonStats.splits&&seasonStats.splits[0]&&seasonStats.splits[0].stat;
+          if(!stat)continue;
+          const hr=stat.homeRuns||0;
+          const pa=stat.plateAppearances||stat.atBats||0;
+          if(pa<5)continue;
+          const pct=(1-Math.pow(1-hr/pa,4.3))*100;
+          map[name]=pct.toFixed(1);
+        }
+        return map;
+      }catch(e){return{};}
+    }
+
+    // Show lineup immediately, then enrich with stats + odds in parallel
+    buildLineupCols(awayLineup,homeLineup,{},{});
+    const[oddsMap,hrMap]=await Promise.all([fetchHROdds(),fetchMLBHRStats()]);
+    buildLineupCols(awayLineup,homeLineup,oddsMap,hrMap);
   }catch(err){
     showError('Could not load from ESPN: '+err.message);
   }
