@@ -199,14 +199,20 @@
   .lm-lineups{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
   .lm-lineup-col{background:var(--surface2);border-radius:8px;padding:12px;}
   .lm-lineup-header{font-size:11px;font-weight:700;color:var(--muted);letter-spacing:.5px;text-transform:uppercase;margin-bottom:10px;padding-bottom:6px;border-bottom:1px solid var(--border);}
-  .lm-player-row{display:flex;align-items:center;gap:8px;padding:5px 0;border-bottom:1px solid rgba(46,51,71,.4);font-size:13px;}
-  .lm-player-row:last-child{border-bottom:none;}
-  .lm-bat-num{font-size:11px;color:var(--muted);font-weight:700;width:16px;flex-shrink:0;}
-  .lm-player-name{flex:1;font-weight:500;}
   .lm-no-lineup{text-align:center;padding:20px 0;color:var(--muted);font-size:13px;}
   .lm-fetch-btn{display:block;margin:8px auto 0;background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:7px 16px;color:var(--accent);font-size:12px;cursor:pointer;transition:all .15s;}
   .lm-fetch-btn:hover{background:var(--surface2);}
-  .lm-player-pos{font-size:10px;color:var(--accent);font-weight:700;background:rgba(79,142,247,.1);border-radius:3px;padding:1px 5px;margin-left:auto;flex-shrink:0;}
+  .lm-player-pos{font-size:10px;color:var(--accent);font-weight:700;background:rgba(79,142,247,.1);border-radius:3px;padding:1px 5px;flex-shrink:0;}
+  .lm-lineup-table{width:100%;border-collapse:collapse;font-size:12px;}
+  .lm-lineup-table thead th{font-size:10px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.5px;padding:0 4px 7px;text-align:left;border-bottom:1px solid var(--border);}
+  .lm-lineup-table .lm-th-hr,.lm-lineup-table .lm-th-odds{text-align:right;}
+  .lm-lineup-table tbody tr{border-bottom:1px solid rgba(46,51,71,.35);}
+  .lm-lineup-table tbody tr:last-child{border-bottom:none;}
+  .lm-lineup-table td{padding:5px 4px;vertical-align:middle;}
+  .lm-bat-num{font-size:11px;color:var(--muted);font-weight:700;width:14px;}
+  .lm-player-name{font-weight:500;font-size:12px;}
+  .lm-hr-pct{text-align:right;font-weight:700;color:var(--green);font-size:12px;white-space:nowrap;}
+  .lm-hr-odds{text-align:right;color:var(--muted);font-size:11px;white-space:nowrap;}
   .lineup-btn{background:rgba(79,142,247,.1);border:1px solid rgba(79,142,247,.25);border-radius:6px;padding:3px 10px;color:var(--accent);font-size:11px;font-weight:600;cursor:pointer;transition:all .15s;}
   .lineup-btn:hover{background:rgba(79,142,247,.2);}
   @keyframes spin{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
@@ -794,26 +800,7 @@ async function fetchESPNLineup(idx){
   const dateStr=g.game_date.replace(/-/g,'');
   const awayNick=teamNick(g.away_team);
   const homeNick=teamNick(g.home_team);
-
-  function buildLineupCols(awayPlayers,homePlayers){
-    function lineupCol(label,players){
-      if(!players||!players.length)return`<div class="lm-lineup-col">
-        <div class="lm-lineup-header">${label}</div>
-        <div class="lm-no-lineup">Lineup not yet posted on ESPN</div>
-      </div>`;
-      return`<div class="lm-lineup-col">
-        <div class="lm-lineup-header">${label} Batting Order</div>
-        ${players.map((p,i)=>`<div class="lm-player-row">
-          <span class="lm-bat-num">${i+1}</span>
-          <span class="lm-player-name">${p.name}</span>
-          ${p.pos?`<span class="lm-player-pos">${p.pos}</span>`:''}
-        </div>`).join('')}
-      </div>`;
-    }
-    document.getElementById('lm-lineups-wrap').innerHTML=
-      lineupCol(g.away_team.split(' ').pop(),awayPlayers)+
-      lineupCol(g.home_team.split(' ').pop(),homePlayers);
-  }
+  const ODDS_KEY='';
 
   function showError(msg){
     document.getElementById('lm-lineups-wrap').innerHTML=`
@@ -823,8 +810,62 @@ async function fetchESPNLineup(idx){
       </div>`;
   }
 
+  function buildLineupCols(awayPlayers,homePlayers,oddsMap){
+    const hasOdds=oddsMap&&Object.keys(oddsMap).length>0;
+
+    function matchOdds(name){
+      if(!oddsMap)return null;
+      if(name in oddsMap)return oddsMap[name];
+      const norm=s=>s.toLowerCase().replace(/[^a-z\s]/g,'').trim();
+      const pn=norm(name);
+      for(const[k,v]of Object.entries(oddsMap)){
+        if(norm(k)===pn)return v;
+        const pl=pn.split(' ').pop();
+        const kl=norm(k).split(' ').pop();
+        if(pl.length>3&&pl===kl)return v;
+      }
+      return null;
+    }
+
+    function fmtOdds(name){
+      const o=matchOdds(name);
+      if(o==null)return'—';
+      return o>0?'+'+o:''+o;
+    }
+
+    function lineupCol(label,players){
+      if(!players||!players.length)return`<div class="lm-lineup-col">
+        <div class="lm-lineup-header">${label}</div>
+        <div class="lm-no-lineup">Lineup not yet posted on ESPN</div>
+      </div>`;
+      return`<div class="lm-lineup-col">
+        <div class="lm-lineup-header">${label} Batting Order</div>
+        <table class="lm-lineup-table">
+          <thead><tr>
+            <th class="lm-bat-num">#</th>
+            <th>Player</th>
+            <th>Pos</th>
+            <th class="lm-th-hr" title="Estimated HR probability this game (season HR/PA × 4.3 PA/game)">HR%</th>
+            ${hasOdds?'<th class="lm-th-odds" title="Best available sportsbook odds to hit a HR">Odds</th>':''}
+          </tr></thead>
+          <tbody>
+            ${players.map((p,i)=>`<tr>
+              <td class="lm-bat-num">${i+1}</td>
+              <td class="lm-player-name">${p.name}</td>
+              <td>${p.pos?`<span class="lm-player-pos">${p.pos}</span>`:''}</td>
+              <td class="lm-hr-pct">${p.hrPct!=null?p.hrPct+'%':'—'}</td>
+              ${hasOdds?`<td class="lm-hr-odds">${fmtOdds(p.name)}</td>`:''}`).join('')}
+          </tbody>
+        </table>
+      </div>`;
+    }
+    document.getElementById('lm-lineups-wrap').innerHTML=
+      lineupCol(g.away_team.split(' ').pop(),awayPlayers)+
+      lineupCol(g.home_team.split(' ').pop(),homePlayers);
+  }
+
   try{
-    // Step 1: find the ESPN event ID for this game
+    // Step 1: ESPN scoreboard → event ID
     const sbRes=await fetch(`https://site.api.espn.com/apis/site/v2/sports/baseball/mlb/scoreboard?dates=${dateStr}`);
     if(!sbRes.ok)throw new Error('ESPN scoreboard returned '+sbRes.status);
     const sbData=await sbRes.json();
@@ -838,10 +879,9 @@ async function fetchESPNLineup(idx){
       const hasHome=espnNicks.some(n=>n.includes(homeNick)||homeNick.includes(n));
       if(hasAway&&hasHome){eventId=ev.id;break;}
     }
-
     if(!eventId){showError('Game not found on ESPN for '+g.game_date+'.<br>Check back closer to game time.');return;}
 
-    // Step 2: fetch lineup from ESPN game summary
+    // Step 2: ESPN summary → rosters with athlete IDs
     const sumRes=await fetch(`https://site.api.espn.com/apis/site/v2/sports/baseball/mlb/summary?event=${eventId}`);
     if(!sumRes.ok)throw new Error('ESPN summary returned '+sumRes.status);
     const sumData=await sumRes.json();
@@ -855,42 +895,90 @@ async function fetchESPNLineup(idx){
       return starters.map(p=>{
         const name=(p.athlete&&(p.athlete.displayName||p.athlete.fullName))||'?';
         const pos=(p.lineup&&p.lineup.displayName)
-          ||(p.position&&(p.position.abbreviation||p.position.displayName))
-          ||'';
-        return{name,pos};
+          ||(p.position&&(p.position.abbreviation||p.position.displayName))||'';
+        const id=(p.athlete&&p.athlete.id)||null;
+        return{name,pos,id,hrPct:null};
       });
     }
 
     function getStartingPitcher(homeAway){
       const tr=rosters.find(r=>r.homeAway===homeAway);
       if(!tr||!tr.roster)return null;
-      // SP has starter=true and batOrder=0 (or absent), position is a pitcher
       const sp=tr.roster.find(p=>p.starter&&(!p.batOrder||p.batOrder===0)&&p.position&&
         (p.position.abbreviation==='SP'||p.position.abbreviation==='P'||
          (p.position.displayName||'').toLowerCase().includes('pitcher')));
       return sp?(sp.athlete&&(sp.athlete.displayName||sp.athlete.fullName))||null:null;
     }
 
-    // Update pitcher boxes with ESPN confirmed starters
     const awaySP=getStartingPitcher('away');
     const homeSP=getStartingPitcher('home');
-    if(awaySP){
-      const el=document.getElementById('lm-away-sp');
-      if(el)el.textContent=awaySP;
-    }
-    if(homeSP){
-      const el=document.getElementById('lm-home-sp');
-      if(el)el.textContent=homeSP;
-    }
+    if(awaySP){const el=document.getElementById('lm-away-sp');if(el)el.textContent=awaySP;}
+    if(homeSP){const el=document.getElementById('lm-home-sp');if(el)el.textContent=homeSP;}
 
     const awayLineup=parseRoster('away');
     const homeLineup=parseRoster('home');
-
     if(!awayLineup.length&&!homeLineup.length){
       showError('Lineups not posted on ESPN yet.<br>Check back closer to first pitch.');
       return;
     }
-    buildLineupCols(awayLineup,homeLineup);
+
+    // Step 3: fetch HR stats for each batter from ESPN athlete stats API
+    async function fetchHRStats(player){
+      if(!player.id)return;
+      try{
+        const r=await fetch(`https://site.api.espn.com/apis/site/v2/sports/baseball/mlb/athletes/${player.id}/stats`);
+        if(!r.ok)return;
+        const d=await r.json();
+        const cats=(d.splits&&d.splits.categories)||[];
+        const hitting=cats.find(c=>(c.name||'').toLowerCase()==='hitting');
+        if(!hitting)return;
+        const stats=hitting.stats||[];
+        const get=name=>{const s=stats.find(x=>x.name===name);return s?+(s.value!=null?s.value:s.displayValue)||0:0;};
+        const hr=get('homeRuns');
+        const pa=get('plateAppearances')||get('atBats')||0;
+        if(pa<5)return;
+        // P(at least 1 HR) = 1 - (1 - HR/PA)^4.3  (binomial, avg 4.3 PA/game)
+        const hrPerPA=hr/pa;
+        const pGame=1-Math.pow(1-hrPerPA,4.3);
+        player.hrPct=(pGame*100).toFixed(1);
+      }catch(e){}
+    }
+
+    // Step 4: fetch sportsbook HR prop odds from The Odds API
+    async function fetchHROdds(){
+      if(!ODDS_KEY)return{};
+      try{
+        const evR=await fetch(`https://api.the-odds-api.com/v4/sports/baseball_mlb/events?apiKey=${ODDS_KEY}&dateFormat=iso`);
+        if(!evR.ok)return{};
+        const evs=await evR.json();
+        const aLow=g.away_team.toLowerCase().split(' ').pop();
+        const hLow=g.home_team.toLowerCase().split(' ').pop();
+        const ev=evs.find(e=>(e.away_team||'').toLowerCase().includes(aLow)&&(e.home_team||'').toLowerCase().includes(hLow));
+        if(!ev)return{};
+        const odR=await fetch(`https://api.the-odds-api.com/v4/sports/baseball_mlb/events/${ev.id}/odds?apiKey=${ODDS_KEY}&regions=us&markets=batter_home_runs&oddsFormat=american`);
+        if(!odR.ok)return{};
+        const od=await odR.json();
+        const map={};
+        for(const bm of(od.bookmakers||[]))for(const mkt of(bm.markets||[])){
+          if(mkt.key!=='batter_home_runs')continue;
+          for(const oc of(mkt.outcomes||[])){
+            const n=oc.name||oc.description||'';
+            if(!n||oc.price==null)continue;
+            if(!(n in map)||oc.price>map[n])map[n]=oc.price;
+          }
+        }
+        return map;
+      }catch(e){return{};}
+    }
+
+    // Run all fetches in parallel
+    const allBatters=[...awayLineup,...homeLineup];
+    const [oddsMap]=await Promise.all([
+      fetchHROdds(),
+      ...allBatters.map(p=>fetchHRStats(p))
+    ]);
+
+    buildLineupCols(awayLineup,homeLineup,oddsMap);
   }catch(err){
     showError('Could not load from ESPN: '+err.message);
   }
