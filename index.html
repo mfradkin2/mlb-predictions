@@ -970,16 +970,25 @@ async function fetchESPNLineup(idx){
           ps.forEach(p=>p.person&&p.person.id&&ids.add(p.person.id));
         }
         if(!ids.size)return{};
-        // Fetch season hitting stats for all players in one call
-        const stR=await fetch(`https://statsapi.mlb.com/api/v1/people?personIds=${[...ids].join(',')}&hydrate=stats(group=hitting,type=season,season=2026)`);
+        // Fetch yearByYear hitting stats — lets us fall back to 2025 if 2026 HR=0
+        const stR=await fetch(`https://statsapi.mlb.com/api/v1/people?personIds=${[...ids].join(',')}&hydrate=stats(group=hitting,type=yearByYear)`);
         if(!stR.ok)return{};
         const sd=await stR.json();
         const map={};
         for(const person of(sd.people||[])){
           const name=person.fullName;
           if(!name)continue;
-          const seasonStats=(person.stats||[]).find(s=>s.type&&s.type.displayName==='season'&&s.group&&s.group.displayName==='hitting');
-          const stat=seasonStats&&seasonStats.splits&&seasonStats.splits[0]&&seasonStats.splits[0].stat;
+          const allSplits=(person.stats||[])
+            .filter(s=>s.group&&s.group.displayName==='hitting'&&s.splits)
+            .flatMap(s=>s.splits);
+          // Prefer 2026, fall back to 2025, then any year with HR>0
+          const bySeason={};
+          for(const sp of allSplits){
+            const yr=sp.season||'';
+            if(!bySeason[yr])bySeason[yr]=sp.stat;
+          }
+          const stat=bySeason['2026']||bySeason['2025']||
+            Object.entries(bySeason).sort((a,b)=>b[0].localeCompare(a[0])).map(e=>e[1])[0];
           if(!stat)continue;
           const hr=stat.homeRuns||0;
           const pa=stat.plateAppearances||stat.atBats||0;
