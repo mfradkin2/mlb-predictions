@@ -589,6 +589,47 @@ function renderToday(){
   gs=sortGames(gs,sortToday);
   document.getElementById('count-today').textContent=gs.length+' game'+(gs.length!==1?'s':'');
   document.getElementById('list-today').innerHTML=gs.length?gs.map(g=>renderCard(g)).join(''):`<div class="empty">No games today (${TODAY})</div>`;
+
+async function refreshLiveScores(){
+  try{
+    const dateStr=TODAY.replace(/-/g,'');
+    const res=await fetch('https://site.api.espn.com/apis/site/v2/sports/baseball/mlb/scoreboard?dates='+dateStr);
+    if(!res.ok)return;
+    const{events=[]}=await res.json();
+    let changed=false;
+    for(const ev of events){
+      const comp=ev.competitions?.[0];if(!comp)continue;
+      const comps=comp.competitors||[];
+      const sn=comp.status?.type?.name||'';
+      const newStatus=sn==='STATUS_FINAL'?'Final':sn==='STATUS_IN_PROGRESS'?'In Progress':null;
+      if(!newStatus)continue;
+      const ea=comps.find(c=>c.homeAway==='away');
+      const eh=comps.find(c=>c.homeAway==='home');
+      if(!ea||!eh)continue;
+      const en=t=>((t.team?.name||t.team?.displayName)||'').toLowerCase();
+      const game=GAMES.find(g=>{
+        if(g.game_date!==TODAY)return false;
+        const al=g.away_team.toLowerCase(),hl=g.home_team.toLowerCase();
+        const an=en(ea),hn=en(eh);
+        return(al.includes(an)||an.includes(al)||al.split(' ').pop()===an.split(' ').pop())
+            &&(hl.includes(hn)||hn.includes(hl)||hl.split(' ').pop()===hn.split(' ').pop());
+      });
+      if(!game)continue;
+      if(game.status!==newStatus){game.status=newStatus;changed=true;}
+      const ar=(ea.records?.[0]?.summary)||'';
+      const hr=(eh.records?.[0]?.summary)||'';
+      if(ar&&game.away_record!==ar){game.away_record=ar;changed=true;}
+      if(hr&&game.home_record!==hr){game.home_record=hr;changed=true;}
+    }
+    if(changed){
+      const s=document.getElementById('search-input')?.value||'';
+      let gs=GAMES.filter(g=>g.game_date===TODAY&&matchSearch(g,s));
+      document.getElementById('list-today').innerHTML=gs.length?gs.map(g=>renderCard(g)).join(''):'<div class="empty">No games today</div>';
+    }
+  }catch(e){}
+}
+refreshLiveScores();
+setInterval(refreshLiveScores,60000);
 }
 
 // ── Results ───────────────────────────────────────────────────────────────────
