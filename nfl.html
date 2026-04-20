@@ -20,168 +20,204 @@ body {
   font-size: 14px; line-height: 1.45;
 }
 
-/* ── Header ── */
+/* ── Page header ─────────────────────────────────────────────────────────── */
 .page-header {
   display: flex; align-items: center; gap: 14px;
-  padding: 15px 24px;
-  background: var(--bg2); border-bottom: 1px solid var(--border);
+  padding: 14px 24px; background: var(--bg2);
+  border-bottom: 1px solid var(--border);
 }
-.hdr-emoji { font-size: 26px; line-height: 1; }
+.hdr-emoji { font-size: 24px; line-height: 1; }
 .hdr-info  { flex: 1; }
 .hdr-name  { font-size: 16px; font-weight: 700; color: #8b5cf6; letter-spacing: -.2px; }
 .hdr-sub   { font-size: 11px; color: var(--muted); margin-top: 2px; }
 .hdr-right { display: flex; flex-direction: column; align-items: flex-end; gap: 3px; }
 .hdr-date  { font-size: 11px; color: var(--dim); }
-.live-status {
-  font-size: 10px; font-weight: 700; letter-spacing: .4px;
-  color: var(--muted); transition: color .3s;
-}
+.live-status { font-size: 10px; font-weight: 700; letter-spacing: .4px; color: var(--dim); transition: color .3s; }
 .live-status.is-live { color: #4ade80; }
 
-/* ── Sub-nav ── */
+/* ── Sub-nav ─────────────────────────────────────────────────────────────── */
 .sub-nav {
   display: flex; background: var(--bg2);
-  border-bottom: 1px solid var(--border); padding: 0 20px;
+  border-bottom: 1px solid var(--border); padding: 0 24px;
 }
 .sub-tab {
-  padding: 11px 20px; font-size: 13px; font-weight: 500;
-  color: var(--muted); border-bottom: 2px solid transparent;
-  cursor: pointer; transition: color .15s, border-color .15s;
-  user-select: none; white-space: nowrap;
+  padding: 11px 20px; font-size: 13px; font-weight: 500; color: var(--muted);
+  border-bottom: 2px solid transparent; cursor: pointer;
+  transition: color .15s, border-color .15s; user-select: none; white-space: nowrap;
 }
 .sub-tab:hover { color: var(--text); }
 .sub-tab.active { color: var(--text); border-color: #8b5cf6; }
-.sub-panel { display: none; padding: 22px 20px; }
+.sub-panel { display: none; }
 .sub-panel.active { display: block; }
 
-/* ── Grid ── */
-.grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: 14px; max-width: 1440px; margin: 0 auto;
+/* ── Filter bar ──────────────────────────────────────────────────────────── */
+.filter-bar {
+  display: flex; flex-wrap: wrap; align-items: center; gap: 6px 16px;
+  padding: 12px 24px; background: var(--bg2);
+  border-bottom: 1px solid var(--border);
+  position: sticky; top: 0; z-index: 10;
 }
+.fg { display: flex; align-items: center; gap: 4px; }
+.fl { font-size: 10px; font-weight: 700; color: var(--muted); text-transform: uppercase;
+      letter-spacing: .4px; margin-right: 2px; white-space: nowrap; }
+.fb {
+  font-size: 11px; font-weight: 500; padding: 3px 10px; border-radius: 20px;
+  background: transparent; color: var(--muted);
+  border: 1px solid var(--border); cursor: pointer;
+  transition: all .15s; white-space: nowrap;
+}
+.fb:hover { color: var(--text); border-color: var(--dim); }
+.fb.active { background: #8b5cf6; color: #fff; border-color: #8b5cf6; }
+.game-count { margin-left: auto; font-size: 11px; color: var(--muted); white-space: nowrap; }
 
-/* ── Card ── */
-.card {
-  background: var(--bg2);
-  border: 1px solid var(--border);
-  border-top: 3px solid #8b5cf6;
-  border-radius: 10px;
-  padding: 14px 16px 16px;
-  transition: box-shadow .15s, border-color .15s;
-}
-.card:hover {
-  box-shadow: 0 6px 24px rgba(0,0,0,.4);
-  border-color: #8b5cf6;
-}
-.card.is-live {
-  border-top-color: #4ade80;
-  box-shadow: 0 0 0 1px rgba(74,222,128,.15);
-}
-@keyframes flash { 0%,100% { opacity:1; } 50% { opacity:.5; } }
-.card.just-updated { animation: flash .6s ease; }
+/* ── Game list ───────────────────────────────────────────────────────────── */
+.game-list { max-width: 1100px; margin: 0 auto; padding: 12px 24px 24px; }
 
-/* ── Card header ── */
-.card-head {
-  display: flex; justify-content: space-between; align-items: center;
-  margin-bottom: 13px;
+/* ── Game row ────────────────────────────────────────────────────────────── */
+.game-row {
+  background: var(--bg2); border: 1px solid var(--border);
+  border-radius: 8px; margin-bottom: 6px; overflow: hidden;
+  transition: border-color .15s;
 }
-.game-date { font-size: 11px; color: var(--muted); font-variant-numeric: tabular-nums; }
-.head-right { display: flex; gap: 5px; align-items: center; }
+.game-row:hover { border-color: #8b5cf64d; }
+.game-row.is-live { border-color: rgba(74,222,128,.35); }
+@keyframes flash { 0%,100%{opacity:1;} 50%{opacity:.5;} }
+.game-row.just-updated { animation: flash .5s ease; }
 
-/* ── Pills ── */
+.row-main {
+  display: flex; align-items: center; gap: 12px;
+  padding: 11px 14px; cursor: pointer; user-select: none;
+}
+.row-main:hover { background: rgba(255,255,255,.02); }
+
+/* date */
+.row-date { font-size: 11px; color: var(--muted); min-width: 42px; flex-shrink: 0; }
+
+/* teams block */
+.row-teams {
+  display: flex; align-items: center; gap: 10px; flex: 1; min-width: 0;
+}
+.row-team {
+  flex: 1; min-width: 0; display: flex; flex-direction: column; gap: 1px;
+}
+.row-team.right { align-items: flex-end; }
+.rtn {
+  font-size: 13px; font-weight: 600; white-space: nowrap;
+  overflow: hidden; text-overflow: ellipsis; color: var(--text);
+}
+.row-team.fav .rtn   { color: #8b5cf6; }
+.row-team.winner .rtn { color: #4ade80; }
+.rrec { font-size: 10px; color: var(--muted); }
+
+/* score / time center */
+.row-score, .row-time {
+  flex-shrink: 0; text-align: center; min-width: 80px; padding: 0 6px;
+}
+.sc { font-size: 16px; font-weight: 700; letter-spacing: -.3px; display: block; }
+.sc.live { color: #4ade80; }
+.sc-lbl { font-size: 9px; color: var(--muted); text-transform: uppercase; letter-spacing: .7px; }
+.row-time { font-size: 12px; color: var(--muted); }
+.live-badge-inline {
+  font-size: 9px; font-weight: 800; color: #4ade80; display: block;
+  letter-spacing: .5px; text-transform: uppercase;
+  animation: pulse 1.4s ease-in-out infinite;
+}
+.status-line { font-size: 10px; color: var(--muted); display: block; margin-top: 1px; }
+
+/* meta (right side of row) */
+.row-meta {
+  display: flex; align-items: center; gap: 8px; flex-shrink: 0;
+}
+.row-bar {
+  width: 60px; height: 4px; border-radius: 2px;
+  background: var(--border); overflow: hidden; display: flex;
+}
+.rb-away { background: #60a5fa; height: 100%; }
+.rb-home { background: #8b5cf6; height: 100%; flex: 1; }
+.row-pick { font-size: 11px; font-weight: 600; color: var(--muted); white-space: nowrap; min-width: 80px; }
+.result-area { display: flex; align-items: center; }
+
+.expand-btn {
+  font-size: 14px; color: var(--dim); transition: transform .2s;
+  flex-shrink: 0; line-height: 1; padding: 0 2px;
+}
+.row-main.open .expand-btn { transform: rotate(180deg); }
+
+/* ── Row detail (collapsible stats) ─────────────────────────────────────── */
+.row-detail { display: none; border-top: 1px solid var(--border); }
+.row-detail.open { display: block; }
+.detail-inner { padding: 12px 14px 14px; }
+
+.detail-stats { width: 100%; border-collapse: collapse; max-width: 480px; margin: 0 auto; }
+.detail-stats th {
+  font-size: 10px; font-weight: 700; color: var(--muted);
+  text-transform: uppercase; letter-spacing: .4px; padding: 0 0 8px;
+}
+.detail-stats th.ds-away { text-align: left; }
+.detail-stats th.ds-home { text-align: right; }
+.detail-stats th.ds-lbl  { text-align: center; }
+.detail-stats td { padding: 4px 0; font-size: 12px; vertical-align: middle; }
+.ds-away { width: 30%; text-align: left;   font-weight: 600; color: var(--muted); }
+.ds-home { width: 30%; text-align: right;  font-weight: 600; color: var(--muted); }
+.ds-lbl  { width: 40%; text-align: center; font-size: 10px; font-weight: 600;
+           color: var(--dim); text-transform: uppercase; letter-spacing: .35px; }
+.detail-stats td.better { color: #8b5cf6 !important; }
+.detail-stats td.worse  { color: var(--dim)  !important; }
+
+/* ── Pills ───────────────────────────────────────────────────────────────── */
 .pill {
   font-size: 10px; font-weight: 700; letter-spacing: .4px;
   padding: 2px 8px; border-radius: 20px; text-transform: uppercase;
+  white-space: nowrap;
 }
 .conf-high    { background: rgba(34,197,94,.13);  color: #4ade80; border: 1px solid rgba(34,197,94,.22); }
 .conf-med     { background: rgba(251,191,36,.1);  color: #fbbf24; border: 1px solid rgba(251,191,36,.2); }
 .conf-low     { background: rgba(93,115,144,.1);  color: var(--muted); border: 1px solid var(--border); }
 .pill-correct { background: rgba(34,197,94,.13);  color: #4ade80; border: 1px solid rgba(34,197,94,.22); }
 .pill-wrong   { background: rgba(239,68,68,.13);  color: #f87171; border: 1px solid rgba(239,68,68,.22); }
-.pill-live    { background: rgba(74,222,128,.15); color: #4ade80; border: 1px solid rgba(74,222,128,.3); }
-@keyframes pulse { 0%,100% { opacity:1; } 50% { opacity:.4; } }
-.pill-live    { animation: pulse 1.8s ease-in-out infinite; }
+.pill-live    { background: rgba(74,222,128,.15); color: #4ade80; border: 1px solid rgba(74,222,128,.3);
+                animation: pulse 1.8s ease-in-out infinite; }
+@keyframes pulse { 0%,100%{opacity:1;} 50%{opacity:.4;} }
 
-/* ── Matchup ── */
-.matchup { display: flex; align-items: center; gap: 8px; margin-bottom: 13px; }
-.team { flex: 1; min-width: 0; }
-.home-team { text-align: right; }
-.tname {
-  font-size: 14px; font-weight: 700;
-  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
-}
-.tname-fav { color: #8b5cf6; }
-.trec { font-size: 11px; color: var(--muted); margin-top: 2px; }
-
-.center { flex-shrink: 0; text-align: center; min-width: 72px; padding: 0 4px; }
-.c-score     { font-size: 21px; font-weight: 700; letter-spacing: -.5px; }
-.c-score.live { color: #4ade80; }
-.c-label     { font-size: 9px; color: var(--muted); text-transform: uppercase; letter-spacing: .8px; margin-top: 1px; }
-.c-time      { font-size: 12px; color: var(--muted); }
-.c-live-badge {
-  font-size: 9px; font-weight: 800; letter-spacing: .6px;
-  color: #4ade80; text-transform: uppercase; margin-top: 2px;
-  animation: pulse 1.4s ease-in-out infinite;
-}
-.c-status    { font-size: 10px; color: var(--muted); margin-top: 2px; }
-
-/* ── Probability bar ── */
-.prob-block { margin-bottom: 13px; }
-.prob-bar {
-  height: 5px; border-radius: 3px;
-  background: var(--border); overflow: hidden; display: flex; margin-bottom: 5px;
-}
-.pb-away { background: #60a5fa; height: 100%; }
-.pb-home { background: #8b5cf6; height: 100%; flex: 1; }
-.prob-row { display: flex; justify-content: space-between; font-size: 11px; }
-.pl    { color: var(--muted); }
-.ph    { color: var(--text); font-weight: 600; }
-.ppick { color: var(--text); font-weight: 600; }
-
-/* ── Stats table ── */
-.stats { width: 100%; border-collapse: collapse; border-top: 1px solid var(--border); }
-.stats tbody tr:first-child td { padding-top: 10px; }
-.stats td { padding: 3px 0; font-size: 12px; vertical-align: middle; }
-.stat-lbl    { text-align: center; color: var(--muted); font-size: 10px; font-weight: 600;
-               text-transform: uppercase; letter-spacing: .35px; width: 40%; }
-.stat-val    { width: 30%; font-weight: 600; color: var(--muted); }
-.ta-l        { text-align: left; }
-.ta-r        { text-align: right; }
-.stat-better { color: #8b5cf6 !important; }
-.stat-worse  { color: var(--dim) !important; }
-
-/* ── Accuracy ── */
+/* ── Accuracy tab ────────────────────────────────────────────────────────── */
 .acc-grid {
-  display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-  gap: 12px; max-width: 700px; margin: 0 auto 26px;
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(140px,1fr));
+  gap: 10px; max-width: 900px; margin: 20px auto 0; padding: 0 24px;
 }
 .acc-card {
   background: var(--bg2); border: 1px solid var(--border);
-  border-radius: 10px; padding: 16px; text-align: center;
+  border-radius: 10px; padding: 14px 12px; text-align: center;
 }
-.acc-big { font-size: 26px; font-weight: 700; }
-.acc-lbl { font-size: 11px; color: var(--muted); margin-top: 4px; }
-.acc-table { width: 100%; max-width: 960px; margin: 0 auto; border-collapse: collapse; font-size: 13px; }
+.acc-card.acc-hi .acc-big { color: #4ade80; }
+.acc-card.acc-md .acc-big { color: #fbbf24; }
+.acc-card.acc-lo .acc-big { color: var(--muted); }
+.acc-big { font-size: 24px; font-weight: 700; }
+.acc-lbl { font-size: 10px; color: var(--muted); margin-top: 4px; }
+
+.acc-table { width: 100%; border-collapse: collapse; font-size: 13px; }
 .acc-table th {
   text-align: left; padding: 9px 12px; color: var(--muted);
   border-bottom: 1px solid var(--border);
   font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .4px;
 }
-.acc-table td { padding: 9px 12px; border-bottom: 1px solid var(--border); }
+.acc-table td    { padding: 9px 12px; border-bottom: 1px solid var(--border); }
 .acc-table tr:last-child td { border-bottom: none; }
 .acc-table tr:hover td { background: var(--bg3); }
 .acc-ok { color: #4ade80; font-weight: 700; }
 .acc-no { color: #f87171; font-weight: 700; }
+.prob-txt { color: var(--muted); font-size: 11px; }
 
-/* ── Empty ── */
+/* ── Empty ───────────────────────────────────────────────────────────────── */
 .empty { text-align: center; padding: 80px 20px; color: var(--muted); font-size: 15px; }
-.empty .e-icon { font-size: 38px; display: block; margin-bottom: 10px; opacity: .35; }
+.e-icon { font-size: 36px; display: block; margin-bottom: 10px; opacity: .3; }
 
-@media (max-width: 640px) {
-  .grid { grid-template-columns: 1fr; }
-  .sub-tab { font-size: 12px; padding: 9px 12px; }
-  .sub-nav { padding: 0 8px; }
+@media (max-width: 700px) {
+  .row-bar, .row-date { display: none; }
+  .row-pick { min-width: 70px; font-size: 10px; }
+  .row-teams { gap: 6px; }
+  .game-list { padding: 10px 12px 20px; }
+  .filter-bar { padding: 10px 12px; gap: 5px 10px; }
+  .sub-nav { padding: 0 12px; }
 }
 </style>
 </head>
@@ -191,7 +227,7 @@ body {
   <div class="hdr-emoji">🏈</div>
   <div class="hdr-info">
     <div class="hdr-name">NFL Predictions</div>
-    <div class="hdr-sub">2026 Season  &nbsp;·&nbsp;  Today: 0  ·  Recent: 0  ·  Upcoming: 0</div>
+    <div class="hdr-sub">2026 Season  ·  Today: 0  ·  Recent: 0  ·  Upcoming: 0</div>
   </div>
   <div class="hdr-right">
     <div class="hdr-date">Updated 2026-04-20</div>
@@ -209,1240 +245,227 @@ body {
 <div id="tab-today"    class="sub-panel active"><div class="empty"><span class="e-icon">🏈</span>No NFL games to show.</div></div>
 <div id="tab-recent"   class="sub-panel"><div class="empty"><span class="e-icon">🏈</span>No NFL games to show.</div></div>
 <div id="tab-upcoming" class="sub-panel"><div class="empty"><span class="e-icon">🏈</span>No NFL games to show.</div></div>
-<div id="tab-accuracy" class="sub-panel">
+<div id="tab-accuracy" class="sub-panel"><div style="padding:20px 0">
 <div class="acc-grid">
   <div class="acc-card"><div class="acc-big">74.7%</div><div class="acc-lbl">Overall Accuracy</div></div>
   <div class="acc-card"><div class="acc-big">133</div><div class="acc-lbl">Correct of 178</div></div>
-  <div class="acc-card"><div class="acc-big">83.6%</div><div class="acc-lbl">High Conf Acc</div></div>
-  <div class="acc-card"><div class="acc-big">59.5%</div><div class="acc-lbl">Med Conf Acc</div></div>
+  <div class="acc-card acc-hi"><div class="acc-big">83.6%</div><div class="acc-lbl">High Conf (116 games)</div></div>
+  <div class="acc-card acc-md"><div class="acc-big">59.5%</div><div class="acc-lbl">Med Conf (37 games)</div></div>
+  <div class="acc-card acc-lo"><div class="acc-big">56.0%</div><div class="acc-lbl">Low Conf (25 games)</div></div>
 </div>
-<table class="acc-table">
-  <thead><tr><th>Date</th><th>Matchup</th><th>Predicted</th><th>Actual</th><th>Conf</th><th></th></tr></thead>
-  <tbody><tr>
-          <td>2025-10-23</td>
-          <td>Minnesota Vikings @ Los Angeles Chargers</td>
-          <td>Los Angeles Chargers (70%)</td>
-          <td>Los Angeles Chargers (10–37)</td>
-          <td><span class="pill conf-high">HIGH CONF</span></td>
-          <td class="acc-ok">✓</td>
-        </tr><tr>
-          <td>2025-10-26</td>
-          <td>Miami Dolphins @ Atlanta Falcons</td>
-          <td>Atlanta Falcons (61%)</td>
-          <td>Miami Dolphins (34–10)</td>
-          <td><span class="pill conf-med">MED CONF</span></td>
-          <td class="acc-no">✗</td>
-        </tr><tr>
-          <td>2025-10-26</td>
-          <td>New York Jets @ Cincinnati Bengals</td>
-          <td>Cincinnati Bengals (76%)</td>
-          <td>New York Jets (39–38)</td>
-          <td><span class="pill conf-high">HIGH CONF</span></td>
-          <td class="acc-no">✗</td>
-        </tr><tr>
-          <td>2025-10-26</td>
-          <td>Cleveland Browns @ New England Patriots</td>
-          <td>New England Patriots (97%)</td>
-          <td>New England Patriots (13–32)</td>
-          <td><span class="pill conf-high">HIGH CONF</span></td>
-          <td class="acc-ok">✓</td>
-        </tr><tr>
-          <td>2025-10-26</td>
-          <td>New York Giants @ Philadelphia Eagles</td>
-          <td>Philadelphia Eagles (94%)</td>
-          <td>Philadelphia Eagles (20–38)</td>
-          <td><span class="pill conf-high">HIGH CONF</span></td>
-          <td class="acc-ok">✓</td>
-        </tr><tr>
-          <td>2025-10-26</td>
-          <td>Buffalo Bills @ Carolina Panthers</td>
-          <td>Buffalo Bills (80%)</td>
-          <td>Buffalo Bills (40–9)</td>
-          <td><span class="pill conf-high">HIGH CONF</span></td>
-          <td class="acc-ok">✓</td>
-        </tr><tr>
-          <td>2025-10-26</td>
-          <td>Chicago Bears @ Baltimore Ravens</td>
-          <td>Chicago Bears (76%)</td>
-          <td>Baltimore Ravens (16–30)</td>
-          <td><span class="pill conf-high">HIGH CONF</span></td>
-          <td class="acc-no">✗</td>
-        </tr><tr>
-          <td>2025-10-26</td>
-          <td>San Francisco 49ers @ Houston Texans</td>
-          <td>Houston Texans (50%)</td>
-          <td>Houston Texans (15–26)</td>
-          <td><span class="pill conf-low">LOW CONF</span></td>
-          <td class="acc-ok">✓</td>
-        </tr><tr>
-          <td>2025-10-26</td>
-          <td>Tampa Bay Buccaneers @ New Orleans Saints</td>
-          <td>Tampa Bay Buccaneers (67%)</td>
-          <td>Tampa Bay Buccaneers (23–3)</td>
-          <td><span class="pill conf-med">MED CONF</span></td>
-          <td class="acc-ok">✓</td>
-        </tr><tr>
-          <td>2025-10-26</td>
-          <td>Dallas Cowboys @ Denver Broncos</td>
-          <td>Denver Broncos (93%)</td>
-          <td>Denver Broncos (24–44)</td>
-          <td><span class="pill conf-high">HIGH CONF</span></td>
-          <td class="acc-ok">✓</td>
-        </tr><tr>
-          <td>2025-10-26</td>
-          <td>Tennessee Titans @ Indianapolis Colts</td>
-          <td>Indianapolis Colts (86%)</td>
-          <td>Indianapolis Colts (14–38)</td>
-          <td><span class="pill conf-high">HIGH CONF</span></td>
-          <td class="acc-ok">✓</td>
-        </tr><tr>
-          <td>2025-10-26</td>
-          <td>Green Bay Packers @ Pittsburgh Steelers</td>
-          <td>Pittsburgh Steelers (57%)</td>
-          <td>Green Bay Packers (35–25)</td>
-          <td><span class="pill conf-low">LOW CONF</span></td>
-          <td class="acc-no">✗</td>
-        </tr><tr>
-          <td>2025-10-27</td>
-          <td>Washington Commanders @ Kansas City Chiefs</td>
-          <td>Kansas City Chiefs (58%)</td>
-          <td>Kansas City Chiefs (7–28)</td>
-          <td><span class="pill conf-low">LOW CONF</span></td>
-          <td class="acc-ok">✓</td>
-        </tr><tr>
-          <td>2025-10-30</td>
-          <td>Baltimore Ravens @ Miami Dolphins</td>
-          <td>Baltimore Ravens (56%)</td>
-          <td>Baltimore Ravens (28–6)</td>
-          <td><span class="pill conf-low">LOW CONF</span></td>
-          <td class="acc-ok">✓</td>
-        </tr><tr>
-          <td>2025-11-02</td>
-          <td>Chicago Bears @ Cincinnati Bengals</td>
-          <td>Chicago Bears (87%)</td>
-          <td>Chicago Bears (47–42)</td>
-          <td><span class="pill conf-high">HIGH CONF</span></td>
-          <td class="acc-ok">✓</td>
-        </tr><tr>
-          <td>2025-11-02</td>
-          <td>Minnesota Vikings @ Detroit Lions</td>
-          <td>Minnesota Vikings (50%)</td>
-          <td>Minnesota Vikings (27–24)</td>
-          <td><span class="pill conf-low">LOW CONF</span></td>
-          <td class="acc-ok">✓</td>
-        </tr><tr>
-          <td>2025-11-02</td>
-          <td>Carolina Panthers @ Green Bay Packers</td>
-          <td>Green Bay Packers (63%)</td>
-          <td>Carolina Panthers (16–13)</td>
-          <td><span class="pill conf-med">MED CONF</span></td>
-          <td class="acc-no">✗</td>
-        </tr><tr>
-          <td>2025-11-02</td>
-          <td>Los Angeles Chargers @ Tennessee Titans</td>
-          <td>Los Angeles Chargers (95%)</td>
-          <td>Los Angeles Chargers (27–20)</td>
-          <td><span class="pill conf-high">HIGH CONF</span></td>
-          <td class="acc-ok">✓</td>
-        </tr><tr>
-          <td>2025-11-02</td>
-          <td>Atlanta Falcons @ New England Patriots</td>
-          <td>New England Patriots (90%)</td>
-          <td>New England Patriots (23–24)</td>
-          <td><span class="pill conf-high">HIGH CONF</span></td>
-          <td class="acc-ok">✓</td>
-        </tr><tr>
-          <td>2025-11-02</td>
-          <td>San Francisco 49ers @ New York Giants</td>
-          <td>San Francisco 49ers (96%)</td>
-          <td>San Francisco 49ers (34–24)</td>
-          <td><span class="pill conf-high">HIGH CONF</span></td>
-          <td class="acc-ok">✓</td>
-        </tr><tr>
-          <td>2025-11-02</td>
-          <td>Indianapolis Colts @ Pittsburgh Steelers</td>
-          <td>Pittsburgh Steelers (72%)</td>
-          <td>Pittsburgh Steelers (20–27)</td>
-          <td><span class="pill conf-high">HIGH CONF</span></td>
-          <td class="acc-ok">✓</td>
-        </tr><tr>
-          <td>2025-11-02</td>
-          <td>Denver Broncos @ Houston Texans</td>
-          <td>Denver Broncos (69%)</td>
-          <td>Denver Broncos (18–15)</td>
-          <td><span class="pill conf-high">HIGH CONF</span></td>
-          <td class="acc-ok">✓</td>
-        </tr><tr>
-          <td>2025-11-02</td>
-          <td>Jacksonville Jaguars @ Las Vegas Raiders</td>
-          <td>Jacksonville Jaguars (97%)</td>
-          <td>Jacksonville Jaguars (30–29)</td>
-          <td><span class="pill conf-high">HIGH CONF</span></td>
-          <td class="acc-ok">✓</td>
-        </tr><tr>
-          <td>2025-11-02</td>
-          <td>New Orleans Saints @ Los Angeles Rams</td>
-          <td>Los Angeles Rams (90%)</td>
-          <td>Los Angeles Rams (10–34)</td>
-          <td><span class="pill conf-high">HIGH CONF</span></td>
-          <td class="acc-ok">✓</td>
-        </tr><tr>
-          <td>2025-11-02</td>
-          <td>Kansas City Chiefs @ Buffalo Bills</td>
-          <td>Buffalo Bills (92%)</td>
-          <td>Buffalo Bills (21–28)</td>
-          <td><span class="pill conf-high">HIGH CONF</span></td>
-          <td class="acc-ok">✓</td>
-        </tr><tr>
-          <td>2025-11-02</td>
-          <td>Seattle Seahawks @ Washington Commanders</td>
-          <td>Seattle Seahawks (96%)</td>
-          <td>Seattle Seahawks (38–14)</td>
-          <td><span class="pill conf-high">HIGH CONF</span></td>
-          <td class="acc-ok">✓</td>
-        </tr><tr>
-          <td>2025-11-03</td>
-          <td>Arizona Cardinals @ Dallas Cowboys</td>
-          <td>Dallas Cowboys (86%)</td>
-          <td>Arizona Cardinals (27–17)</td>
-          <td><span class="pill conf-high">HIGH CONF</span></td>
-          <td class="acc-no">✗</td>
-        </tr><tr>
-          <td>2025-11-06</td>
-          <td>Las Vegas Raiders @ Denver Broncos</td>
-          <td>Denver Broncos (99%)</td>
-          <td>Denver Broncos (7–10)</td>
-          <td><span class="pill conf-high">HIGH CONF</span></td>
-          <td class="acc-ok">✓</td>
-        </tr><tr>
-          <td>2025-11-09</td>
-          <td>Atlanta Falcons @ Indianapolis Colts</td>
-          <td>Atlanta Falcons (52%)</td>
-          <td>Indianapolis Colts (25–31)</td>
-          <td><span class="pill conf-low">LOW CONF</span></td>
-          <td class="acc-no">✗</td>
-        </tr><tr>
-          <td>2025-11-09</td>
-          <td>New York Giants @ Chicago Bears</td>
-          <td>Chicago Bears (94%)</td>
-          <td>Chicago Bears (20–24)</td>
-          <td><span class="pill conf-high">HIGH CONF</span></td>
-          <td class="acc-ok">✓</td>
-        </tr><tr>
-          <td>2025-11-09</td>
-          <td>Buffalo Bills @ Miami Dolphins</td>
-          <td>Buffalo Bills (85%)</td>
-          <td>Miami Dolphins (13–30)</td>
-          <td><span class="pill conf-high">HIGH CONF</span></td>
-          <td class="acc-no">✗</td>
-        </tr><tr>
-          <td>2025-11-09</td>
-          <td>Baltimore Ravens @ Minnesota Vikings</td>
-          <td>Minnesota Vikings (62%)</td>
-          <td>Baltimore Ravens (27–19)</td>
-          <td><span class="pill conf-med">MED CONF</span></td>
-          <td class="acc-no">✗</td>
-        </tr><tr>
-          <td>2025-11-09</td>
-          <td>Cleveland Browns @ New York Jets</td>
-          <td>Cleveland Browns (66%)</td>
-          <td>New York Jets (20–27)</td>
-          <td><span class="pill conf-med">MED CONF</span></td>
-          <td class="acc-no">✗</td>
-        </tr><tr>
-          <td>2025-11-09</td>
-          <td>New England Patriots @ Tampa Bay Buccaneers</td>
-          <td>New England Patriots (90%)</td>
-          <td>New England Patriots (28–23)</td>
-          <td><span class="pill conf-high">HIGH CONF</span></td>
-          <td class="acc-ok">✓</td>
-        </tr><tr>
-          <td>2025-11-09</td>
-          <td>New Orleans Saints @ Carolina Panthers</td>
-          <td>Carolina Panthers (71%)</td>
-          <td>New Orleans Saints (17–7)</td>
-          <td><span class="pill conf-high">HIGH CONF</span></td>
-          <td class="acc-no">✗</td>
-        </tr><tr>
-          <td>2025-11-09</td>
-          <td>Jacksonville Jaguars @ Houston Texans</td>
-          <td>Jacksonville Jaguars (58%)</td>
-          <td>Houston Texans (29–36)</td>
-          <td><span class="pill conf-low">LOW CONF</span></td>
-          <td class="acc-no">✗</td>
-        </tr><tr>
-          <td>2025-11-09</td>
-          <td>Arizona Cardinals @ Seattle Seahawks</td>
-          <td>Seattle Seahawks (98%)</td>
-          <td>Seattle Seahawks (22–44)</td>
-          <td><span class="pill conf-high">HIGH CONF</span></td>
-          <td class="acc-ok">✓</td>
-        </tr><tr>
-          <td>2025-11-09</td>
-          <td>Los Angeles Rams @ San Francisco 49ers</td>
-          <td>San Francisco 49ers (55%)</td>
-          <td>Los Angeles Rams (42–26)</td>
-          <td><span class="pill conf-low">LOW CONF</span></td>
-          <td class="acc-no">✗</td>
-        </tr><tr>
-          <td>2025-11-09</td>
-          <td>Detroit Lions @ Washington Commanders</td>
-          <td>Detroit Lions (80%)</td>
-          <td>Detroit Lions (44–22)</td>
-          <td><span class="pill conf-high">HIGH CONF</span></td>
-          <td class="acc-ok">✓</td>
-        </tr><tr>
-          <td>2025-11-09</td>
-          <td>Pittsburgh Steelers @ Los Angeles Chargers</td>
-          <td>Los Angeles Chargers (61%)</td>
-          <td>Los Angeles Chargers (10–25)</td>
-          <td><span class="pill conf-med">MED CONF</span></td>
-          <td class="acc-ok">✓</td>
-        </tr><tr>
-          <td>2025-11-10</td>
-          <td>Philadelphia Eagles @ Green Bay Packers</td>
-          <td>Philadelphia Eagles (63%)</td>
-          <td>Philadelphia Eagles (10–7)</td>
-          <td><span class="pill conf-med">MED CONF</span></td>
-          <td class="acc-ok">✓</td>
-        </tr><tr>
-          <td>2025-11-13</td>
-          <td>New York Jets @ New England Patriots</td>
-          <td>New England Patriots (98%)</td>
-          <td>New England Patriots (14–27)</td>
-          <td><span class="pill conf-high">HIGH CONF</span></td>
-          <td class="acc-ok">✓</td>
-        </tr><tr>
-          <td>2025-11-16</td>
-          <td>Washington Commanders @ Miami Dolphins</td>
-          <td>Miami Dolphins (70%)</td>
-          <td>Miami Dolphins (13–16)</td>
-          <td><span class="pill conf-high">HIGH CONF</span></td>
-          <td class="acc-ok">✓</td>
-        </tr><tr>
-          <td>2025-11-16</td>
-          <td>Carolina Panthers @ Atlanta Falcons</td>
-          <td>Atlanta Falcons (51%)</td>
-          <td>Carolina Panthers (30–27)</td>
-          <td><span class="pill conf-low">LOW CONF</span></td>
-          <td class="acc-no">✗</td>
-        </tr><tr>
-          <td>2025-11-16</td>
-          <td>Tampa Bay Buccaneers @ Buffalo Bills</td>
-          <td>Buffalo Bills (82%)</td>
-          <td>Buffalo Bills (32–44)</td>
-          <td><span class="pill conf-high">HIGH CONF</span></td>
-          <td class="acc-ok">✓</td>
-        </tr><tr>
-          <td>2025-11-16</td>
-          <td>Houston Texans @ Tennessee Titans</td>
-          <td>Houston Texans (96%)</td>
-          <td>Houston Texans (16–13)</td>
-          <td><span class="pill conf-high">HIGH CONF</span></td>
-          <td class="acc-ok">✓</td>
-        </tr><tr>
-          <td>2025-11-16</td>
-          <td>Chicago Bears @ Minnesota Vikings</td>
-          <td>Chicago Bears (68%)</td>
-          <td>Chicago Bears (19–17)</td>
-          <td><span class="pill conf-med">MED CONF</span></td>
-          <td class="acc-ok">✓</td>
-        </tr><tr>
-          <td>2025-11-16</td>
-          <td>Green Bay Packers @ New York Giants</td>
-          <td>Green Bay Packers (89%)</td>
-          <td>Green Bay Packers (27–20)</td>
-          <td><span class="pill conf-high">HIGH CONF</span></td>
-          <td class="acc-ok">✓</td>
-        </tr><tr>
-          <td>2025-11-16</td>
-          <td>Cincinnati Bengals @ Pittsburgh Steelers</td>
-          <td>Pittsburgh Steelers (83%)</td>
-          <td>Pittsburgh Steelers (12–34)</td>
-          <td><span class="pill conf-high">HIGH CONF</span></td>
-          <td class="acc-ok">✓</td>
-        </tr><tr>
-          <td>2025-11-16</td>
-          <td>Los Angeles Chargers @ Jacksonville Jaguars</td>
-          <td>Jacksonville Jaguars (68%)</td>
-          <td>Jacksonville Jaguars (6–35)</td>
-          <td><span class="pill conf-med">MED CONF</span></td>
-          <td class="acc-ok">✓</td>
-        </tr><tr>
-          <td>2025-11-16</td>
-          <td>Seattle Seahawks @ Los Angeles Rams</td>
-          <td>Seattle Seahawks (68%)</td>
-          <td>Los Angeles Rams (19–21)</td>
-          <td><span class="pill conf-med">MED CONF</span></td>
-          <td class="acc-no">✗</td>
-        </tr><tr>
-          <td>2025-11-16</td>
-          <td>San Francisco 49ers @ Arizona Cardinals</td>
-          <td>San Francisco 49ers (97%)</td>
-          <td>San Francisco 49ers (41–22)</td>
-          <td><span class="pill conf-high">HIGH CONF</span></td>
-          <td class="acc-ok">✓</td>
-        </tr><tr>
-          <td>2025-11-16</td>
-          <td>Baltimore Ravens @ Cleveland Browns</td>
-          <td>Baltimore Ravens (74%)</td>
-          <td>Baltimore Ravens (23–16)</td>
-          <td><span class="pill conf-high">HIGH CONF</span></td>
-          <td class="acc-ok">✓</td>
-        </tr><tr>
-          <td>2025-11-16</td>
-          <td>Kansas City Chiefs @ Denver Broncos</td>
-          <td>Denver Broncos (96%)</td>
-          <td>Denver Broncos (19–22)</td>
-          <td><span class="pill conf-high">HIGH CONF</span></td>
-          <td class="acc-ok">✓</td>
-        </tr><tr>
-          <td>2025-11-16</td>
-          <td>Detroit Lions @ Philadelphia Eagles</td>
-          <td>Philadelphia Eagles (71%)</td>
-          <td>Philadelphia Eagles (9–16)</td>
-          <td><span class="pill conf-high">HIGH CONF</span></td>
-          <td class="acc-ok">✓</td>
-        </tr><tr>
-          <td>2025-11-17</td>
-          <td>Dallas Cowboys @ Las Vegas Raiders</td>
-          <td>Dallas Cowboys (83%)</td>
-          <td>Dallas Cowboys (33–16)</td>
-          <td><span class="pill conf-high">HIGH CONF</span></td>
-          <td class="acc-ok">✓</td>
-        </tr><tr>
-          <td>2025-11-20</td>
-          <td>Buffalo Bills @ Houston Texans</td>
-          <td>Houston Texans (52%)</td>
-          <td>Houston Texans (19–23)</td>
-          <td><span class="pill conf-low">LOW CONF</span></td>
-          <td class="acc-ok">✓</td>
-        </tr><tr>
-          <td>2025-11-23</td>
-          <td>Pittsburgh Steelers @ Chicago Bears</td>
-          <td>Chicago Bears (61%)</td>
-          <td>Chicago Bears (28–31)</td>
-          <td><span class="pill conf-med">MED CONF</span></td>
-          <td class="acc-ok">✓</td>
-        </tr><tr>
-          <td>2025-11-23</td>
-          <td>New England Patriots @ Cincinnati Bengals</td>
-          <td>New England Patriots (95%)</td>
-          <td>New England Patriots (26–20)</td>
-          <td><span class="pill conf-high">HIGH CONF</span></td>
-          <td class="acc-ok">✓</td>
-        </tr><tr>
-          <td>2025-11-23</td>
-          <td>New York Giants @ Detroit Lions</td>
-          <td>Detroit Lions (88%)</td>
-          <td>Detroit Lions (27–34)</td>
-          <td><span class="pill conf-high">HIGH CONF</span></td>
-          <td class="acc-ok">✓</td>
-        </tr><tr>
-          <td>2025-11-23</td>
-          <td>Minnesota Vikings @ Green Bay Packers</td>
-          <td>Green Bay Packers (56%)</td>
-          <td>Green Bay Packers (6–23)</td>
-          <td><span class="pill conf-low">LOW CONF</span></td>
-          <td class="acc-ok">✓</td>
-        </tr><tr>
-          <td>2025-11-23</td>
-          <td>Seattle Seahawks @ Tennessee Titans</td>
-          <td>Seattle Seahawks (98%)</td>
-          <td>Seattle Seahawks (30–24)</td>
-          <td><span class="pill conf-high">HIGH CONF</span></td>
-          <td class="acc-ok">✓</td>
-        </tr><tr>
-          <td>2025-11-23</td>
-          <td>Indianapolis Colts @ Kansas City Chiefs</td>
-          <td>Indianapolis Colts (68%)</td>
-          <td>Kansas City Chiefs (20–23)</td>
-          <td><span class="pill conf-med">MED CONF</span></td>
-          <td class="acc-no">✗</td>
-        </tr><tr>
-          <td>2025-11-23</td>
-          <td>New York Jets @ Baltimore Ravens</td>
-          <td>Baltimore Ravens (86%)</td>
-          <td>Baltimore Ravens (10–23)</td>
-          <td><span class="pill conf-high">HIGH CONF</span></td>
-          <td class="acc-ok">✓</td>
-        </tr><tr>
-          <td>2025-11-23</td>
-          <td>Cleveland Browns @ Las Vegas Raiders</td>
-          <td>Cleveland Browns (66%)</td>
-          <td>Cleveland Browns (24–10)</td>
-          <td><span class="pill conf-med">MED CONF</span></td>
-          <td class="acc-ok">✓</td>
-        </tr><tr>
-          <td>2025-11-23</td>
-          <td>Jacksonville Jaguars @ Arizona Cardinals</td>
-          <td>Jacksonville Jaguars (98%)</td>
-          <td>Jacksonville Jaguars (27–24)</td>
-          <td><span class="pill conf-high">HIGH CONF</span></td>
-          <td class="acc-ok">✓</td>
-        </tr><tr>
-          <td>2025-11-23</td>
-          <td>Philadelphia Eagles @ Dallas Cowboys</td>
-          <td>Philadelphia Eagles (78%)</td>
-          <td>Dallas Cowboys (21–24)</td>
-          <td><span class="pill conf-high">HIGH CONF</span></td>
-          <td class="acc-no">✗</td>
-        </tr><tr>
-          <td>2025-11-23</td>
-          <td>Atlanta Falcons @ New Orleans Saints</td>
-          <td>Atlanta Falcons (68%)</td>
-          <td>Atlanta Falcons (24–10)</td>
-          <td><span class="pill conf-med">MED CONF</span></td>
-          <td class="acc-ok">✓</td>
-        </tr><tr>
-          <td>2025-11-23</td>
-          <td>Tampa Bay Buccaneers @ Los Angeles Rams</td>
-          <td>Los Angeles Rams (81%)</td>
-          <td>Los Angeles Rams (7–34)</td>
-          <td><span class="pill conf-high">HIGH CONF</span></td>
-          <td class="acc-ok">✓</td>
-        </tr><tr>
-          <td>2025-11-24</td>
-          <td>Carolina Panthers @ San Francisco 49ers</td>
-          <td>San Francisco 49ers (82%)</td>
-          <td>San Francisco 49ers (9–20)</td>
-          <td><span class="pill conf-high">HIGH CONF</span></td>
-          <td class="acc-ok">✓</td>
-        </tr><tr>
-          <td>2025-11-27</td>
-          <td>Green Bay Packers @ Detroit Lions</td>
-          <td>Green Bay Packers (55%)</td>
-          <td>Green Bay Packers (31–24)</td>
-          <td><span class="pill conf-low">LOW CONF</span></td>
-          <td class="acc-ok">✓</td>
-        </tr><tr>
-          <td>2025-11-27</td>
-          <td>Kansas City Chiefs @ Dallas Cowboys</td>
-          <td>Dallas Cowboys (68%)</td>
-          <td>Dallas Cowboys (28–31)</td>
-          <td><span class="pill conf-high">HIGH CONF</span></td>
-          <td class="acc-ok">✓</td>
-        </tr><tr>
-          <td>2025-11-27</td>
-          <td>Cincinnati Bengals @ Baltimore Ravens</td>
-          <td>Baltimore Ravens (68%)</td>
-          <td>Cincinnati Bengals (32–14)</td>
-          <td><span class="pill conf-med">MED CONF</span></td>
-          <td class="acc-no">✗</td>
-        </tr><tr>
-          <td>2025-11-28</td>
-          <td>Chicago Bears @ Philadelphia Eagles</td>
-          <td>Philadelphia Eagles (51%)</td>
-          <td>Chicago Bears (24–15)</td>
-          <td><span class="pill conf-low">LOW CONF</span></td>
-          <td class="acc-no">✗</td>
-        </tr><tr>
-          <td>2025-11-30</td>
-          <td>San Francisco 49ers @ Cleveland Browns</td>
-          <td>San Francisco 49ers (93%)</td>
-          <td>San Francisco 49ers (26–8)</td>
-          <td><span class="pill conf-high">HIGH CONF</span></td>
-          <td class="acc-ok">✓</td>
-        </tr><tr>
-          <td>2025-11-30</td>
-          <td>Jacksonville Jaguars @ Tennessee Titans</td>
-          <td>Jacksonville Jaguars (97%)</td>
-          <td>Jacksonville Jaguars (25–3)</td>
-          <td><span class="pill conf-high">HIGH CONF</span></td>
-          <td class="acc-ok">✓</td>
-        </tr><tr>
-          <td>2025-11-30</td>
-          <td>Houston Texans @ Indianapolis Colts</td>
-          <td>Houston Texans (82%)</td>
-          <td>Houston Texans (20–16)</td>
-          <td><span class="pill conf-high">HIGH CONF</span></td>
-          <td class="acc-ok">✓</td>
-        </tr><tr>
-          <td>2025-11-30</td>
-          <td>New Orleans Saints @ Miami Dolphins</td>
-          <td>Miami Dolphins (62%)</td>
-          <td>Miami Dolphins (17–21)</td>
-          <td><span class="pill conf-med">MED CONF</span></td>
-          <td class="acc-ok">✓</td>
-        </tr><tr>
-          <td>2025-11-30</td>
-          <td>Atlanta Falcons @ New York Jets</td>
-          <td>Atlanta Falcons (86%)</td>
-          <td>New York Jets (24–27)</td>
-          <td><span class="pill conf-high">HIGH CONF</span></td>
-          <td class="acc-no">✗</td>
-        </tr><tr>
-          <td>2025-11-30</td>
-          <td>Arizona Cardinals @ Tampa Bay Buccaneers</td>
-          <td>Tampa Bay Buccaneers (88%)</td>
-          <td>Tampa Bay Buccaneers (17–20)</td>
-          <td><span class="pill conf-high">HIGH CONF</span></td>
-          <td class="acc-ok">✓</td>
-        </tr><tr>
-          <td>2025-11-30</td>
-          <td>Los Angeles Rams @ Carolina Panthers</td>
-          <td>Los Angeles Rams (78%)</td>
-          <td>Carolina Panthers (28–31)</td>
-          <td><span class="pill conf-high">HIGH CONF</span></td>
-          <td class="acc-no">✗</td>
-        </tr><tr>
-          <td>2025-11-30</td>
-          <td>Minnesota Vikings @ Seattle Seahawks</td>
-          <td>Seattle Seahawks (87%)</td>
-          <td>Seattle Seahawks (0–26)</td>
-          <td><span class="pill conf-high">HIGH CONF</span></td>
-          <td class="acc-ok">✓</td>
-        </tr><tr>
-          <td>2025-11-30</td>
-          <td>Buffalo Bills @ Pittsburgh Steelers</td>
-          <td>Buffalo Bills (65%)</td>
-          <td>Buffalo Bills (26–7)</td>
-          <td><span class="pill conf-med">MED CONF</span></td>
-          <td class="acc-ok">✓</td>
-        </tr><tr>
-          <td>2025-11-30</td>
-          <td>Las Vegas Raiders @ Los Angeles Chargers</td>
-          <td>Los Angeles Chargers (96%)</td>
-          <td>Los Angeles Chargers (14–31)</td>
-          <td><span class="pill conf-high">HIGH CONF</span></td>
-          <td class="acc-ok">✓</td>
-        </tr><tr>
-          <td>2025-11-30</td>
-          <td>Denver Broncos @ Washington Commanders</td>
-          <td>Denver Broncos (97%)</td>
-          <td>Denver Broncos (27–26)</td>
-          <td><span class="pill conf-high">HIGH CONF</span></td>
-          <td class="acc-ok">✓</td>
-        </tr><tr>
-          <td>2025-12-01</td>
-          <td>New York Giants @ New England Patriots</td>
-          <td>New England Patriots (98%)</td>
-          <td>New England Patriots (15–33)</td>
-          <td><span class="pill conf-high">HIGH CONF</span></td>
-          <td class="acc-ok">✓</td>
-        </tr><tr>
-          <td>2025-12-04</td>
-          <td>Dallas Cowboys @ Detroit Lions</td>
-          <td>Detroit Lions (63%)</td>
-          <td>Detroit Lions (30–44)</td>
-          <td><span class="pill conf-med">MED CONF</span></td>
-          <td class="acc-ok">✓</td>
-        </tr><tr>
-          <td>2025-12-07</td>
-          <td>Seattle Seahawks @ Atlanta Falcons</td>
-          <td>Seattle Seahawks (89%)</td>
-          <td>Seattle Seahawks (37–9)</td>
-          <td><span class="pill conf-high">HIGH CONF</span></td>
-          <td class="acc-ok">✓</td>
-        </tr><tr>
-          <td>2025-12-07</td>
-          <td>Cincinnati Bengals @ Buffalo Bills</td>
-          <td>Buffalo Bills (91%)</td>
-          <td>Buffalo Bills (34–39)</td>
-          <td><span class="pill conf-high">HIGH CONF</span></td>
-          <td class="acc-ok">✓</td>
-        </tr><tr>
-          <td>2025-12-07</td>
-          <td>Tennessee Titans @ Cleveland Browns</td>
-          <td>Cleveland Browns (68%)</td>
-          <td>Tennessee Titans (31–29)</td>
-          <td><span class="pill conf-high">HIGH CONF</span></td>
-          <td class="acc-no">✗</td>
-        </tr><tr>
-          <td>2025-12-07</td>
-          <td>Washington Commanders @ Minnesota Vikings</td>
-          <td>Minnesota Vikings (83%)</td>
-          <td>Minnesota Vikings (0–31)</td>
-          <td><span class="pill conf-high">HIGH CONF</span></td>
-          <td class="acc-ok">✓</td>
-        </tr><tr>
-          <td>2025-12-07</td>
-          <td>Miami Dolphins @ New York Jets</td>
-          <td>Miami Dolphins (81%)</td>
-          <td>Miami Dolphins (34–10)</td>
-          <td><span class="pill conf-high">HIGH CONF</span></td>
-          <td class="acc-ok">✓</td>
-        </tr><tr>
-          <td>2025-12-07</td>
-          <td>New Orleans Saints @ Tampa Bay Buccaneers</td>
-          <td>Tampa Bay Buccaneers (70%)</td>
-          <td>New Orleans Saints (24–20)</td>
-          <td><span class="pill conf-high">HIGH CONF</span></td>
-          <td class="acc-no">✗</td>
-        </tr><tr>
-          <td>2025-12-07</td>
-          <td>Indianapolis Colts @ Jacksonville Jaguars</td>
-          <td>Jacksonville Jaguars (88%)</td>
-          <td>Jacksonville Jaguars (19–36)</td>
-          <td><span class="pill conf-high">HIGH CONF</span></td>
-          <td class="acc-ok">✓</td>
-        </tr><tr>
-          <td>2025-12-07</td>
-          <td>Pittsburgh Steelers @ Baltimore Ravens</td>
-          <td>Pittsburgh Steelers (69%)</td>
-          <td>Pittsburgh Steelers (27–22)</td>
-          <td><span class="pill conf-high">HIGH CONF</span></td>
-          <td class="acc-ok">✓</td>
-        </tr><tr>
-          <td>2025-12-07</td>
-          <td>Denver Broncos @ Las Vegas Raiders</td>
-          <td>Denver Broncos (98%)</td>
-          <td>Denver Broncos (24–17)</td>
-          <td><span class="pill conf-high">HIGH CONF</span></td>
-          <td class="acc-ok">✓</td>
-        </tr><tr>
-          <td>2025-12-07</td>
-          <td>Chicago Bears @ Green Bay Packers</td>
-          <td>Chicago Bears (64%)</td>
-          <td>Green Bay Packers (21–28)</td>
-          <td><span class="pill conf-med">MED CONF</span></td>
-          <td class="acc-no">✗</td>
-        </tr><tr>
-          <td>2025-12-07</td>
-          <td>Los Angeles Rams @ Arizona Cardinals</td>
-          <td>Los Angeles Rams (96%)</td>
-          <td>Los Angeles Rams (45–17)</td>
-          <td><span class="pill conf-high">HIGH CONF</span></td>
-          <td class="acc-ok">✓</td>
-        </tr><tr>
-          <td>2025-12-07</td>
-          <td>Houston Texans @ Kansas City Chiefs</td>
-          <td>Houston Texans (91%)</td>
-          <td>Houston Texans (20–10)</td>
-          <td><span class="pill conf-high">HIGH CONF</span></td>
-          <td class="acc-ok">✓</td>
-        </tr><tr>
-          <td>2025-12-08</td>
-          <td>Philadelphia Eagles @ Los Angeles Chargers</td>
-          <td>Los Angeles Chargers (52%)</td>
-          <td>Los Angeles Chargers (19–22)</td>
-          <td><span class="pill conf-low">LOW CONF</span></td>
-          <td class="acc-ok">✓</td>
-        </tr><tr>
-          <td>2025-12-11</td>
-          <td>Atlanta Falcons @ Tampa Bay Buccaneers</td>
-          <td>Tampa Bay Buccaneers (51%)</td>
-          <td>Atlanta Falcons (29–28)</td>
-          <td><span class="pill conf-low">LOW CONF</span></td>
-          <td class="acc-no">✗</td>
-        </tr><tr>
-          <td>2025-12-14</td>
-          <td>Cleveland Browns @ Chicago Bears</td>
-          <td>Chicago Bears (91%)</td>
-          <td>Chicago Bears (3–31)</td>
-          <td><span class="pill conf-high">HIGH CONF</span></td>
-          <td class="acc-ok">✓</td>
-        </tr><tr>
-          <td>2025-12-14</td>
-          <td>Baltimore Ravens @ Cincinnati Bengals</td>
-          <td>Baltimore Ravens (65%)</td>
-          <td>Baltimore Ravens (24–0)</td>
-          <td><span class="pill conf-med">MED CONF</span></td>
-          <td class="acc-ok">✓</td>
-        </tr><tr>
-          <td>2025-12-14</td>
-          <td>Los Angeles Chargers @ Kansas City Chiefs</td>
-          <td>Los Angeles Chargers (88%)</td>
-          <td>Los Angeles Chargers (16–13)</td>
-          <td><span class="pill conf-high">HIGH CONF</span></td>
-          <td class="acc-ok">✓</td>
-        </tr><tr>
-          <td>2025-12-14</td>
-          <td>Buffalo Bills @ New England Patriots</td>
-          <td>New England Patriots (69%)</td>
-          <td>Buffalo Bills (35–31)</td>
-          <td><span class="pill conf-high">HIGH CONF</span></td>
-          <td class="acc-no">✗</td>
-        </tr><tr>
-          <td>2025-12-14</td>
-          <td>Washington Commanders @ New York Giants</td>
-          <td>Washington Commanders (60%)</td>
-          <td>Washington Commanders (29–21)</td>
-          <td><span class="pill conf-med">MED CONF</span></td>
-          <td class="acc-ok">✓</td>
-        </tr><tr>
-          <td>2025-12-14</td>
-          <td>Las Vegas Raiders @ Philadelphia Eagles</td>
-          <td>Philadelphia Eagles (95%)</td>
-          <td>Philadelphia Eagles (0–31)</td>
-          <td><span class="pill conf-high">HIGH CONF</span></td>
-          <td class="acc-ok">✓</td>
-        </tr><tr>
-          <td>2025-12-14</td>
-          <td>New York Jets @ Jacksonville Jaguars</td>
-          <td>Jacksonville Jaguars (98%)</td>
-          <td>Jacksonville Jaguars (20–48)</td>
-          <td><span class="pill conf-high">HIGH CONF</span></td>
-          <td class="acc-ok">✓</td>
-        </tr><tr>
-          <td>2025-12-14</td>
-          <td>Arizona Cardinals @ Houston Texans</td>
-          <td>Houston Texans (97%)</td>
-          <td>Houston Texans (20–40)</td>
-          <td><span class="pill conf-high">HIGH CONF</span></td>
-          <td class="acc-ok">✓</td>
-        </tr><tr>
-          <td>2025-12-14</td>
-          <td>Green Bay Packers @ Denver Broncos</td>
-          <td>Denver Broncos (86%)</td>
-          <td>Denver Broncos (26–34)</td>
-          <td><span class="pill conf-high">HIGH CONF</span></td>
-          <td class="acc-ok">✓</td>
-        </tr><tr>
-          <td>2025-12-14</td>
-          <td>Detroit Lions @ Los Angeles Rams</td>
-          <td>Los Angeles Rams (76%)</td>
-          <td>Los Angeles Rams (34–41)</td>
-          <td><span class="pill conf-high">HIGH CONF</span></td>
-          <td class="acc-ok">✓</td>
-        </tr><tr>
-          <td>2025-12-14</td>
-          <td>Carolina Panthers @ New Orleans Saints</td>
-          <td>Carolina Panthers (68%)</td>
-          <td>New Orleans Saints (17–20)</td>
-          <td><span class="pill conf-high">HIGH CONF</span></td>
-          <td class="acc-no">✗</td>
-        </tr><tr>
-          <td>2025-12-14</td>
-          <td>Tennessee Titans @ San Francisco 49ers</td>
-          <td>San Francisco 49ers (97%)</td>
-          <td>San Francisco 49ers (24–37)</td>
-          <td><span class="pill conf-high">HIGH CONF</span></td>
-          <td class="acc-ok">✓</td>
-        </tr><tr>
-          <td>2025-12-14</td>
-          <td>Indianapolis Colts @ Seattle Seahawks</td>
-          <td>Seattle Seahawks (91%)</td>
-          <td>Seattle Seahawks (16–18)</td>
-          <td><span class="pill conf-high">HIGH CONF</span></td>
-          <td class="acc-ok">✓</td>
-        </tr><tr>
-          <td>2025-12-14</td>
-          <td>Minnesota Vikings @ Dallas Cowboys</td>
-          <td>Minnesota Vikings (62%)</td>
-          <td>Minnesota Vikings (34–26)</td>
-          <td><span class="pill conf-med">MED CONF</span></td>
-          <td class="acc-ok">✓</td>
-        </tr><tr>
-          <td>2025-12-15</td>
-          <td>Miami Dolphins @ Pittsburgh Steelers</td>
-          <td>Pittsburgh Steelers (76%)</td>
-          <td>Pittsburgh Steelers (15–28)</td>
-          <td><span class="pill conf-high">HIGH CONF</span></td>
-          <td class="acc-ok">✓</td>
-        </tr><tr>
-          <td>2025-12-18</td>
-          <td>Los Angeles Rams @ Seattle Seahawks</td>
-          <td>Seattle Seahawks (70%)</td>
-          <td>Seattle Seahawks (37–38)</td>
-          <td><span class="pill conf-high">HIGH CONF</span></td>
-          <td class="acc-ok">✓</td>
-        </tr><tr>
-          <td>2025-12-20</td>
-          <td>Philadelphia Eagles @ Washington Commanders</td>
-          <td>Philadelphia Eagles (90%)</td>
-          <td>Philadelphia Eagles (29–18)</td>
-          <td><span class="pill conf-high">HIGH CONF</span></td>
-          <td class="acc-ok">✓</td>
-        </tr><tr>
-          <td>2025-12-20</td>
-          <td>Green Bay Packers @ Chicago Bears</td>
-          <td>Chicago Bears (66%)</td>
-          <td>Chicago Bears (16–22)</td>
-          <td><span class="pill conf-med">MED CONF</span></td>
-          <td class="acc-ok">✓</td>
-        </tr><tr>
-          <td>2025-12-21</td>
-          <td>Buffalo Bills @ Cleveland Browns</td>
-          <td>Buffalo Bills (93%)</td>
-          <td>Buffalo Bills (23–20)</td>
-          <td><span class="pill conf-high">HIGH CONF</span></td>
-          <td class="acc-ok">✓</td>
-        </tr><tr>
-          <td>2025-12-21</td>
-          <td>Los Angeles Chargers @ Dallas Cowboys</td>
-          <td>Los Angeles Chargers (79%)</td>
-          <td>Los Angeles Chargers (34–17)</td>
-          <td><span class="pill conf-high">HIGH CONF</span></td>
-          <td class="acc-ok">✓</td>
-        </tr><tr>
-          <td>2025-12-21</td>
-          <td>Kansas City Chiefs @ Tennessee Titans</td>
-          <td>Kansas City Chiefs (71%)</td>
-          <td>Tennessee Titans (9–26)</td>
-          <td><span class="pill conf-high">HIGH CONF</span></td>
-          <td class="acc-no">✗</td>
-        </tr><tr>
-          <td>2025-12-21</td>
-          <td>Cincinnati Bengals @ Miami Dolphins</td>
-          <td>Miami Dolphins (61%)</td>
-          <td>Cincinnati Bengals (45–21)</td>
-          <td><span class="pill conf-med">MED CONF</span></td>
-          <td class="acc-no">✗</td>
-        </tr><tr>
-          <td>2025-12-21</td>
-          <td>New York Jets @ New Orleans Saints</td>
-          <td>New Orleans Saints (76%)</td>
-          <td>New Orleans Saints (6–29)</td>
-          <td><span class="pill conf-high">HIGH CONF</span></td>
-          <td class="acc-ok">✓</td>
-        </tr><tr>
-          <td>2025-12-21</td>
-          <td>Minnesota Vikings @ New York Giants</td>
-          <td>Minnesota Vikings (87%)</td>
-          <td>Minnesota Vikings (16–13)</td>
-          <td><span class="pill conf-high">HIGH CONF</span></td>
-          <td class="acc-ok">✓</td>
-        </tr><tr>
-          <td>2025-12-21</td>
-          <td>Tampa Bay Buccaneers @ Carolina Panthers</td>
-          <td>Carolina Panthers (53%)</td>
-          <td>Carolina Panthers (20–23)</td>
-          <td><span class="pill conf-low">LOW CONF</span></td>
-          <td class="acc-ok">✓</td>
-        </tr><tr>
-          <td>2025-12-21</td>
-          <td>Jacksonville Jaguars @ Denver Broncos</td>
-          <td>Denver Broncos (63%)</td>
-          <td>Jacksonville Jaguars (34–20)</td>
-          <td><span class="pill conf-med">MED CONF</span></td>
-          <td class="acc-no">✗</td>
-        </tr><tr>
-          <td>2025-12-21</td>
-          <td>Atlanta Falcons @ Arizona Cardinals</td>
-          <td>Atlanta Falcons (87%)</td>
-          <td>Atlanta Falcons (26–19)</td>
-          <td><span class="pill conf-high">HIGH CONF</span></td>
-          <td class="acc-ok">✓</td>
-        </tr><tr>
-          <td>2025-12-21</td>
-          <td>Pittsburgh Steelers @ Detroit Lions</td>
-          <td>Pittsburgh Steelers (61%)</td>
-          <td>Pittsburgh Steelers (29–24)</td>
-          <td><span class="pill conf-med">MED CONF</span></td>
-          <td class="acc-ok">✓</td>
-        </tr><tr>
-          <td>2025-12-21</td>
-          <td>Las Vegas Raiders @ Houston Texans</td>
-          <td>Houston Texans (97%)</td>
-          <td>Houston Texans (21–23)</td>
-          <td><span class="pill conf-high">HIGH CONF</span></td>
-          <td class="acc-ok">✓</td>
-        </tr><tr>
-          <td>2025-12-21</td>
-          <td>New England Patriots @ Baltimore Ravens</td>
-          <td>New England Patriots (90%)</td>
-          <td>New England Patriots (28–24)</td>
-          <td><span class="pill conf-high">HIGH CONF</span></td>
-          <td class="acc-ok">✓</td>
-        </tr><tr>
-          <td>2025-12-22</td>
-          <td>San Francisco 49ers @ Indianapolis Colts</td>
-          <td>San Francisco 49ers (83%)</td>
-          <td>San Francisco 49ers (48–27)</td>
-          <td><span class="pill conf-high">HIGH CONF</span></td>
-          <td class="acc-ok">✓</td>
-        </tr><tr>
-          <td>2025-12-25</td>
-          <td>Dallas Cowboys @ Washington Commanders</td>
-          <td>Dallas Cowboys (71%)</td>
-          <td>Dallas Cowboys (30–23)</td>
-          <td><span class="pill conf-high">HIGH CONF</span></td>
-          <td class="acc-ok">✓</td>
-        </tr><tr>
-          <td>2025-12-25</td>
-          <td>Detroit Lions @ Minnesota Vikings</td>
-          <td>Minnesota Vikings (53%)</td>
-          <td>Minnesota Vikings (10–23)</td>
-          <td><span class="pill conf-low">LOW CONF</span></td>
-          <td class="acc-ok">✓</td>
-        </tr><tr>
-          <td>2025-12-25</td>
-          <td>Denver Broncos @ Kansas City Chiefs</td>
-          <td>Denver Broncos (96%)</td>
-          <td>Denver Broncos (20–13)</td>
-          <td><span class="pill conf-high">HIGH CONF</span></td>
-          <td class="acc-ok">✓</td>
-        </tr><tr>
-          <td>2025-12-27</td>
-          <td>Houston Texans @ Los Angeles Chargers</td>
-          <td>Houston Texans (56%)</td>
-          <td>Houston Texans (20–16)</td>
-          <td><span class="pill conf-low">LOW CONF</span></td>
-          <td class="acc-ok">✓</td>
-        </tr><tr>
-          <td>2025-12-27</td>
-          <td>Baltimore Ravens @ Green Bay Packers</td>
-          <td>Green Bay Packers (66%)</td>
-          <td>Baltimore Ravens (41–24)</td>
-          <td><span class="pill conf-med">MED CONF</span></td>
-          <td class="acc-no">✗</td>
-        </tr><tr>
-          <td>2025-12-28</td>
-          <td>Arizona Cardinals @ Cincinnati Bengals</td>
-          <td>Cincinnati Bengals (77%)</td>
-          <td>Cincinnati Bengals (14–37)</td>
-          <td><span class="pill conf-high">HIGH CONF</span></td>
-          <td class="acc-ok">✓</td>
-        </tr><tr>
-          <td>2025-12-28</td>
-          <td>Pittsburgh Steelers @ Cleveland Browns</td>
-          <td>Pittsburgh Steelers (87%)</td>
-          <td>Cleveland Browns (6–13)</td>
-          <td><span class="pill conf-high">HIGH CONF</span></td>
-          <td class="acc-no">✗</td>
-        </tr><tr>
-          <td>2025-12-28</td>
-          <td>New Orleans Saints @ Tennessee Titans</td>
-          <td>New Orleans Saints (74%)</td>
-          <td>New Orleans Saints (34–26)</td>
-          <td><span class="pill conf-high">HIGH CONF</span></td>
-          <td class="acc-ok">✓</td>
-        </tr><tr>
-          <td>2025-12-28</td>
-          <td>Jacksonville Jaguars @ Indianapolis Colts</td>
-          <td>Jacksonville Jaguars (87%)</td>
-          <td>Jacksonville Jaguars (23–17)</td>
-          <td><span class="pill conf-high">HIGH CONF</span></td>
-          <td class="acc-ok">✓</td>
-        </tr><tr>
-          <td>2025-12-28</td>
-          <td>Tampa Bay Buccaneers @ Miami Dolphins</td>
-          <td>Tampa Bay Buccaneers (57%)</td>
-          <td>Miami Dolphins (17–20)</td>
-          <td><span class="pill conf-low">LOW CONF</span></td>
-          <td class="acc-no">✗</td>
-        </tr><tr>
-          <td>2025-12-28</td>
-          <td>New England Patriots @ New York Jets</td>
-          <td>New England Patriots (98%)</td>
-          <td>New England Patriots (42–10)</td>
-          <td><span class="pill conf-high">HIGH CONF</span></td>
-          <td class="acc-ok">✓</td>
-        </tr><tr>
-          <td>2025-12-28</td>
-          <td>Seattle Seahawks @ Carolina Panthers</td>
-          <td>Seattle Seahawks (89%)</td>
-          <td>Seattle Seahawks (27–10)</td>
-          <td><span class="pill conf-high">HIGH CONF</span></td>
-          <td class="acc-ok">✓</td>
-        </tr><tr>
-          <td>2025-12-28</td>
-          <td>New York Giants @ Las Vegas Raiders</td>
-          <td>New York Giants (55%)</td>
-          <td>New York Giants (34–10)</td>
-          <td><span class="pill conf-low">LOW CONF</span></td>
-          <td class="acc-ok">✓</td>
-        </tr><tr>
-          <td>2025-12-28</td>
-          <td>Philadelphia Eagles @ Buffalo Bills</td>
-          <td>Buffalo Bills (60%)</td>
-          <td>Philadelphia Eagles (13–12)</td>
-          <td><span class="pill conf-med">MED CONF</span></td>
-          <td class="acc-no">✗</td>
-        </tr><tr>
-          <td>2025-12-28</td>
-          <td>Chicago Bears @ San Francisco 49ers</td>
-          <td>San Francisco 49ers (60%)</td>
-          <td>San Francisco 49ers (38–42)</td>
-          <td><span class="pill conf-med">MED CONF</span></td>
-          <td class="acc-ok">✓</td>
-        </tr><tr>
-          <td>2025-12-29</td>
-          <td>Los Angeles Rams @ Atlanta Falcons</td>
-          <td>Los Angeles Rams (79%)</td>
-          <td>Atlanta Falcons (24–27)</td>
-          <td><span class="pill conf-high">HIGH CONF</span></td>
-          <td class="acc-no">✗</td>
-        </tr><tr>
-          <td>2026-01-03</td>
-          <td>Carolina Panthers @ Tampa Bay Buccaneers</td>
-          <td>Tampa Bay Buccaneers (50%)</td>
-          <td>Tampa Bay Buccaneers (14–16)</td>
-          <td><span class="pill conf-low">LOW CONF</span></td>
-          <td class="acc-ok">✓</td>
-        </tr><tr>
-          <td>2026-01-03</td>
-          <td>Seattle Seahawks @ San Francisco 49ers</td>
-          <td>Seattle Seahawks (65%)</td>
-          <td>Seattle Seahawks (13–3)</td>
-          <td><span class="pill conf-med">MED CONF</span></td>
-          <td class="acc-ok">✓</td>
-        </tr></tbody>
-</table></div>
+<div class="filter-bar" id="fb-accuracy"><div class="fg"><span class="fl">Confidence</span><button class="fb active" data-tab="accuracy" data-filter="conf" data-value="all" onclick="setFilter(this)">All</button><button class="fb" data-tab="accuracy" data-filter="conf" data-value="high" onclick="setFilter(this)">High</button><button class="fb" data-tab="accuracy" data-filter="conf" data-value="med" onclick="setFilter(this)">Med</button><button class="fb" data-tab="accuracy" data-filter="conf" data-value="low" onclick="setFilter(this)">Low</button></div><div class="fg"><span class="fl">Result</span><button class="fb active" data-tab="accuracy" data-filter="result" data-value="all" onclick="setFilter(this)">All</button><button class="fb" data-tab="accuracy" data-filter="result" data-value="correct" onclick="setFilter(this)">✓ Correct</button><button class="fb" data-tab="accuracy" data-filter="result" data-value="wrong" onclick="setFilter(this)">✗ Wrong</button></div><span class="game-count" id="count-accuracy">178 games</span></div>
+<div id="list-accuracy">
+  <table class="acc-table">
+    <thead><tr><th>Date</th><th>Matchup</th><th>Predicted</th><th>Actual</th><th>Conf</th><th>Result</th></tr></thead>
+    <tbody id="acc-tbody"><tr class="acc-row" data-conf="high" data-result="correct"><td>2025-10-23</td><td>Minnesota Vikings @ Los Angeles Chargers</td><td>Los Angeles Chargers <span class="prob-txt">(70%)</span></td><td>Los Angeles Chargers <span class="prob-txt">(10–37)</span></td><td><span class="pill conf-high">HIGH CONF</span></td><td class="acc-ok">✓ Correct</td></tr><tr class="acc-row" data-conf="med" data-result="wrong"><td>2025-10-26</td><td>Miami Dolphins @ Atlanta Falcons</td><td>Atlanta Falcons <span class="prob-txt">(61%)</span></td><td>Miami Dolphins <span class="prob-txt">(34–10)</span></td><td><span class="pill conf-med">MED CONF</span></td><td class="acc-no">✗ Wrong</td></tr><tr class="acc-row" data-conf="high" data-result="wrong"><td>2025-10-26</td><td>New York Jets @ Cincinnati Bengals</td><td>Cincinnati Bengals <span class="prob-txt">(76%)</span></td><td>New York Jets <span class="prob-txt">(39–38)</span></td><td><span class="pill conf-high">HIGH CONF</span></td><td class="acc-no">✗ Wrong</td></tr><tr class="acc-row" data-conf="high" data-result="correct"><td>2025-10-26</td><td>Cleveland Browns @ New England Patriots</td><td>New England Patriots <span class="prob-txt">(97%)</span></td><td>New England Patriots <span class="prob-txt">(13–32)</span></td><td><span class="pill conf-high">HIGH CONF</span></td><td class="acc-ok">✓ Correct</td></tr><tr class="acc-row" data-conf="high" data-result="correct"><td>2025-10-26</td><td>New York Giants @ Philadelphia Eagles</td><td>Philadelphia Eagles <span class="prob-txt">(94%)</span></td><td>Philadelphia Eagles <span class="prob-txt">(20–38)</span></td><td><span class="pill conf-high">HIGH CONF</span></td><td class="acc-ok">✓ Correct</td></tr><tr class="acc-row" data-conf="high" data-result="correct"><td>2025-10-26</td><td>Buffalo Bills @ Carolina Panthers</td><td>Buffalo Bills <span class="prob-txt">(80%)</span></td><td>Buffalo Bills <span class="prob-txt">(40–9)</span></td><td><span class="pill conf-high">HIGH CONF</span></td><td class="acc-ok">✓ Correct</td></tr><tr class="acc-row" data-conf="high" data-result="wrong"><td>2025-10-26</td><td>Chicago Bears @ Baltimore Ravens</td><td>Chicago Bears <span class="prob-txt">(76%)</span></td><td>Baltimore Ravens <span class="prob-txt">(16–30)</span></td><td><span class="pill conf-high">HIGH CONF</span></td><td class="acc-no">✗ Wrong</td></tr><tr class="acc-row" data-conf="low" data-result="correct"><td>2025-10-26</td><td>San Francisco 49ers @ Houston Texans</td><td>Houston Texans <span class="prob-txt">(50%)</span></td><td>Houston Texans <span class="prob-txt">(15–26)</span></td><td><span class="pill conf-low">LOW CONF</span></td><td class="acc-ok">✓ Correct</td></tr><tr class="acc-row" data-conf="med" data-result="correct"><td>2025-10-26</td><td>Tampa Bay Buccaneers @ New Orleans Saints</td><td>Tampa Bay Buccaneers <span class="prob-txt">(67%)</span></td><td>Tampa Bay Buccaneers <span class="prob-txt">(23–3)</span></td><td><span class="pill conf-med">MED CONF</span></td><td class="acc-ok">✓ Correct</td></tr><tr class="acc-row" data-conf="high" data-result="correct"><td>2025-10-26</td><td>Dallas Cowboys @ Denver Broncos</td><td>Denver Broncos <span class="prob-txt">(93%)</span></td><td>Denver Broncos <span class="prob-txt">(24–44)</span></td><td><span class="pill conf-high">HIGH CONF</span></td><td class="acc-ok">✓ Correct</td></tr><tr class="acc-row" data-conf="high" data-result="correct"><td>2025-10-26</td><td>Tennessee Titans @ Indianapolis Colts</td><td>Indianapolis Colts <span class="prob-txt">(86%)</span></td><td>Indianapolis Colts <span class="prob-txt">(14–38)</span></td><td><span class="pill conf-high">HIGH CONF</span></td><td class="acc-ok">✓ Correct</td></tr><tr class="acc-row" data-conf="low" data-result="wrong"><td>2025-10-26</td><td>Green Bay Packers @ Pittsburgh Steelers</td><td>Pittsburgh Steelers <span class="prob-txt">(57%)</span></td><td>Green Bay Packers <span class="prob-txt">(35–25)</span></td><td><span class="pill conf-low">LOW CONF</span></td><td class="acc-no">✗ Wrong</td></tr><tr class="acc-row" data-conf="low" data-result="correct"><td>2025-10-27</td><td>Washington Commanders @ Kansas City Chiefs</td><td>Kansas City Chiefs <span class="prob-txt">(58%)</span></td><td>Kansas City Chiefs <span class="prob-txt">(7–28)</span></td><td><span class="pill conf-low">LOW CONF</span></td><td class="acc-ok">✓ Correct</td></tr><tr class="acc-row" data-conf="low" data-result="correct"><td>2025-10-30</td><td>Baltimore Ravens @ Miami Dolphins</td><td>Baltimore Ravens <span class="prob-txt">(56%)</span></td><td>Baltimore Ravens <span class="prob-txt">(28–6)</span></td><td><span class="pill conf-low">LOW CONF</span></td><td class="acc-ok">✓ Correct</td></tr><tr class="acc-row" data-conf="high" data-result="correct"><td>2025-11-02</td><td>Chicago Bears @ Cincinnati Bengals</td><td>Chicago Bears <span class="prob-txt">(87%)</span></td><td>Chicago Bears <span class="prob-txt">(47–42)</span></td><td><span class="pill conf-high">HIGH CONF</span></td><td class="acc-ok">✓ Correct</td></tr><tr class="acc-row" data-conf="low" data-result="correct"><td>2025-11-02</td><td>Minnesota Vikings @ Detroit Lions</td><td>Minnesota Vikings <span class="prob-txt">(50%)</span></td><td>Minnesota Vikings <span class="prob-txt">(27–24)</span></td><td><span class="pill conf-low">LOW CONF</span></td><td class="acc-ok">✓ Correct</td></tr><tr class="acc-row" data-conf="med" data-result="wrong"><td>2025-11-02</td><td>Carolina Panthers @ Green Bay Packers</td><td>Green Bay Packers <span class="prob-txt">(63%)</span></td><td>Carolina Panthers <span class="prob-txt">(16–13)</span></td><td><span class="pill conf-med">MED CONF</span></td><td class="acc-no">✗ Wrong</td></tr><tr class="acc-row" data-conf="high" data-result="correct"><td>2025-11-02</td><td>Los Angeles Chargers @ Tennessee Titans</td><td>Los Angeles Chargers <span class="prob-txt">(95%)</span></td><td>Los Angeles Chargers <span class="prob-txt">(27–20)</span></td><td><span class="pill conf-high">HIGH CONF</span></td><td class="acc-ok">✓ Correct</td></tr><tr class="acc-row" data-conf="high" data-result="correct"><td>2025-11-02</td><td>Atlanta Falcons @ New England Patriots</td><td>New England Patriots <span class="prob-txt">(90%)</span></td><td>New England Patriots <span class="prob-txt">(23–24)</span></td><td><span class="pill conf-high">HIGH CONF</span></td><td class="acc-ok">✓ Correct</td></tr><tr class="acc-row" data-conf="high" data-result="correct"><td>2025-11-02</td><td>San Francisco 49ers @ New York Giants</td><td>San Francisco 49ers <span class="prob-txt">(96%)</span></td><td>San Francisco 49ers <span class="prob-txt">(34–24)</span></td><td><span class="pill conf-high">HIGH CONF</span></td><td class="acc-ok">✓ Correct</td></tr><tr class="acc-row" data-conf="high" data-result="correct"><td>2025-11-02</td><td>Indianapolis Colts @ Pittsburgh Steelers</td><td>Pittsburgh Steelers <span class="prob-txt">(72%)</span></td><td>Pittsburgh Steelers <span class="prob-txt">(20–27)</span></td><td><span class="pill conf-high">HIGH CONF</span></td><td class="acc-ok">✓ Correct</td></tr><tr class="acc-row" data-conf="high" data-result="correct"><td>2025-11-02</td><td>Denver Broncos @ Houston Texans</td><td>Denver Broncos <span class="prob-txt">(69%)</span></td><td>Denver Broncos <span class="prob-txt">(18–15)</span></td><td><span class="pill conf-high">HIGH CONF</span></td><td class="acc-ok">✓ Correct</td></tr><tr class="acc-row" data-conf="high" data-result="correct"><td>2025-11-02</td><td>Jacksonville Jaguars @ Las Vegas Raiders</td><td>Jacksonville Jaguars <span class="prob-txt">(97%)</span></td><td>Jacksonville Jaguars <span class="prob-txt">(30–29)</span></td><td><span class="pill conf-high">HIGH CONF</span></td><td class="acc-ok">✓ Correct</td></tr><tr class="acc-row" data-conf="high" data-result="correct"><td>2025-11-02</td><td>New Orleans Saints @ Los Angeles Rams</td><td>Los Angeles Rams <span class="prob-txt">(90%)</span></td><td>Los Angeles Rams <span class="prob-txt">(10–34)</span></td><td><span class="pill conf-high">HIGH CONF</span></td><td class="acc-ok">✓ Correct</td></tr><tr class="acc-row" data-conf="high" data-result="correct"><td>2025-11-02</td><td>Kansas City Chiefs @ Buffalo Bills</td><td>Buffalo Bills <span class="prob-txt">(92%)</span></td><td>Buffalo Bills <span class="prob-txt">(21–28)</span></td><td><span class="pill conf-high">HIGH CONF</span></td><td class="acc-ok">✓ Correct</td></tr><tr class="acc-row" data-conf="high" data-result="correct"><td>2025-11-02</td><td>Seattle Seahawks @ Washington Commanders</td><td>Seattle Seahawks <span class="prob-txt">(96%)</span></td><td>Seattle Seahawks <span class="prob-txt">(38–14)</span></td><td><span class="pill conf-high">HIGH CONF</span></td><td class="acc-ok">✓ Correct</td></tr><tr class="acc-row" data-conf="high" data-result="wrong"><td>2025-11-03</td><td>Arizona Cardinals @ Dallas Cowboys</td><td>Dallas Cowboys <span class="prob-txt">(86%)</span></td><td>Arizona Cardinals <span class="prob-txt">(27–17)</span></td><td><span class="pill conf-high">HIGH CONF</span></td><td class="acc-no">✗ Wrong</td></tr><tr class="acc-row" data-conf="high" data-result="correct"><td>2025-11-06</td><td>Las Vegas Raiders @ Denver Broncos</td><td>Denver Broncos <span class="prob-txt">(99%)</span></td><td>Denver Broncos <span class="prob-txt">(7–10)</span></td><td><span class="pill conf-high">HIGH CONF</span></td><td class="acc-ok">✓ Correct</td></tr><tr class="acc-row" data-conf="low" data-result="wrong"><td>2025-11-09</td><td>Atlanta Falcons @ Indianapolis Colts</td><td>Atlanta Falcons <span class="prob-txt">(52%)</span></td><td>Indianapolis Colts <span class="prob-txt">(25–31)</span></td><td><span class="pill conf-low">LOW CONF</span></td><td class="acc-no">✗ Wrong</td></tr><tr class="acc-row" data-conf="high" data-result="correct"><td>2025-11-09</td><td>New York Giants @ Chicago Bears</td><td>Chicago Bears <span class="prob-txt">(94%)</span></td><td>Chicago Bears <span class="prob-txt">(20–24)</span></td><td><span class="pill conf-high">HIGH CONF</span></td><td class="acc-ok">✓ Correct</td></tr><tr class="acc-row" data-conf="high" data-result="wrong"><td>2025-11-09</td><td>Buffalo Bills @ Miami Dolphins</td><td>Buffalo Bills <span class="prob-txt">(85%)</span></td><td>Miami Dolphins <span class="prob-txt">(13–30)</span></td><td><span class="pill conf-high">HIGH CONF</span></td><td class="acc-no">✗ Wrong</td></tr><tr class="acc-row" data-conf="med" data-result="wrong"><td>2025-11-09</td><td>Baltimore Ravens @ Minnesota Vikings</td><td>Minnesota Vikings <span class="prob-txt">(62%)</span></td><td>Baltimore Ravens <span class="prob-txt">(27–19)</span></td><td><span class="pill conf-med">MED CONF</span></td><td class="acc-no">✗ Wrong</td></tr><tr class="acc-row" data-conf="med" data-result="wrong"><td>2025-11-09</td><td>Cleveland Browns @ New York Jets</td><td>Cleveland Browns <span class="prob-txt">(66%)</span></td><td>New York Jets <span class="prob-txt">(20–27)</span></td><td><span class="pill conf-med">MED CONF</span></td><td class="acc-no">✗ Wrong</td></tr><tr class="acc-row" data-conf="high" data-result="correct"><td>2025-11-09</td><td>New England Patriots @ Tampa Bay Buccaneers</td><td>New England Patriots <span class="prob-txt">(90%)</span></td><td>New England Patriots <span class="prob-txt">(28–23)</span></td><td><span class="pill conf-high">HIGH CONF</span></td><td class="acc-ok">✓ Correct</td></tr><tr class="acc-row" data-conf="high" data-result="wrong"><td>2025-11-09</td><td>New Orleans Saints @ Carolina Panthers</td><td>Carolina Panthers <span class="prob-txt">(71%)</span></td><td>New Orleans Saints <span class="prob-txt">(17–7)</span></td><td><span class="pill conf-high">HIGH CONF</span></td><td class="acc-no">✗ Wrong</td></tr><tr class="acc-row" data-conf="low" data-result="wrong"><td>2025-11-09</td><td>Jacksonville Jaguars @ Houston Texans</td><td>Jacksonville Jaguars <span class="prob-txt">(58%)</span></td><td>Houston Texans <span class="prob-txt">(29–36)</span></td><td><span class="pill conf-low">LOW CONF</span></td><td class="acc-no">✗ Wrong</td></tr><tr class="acc-row" data-conf="high" data-result="correct"><td>2025-11-09</td><td>Arizona Cardinals @ Seattle Seahawks</td><td>Seattle Seahawks <span class="prob-txt">(98%)</span></td><td>Seattle Seahawks <span class="prob-txt">(22–44)</span></td><td><span class="pill conf-high">HIGH CONF</span></td><td class="acc-ok">✓ Correct</td></tr><tr class="acc-row" data-conf="low" data-result="wrong"><td>2025-11-09</td><td>Los Angeles Rams @ San Francisco 49ers</td><td>San Francisco 49ers <span class="prob-txt">(55%)</span></td><td>Los Angeles Rams <span class="prob-txt">(42–26)</span></td><td><span class="pill conf-low">LOW CONF</span></td><td class="acc-no">✗ Wrong</td></tr><tr class="acc-row" data-conf="high" data-result="correct"><td>2025-11-09</td><td>Detroit Lions @ Washington Commanders</td><td>Detroit Lions <span class="prob-txt">(80%)</span></td><td>Detroit Lions <span class="prob-txt">(44–22)</span></td><td><span class="pill conf-high">HIGH CONF</span></td><td class="acc-ok">✓ Correct</td></tr><tr class="acc-row" data-conf="med" data-result="correct"><td>2025-11-09</td><td>Pittsburgh Steelers @ Los Angeles Chargers</td><td>Los Angeles Chargers <span class="prob-txt">(61%)</span></td><td>Los Angeles Chargers <span class="prob-txt">(10–25)</span></td><td><span class="pill conf-med">MED CONF</span></td><td class="acc-ok">✓ Correct</td></tr><tr class="acc-row" data-conf="med" data-result="correct"><td>2025-11-10</td><td>Philadelphia Eagles @ Green Bay Packers</td><td>Philadelphia Eagles <span class="prob-txt">(63%)</span></td><td>Philadelphia Eagles <span class="prob-txt">(10–7)</span></td><td><span class="pill conf-med">MED CONF</span></td><td class="acc-ok">✓ Correct</td></tr><tr class="acc-row" data-conf="high" data-result="correct"><td>2025-11-13</td><td>New York Jets @ New England Patriots</td><td>New England Patriots <span class="prob-txt">(98%)</span></td><td>New England Patriots <span class="prob-txt">(14–27)</span></td><td><span class="pill conf-high">HIGH CONF</span></td><td class="acc-ok">✓ Correct</td></tr><tr class="acc-row" data-conf="high" data-result="correct"><td>2025-11-16</td><td>Washington Commanders @ Miami Dolphins</td><td>Miami Dolphins <span class="prob-txt">(70%)</span></td><td>Miami Dolphins <span class="prob-txt">(13–16)</span></td><td><span class="pill conf-high">HIGH CONF</span></td><td class="acc-ok">✓ Correct</td></tr><tr class="acc-row" data-conf="low" data-result="wrong"><td>2025-11-16</td><td>Carolina Panthers @ Atlanta Falcons</td><td>Atlanta Falcons <span class="prob-txt">(51%)</span></td><td>Carolina Panthers <span class="prob-txt">(30–27)</span></td><td><span class="pill conf-low">LOW CONF</span></td><td class="acc-no">✗ Wrong</td></tr><tr class="acc-row" data-conf="high" data-result="correct"><td>2025-11-16</td><td>Tampa Bay Buccaneers @ Buffalo Bills</td><td>Buffalo Bills <span class="prob-txt">(82%)</span></td><td>Buffalo Bills <span class="prob-txt">(32–44)</span></td><td><span class="pill conf-high">HIGH CONF</span></td><td class="acc-ok">✓ Correct</td></tr><tr class="acc-row" data-conf="high" data-result="correct"><td>2025-11-16</td><td>Houston Texans @ Tennessee Titans</td><td>Houston Texans <span class="prob-txt">(96%)</span></td><td>Houston Texans <span class="prob-txt">(16–13)</span></td><td><span class="pill conf-high">HIGH CONF</span></td><td class="acc-ok">✓ Correct</td></tr><tr class="acc-row" data-conf="med" data-result="correct"><td>2025-11-16</td><td>Chicago Bears @ Minnesota Vikings</td><td>Chicago Bears <span class="prob-txt">(68%)</span></td><td>Chicago Bears <span class="prob-txt">(19–17)</span></td><td><span class="pill conf-med">MED CONF</span></td><td class="acc-ok">✓ Correct</td></tr><tr class="acc-row" data-conf="high" data-result="correct"><td>2025-11-16</td><td>Green Bay Packers @ New York Giants</td><td>Green Bay Packers <span class="prob-txt">(89%)</span></td><td>Green Bay Packers <span class="prob-txt">(27–20)</span></td><td><span class="pill conf-high">HIGH CONF</span></td><td class="acc-ok">✓ Correct</td></tr><tr class="acc-row" data-conf="high" data-result="correct"><td>2025-11-16</td><td>Cincinnati Bengals @ Pittsburgh Steelers</td><td>Pittsburgh Steelers <span class="prob-txt">(83%)</span></td><td>Pittsburgh Steelers <span class="prob-txt">(12–34)</span></td><td><span class="pill conf-high">HIGH CONF</span></td><td class="acc-ok">✓ Correct</td></tr><tr class="acc-row" data-conf="med" data-result="correct"><td>2025-11-16</td><td>Los Angeles Chargers @ Jacksonville Jaguars</td><td>Jacksonville Jaguars <span class="prob-txt">(68%)</span></td><td>Jacksonville Jaguars <span class="prob-txt">(6–35)</span></td><td><span class="pill conf-med">MED CONF</span></td><td class="acc-ok">✓ Correct</td></tr><tr class="acc-row" data-conf="med" data-result="wrong"><td>2025-11-16</td><td>Seattle Seahawks @ Los Angeles Rams</td><td>Seattle Seahawks <span class="prob-txt">(68%)</span></td><td>Los Angeles Rams <span class="prob-txt">(19–21)</span></td><td><span class="pill conf-med">MED CONF</span></td><td class="acc-no">✗ Wrong</td></tr><tr class="acc-row" data-conf="high" data-result="correct"><td>2025-11-16</td><td>San Francisco 49ers @ Arizona Cardinals</td><td>San Francisco 49ers <span class="prob-txt">(97%)</span></td><td>San Francisco 49ers <span class="prob-txt">(41–22)</span></td><td><span class="pill conf-high">HIGH CONF</span></td><td class="acc-ok">✓ Correct</td></tr><tr class="acc-row" data-conf="high" data-result="correct"><td>2025-11-16</td><td>Baltimore Ravens @ Cleveland Browns</td><td>Baltimore Ravens <span class="prob-txt">(74%)</span></td><td>Baltimore Ravens <span class="prob-txt">(23–16)</span></td><td><span class="pill conf-high">HIGH CONF</span></td><td class="acc-ok">✓ Correct</td></tr><tr class="acc-row" data-conf="high" data-result="correct"><td>2025-11-16</td><td>Kansas City Chiefs @ Denver Broncos</td><td>Denver Broncos <span class="prob-txt">(96%)</span></td><td>Denver Broncos <span class="prob-txt">(19–22)</span></td><td><span class="pill conf-high">HIGH CONF</span></td><td class="acc-ok">✓ Correct</td></tr><tr class="acc-row" data-conf="high" data-result="correct"><td>2025-11-16</td><td>Detroit Lions @ Philadelphia Eagles</td><td>Philadelphia Eagles <span class="prob-txt">(71%)</span></td><td>Philadelphia Eagles <span class="prob-txt">(9–16)</span></td><td><span class="pill conf-high">HIGH CONF</span></td><td class="acc-ok">✓ Correct</td></tr><tr class="acc-row" data-conf="high" data-result="correct"><td>2025-11-17</td><td>Dallas Cowboys @ Las Vegas Raiders</td><td>Dallas Cowboys <span class="prob-txt">(83%)</span></td><td>Dallas Cowboys <span class="prob-txt">(33–16)</span></td><td><span class="pill conf-high">HIGH CONF</span></td><td class="acc-ok">✓ Correct</td></tr><tr class="acc-row" data-conf="low" data-result="correct"><td>2025-11-20</td><td>Buffalo Bills @ Houston Texans</td><td>Houston Texans <span class="prob-txt">(52%)</span></td><td>Houston Texans <span class="prob-txt">(19–23)</span></td><td><span class="pill conf-low">LOW CONF</span></td><td class="acc-ok">✓ Correct</td></tr><tr class="acc-row" data-conf="med" data-result="correct"><td>2025-11-23</td><td>Pittsburgh Steelers @ Chicago Bears</td><td>Chicago Bears <span class="prob-txt">(61%)</span></td><td>Chicago Bears <span class="prob-txt">(28–31)</span></td><td><span class="pill conf-med">MED CONF</span></td><td class="acc-ok">✓ Correct</td></tr><tr class="acc-row" data-conf="high" data-result="correct"><td>2025-11-23</td><td>New England Patriots @ Cincinnati Bengals</td><td>New England Patriots <span class="prob-txt">(95%)</span></td><td>New England Patriots <span class="prob-txt">(26–20)</span></td><td><span class="pill conf-high">HIGH CONF</span></td><td class="acc-ok">✓ Correct</td></tr><tr class="acc-row" data-conf="high" data-result="correct"><td>2025-11-23</td><td>New York Giants @ Detroit Lions</td><td>Detroit Lions <span class="prob-txt">(88%)</span></td><td>Detroit Lions <span class="prob-txt">(27–34)</span></td><td><span class="pill conf-high">HIGH CONF</span></td><td class="acc-ok">✓ Correct</td></tr><tr class="acc-row" data-conf="low" data-result="correct"><td>2025-11-23</td><td>Minnesota Vikings @ Green Bay Packers</td><td>Green Bay Packers <span class="prob-txt">(56%)</span></td><td>Green Bay Packers <span class="prob-txt">(6–23)</span></td><td><span class="pill conf-low">LOW CONF</span></td><td class="acc-ok">✓ Correct</td></tr><tr class="acc-row" data-conf="high" data-result="correct"><td>2025-11-23</td><td>Seattle Seahawks @ Tennessee Titans</td><td>Seattle Seahawks <span class="prob-txt">(98%)</span></td><td>Seattle Seahawks <span class="prob-txt">(30–24)</span></td><td><span class="pill conf-high">HIGH CONF</span></td><td class="acc-ok">✓ Correct</td></tr><tr class="acc-row" data-conf="med" data-result="wrong"><td>2025-11-23</td><td>Indianapolis Colts @ Kansas City Chiefs</td><td>Indianapolis Colts <span class="prob-txt">(68%)</span></td><td>Kansas City Chiefs <span class="prob-txt">(20–23)</span></td><td><span class="pill conf-med">MED CONF</span></td><td class="acc-no">✗ Wrong</td></tr><tr class="acc-row" data-conf="high" data-result="correct"><td>2025-11-23</td><td>New York Jets @ Baltimore Ravens</td><td>Baltimore Ravens <span class="prob-txt">(86%)</span></td><td>Baltimore Ravens <span class="prob-txt">(10–23)</span></td><td><span class="pill conf-high">HIGH CONF</span></td><td class="acc-ok">✓ Correct</td></tr><tr class="acc-row" data-conf="med" data-result="correct"><td>2025-11-23</td><td>Cleveland Browns @ Las Vegas Raiders</td><td>Cleveland Browns <span class="prob-txt">(66%)</span></td><td>Cleveland Browns <span class="prob-txt">(24–10)</span></td><td><span class="pill conf-med">MED CONF</span></td><td class="acc-ok">✓ Correct</td></tr><tr class="acc-row" data-conf="high" data-result="correct"><td>2025-11-23</td><td>Jacksonville Jaguars @ Arizona Cardinals</td><td>Jacksonville Jaguars <span class="prob-txt">(98%)</span></td><td>Jacksonville Jaguars <span class="prob-txt">(27–24)</span></td><td><span class="pill conf-high">HIGH CONF</span></td><td class="acc-ok">✓ Correct</td></tr><tr class="acc-row" data-conf="high" data-result="wrong"><td>2025-11-23</td><td>Philadelphia Eagles @ Dallas Cowboys</td><td>Philadelphia Eagles <span class="prob-txt">(78%)</span></td><td>Dallas Cowboys <span class="prob-txt">(21–24)</span></td><td><span class="pill conf-high">HIGH CONF</span></td><td class="acc-no">✗ Wrong</td></tr><tr class="acc-row" data-conf="med" data-result="correct"><td>2025-11-23</td><td>Atlanta Falcons @ New Orleans Saints</td><td>Atlanta Falcons <span class="prob-txt">(68%)</span></td><td>Atlanta Falcons <span class="prob-txt">(24–10)</span></td><td><span class="pill conf-med">MED CONF</span></td><td class="acc-ok">✓ Correct</td></tr><tr class="acc-row" data-conf="high" data-result="correct"><td>2025-11-23</td><td>Tampa Bay Buccaneers @ Los Angeles Rams</td><td>Los Angeles Rams <span class="prob-txt">(81%)</span></td><td>Los Angeles Rams <span class="prob-txt">(7–34)</span></td><td><span class="pill conf-high">HIGH CONF</span></td><td class="acc-ok">✓ Correct</td></tr><tr class="acc-row" data-conf="high" data-result="correct"><td>2025-11-24</td><td>Carolina Panthers @ San Francisco 49ers</td><td>San Francisco 49ers <span class="prob-txt">(82%)</span></td><td>San Francisco 49ers <span class="prob-txt">(9–20)</span></td><td><span class="pill conf-high">HIGH CONF</span></td><td class="acc-ok">✓ Correct</td></tr><tr class="acc-row" data-conf="low" data-result="correct"><td>2025-11-27</td><td>Green Bay Packers @ Detroit Lions</td><td>Green Bay Packers <span class="prob-txt">(55%)</span></td><td>Green Bay Packers <span class="prob-txt">(31–24)</span></td><td><span class="pill conf-low">LOW CONF</span></td><td class="acc-ok">✓ Correct</td></tr><tr class="acc-row" data-conf="high" data-result="correct"><td>2025-11-27</td><td>Kansas City Chiefs @ Dallas Cowboys</td><td>Dallas Cowboys <span class="prob-txt">(68%)</span></td><td>Dallas Cowboys <span class="prob-txt">(28–31)</span></td><td><span class="pill conf-high">HIGH CONF</span></td><td class="acc-ok">✓ Correct</td></tr><tr class="acc-row" data-conf="med" data-result="wrong"><td>2025-11-27</td><td>Cincinnati Bengals @ Baltimore Ravens</td><td>Baltimore Ravens <span class="prob-txt">(68%)</span></td><td>Cincinnati Bengals <span class="prob-txt">(32–14)</span></td><td><span class="pill conf-med">MED CONF</span></td><td class="acc-no">✗ Wrong</td></tr><tr class="acc-row" data-conf="low" data-result="wrong"><td>2025-11-28</td><td>Chicago Bears @ Philadelphia Eagles</td><td>Philadelphia Eagles <span class="prob-txt">(51%)</span></td><td>Chicago Bears <span class="prob-txt">(24–15)</span></td><td><span class="pill conf-low">LOW CONF</span></td><td class="acc-no">✗ Wrong</td></tr><tr class="acc-row" data-conf="high" data-result="correct"><td>2025-11-30</td><td>San Francisco 49ers @ Cleveland Browns</td><td>San Francisco 49ers <span class="prob-txt">(93%)</span></td><td>San Francisco 49ers <span class="prob-txt">(26–8)</span></td><td><span class="pill conf-high">HIGH CONF</span></td><td class="acc-ok">✓ Correct</td></tr><tr class="acc-row" data-conf="high" data-result="correct"><td>2025-11-30</td><td>Jacksonville Jaguars @ Tennessee Titans</td><td>Jacksonville Jaguars <span class="prob-txt">(97%)</span></td><td>Jacksonville Jaguars <span class="prob-txt">(25–3)</span></td><td><span class="pill conf-high">HIGH CONF</span></td><td class="acc-ok">✓ Correct</td></tr><tr class="acc-row" data-conf="high" data-result="correct"><td>2025-11-30</td><td>Houston Texans @ Indianapolis Colts</td><td>Houston Texans <span class="prob-txt">(82%)</span></td><td>Houston Texans <span class="prob-txt">(20–16)</span></td><td><span class="pill conf-high">HIGH CONF</span></td><td class="acc-ok">✓ Correct</td></tr><tr class="acc-row" data-conf="med" data-result="correct"><td>2025-11-30</td><td>New Orleans Saints @ Miami Dolphins</td><td>Miami Dolphins <span class="prob-txt">(62%)</span></td><td>Miami Dolphins <span class="prob-txt">(17–21)</span></td><td><span class="pill conf-med">MED CONF</span></td><td class="acc-ok">✓ Correct</td></tr><tr class="acc-row" data-conf="high" data-result="wrong"><td>2025-11-30</td><td>Atlanta Falcons @ New York Jets</td><td>Atlanta Falcons <span class="prob-txt">(86%)</span></td><td>New York Jets <span class="prob-txt">(24–27)</span></td><td><span class="pill conf-high">HIGH CONF</span></td><td class="acc-no">✗ Wrong</td></tr><tr class="acc-row" data-conf="high" data-result="correct"><td>2025-11-30</td><td>Arizona Cardinals @ Tampa Bay Buccaneers</td><td>Tampa Bay Buccaneers <span class="prob-txt">(88%)</span></td><td>Tampa Bay Buccaneers <span class="prob-txt">(17–20)</span></td><td><span class="pill conf-high">HIGH CONF</span></td><td class="acc-ok">✓ Correct</td></tr><tr class="acc-row" data-conf="high" data-result="wrong"><td>2025-11-30</td><td>Los Angeles Rams @ Carolina Panthers</td><td>Los Angeles Rams <span class="prob-txt">(78%)</span></td><td>Carolina Panthers <span class="prob-txt">(28–31)</span></td><td><span class="pill conf-high">HIGH CONF</span></td><td class="acc-no">✗ Wrong</td></tr><tr class="acc-row" data-conf="high" data-result="correct"><td>2025-11-30</td><td>Minnesota Vikings @ Seattle Seahawks</td><td>Seattle Seahawks <span class="prob-txt">(87%)</span></td><td>Seattle Seahawks <span class="prob-txt">(0–26)</span></td><td><span class="pill conf-high">HIGH CONF</span></td><td class="acc-ok">✓ Correct</td></tr><tr class="acc-row" data-conf="med" data-result="correct"><td>2025-11-30</td><td>Buffalo Bills @ Pittsburgh Steelers</td><td>Buffalo Bills <span class="prob-txt">(65%)</span></td><td>Buffalo Bills <span class="prob-txt">(26–7)</span></td><td><span class="pill conf-med">MED CONF</span></td><td class="acc-ok">✓ Correct</td></tr><tr class="acc-row" data-conf="high" data-result="correct"><td>2025-11-30</td><td>Las Vegas Raiders @ Los Angeles Chargers</td><td>Los Angeles Chargers <span class="prob-txt">(96%)</span></td><td>Los Angeles Chargers <span class="prob-txt">(14–31)</span></td><td><span class="pill conf-high">HIGH CONF</span></td><td class="acc-ok">✓ Correct</td></tr><tr class="acc-row" data-conf="high" data-result="correct"><td>2025-11-30</td><td>Denver Broncos @ Washington Commanders</td><td>Denver Broncos <span class="prob-txt">(97%)</span></td><td>Denver Broncos <span class="prob-txt">(27–26)</span></td><td><span class="pill conf-high">HIGH CONF</span></td><td class="acc-ok">✓ Correct</td></tr><tr class="acc-row" data-conf="high" data-result="correct"><td>2025-12-01</td><td>New York Giants @ New England Patriots</td><td>New England Patriots <span class="prob-txt">(98%)</span></td><td>New England Patriots <span class="prob-txt">(15–33)</span></td><td><span class="pill conf-high">HIGH CONF</span></td><td class="acc-ok">✓ Correct</td></tr><tr class="acc-row" data-conf="med" data-result="correct"><td>2025-12-04</td><td>Dallas Cowboys @ Detroit Lions</td><td>Detroit Lions <span class="prob-txt">(63%)</span></td><td>Detroit Lions <span class="prob-txt">(30–44)</span></td><td><span class="pill conf-med">MED CONF</span></td><td class="acc-ok">✓ Correct</td></tr><tr class="acc-row" data-conf="high" data-result="correct"><td>2025-12-07</td><td>Seattle Seahawks @ Atlanta Falcons</td><td>Seattle Seahawks <span class="prob-txt">(89%)</span></td><td>Seattle Seahawks <span class="prob-txt">(37–9)</span></td><td><span class="pill conf-high">HIGH CONF</span></td><td class="acc-ok">✓ Correct</td></tr><tr class="acc-row" data-conf="high" data-result="correct"><td>2025-12-07</td><td>Cincinnati Bengals @ Buffalo Bills</td><td>Buffalo Bills <span class="prob-txt">(91%)</span></td><td>Buffalo Bills <span class="prob-txt">(34–39)</span></td><td><span class="pill conf-high">HIGH CONF</span></td><td class="acc-ok">✓ Correct</td></tr><tr class="acc-row" data-conf="high" data-result="wrong"><td>2025-12-07</td><td>Tennessee Titans @ Cleveland Browns</td><td>Cleveland Browns <span class="prob-txt">(68%)</span></td><td>Tennessee Titans <span class="prob-txt">(31–29)</span></td><td><span class="pill conf-high">HIGH CONF</span></td><td class="acc-no">✗ Wrong</td></tr><tr class="acc-row" data-conf="high" data-result="correct"><td>2025-12-07</td><td>Washington Commanders @ Minnesota Vikings</td><td>Minnesota Vikings <span class="prob-txt">(83%)</span></td><td>Minnesota Vikings <span class="prob-txt">(0–31)</span></td><td><span class="pill conf-high">HIGH CONF</span></td><td class="acc-ok">✓ Correct</td></tr><tr class="acc-row" data-conf="high" data-result="correct"><td>2025-12-07</td><td>Miami Dolphins @ New York Jets</td><td>Miami Dolphins <span class="prob-txt">(81%)</span></td><td>Miami Dolphins <span class="prob-txt">(34–10)</span></td><td><span class="pill conf-high">HIGH CONF</span></td><td class="acc-ok">✓ Correct</td></tr><tr class="acc-row" data-conf="high" data-result="wrong"><td>2025-12-07</td><td>New Orleans Saints @ Tampa Bay Buccaneers</td><td>Tampa Bay Buccaneers <span class="prob-txt">(70%)</span></td><td>New Orleans Saints <span class="prob-txt">(24–20)</span></td><td><span class="pill conf-high">HIGH CONF</span></td><td class="acc-no">✗ Wrong</td></tr><tr class="acc-row" data-conf="high" data-result="correct"><td>2025-12-07</td><td>Indianapolis Colts @ Jacksonville Jaguars</td><td>Jacksonville Jaguars <span class="prob-txt">(88%)</span></td><td>Jacksonville Jaguars <span class="prob-txt">(19–36)</span></td><td><span class="pill conf-high">HIGH CONF</span></td><td class="acc-ok">✓ Correct</td></tr><tr class="acc-row" data-conf="high" data-result="correct"><td>2025-12-07</td><td>Pittsburgh Steelers @ Baltimore Ravens</td><td>Pittsburgh Steelers <span class="prob-txt">(69%)</span></td><td>Pittsburgh Steelers <span class="prob-txt">(27–22)</span></td><td><span class="pill conf-high">HIGH CONF</span></td><td class="acc-ok">✓ Correct</td></tr><tr class="acc-row" data-conf="high" data-result="correct"><td>2025-12-07</td><td>Denver Broncos @ Las Vegas Raiders</td><td>Denver Broncos <span class="prob-txt">(98%)</span></td><td>Denver Broncos <span class="prob-txt">(24–17)</span></td><td><span class="pill conf-high">HIGH CONF</span></td><td class="acc-ok">✓ Correct</td></tr><tr class="acc-row" data-conf="med" data-result="wrong"><td>2025-12-07</td><td>Chicago Bears @ Green Bay Packers</td><td>Chicago Bears <span class="prob-txt">(64%)</span></td><td>Green Bay Packers <span class="prob-txt">(21–28)</span></td><td><span class="pill conf-med">MED CONF</span></td><td class="acc-no">✗ Wrong</td></tr><tr class="acc-row" data-conf="high" data-result="correct"><td>2025-12-07</td><td>Los Angeles Rams @ Arizona Cardinals</td><td>Los Angeles Rams <span class="prob-txt">(96%)</span></td><td>Los Angeles Rams <span class="prob-txt">(45–17)</span></td><td><span class="pill conf-high">HIGH CONF</span></td><td class="acc-ok">✓ Correct</td></tr><tr class="acc-row" data-conf="high" data-result="correct"><td>2025-12-07</td><td>Houston Texans @ Kansas City Chiefs</td><td>Houston Texans <span class="prob-txt">(91%)</span></td><td>Houston Texans <span class="prob-txt">(20–10)</span></td><td><span class="pill conf-high">HIGH CONF</span></td><td class="acc-ok">✓ Correct</td></tr><tr class="acc-row" data-conf="low" data-result="correct"><td>2025-12-08</td><td>Philadelphia Eagles @ Los Angeles Chargers</td><td>Los Angeles Chargers <span class="prob-txt">(52%)</span></td><td>Los Angeles Chargers <span class="prob-txt">(19–22)</span></td><td><span class="pill conf-low">LOW CONF</span></td><td class="acc-ok">✓ Correct</td></tr><tr class="acc-row" data-conf="low" data-result="wrong"><td>2025-12-11</td><td>Atlanta Falcons @ Tampa Bay Buccaneers</td><td>Tampa Bay Buccaneers <span class="prob-txt">(51%)</span></td><td>Atlanta Falcons <span class="prob-txt">(29–28)</span></td><td><span class="pill conf-low">LOW CONF</span></td><td class="acc-no">✗ Wrong</td></tr><tr class="acc-row" data-conf="high" data-result="correct"><td>2025-12-14</td><td>Cleveland Browns @ Chicago Bears</td><td>Chicago Bears <span class="prob-txt">(91%)</span></td><td>Chicago Bears <span class="prob-txt">(3–31)</span></td><td><span class="pill conf-high">HIGH CONF</span></td><td class="acc-ok">✓ Correct</td></tr><tr class="acc-row" data-conf="med" data-result="correct"><td>2025-12-14</td><td>Baltimore Ravens @ Cincinnati Bengals</td><td>Baltimore Ravens <span class="prob-txt">(65%)</span></td><td>Baltimore Ravens <span class="prob-txt">(24–0)</span></td><td><span class="pill conf-med">MED CONF</span></td><td class="acc-ok">✓ Correct</td></tr><tr class="acc-row" data-conf="high" data-result="correct"><td>2025-12-14</td><td>Los Angeles Chargers @ Kansas City Chiefs</td><td>Los Angeles Chargers <span class="prob-txt">(88%)</span></td><td>Los Angeles Chargers <span class="prob-txt">(16–13)</span></td><td><span class="pill conf-high">HIGH CONF</span></td><td class="acc-ok">✓ Correct</td></tr><tr class="acc-row" data-conf="high" data-result="wrong"><td>2025-12-14</td><td>Buffalo Bills @ New England Patriots</td><td>New England Patriots <span class="prob-txt">(69%)</span></td><td>Buffalo Bills <span class="prob-txt">(35–31)</span></td><td><span class="pill conf-high">HIGH CONF</span></td><td class="acc-no">✗ Wrong</td></tr><tr class="acc-row" data-conf="med" data-result="correct"><td>2025-12-14</td><td>Washington Commanders @ New York Giants</td><td>Washington Commanders <span class="prob-txt">(60%)</span></td><td>Washington Commanders <span class="prob-txt">(29–21)</span></td><td><span class="pill conf-med">MED CONF</span></td><td class="acc-ok">✓ Correct</td></tr><tr class="acc-row" data-conf="high" data-result="correct"><td>2025-12-14</td><td>Las Vegas Raiders @ Philadelphia Eagles</td><td>Philadelphia Eagles <span class="prob-txt">(95%)</span></td><td>Philadelphia Eagles <span class="prob-txt">(0–31)</span></td><td><span class="pill conf-high">HIGH CONF</span></td><td class="acc-ok">✓ Correct</td></tr><tr class="acc-row" data-conf="high" data-result="correct"><td>2025-12-14</td><td>New York Jets @ Jacksonville Jaguars</td><td>Jacksonville Jaguars <span class="prob-txt">(98%)</span></td><td>Jacksonville Jaguars <span class="prob-txt">(20–48)</span></td><td><span class="pill conf-high">HIGH CONF</span></td><td class="acc-ok">✓ Correct</td></tr><tr class="acc-row" data-conf="high" data-result="correct"><td>2025-12-14</td><td>Arizona Cardinals @ Houston Texans</td><td>Houston Texans <span class="prob-txt">(97%)</span></td><td>Houston Texans <span class="prob-txt">(20–40)</span></td><td><span class="pill conf-high">HIGH CONF</span></td><td class="acc-ok">✓ Correct</td></tr><tr class="acc-row" data-conf="high" data-result="correct"><td>2025-12-14</td><td>Green Bay Packers @ Denver Broncos</td><td>Denver Broncos <span class="prob-txt">(86%)</span></td><td>Denver Broncos <span class="prob-txt">(26–34)</span></td><td><span class="pill conf-high">HIGH CONF</span></td><td class="acc-ok">✓ Correct</td></tr><tr class="acc-row" data-conf="high" data-result="correct"><td>2025-12-14</td><td>Detroit Lions @ Los Angeles Rams</td><td>Los Angeles Rams <span class="prob-txt">(76%)</span></td><td>Los Angeles Rams <span class="prob-txt">(34–41)</span></td><td><span class="pill conf-high">HIGH CONF</span></td><td class="acc-ok">✓ Correct</td></tr><tr class="acc-row" data-conf="high" data-result="wrong"><td>2025-12-14</td><td>Carolina Panthers @ New Orleans Saints</td><td>Carolina Panthers <span class="prob-txt">(68%)</span></td><td>New Orleans Saints <span class="prob-txt">(17–20)</span></td><td><span class="pill conf-high">HIGH CONF</span></td><td class="acc-no">✗ Wrong</td></tr><tr class="acc-row" data-conf="high" data-result="correct"><td>2025-12-14</td><td>Tennessee Titans @ San Francisco 49ers</td><td>San Francisco 49ers <span class="prob-txt">(97%)</span></td><td>San Francisco 49ers <span class="prob-txt">(24–37)</span></td><td><span class="pill conf-high">HIGH CONF</span></td><td class="acc-ok">✓ Correct</td></tr><tr class="acc-row" data-conf="high" data-result="correct"><td>2025-12-14</td><td>Indianapolis Colts @ Seattle Seahawks</td><td>Seattle Seahawks <span class="prob-txt">(91%)</span></td><td>Seattle Seahawks <span class="prob-txt">(16–18)</span></td><td><span class="pill conf-high">HIGH CONF</span></td><td class="acc-ok">✓ Correct</td></tr><tr class="acc-row" data-conf="med" data-result="correct"><td>2025-12-14</td><td>Minnesota Vikings @ Dallas Cowboys</td><td>Minnesota Vikings <span class="prob-txt">(62%)</span></td><td>Minnesota Vikings <span class="prob-txt">(34–26)</span></td><td><span class="pill conf-med">MED CONF</span></td><td class="acc-ok">✓ Correct</td></tr><tr class="acc-row" data-conf="high" data-result="correct"><td>2025-12-15</td><td>Miami Dolphins @ Pittsburgh Steelers</td><td>Pittsburgh Steelers <span class="prob-txt">(76%)</span></td><td>Pittsburgh Steelers <span class="prob-txt">(15–28)</span></td><td><span class="pill conf-high">HIGH CONF</span></td><td class="acc-ok">✓ Correct</td></tr><tr class="acc-row" data-conf="high" data-result="correct"><td>2025-12-18</td><td>Los Angeles Rams @ Seattle Seahawks</td><td>Seattle Seahawks <span class="prob-txt">(70%)</span></td><td>Seattle Seahawks <span class="prob-txt">(37–38)</span></td><td><span class="pill conf-high">HIGH CONF</span></td><td class="acc-ok">✓ Correct</td></tr><tr class="acc-row" data-conf="high" data-result="correct"><td>2025-12-20</td><td>Philadelphia Eagles @ Washington Commanders</td><td>Philadelphia Eagles <span class="prob-txt">(90%)</span></td><td>Philadelphia Eagles <span class="prob-txt">(29–18)</span></td><td><span class="pill conf-high">HIGH CONF</span></td><td class="acc-ok">✓ Correct</td></tr><tr class="acc-row" data-conf="med" data-result="correct"><td>2025-12-20</td><td>Green Bay Packers @ Chicago Bears</td><td>Chicago Bears <span class="prob-txt">(66%)</span></td><td>Chicago Bears <span class="prob-txt">(16–22)</span></td><td><span class="pill conf-med">MED CONF</span></td><td class="acc-ok">✓ Correct</td></tr><tr class="acc-row" data-conf="high" data-result="correct"><td>2025-12-21</td><td>Buffalo Bills @ Cleveland Browns</td><td>Buffalo Bills <span class="prob-txt">(93%)</span></td><td>Buffalo Bills <span class="prob-txt">(23–20)</span></td><td><span class="pill conf-high">HIGH CONF</span></td><td class="acc-ok">✓ Correct</td></tr><tr class="acc-row" data-conf="high" data-result="correct"><td>2025-12-21</td><td>Los Angeles Chargers @ Dallas Cowboys</td><td>Los Angeles Chargers <span class="prob-txt">(79%)</span></td><td>Los Angeles Chargers <span class="prob-txt">(34–17)</span></td><td><span class="pill conf-high">HIGH CONF</span></td><td class="acc-ok">✓ Correct</td></tr><tr class="acc-row" data-conf="high" data-result="wrong"><td>2025-12-21</td><td>Kansas City Chiefs @ Tennessee Titans</td><td>Kansas City Chiefs <span class="prob-txt">(71%)</span></td><td>Tennessee Titans <span class="prob-txt">(9–26)</span></td><td><span class="pill conf-high">HIGH CONF</span></td><td class="acc-no">✗ Wrong</td></tr><tr class="acc-row" data-conf="med" data-result="wrong"><td>2025-12-21</td><td>Cincinnati Bengals @ Miami Dolphins</td><td>Miami Dolphins <span class="prob-txt">(61%)</span></td><td>Cincinnati Bengals <span class="prob-txt">(45–21)</span></td><td><span class="pill conf-med">MED CONF</span></td><td class="acc-no">✗ Wrong</td></tr><tr class="acc-row" data-conf="high" data-result="correct"><td>2025-12-21</td><td>New York Jets @ New Orleans Saints</td><td>New Orleans Saints <span class="prob-txt">(76%)</span></td><td>New Orleans Saints <span class="prob-txt">(6–29)</span></td><td><span class="pill conf-high">HIGH CONF</span></td><td class="acc-ok">✓ Correct</td></tr><tr class="acc-row" data-conf="high" data-result="correct"><td>2025-12-21</td><td>Minnesota Vikings @ New York Giants</td><td>Minnesota Vikings <span class="prob-txt">(87%)</span></td><td>Minnesota Vikings <span class="prob-txt">(16–13)</span></td><td><span class="pill conf-high">HIGH CONF</span></td><td class="acc-ok">✓ Correct</td></tr><tr class="acc-row" data-conf="low" data-result="correct"><td>2025-12-21</td><td>Tampa Bay Buccaneers @ Carolina Panthers</td><td>Carolina Panthers <span class="prob-txt">(53%)</span></td><td>Carolina Panthers <span class="prob-txt">(20–23)</span></td><td><span class="pill conf-low">LOW CONF</span></td><td class="acc-ok">✓ Correct</td></tr><tr class="acc-row" data-conf="med" data-result="wrong"><td>2025-12-21</td><td>Jacksonville Jaguars @ Denver Broncos</td><td>Denver Broncos <span class="prob-txt">(63%)</span></td><td>Jacksonville Jaguars <span class="prob-txt">(34–20)</span></td><td><span class="pill conf-med">MED CONF</span></td><td class="acc-no">✗ Wrong</td></tr><tr class="acc-row" data-conf="high" data-result="correct"><td>2025-12-21</td><td>Atlanta Falcons @ Arizona Cardinals</td><td>Atlanta Falcons <span class="prob-txt">(87%)</span></td><td>Atlanta Falcons <span class="prob-txt">(26–19)</span></td><td><span class="pill conf-high">HIGH CONF</span></td><td class="acc-ok">✓ Correct</td></tr><tr class="acc-row" data-conf="med" data-result="correct"><td>2025-12-21</td><td>Pittsburgh Steelers @ Detroit Lions</td><td>Pittsburgh Steelers <span class="prob-txt">(61%)</span></td><td>Pittsburgh Steelers <span class="prob-txt">(29–24)</span></td><td><span class="pill conf-med">MED CONF</span></td><td class="acc-ok">✓ Correct</td></tr><tr class="acc-row" data-conf="high" data-result="correct"><td>2025-12-21</td><td>Las Vegas Raiders @ Houston Texans</td><td>Houston Texans <span class="prob-txt">(97%)</span></td><td>Houston Texans <span class="prob-txt">(21–23)</span></td><td><span class="pill conf-high">HIGH CONF</span></td><td class="acc-ok">✓ Correct</td></tr><tr class="acc-row" data-conf="high" data-result="correct"><td>2025-12-21</td><td>New England Patriots @ Baltimore Ravens</td><td>New England Patriots <span class="prob-txt">(90%)</span></td><td>New England Patriots <span class="prob-txt">(28–24)</span></td><td><span class="pill conf-high">HIGH CONF</span></td><td class="acc-ok">✓ Correct</td></tr><tr class="acc-row" data-conf="high" data-result="correct"><td>2025-12-22</td><td>San Francisco 49ers @ Indianapolis Colts</td><td>San Francisco 49ers <span class="prob-txt">(83%)</span></td><td>San Francisco 49ers <span class="prob-txt">(48–27)</span></td><td><span class="pill conf-high">HIGH CONF</span></td><td class="acc-ok">✓ Correct</td></tr><tr class="acc-row" data-conf="high" data-result="correct"><td>2025-12-25</td><td>Dallas Cowboys @ Washington Commanders</td><td>Dallas Cowboys <span class="prob-txt">(71%)</span></td><td>Dallas Cowboys <span class="prob-txt">(30–23)</span></td><td><span class="pill conf-high">HIGH CONF</span></td><td class="acc-ok">✓ Correct</td></tr><tr class="acc-row" data-conf="low" data-result="correct"><td>2025-12-25</td><td>Detroit Lions @ Minnesota Vikings</td><td>Minnesota Vikings <span class="prob-txt">(53%)</span></td><td>Minnesota Vikings <span class="prob-txt">(10–23)</span></td><td><span class="pill conf-low">LOW CONF</span></td><td class="acc-ok">✓ Correct</td></tr><tr class="acc-row" data-conf="high" data-result="correct"><td>2025-12-25</td><td>Denver Broncos @ Kansas City Chiefs</td><td>Denver Broncos <span class="prob-txt">(96%)</span></td><td>Denver Broncos <span class="prob-txt">(20–13)</span></td><td><span class="pill conf-high">HIGH CONF</span></td><td class="acc-ok">✓ Correct</td></tr><tr class="acc-row" data-conf="low" data-result="correct"><td>2025-12-27</td><td>Houston Texans @ Los Angeles Chargers</td><td>Houston Texans <span class="prob-txt">(56%)</span></td><td>Houston Texans <span class="prob-txt">(20–16)</span></td><td><span class="pill conf-low">LOW CONF</span></td><td class="acc-ok">✓ Correct</td></tr><tr class="acc-row" data-conf="med" data-result="wrong"><td>2025-12-27</td><td>Baltimore Ravens @ Green Bay Packers</td><td>Green Bay Packers <span class="prob-txt">(66%)</span></td><td>Baltimore Ravens <span class="prob-txt">(41–24)</span></td><td><span class="pill conf-med">MED CONF</span></td><td class="acc-no">✗ Wrong</td></tr><tr class="acc-row" data-conf="high" data-result="correct"><td>2025-12-28</td><td>Arizona Cardinals @ Cincinnati Bengals</td><td>Cincinnati Bengals <span class="prob-txt">(77%)</span></td><td>Cincinnati Bengals <span class="prob-txt">(14–37)</span></td><td><span class="pill conf-high">HIGH CONF</span></td><td class="acc-ok">✓ Correct</td></tr><tr class="acc-row" data-conf="high" data-result="wrong"><td>2025-12-28</td><td>Pittsburgh Steelers @ Cleveland Browns</td><td>Pittsburgh Steelers <span class="prob-txt">(87%)</span></td><td>Cleveland Browns <span class="prob-txt">(6–13)</span></td><td><span class="pill conf-high">HIGH CONF</span></td><td class="acc-no">✗ Wrong</td></tr><tr class="acc-row" data-conf="high" data-result="correct"><td>2025-12-28</td><td>New Orleans Saints @ Tennessee Titans</td><td>New Orleans Saints <span class="prob-txt">(74%)</span></td><td>New Orleans Saints <span class="prob-txt">(34–26)</span></td><td><span class="pill conf-high">HIGH CONF</span></td><td class="acc-ok">✓ Correct</td></tr><tr class="acc-row" data-conf="high" data-result="correct"><td>2025-12-28</td><td>Jacksonville Jaguars @ Indianapolis Colts</td><td>Jacksonville Jaguars <span class="prob-txt">(87%)</span></td><td>Jacksonville Jaguars <span class="prob-txt">(23–17)</span></td><td><span class="pill conf-high">HIGH CONF</span></td><td class="acc-ok">✓ Correct</td></tr><tr class="acc-row" data-conf="low" data-result="wrong"><td>2025-12-28</td><td>Tampa Bay Buccaneers @ Miami Dolphins</td><td>Tampa Bay Buccaneers <span class="prob-txt">(57%)</span></td><td>Miami Dolphins <span class="prob-txt">(17–20)</span></td><td><span class="pill conf-low">LOW CONF</span></td><td class="acc-no">✗ Wrong</td></tr><tr class="acc-row" data-conf="high" data-result="correct"><td>2025-12-28</td><td>New England Patriots @ New York Jets</td><td>New England Patriots <span class="prob-txt">(98%)</span></td><td>New England Patriots <span class="prob-txt">(42–10)</span></td><td><span class="pill conf-high">HIGH CONF</span></td><td class="acc-ok">✓ Correct</td></tr><tr class="acc-row" data-conf="high" data-result="correct"><td>2025-12-28</td><td>Seattle Seahawks @ Carolina Panthers</td><td>Seattle Seahawks <span class="prob-txt">(89%)</span></td><td>Seattle Seahawks <span class="prob-txt">(27–10)</span></td><td><span class="pill conf-high">HIGH CONF</span></td><td class="acc-ok">✓ Correct</td></tr><tr class="acc-row" data-conf="low" data-result="correct"><td>2025-12-28</td><td>New York Giants @ Las Vegas Raiders</td><td>New York Giants <span class="prob-txt">(55%)</span></td><td>New York Giants <span class="prob-txt">(34–10)</span></td><td><span class="pill conf-low">LOW CONF</span></td><td class="acc-ok">✓ Correct</td></tr><tr class="acc-row" data-conf="med" data-result="wrong"><td>2025-12-28</td><td>Philadelphia Eagles @ Buffalo Bills</td><td>Buffalo Bills <span class="prob-txt">(60%)</span></td><td>Philadelphia Eagles <span class="prob-txt">(13–12)</span></td><td><span class="pill conf-med">MED CONF</span></td><td class="acc-no">✗ Wrong</td></tr><tr class="acc-row" data-conf="med" data-result="correct"><td>2025-12-28</td><td>Chicago Bears @ San Francisco 49ers</td><td>San Francisco 49ers <span class="prob-txt">(60%)</span></td><td>San Francisco 49ers <span class="prob-txt">(38–42)</span></td><td><span class="pill conf-med">MED CONF</span></td><td class="acc-ok">✓ Correct</td></tr><tr class="acc-row" data-conf="high" data-result="wrong"><td>2025-12-29</td><td>Los Angeles Rams @ Atlanta Falcons</td><td>Los Angeles Rams <span class="prob-txt">(79%)</span></td><td>Atlanta Falcons <span class="prob-txt">(24–27)</span></td><td><span class="pill conf-high">HIGH CONF</span></td><td class="acc-no">✗ Wrong</td></tr><tr class="acc-row" data-conf="low" data-result="correct"><td>2026-01-03</td><td>Carolina Panthers @ Tampa Bay Buccaneers</td><td>Tampa Bay Buccaneers <span class="prob-txt">(50%)</span></td><td>Tampa Bay Buccaneers <span class="prob-txt">(14–16)</span></td><td><span class="pill conf-low">LOW CONF</span></td><td class="acc-ok">✓ Correct</td></tr><tr class="acc-row" data-conf="med" data-result="correct"><td>2026-01-03</td><td>Seattle Seahawks @ San Francisco 49ers</td><td>Seattle Seahawks <span class="prob-txt">(65%)</span></td><td>Seattle Seahawks <span class="prob-txt">(13–3)</span></td><td><span class="pill conf-med">MED CONF</span></td><td class="acc-ok">✓ Correct</td></tr><tr class="acc-row" data-conf="high" data-result="correct"><td>2026-01-04</td><td>New Orleans Saints @ Atlanta Falcons</td><td>Atlanta Falcons <span class="prob-txt">(70%)</span></td><td>Atlanta Falcons <span class="prob-txt">(17–19)</span></td><td><span class="pill conf-high">HIGH CONF</span></td><td class="acc-ok">✓ Correct</td></tr><tr class="acc-row" data-conf="med" data-result="wrong"><td>2026-01-04</td><td>Cleveland Browns @ Cincinnati Bengals</td><td>Cincinnati Bengals <span class="prob-txt">(61%)</span></td><td>Cleveland Browns <span class="prob-txt">(20–18)</span></td><td><span class="pill conf-med">MED CONF</span></td><td class="acc-no">✗ Wrong</td></tr><tr class="acc-row" data-conf="low" data-result="wrong"><td>2026-01-04</td><td>Green Bay Packers @ Minnesota Vikings</td><td>Green Bay Packers <span class="prob-txt">(53%)</span></td><td>Minnesota Vikings <span class="prob-txt">(3–16)</span></td><td><span class="pill conf-low">LOW CONF</span></td><td class="acc-no">✗ Wrong</td></tr><tr class="acc-row" data-conf="high" data-result="wrong"><td>2026-01-04</td><td>Dallas Cowboys @ New York Giants</td><td>Dallas Cowboys <span class="prob-txt">(80%)</span></td><td>New York Giants <span class="prob-txt">(17–34)</span></td><td><span class="pill conf-high">HIGH CONF</span></td><td class="acc-no">✗ Wrong</td></tr><tr class="acc-row" data-conf="high" data-result="correct"><td>2026-01-04</td><td>Tennessee Titans @ Jacksonville Jaguars</td><td>Jacksonville Jaguars <span class="prob-txt">(98%)</span></td><td>Jacksonville Jaguars <span class="prob-txt">(7–41)</span></td><td><span class="pill conf-high">HIGH CONF</span></td><td class="acc-ok">✓ Correct</td></tr><tr class="acc-row" data-conf="high" data-result="correct"><td>2026-01-04</td><td>Indianapolis Colts @ Houston Texans</td><td>Houston Texans <span class="prob-txt">(84%)</span></td><td>Houston Texans <span class="prob-txt">(30–38)</span></td><td><span class="pill conf-high">HIGH CONF</span></td><td class="acc-ok">✓ Correct</td></tr><tr class="acc-row" data-conf="high" data-result="correct"><td>2026-01-04</td><td>New York Jets @ Buffalo Bills</td><td>Buffalo Bills <span class="prob-txt">(97%)</span></td><td>Buffalo Bills <span class="prob-txt">(8–35)</span></td><td><span class="pill conf-high">HIGH CONF</span></td><td class="acc-ok">✓ Correct</td></tr><tr class="acc-row" data-conf="high" data-result="wrong"><td>2026-01-04</td><td>Detroit Lions @ Chicago Bears</td><td>Chicago Bears <span class="prob-txt">(72%)</span></td><td>Detroit Lions <span class="prob-txt">(19–16)</span></td><td><span class="pill conf-high">HIGH CONF</span></td><td class="acc-no">✗ Wrong</td></tr><tr class="acc-row" data-conf="high" data-result="correct"><td>2026-01-04</td><td>Los Angeles Chargers @ Denver Broncos</td><td>Denver Broncos <span class="prob-txt">(77%)</span></td><td>Denver Broncos <span class="prob-txt">(3–19)</span></td><td><span class="pill conf-high">HIGH CONF</span></td><td class="acc-ok">✓ Correct</td></tr><tr class="acc-row" data-conf="high" data-result="wrong"><td>2026-01-04</td><td>Kansas City Chiefs @ Las Vegas Raiders</td><td>Kansas City Chiefs <span class="prob-txt">(71%)</span></td><td>Las Vegas Raiders <span class="prob-txt">(12–14)</span></td><td><span class="pill conf-high">HIGH CONF</span></td><td class="acc-no">✗ Wrong</td></tr><tr class="acc-row" data-conf="high" data-result="correct"><td>2026-01-04</td><td>Arizona Cardinals @ Los Angeles Rams</td><td>Los Angeles Rams <span class="prob-txt">(97%)</span></td><td>Los Angeles Rams <span class="prob-txt">(20–37)</span></td><td><span class="pill conf-high">HIGH CONF</span></td><td class="acc-ok">✓ Correct</td></tr><tr class="acc-row" data-conf="high" data-result="correct"><td>2026-01-04</td><td>Miami Dolphins @ New England Patriots</td><td>New England Patriots <span class="prob-txt">(93%)</span></td><td>New England Patriots <span class="prob-txt">(10–38)</span></td><td><span class="pill conf-high">HIGH CONF</span></td><td class="acc-ok">✓ Correct</td></tr><tr class="acc-row" data-conf="high" data-result="wrong"><td>2026-01-04</td><td>Washington Commanders @ Philadelphia Eagles</td><td>Philadelphia Eagles <span class="prob-txt">(91%)</span></td><td>Washington Commanders <span class="prob-txt">(24–17)</span></td><td><span class="pill conf-high">HIGH CONF</span></td><td class="acc-no">✗ Wrong</td></tr><tr class="acc-row" data-conf="high" data-result="correct"><td>2026-01-04</td><td>Baltimore Ravens @ Pittsburgh Steelers</td><td>Pittsburgh Steelers <span class="prob-txt">(71%)</span></td><td>Pittsburgh Steelers <span class="prob-txt">(24–26)</span></td><td><span class="pill conf-high">HIGH CONF</span></td><td class="acc-ok">✓ Correct</td></tr><tr class="acc-row" data-conf="high" data-result="correct"><td>2026-01-10</td><td>Los Angeles Rams @ Carolina Panthers</td><td>Los Angeles Rams <span class="prob-txt">(78%)</span></td><td>Los Angeles Rams <span class="prob-txt">(34–31)</span></td><td><span class="pill conf-high">HIGH CONF</span></td><td class="acc-ok">✓ Correct</td></tr><tr class="acc-row" data-conf="med" data-result="correct"><td>2026-01-10</td><td>Green Bay Packers @ Chicago Bears</td><td>Chicago Bears <span class="prob-txt">(66%)</span></td><td>Chicago Bears <span class="prob-txt">(27–31)</span></td><td><span class="pill conf-med">MED CONF</span></td><td class="acc-ok">✓ Correct</td></tr><tr class="acc-row" data-conf="med" data-result="wrong"><td>2026-01-11</td><td>Buffalo Bills @ Jacksonville Jaguars</td><td>Jacksonville Jaguars <span class="prob-txt">(61%)</span></td><td>Buffalo Bills <span class="prob-txt">(27–24)</span></td><td><span class="pill conf-med">MED CONF</span></td><td class="acc-no">✗ Wrong</td></tr><tr class="acc-row" data-conf="med" data-result="correct"><td>2026-01-11</td><td>San Francisco 49ers @ Philadelphia Eagles</td><td>San Francisco 49ers <span class="prob-txt">(58%)</span></td><td>San Francisco 49ers <span class="prob-txt">(23–19)</span></td><td><span class="pill conf-med">MED CONF</span></td><td class="acc-ok">✓ Correct</td></tr><tr class="acc-row" data-conf="high" data-result="correct"><td>2026-01-11</td><td>Los Angeles Chargers @ New England Patriots</td><td>New England Patriots <span class="prob-txt">(75%)</span></td><td>New England Patriots <span class="prob-txt">(3–16)</span></td><td><span class="pill conf-high">HIGH CONF</span></td><td class="acc-ok">✓ Correct</td></tr><tr class="acc-row" data-conf="med" data-result="correct"><td>2026-01-12</td><td>Houston Texans @ Pittsburgh Steelers</td><td>Houston Texans <span class="prob-txt">(66%)</span></td><td>Houston Texans <span class="prob-txt">(30–6)</span></td><td><span class="pill conf-med">MED CONF</span></td><td class="acc-ok">✓ Correct</td></tr><tr class="acc-row" data-conf="high" data-result="correct"><td>2026-01-17</td><td>Buffalo Bills @ Denver Broncos</td><td>Denver Broncos <span class="prob-txt">(71%)</span></td><td>Denver Broncos <span class="prob-txt">(30–33)</span></td><td><span class="pill conf-high">HIGH CONF</span></td><td class="acc-ok">✓ Correct</td></tr><tr class="acc-row" data-conf="med" data-result="correct"><td>2026-01-17</td><td>San Francisco 49ers @ Seattle Seahawks</td><td>Seattle Seahawks <span class="prob-txt">(67%)</span></td><td>Seattle Seahawks <span class="prob-txt">(6–41)</span></td><td><span class="pill conf-med">MED CONF</span></td><td class="acc-ok">✓ Correct</td></tr><tr class="acc-row" data-conf="high" data-result="correct"><td>2026-01-18</td><td>Houston Texans @ New England Patriots</td><td>New England Patriots <span class="prob-txt">(69%)</span></td><td>New England Patriots <span class="prob-txt">(16–28)</span></td><td><span class="pill conf-high">HIGH CONF</span></td><td class="acc-ok">✓ Correct</td></tr><tr class="acc-row" data-conf="low" data-result="correct"><td>2026-01-18</td><td>Los Angeles Rams @ Chicago Bears</td><td>Los Angeles Rams <span class="prob-txt">(54%)</span></td><td>Los Angeles Rams <span class="prob-txt">(20–17)</span></td><td><span class="pill conf-low">LOW CONF</span></td><td class="acc-ok">✓ Correct</td></tr><tr class="acc-row" data-conf="low" data-result="wrong"><td>2026-01-25</td><td>New England Patriots @ Denver Broncos</td><td>Denver Broncos <span class="prob-txt">(54%)</span></td><td>New England Patriots <span class="prob-txt">(10–7)</span></td><td><span class="pill conf-low">LOW CONF</span></td><td class="acc-no">✗ Wrong</td></tr><tr class="acc-row" data-conf="high" data-result="correct"><td>2026-01-25</td><td>Los Angeles Rams @ Seattle Seahawks</td><td>Seattle Seahawks <span class="prob-txt">(70%)</span></td><td>Seattle Seahawks <span class="prob-txt">(27–31)</span></td><td><span class="pill conf-high">HIGH CONF</span></td><td class="acc-ok">✓ Correct</td></tr><tr class="acc-row" data-conf="med" data-result="wrong"><td>2026-02-03</td><td>NFC @ AFC</td><td>AFC <span class="prob-txt">(60%)</span></td><td>NFC <span class="prob-txt">(66–52)</span></td><td><span class="pill conf-med">MED CONF</span></td><td class="acc-no">✗ Wrong</td></tr><tr class="acc-row" data-conf="low" data-result="wrong"><td>2026-02-08</td><td>Seattle Seahawks @ New England Patriots</td><td>New England Patriots <span class="prob-txt">(52%)</span></td><td>Seattle Seahawks <span class="prob-txt">(29–13)</span></td><td><span class="pill conf-low">LOW CONF</span></td><td class="acc-no">✗ Wrong</td></tr></tbody>
+  </table>
+</div></div></div>
 
 <script>
+// ── Tab switching ──────────────────────────────────────────────────────────
 function sw(el, name) {
   document.querySelectorAll('.sub-tab').forEach(t => t.classList.remove('active'));
   document.querySelectorAll('.sub-panel').forEach(p => p.classList.remove('active'));
   el.classList.add('active');
   document.getElementById('tab-' + name).classList.add('active');
+  if (name === 'today') startLive();
+  else stopLive();
 }
-</script>
-<script>
-(function() {
-  const SPORT     = document.body.dataset.sport;
-  const ESPN_PATH = document.body.dataset.espnPath;
-  const INTERVAL  = 30000;   // 30 s between polls
-  const IDLE_INT  = 300000;  // 5 min when no live games
-  let timer = null;
 
-  // Sport-specific status text
-  function statusText(comp) {
-    const st    = comp.status || {};
-    const type  = (st.type || {}).name || '';
-    const situ  = comp.situation || {};
-    if (type === 'STATUS_IN_PROGRESS' || type === 'STATUS_HALFTIME') {
-      if (SPORT === 'mlb') {
-        const inning  = st.period || '';
-        const isTop   = situ.isTopInning !== false;
-        const outs    = situ.outs != null ? situ.outs : '';
-        const runners = [situ.onFirst?'1B':'', situ.onSecond?'2B':'', situ.onThird?'3B':'']
-                          .filter(Boolean).join(' ') || '';
-        return `${isTop ? '▲' : '▼'} ${inning}` +
-               (outs !== '' ? ` · ${outs} out` : '') +
-               (runners ? ` · ${runners}` : '');
-      } else if (SPORT === 'nhl') {
-        const p     = st.period || '';
-        const clock = st.displayClock || '';
-        const label = p === 4 ? 'OT' : p === 5 ? 'SO' : `P${p}`;
-        return `${label} ${clock}`;
-      } else if (SPORT === 'nba') {
-        const p     = st.period || '';
-        const clock = st.displayClock || '';
-        const label = p > 4 ? `OT${p-4}` : `Q${p}`;
-        return `${label} ${clock}`;
-      } else if (SPORT === 'nfl') {
-        const p     = st.period || '';
-        const clock = st.displayClock || '';
-        const label = p > 4 ? `OT` : `Q${p}`;
-        const dn    = (comp.situation || {}).downDistanceText || '';
-        return `${label} ${clock}` + (dn ? `<br><span style="font-size:9px">${dn}</span>` : '');
-      }
-    }
-    return (st.type || {}).shortDetail || '';
-  }
+// ── Row expand / collapse ──────────────────────────────────────────────────
+function toggleRow(detailId, mainEl) {
+  const detail = document.getElementById(detailId);
+  if (!detail) return;
+  const open = detail.classList.toggle('open');
+  mainEl.classList.toggle('open', open);
+}
 
-  async function poll() {
-    try {
-      const today = new Date().toISOString().slice(0,10).replace(/-/g,'');
-      const url   = `https://site.api.espn.com/apis/site/v2/sports/${ESPN_PATH}/scoreboard?dates=${today}`;
-      const resp  = await fetch(url);
-      if (!resp.ok) return;
-      const data  = await resp.json();
+// ── Filtering ──────────────────────────────────────────────────────────────
+const activeFilters = {};
 
-      let liveCount = 0;
+function setFilter(btn) {
+  const tab    = btn.dataset.tab;
+  const filter = btn.dataset.filter;
+  const value  = btn.dataset.value;
 
-      for (const ev of (data.events || [])) {
-        const card = document.querySelector(`[data-game-id="${ev.id}"]`);
-        if (!card) continue;
-        const comp = (ev.competitions || [])[0];
-        if (!comp) continue;
+  // Deactivate siblings in same group
+  btn.closest('.fg').querySelectorAll('.fb').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
 
-        const competitors = comp.competitors || [];
-        const away = competitors.find(c => c.homeAway === 'away') || {};
-        const home = competitors.find(c => c.homeAway === 'home') || {};
-        const awayScore = away.score ?? '';
-        const homeScore = home.score ?? '';
-        const typeName  = (comp.status?.type?.name) || '';
-        const isLive    = typeName === 'STATUS_IN_PROGRESS' || typeName === 'STATUS_HALFTIME';
-        const isFinal   = typeName === 'STATUS_FINAL' || comp.status?.type?.completed;
+  if (!activeFilters[tab]) activeFilters[tab] = {};
+  activeFilters[tab][filter] = value;
+  applyFilters(tab);
+}
 
-        const centerEl = document.getElementById(`center-${ev.id}`);
-        if (!centerEl) continue;
+function applyFilters(tab) {
+  const filters = activeFilters[tab] || {};
+  const today   = new Date().toISOString().slice(0,10);
 
-        const prevHTML = centerEl.innerHTML;
-
-        if (isLive) {
-          liveCount++;
-          const st = statusText(comp);
-          const newHTML =
-            `<div class="c-score live">${awayScore}–${homeScore}</div>` +
-            `<div class="c-live-badge">● LIVE</div>` +
-            (st ? `<div class="c-status">${st}</div>` : '');
-          if (newHTML !== prevHTML) {
-            centerEl.innerHTML = newHTML;
-            card.classList.add('is-live');
-            card.classList.remove('just-updated');
-            void card.offsetWidth; // reflow
-            card.classList.add('just-updated');
-          }
-          // Add pulsing LIVE pill to badge area
-          const headRight = card.querySelector('.head-right');
-          if (headRight && !headRight.querySelector('.pill-live')) {
-            const livePill = document.createElement('span');
-            livePill.className = 'pill pill-live';
-            livePill.textContent = 'LIVE';
-            headRight.prepend(livePill);
-          }
-
-        } else if (isFinal && awayScore !== '' && homeScore !== '') {
-          const newHTML =
-            `<div class="c-score">${awayScore}–${homeScore}</div>` +
-            `<div class="c-label">FINAL</div>`;
-          if (newHTML !== prevHTML) {
-            centerEl.innerHTML = newHTML;
-            card.classList.remove('is-live');
-            // Update result pill
-            const pred    = card.dataset.pred;
-            const awayTeam = card.dataset.away;
-            const homeTeam = card.dataset.home;
-            const actual   = parseInt(awayScore) > parseInt(homeScore) ? 'away' : 'home';
-            const correct  = actual === pred;
-            const ra = card.querySelector('.result-area');
-            if (ra) {
-              ra.innerHTML = `<span class="pill ${correct ? 'pill-correct' : 'pill-wrong'}">${correct ? '✓ Correct' : '✗ Wrong'}</span>`;
-            }
-            // Remove LIVE pill
-            const lp = card.querySelector('.pill-live');
-            if (lp) lp.remove();
-          }
-        }
-      }
-
-      // Update header indicator
-      const indicator = document.getElementById('live-indicator');
-      if (indicator) {
-        const now = new Date();
-        const t   = now.toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'});
-        if (liveCount > 0) {
-          indicator.textContent = `● ${liveCount} game${liveCount>1?'s':''} live · ${t}`;
-          indicator.className = 'live-status is-live';
-          reschedule(INTERVAL);
+  // Game rows (Today, Recent, Upcoming)
+  const list = document.getElementById('list-' + tab);
+  if (list) {
+    const rows = list.querySelectorAll('.game-row');
+    let visible = 0;
+    rows.forEach(row => {
+      let show = true;
+      for (const [key, val] of Object.entries(filters)) {
+        if (val === 'all') continue;
+        if (key === 'days') {
+          const gd   = row.dataset.date || '';
+          const diff = Math.round((new Date(gd) - new Date(today)) / 86400000);
+          // For recent: diff is negative (past), for upcoming: diff is positive
+          const absDiff = Math.abs(diff);
+          if (absDiff > parseInt(val)) { show = false; break; }
         } else {
-          indicator.textContent = `Updated ${t}`;
-          indicator.className = 'live-status';
-          reschedule(IDLE_INT);
+          if ((row.dataset[key] || '') !== val) { show = false; break; }
         }
       }
-    } catch(e) {
-      console.warn('Live poll error:', e);
+      row.style.display = show ? '' : 'none';
+      if (show) visible++;
+    });
+    const cnt = document.getElementById('count-' + tab);
+    if (cnt) cnt.textContent = visible + ' game' + (visible !== 1 ? 's' : '');
+    return;
+  }
+
+  // Accuracy table rows
+  if (tab === 'accuracy') {
+    const tbody = document.getElementById('acc-tbody');
+    if (!tbody) return;
+    const rows = tbody.querySelectorAll('.acc-row');
+    let visible = 0;
+    rows.forEach(row => {
+      let show = true;
+      for (const [key, val] of Object.entries(filters)) {
+        if (val === 'all') continue;
+        if ((row.dataset[key] || '') !== val) { show = false; break; }
+      }
+      row.style.display = show ? '' : 'none';
+      if (show) visible++;
+    });
+    const cnt = document.getElementById('count-accuracy');
+    if (cnt) cnt.textContent = visible + ' game' + (visible !== 1 ? 's' : '');
+  }
+}
+
+// ── Live polling ───────────────────────────────────────────────────────────
+const SPORT      = document.body.dataset.sport;
+const ESPN_PATH  = document.body.dataset.espnPath;
+const FAST       = 30000;
+const SLOW       = 300000;
+let liveTimer    = null;
+
+function statusText(comp) {
+  const st   = comp.status || {};
+  const type = (st.type || {}).name || '';
+  const situ = comp.situation || {};
+  if (type === 'STATUS_IN_PROGRESS' || type === 'STATUS_HALFTIME') {
+    if (SPORT === 'mlb') {
+      const inn  = st.period || '';
+      const top  = situ.isTopInning !== false;
+      const outs = situ.outs != null ? ` · ${situ.outs} out` : '';
+      const base = [situ.onFirst?'1B':'',situ.onSecond?'2B':'',situ.onThird?'3B':''].filter(Boolean).join(' ');
+      return `${top?'▲':'▼'} ${inn}${outs}${base ? ' · ' + base : ''}`;
+    } else if (SPORT === 'nhl') {
+      const p = st.period || ''; const c = st.displayClock || '';
+      return `${p===4?'OT':p===5?'SO':'P'+p} ${c}`;
+    } else if (SPORT === 'nba') {
+      const p = st.period || ''; const c = st.displayClock || '';
+      return `${p>4?'OT'+(p-4):'Q'+p} ${c}`;
+    } else if (SPORT === 'nfl') {
+      const p = st.period || ''; const c = st.displayClock || '';
+      const dn = (comp.situation||{}).downDistanceText || '';
+      return `${p>4?'OT':'Q'+p} ${c}` + (dn ? `<br><small>${dn}</small>` : '');
     }
   }
+  return (st.type||{}).shortDetail || '';
+}
 
-  function reschedule(ms) {
-    clearTimeout(timer);
-    timer = setTimeout(() => { poll(); }, ms);
-  }
+async function pollLive() {
+  try {
+    const today = new Date().toISOString().slice(0,10).replace(/-/g,'');
+    const r     = await fetch(`https://site.api.espn.com/apis/site/v2/sports/${ESPN_PATH}/scoreboard?dates=${today}`);
+    if (!r.ok) return;
+    const data  = await r.json();
+    let liveCt  = 0;
 
-  // Start polling only when Today tab is active and has cards
-  function maybeStart() {
-    const todayPanel = document.getElementById('tab-today');
-    if (todayPanel && todayPanel.querySelector('[data-game-id]')) {
-      poll();
+    for (const ev of (data.events || [])) {
+      const row = document.querySelector(`[data-game-id="${ev.id}"]`);
+      if (!row) continue;
+      const comp  = (ev.competitions||[])[0]; if (!comp) continue;
+      const comps = comp.competitors || [];
+      const away  = comps.find(c=>c.homeAway==='away') || {};
+      const home  = comps.find(c=>c.homeAway==='home') || {};
+      const as_   = away.score ?? ''; const hs_ = home.score ?? '';
+      const tname = (comp.status?.type?.name) || '';
+      const isLive  = tname === 'STATUS_IN_PROGRESS' || tname === 'STATUS_HALFTIME';
+      const isFinal = tname === 'STATUS_FINAL' || comp.status?.type?.completed;
+
+      const centerEl = document.getElementById('center-' + ev.id);
+      if (!centerEl) continue;
+      const prev = centerEl.innerHTML;
+
+      if (isLive) {
+        liveCt++;
+        const st     = statusText(comp);
+        const newHTML = `<div class="row-score">` +
+          `<span class="sc live">${as_}–${hs_}</span>` +
+          `<span class="live-badge-inline">● LIVE</span>` +
+          (st ? `<span class="status-line">${st}</span>` : '') + `</div>`;
+        if (newHTML !== prev) {
+          centerEl.innerHTML = newHTML;
+          row.classList.add('is-live', 'just-updated');
+          setTimeout(() => row.classList.remove('just-updated'), 600);
+        }
+        // LIVE pill in meta
+        const meta = row.querySelector('.row-meta');
+        if (meta && !meta.querySelector('.pill-live')) {
+          const lp = document.createElement('span');
+          lp.className = 'pill pill-live'; lp.textContent = 'LIVE';
+          meta.insertBefore(lp, meta.querySelector('.expand-btn'));
+        }
+      } else if (isFinal && as_ !== '' && hs_ !== '') {
+        const newHTML = `<div class="row-score">` +
+          `<span class="sc">${as_}–${hs_}</span>` +
+          `<span class="sc-lbl">FINAL</span></div>`;
+        if (newHTML !== prev) {
+          centerEl.innerHTML = newHTML;
+          row.classList.remove('is-live');
+          const pred   = row.dataset.pred;
+          const actual = parseInt(as_) > parseInt(hs_) ? 'away' : 'home';
+          const ok     = actual === pred;
+          row.dataset.result = ok ? 'correct' : 'wrong';
+          const ra = row.querySelector('.result-area');
+          if (ra) ra.innerHTML = `<span class="pill ${ok?'pill-correct':'pill-wrong'}">${ok?'✓':'✗'}</span>`;
+          const lp = row.querySelector('.pill-live'); if (lp) lp.remove();
+        }
+      }
     }
-  }
 
-  // Hook into tab switching so polling starts when user switches to Today
-  window._origSw = window.sw;
-  window.sw = function(el, name) {
-    window._origSw(el, name);
-    if (name === 'today') maybeStart();
-    else { clearTimeout(timer); }
-  };
+    const ind = document.getElementById('live-indicator');
+    const now = new Date().toLocaleTimeString([],{hour:'2-digit',minute:'2-digit'});
+    if (ind) {
+      if (liveCt > 0) {
+        ind.textContent = `● ${liveCt} live · ${now}`;
+        ind.className = 'live-status is-live';
+        reschedule(FAST);
+      } else {
+        ind.textContent = `Updated ${now}`;
+        ind.className = 'live-status';
+        reschedule(SLOW);
+      }
+    }
+  } catch(e) { console.warn('Poll error', e); }
+}
 
-  document.addEventListener('DOMContentLoaded', maybeStart);
-})();
+function reschedule(ms) { clearTimeout(liveTimer); liveTimer = setTimeout(pollLive, ms); }
+function startLive() {
+  const tp = document.getElementById('tab-today');
+  if (tp && tp.querySelector('[data-game-id]')) pollLive();
+}
+function stopLive() { clearTimeout(liveTimer); }
+
+document.addEventListener('DOMContentLoaded', startLive);
 </script>
 
 </body>
