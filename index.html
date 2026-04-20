@@ -228,7 +228,7 @@
     <div class="logo">⚾</div>
     <div>
       <h1>MLB Predictions 2026</h1>
-      <div class="header-sub">Last updated: 2026-04-19 &nbsp;·&nbsp; Auto-refreshes hourly</div>
+      <div class="header-sub">Last updated: 2026-04-20 &nbsp;·&nbsp; Auto-refreshes hourly</div>
     </div>
   </div>
   <div class="stat-chips">
@@ -374,7 +374,7 @@ function confBadge(g){
   const mx=maxConf(g);
   if(!mx)return"";
   if(mx>=65)return`<span class="conf-badge high">HIGH CONF</span>`;
-  if(mx>=55)return`<span class="conf-badge med">MEDIUM</span>`;
+  if(mx>=50)return`<span class="conf-badge med">MEDIUM</span>`;
   return`<span class="conf-badge low">TOSS-UP</span>`;
 }
 
@@ -710,7 +710,7 @@ function renderAccuracy(){
   const c=f.filter(g=>g.winner===g.favored_team);
   const acc=f.length?(c.length/f.length*100).toFixed(1):'—';
   const hi=f.filter(g=>maxConf(g)>=50), hiC=hi.filter(g=>g.winner===g.favored_team);
-  const mid=f.filter(g=>{const m=maxConf(g);return m>=55&&m<65;}), midC=mid.filter(g=>g.winner===g.favored_team);
+  const mid=f.filter(g=>{const m=maxConf(g);return m>=50&&m<65;}), midC=mid.filter(g=>g.winner===g.favored_team);
   const lo=f.filter(g=>maxConf(g)<55), loC=lo.filter(g=>g.winner===g.favored_team);
   const title=ACC_FILTER==='all'?'Full Season Accuracy':ACC_FILTER.startsWith('m:')?MONTH_NAMES[+ACC_FILTER.slice(5,7)]+' '+ACC_FILTER.slice(2,6)+' Accuracy':'Last '+ACC_FILTER+' Days Accuracy';
   document.getElementById('acc-panel-title').textContent=title;
@@ -725,7 +725,7 @@ function renderAccuracy(){
   // Build sorted tier lists (newest first within each tier)
   const byDate=(a,b)=>b.game_date.localeCompare(a.game_date);
   const hiG=[...f].filter(g=>maxConf(g)>=50).sort(byDate);
-  const midG=[...f].filter(g=>{const m=maxConf(g);return m>=55&&m<65;}).sort(byDate);
+  const midG=[...f].filter(g=>{const m=maxConf(g);return m>=50&&m<65;}).sort(byDate);
   const loG=[...f].filter(g=>maxConf(g)<55).sort(byDate);
   document.getElementById('list-accuracy').innerHTML=f.length?(
     renderTierSection('tier-hi','★','HIGH CONFIDENCE (65%+)','var(--green)',hiG,true)+
@@ -1051,7 +1051,7 @@ function renderTmBody(){
 
 function tmTierStats(games,team){
   const hi=games.filter(g=>maxConf(g)>=50);
-  const mid=games.filter(g=>{const m=maxConf(g);return m>=55&&m<65;});
+  const mid=games.filter(g=>{const m=maxConf(g);return m>=50&&m<65;});
   const lo=games.filter(g=>maxConf(g)<55);
   return{hi,mid,lo,
     hiC:hi.filter(g=>g.winner===team).length,
@@ -1122,7 +1122,7 @@ function renderTmSchedule(){
     const isFinal=g.status==='Final'&&g.winner;
     const faved=g.favored_team===team;
     const mc=maxConf(g);
-    const confTxt=mc>=65?'HIGH':mc>=55?'MED':'TOSS';
+    const confTxt=mc>=65?'HIGH':mc>=50?'MED':'TOSS';
     const resultHtml=isFinal?`<span class="tm-game-result ${won?'win':'loss'}">${won?'W':'L'}</span>`:'';
     const modelRight=isFinal&&g.winner===g.favored_team;
     const predHtml=isFinal
