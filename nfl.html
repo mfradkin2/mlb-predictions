@@ -15,58 +15,53 @@
 }
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 body {
-  background: var(--bg);
-  color: var(--text);
+  background: var(--bg); color: var(--text);
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Inter", sans-serif;
-  font-size: 14px;
-  line-height: 1.45;
+  font-size: 14px; line-height: 1.45;
 }
 
-/* ── Page header ─────────────────────────────────────────────────────────── */
+/* ── Header ── */
 .page-header {
   display: flex; align-items: center; gap: 14px;
   padding: 15px 24px;
-  background: var(--bg2);
-  border-bottom: 1px solid var(--border);
+  background: var(--bg2); border-bottom: 1px solid var(--border);
 }
-.hdr-emoji  { font-size: 26px; line-height: 1; }
-.hdr-info   { flex: 1; }
-.hdr-name   { font-size: 16px; font-weight: 700; color: #8b5cf6; letter-spacing: -.2px; }
-.hdr-sub    { font-size: 11px; color: var(--muted); margin-top: 2px; }
-.hdr-date   { font-size: 11px; color: var(--dim); }
+.hdr-emoji { font-size: 26px; line-height: 1; }
+.hdr-info  { flex: 1; }
+.hdr-name  { font-size: 16px; font-weight: 700; color: #8b5cf6; letter-spacing: -.2px; }
+.hdr-sub   { font-size: 11px; color: var(--muted); margin-top: 2px; }
+.hdr-right { display: flex; flex-direction: column; align-items: flex-end; gap: 3px; }
+.hdr-date  { font-size: 11px; color: var(--dim); }
+.live-status {
+  font-size: 10px; font-weight: 700; letter-spacing: .4px;
+  color: var(--muted); transition: color .3s;
+}
+.live-status.is-live { color: #4ade80; }
 
-/* ── Sub-navigation ──────────────────────────────────────────────────────── */
+/* ── Sub-nav ── */
 .sub-nav {
-  display: flex;
-  background: var(--bg2);
-  border-bottom: 1px solid var(--border);
-  padding: 0 20px;
+  display: flex; background: var(--bg2);
+  border-bottom: 1px solid var(--border); padding: 0 20px;
 }
 .sub-tab {
-  padding: 11px 20px;
-  font-size: 13px; font-weight: 500;
-  color: var(--muted);
-  border-bottom: 2px solid transparent;
-  cursor: pointer;
-  transition: color .15s, border-color .15s;
-  user-select: none;
-  white-space: nowrap;
+  padding: 11px 20px; font-size: 13px; font-weight: 500;
+  color: var(--muted); border-bottom: 2px solid transparent;
+  cursor: pointer; transition: color .15s, border-color .15s;
+  user-select: none; white-space: nowrap;
 }
 .sub-tab:hover { color: var(--text); }
 .sub-tab.active { color: var(--text); border-color: #8b5cf6; }
 .sub-panel { display: none; padding: 22px 20px; }
 .sub-panel.active { display: block; }
 
-/* ── Cards grid ──────────────────────────────────────────────────────────── */
+/* ── Grid ── */
 .grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  gap: 14px;
-  max-width: 1440px;
-  margin: 0 auto;
+  gap: 14px; max-width: 1440px; margin: 0 auto;
 }
 
-/* ── Game card ───────────────────────────────────────────────────────────── */
+/* ── Card ── */
 .card {
   background: var(--bg2);
   border: 1px solid var(--border);
@@ -79,8 +74,14 @@ body {
   box-shadow: 0 6px 24px rgba(0,0,0,.4);
   border-color: #8b5cf6;
 }
+.card.is-live {
+  border-top-color: #4ade80;
+  box-shadow: 0 0 0 1px rgba(74,222,128,.15);
+}
+@keyframes flash { 0%,100% { opacity:1; } 50% { opacity:.5; } }
+.card.just-updated { animation: flash .6s ease; }
 
-/* ── Card header (date + badges) ─────────────────────────────────────────── */
+/* ── Card header ── */
 .card-head {
   display: flex; justify-content: space-between; align-items: center;
   margin-bottom: 13px;
@@ -88,22 +89,22 @@ body {
 .game-date { font-size: 11px; color: var(--muted); font-variant-numeric: tabular-nums; }
 .head-right { display: flex; gap: 5px; align-items: center; }
 
-/* ── Pills (conf + result) ───────────────────────────────────────────────── */
+/* ── Pills ── */
 .pill {
   font-size: 10px; font-weight: 700; letter-spacing: .4px;
   padding: 2px 8px; border-radius: 20px; text-transform: uppercase;
 }
-.conf-high   { background: rgba(34,197,94,.13);   color: #4ade80; border: 1px solid rgba(34,197,94,.22); }
-.conf-med    { background: rgba(251,191,36,.1);   color: #fbbf24; border: 1px solid rgba(251,191,36,.2); }
-.conf-low    { background: rgba(93,115,144,.1);   color: var(--muted); border: 1px solid var(--border); }
+.conf-high    { background: rgba(34,197,94,.13);  color: #4ade80; border: 1px solid rgba(34,197,94,.22); }
+.conf-med     { background: rgba(251,191,36,.1);  color: #fbbf24; border: 1px solid rgba(251,191,36,.2); }
+.conf-low     { background: rgba(93,115,144,.1);  color: var(--muted); border: 1px solid var(--border); }
 .pill-correct { background: rgba(34,197,94,.13);  color: #4ade80; border: 1px solid rgba(34,197,94,.22); }
 .pill-wrong   { background: rgba(239,68,68,.13);  color: #f87171; border: 1px solid rgba(239,68,68,.22); }
+.pill-live    { background: rgba(74,222,128,.15); color: #4ade80; border: 1px solid rgba(74,222,128,.3); }
+@keyframes pulse { 0%,100% { opacity:1; } 50% { opacity:.4; } }
+.pill-live    { animation: pulse 1.8s ease-in-out infinite; }
 
-/* ── Matchup row ─────────────────────────────────────────────────────────── */
-.matchup {
-  display: flex; align-items: center; gap: 8px;
-  margin-bottom: 13px;
-}
+/* ── Matchup ── */
+.matchup { display: flex; align-items: center; gap: 8px; margin-bottom: 13px; }
 .team { flex: 1; min-width: 0; }
 .home-team { text-align: right; }
 .tname {
@@ -113,49 +114,46 @@ body {
 .tname-fav { color: #8b5cf6; }
 .trec { font-size: 11px; color: var(--muted); margin-top: 2px; }
 
-.center { flex-shrink: 0; text-align: center; min-width: 66px; padding: 0 4px; }
-.c-score { font-size: 21px; font-weight: 700; letter-spacing: -.5px; }
-.c-label { font-size: 9px; color: var(--muted); text-transform: uppercase; letter-spacing: .8px; margin-top: 1px; }
-.c-time  { font-size: 12px; color: var(--muted); }
+.center { flex-shrink: 0; text-align: center; min-width: 72px; padding: 0 4px; }
+.c-score     { font-size: 21px; font-weight: 700; letter-spacing: -.5px; }
+.c-score.live { color: #4ade80; }
+.c-label     { font-size: 9px; color: var(--muted); text-transform: uppercase; letter-spacing: .8px; margin-top: 1px; }
+.c-time      { font-size: 12px; color: var(--muted); }
+.c-live-badge {
+  font-size: 9px; font-weight: 800; letter-spacing: .6px;
+  color: #4ade80; text-transform: uppercase; margin-top: 2px;
+  animation: pulse 1.4s ease-in-out infinite;
+}
+.c-status    { font-size: 10px; color: var(--muted); margin-top: 2px; }
 
-/* ── Probability bar ─────────────────────────────────────────────────────── */
+/* ── Probability bar ── */
 .prob-block { margin-bottom: 13px; }
 .prob-bar {
   height: 5px; border-radius: 3px;
-  background: var(--border);
-  overflow: hidden; display: flex;
-  margin-bottom: 5px;
+  background: var(--border); overflow: hidden; display: flex; margin-bottom: 5px;
 }
 .pb-away { background: #60a5fa; height: 100%; }
-.pb-home { background: #8b5cf6;  height: 100%; flex: 1; }
-.prob-row {
-  display: flex; justify-content: space-between;
-  font-size: 11px;
-}
+.pb-home { background: #8b5cf6; height: 100%; flex: 1; }
+.prob-row { display: flex; justify-content: space-between; font-size: 11px; }
 .pl    { color: var(--muted); }
 .ph    { color: var(--text); font-weight: 600; }
 .ppick { color: var(--text); font-weight: 600; }
 
-/* ── Stats comparison table ──────────────────────────────────────────────── */
-.stats {
-  width: 100%;
-  border-collapse: collapse;
-  border-top: 1px solid var(--border);
-}
+/* ── Stats table ── */
+.stats { width: 100%; border-collapse: collapse; border-top: 1px solid var(--border); }
 .stats tbody tr:first-child td { padding-top: 10px; }
 .stats td { padding: 3px 0; font-size: 12px; vertical-align: middle; }
-.stat-lbl  { text-align: center; color: var(--muted); font-size: 10px; font-weight: 600;
-             text-transform: uppercase; letter-spacing: .35px; width: 40%; }
-.stat-val  { width: 30%; font-weight: 600; color: var(--muted); }
-.ta-left   { text-align: left; }
-.ta-right  { text-align: right; }
+.stat-lbl    { text-align: center; color: var(--muted); font-size: 10px; font-weight: 600;
+               text-transform: uppercase; letter-spacing: .35px; width: 40%; }
+.stat-val    { width: 30%; font-weight: 600; color: var(--muted); }
+.ta-l        { text-align: left; }
+.ta-r        { text-align: right; }
 .stat-better { color: #8b5cf6 !important; }
 .stat-worse  { color: var(--dim) !important; }
 
-/* ── Accuracy tab ────────────────────────────────────────────────────────── */
+/* ── Accuracy ── */
 .acc-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+  display: grid; grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
   gap: 12px; max-width: 700px; margin: 0 auto 26px;
 }
 .acc-card {
@@ -164,13 +162,10 @@ body {
 }
 .acc-big { font-size: 26px; font-weight: 700; }
 .acc-lbl { font-size: 11px; color: var(--muted); margin-top: 4px; }
-.acc-table {
-  width: 100%; max-width: 960px; margin: 0 auto;
-  border-collapse: collapse; font-size: 13px;
-}
+.acc-table { width: 100%; max-width: 960px; margin: 0 auto; border-collapse: collapse; font-size: 13px; }
 .acc-table th {
-  text-align: left; padding: 9px 12px;
-  color: var(--muted); border-bottom: 1px solid var(--border);
+  text-align: left; padding: 9px 12px; color: var(--muted);
+  border-bottom: 1px solid var(--border);
   font-size: 10px; font-weight: 700; text-transform: uppercase; letter-spacing: .4px;
 }
 .acc-table td { padding: 9px 12px; border-bottom: 1px solid var(--border); }
@@ -179,11 +174,8 @@ body {
 .acc-ok { color: #4ade80; font-weight: 700; }
 .acc-no { color: #f87171; font-weight: 700; }
 
-/* ── Empty state ─────────────────────────────────────────────────────────── */
-.empty {
-  text-align: center; padding: 80px 20px;
-  color: var(--muted); font-size: 15px;
-}
+/* ── Empty ── */
+.empty { text-align: center; padding: 80px 20px; color: var(--muted); font-size: 15px; }
 .empty .e-icon { font-size: 38px; display: block; margin-bottom: 10px; opacity: .35; }
 
 @media (max-width: 640px) {
@@ -193,7 +185,7 @@ body {
 }
 </style>
 </head>
-<body>
+<body data-sport="nfl" data-espn-path="football/nfl">
 
 <div class="page-header">
   <div class="hdr-emoji">🏈</div>
@@ -201,7 +193,10 @@ body {
     <div class="hdr-name">NFL Predictions</div>
     <div class="hdr-sub">2026 Season  &nbsp;·&nbsp;  Today: 0  ·  Recent: 0  ·  Upcoming: 0</div>
   </div>
-  <div class="hdr-date">Updated 2026-04-20</div>
+  <div class="hdr-right">
+    <div class="hdr-date">Updated 2026-04-20</div>
+    <div class="live-status" id="live-indicator">Checking for live games…</div>
+  </div>
 </div>
 
 <div class="sub-nav">
@@ -1284,5 +1279,171 @@ function sw(el, name) {
   document.getElementById('tab-' + name).classList.add('active');
 }
 </script>
+<script>
+(function() {
+  const SPORT     = document.body.dataset.sport;
+  const ESPN_PATH = document.body.dataset.espnPath;
+  const INTERVAL  = 30000;   // 30 s between polls
+  const IDLE_INT  = 300000;  // 5 min when no live games
+  let timer = null;
+
+  // Sport-specific status text
+  function statusText(comp) {
+    const st    = comp.status || {};
+    const type  = (st.type || {}).name || '';
+    const situ  = comp.situation || {};
+    if (type === 'STATUS_IN_PROGRESS' || type === 'STATUS_HALFTIME') {
+      if (SPORT === 'mlb') {
+        const inning  = st.period || '';
+        const isTop   = situ.isTopInning !== false;
+        const outs    = situ.outs != null ? situ.outs : '';
+        const runners = [situ.onFirst?'1B':'', situ.onSecond?'2B':'', situ.onThird?'3B':'']
+                          .filter(Boolean).join(' ') || '';
+        return `${isTop ? '▲' : '▼'} ${inning}` +
+               (outs !== '' ? ` · ${outs} out` : '') +
+               (runners ? ` · ${runners}` : '');
+      } else if (SPORT === 'nhl') {
+        const p     = st.period || '';
+        const clock = st.displayClock || '';
+        const label = p === 4 ? 'OT' : p === 5 ? 'SO' : `P${p}`;
+        return `${label} ${clock}`;
+      } else if (SPORT === 'nba') {
+        const p     = st.period || '';
+        const clock = st.displayClock || '';
+        const label = p > 4 ? `OT${p-4}` : `Q${p}`;
+        return `${label} ${clock}`;
+      } else if (SPORT === 'nfl') {
+        const p     = st.period || '';
+        const clock = st.displayClock || '';
+        const label = p > 4 ? `OT` : `Q${p}`;
+        const dn    = (comp.situation || {}).downDistanceText || '';
+        return `${label} ${clock}` + (dn ? `<br><span style="font-size:9px">${dn}</span>` : '');
+      }
+    }
+    return (st.type || {}).shortDetail || '';
+  }
+
+  async function poll() {
+    try {
+      const today = new Date().toISOString().slice(0,10).replace(/-/g,'');
+      const url   = `https://site.api.espn.com/apis/site/v2/sports/${ESPN_PATH}/scoreboard?dates=${today}`;
+      const resp  = await fetch(url);
+      if (!resp.ok) return;
+      const data  = await resp.json();
+
+      let liveCount = 0;
+
+      for (const ev of (data.events || [])) {
+        const card = document.querySelector(`[data-game-id="${ev.id}"]`);
+        if (!card) continue;
+        const comp = (ev.competitions || [])[0];
+        if (!comp) continue;
+
+        const competitors = comp.competitors || [];
+        const away = competitors.find(c => c.homeAway === 'away') || {};
+        const home = competitors.find(c => c.homeAway === 'home') || {};
+        const awayScore = away.score ?? '';
+        const homeScore = home.score ?? '';
+        const typeName  = (comp.status?.type?.name) || '';
+        const isLive    = typeName === 'STATUS_IN_PROGRESS' || typeName === 'STATUS_HALFTIME';
+        const isFinal   = typeName === 'STATUS_FINAL' || comp.status?.type?.completed;
+
+        const centerEl = document.getElementById(`center-${ev.id}`);
+        if (!centerEl) continue;
+
+        const prevHTML = centerEl.innerHTML;
+
+        if (isLive) {
+          liveCount++;
+          const st = statusText(comp);
+          const newHTML =
+            `<div class="c-score live">${awayScore}–${homeScore}</div>` +
+            `<div class="c-live-badge">● LIVE</div>` +
+            (st ? `<div class="c-status">${st}</div>` : '');
+          if (newHTML !== prevHTML) {
+            centerEl.innerHTML = newHTML;
+            card.classList.add('is-live');
+            card.classList.remove('just-updated');
+            void card.offsetWidth; // reflow
+            card.classList.add('just-updated');
+          }
+          // Add pulsing LIVE pill to badge area
+          const headRight = card.querySelector('.head-right');
+          if (headRight && !headRight.querySelector('.pill-live')) {
+            const livePill = document.createElement('span');
+            livePill.className = 'pill pill-live';
+            livePill.textContent = 'LIVE';
+            headRight.prepend(livePill);
+          }
+
+        } else if (isFinal && awayScore !== '' && homeScore !== '') {
+          const newHTML =
+            `<div class="c-score">${awayScore}–${homeScore}</div>` +
+            `<div class="c-label">FINAL</div>`;
+          if (newHTML !== prevHTML) {
+            centerEl.innerHTML = newHTML;
+            card.classList.remove('is-live');
+            // Update result pill
+            const pred    = card.dataset.pred;
+            const awayTeam = card.dataset.away;
+            const homeTeam = card.dataset.home;
+            const actual   = parseInt(awayScore) > parseInt(homeScore) ? 'away' : 'home';
+            const correct  = actual === pred;
+            const ra = card.querySelector('.result-area');
+            if (ra) {
+              ra.innerHTML = `<span class="pill ${correct ? 'pill-correct' : 'pill-wrong'}">${correct ? '✓ Correct' : '✗ Wrong'}</span>`;
+            }
+            // Remove LIVE pill
+            const lp = card.querySelector('.pill-live');
+            if (lp) lp.remove();
+          }
+        }
+      }
+
+      // Update header indicator
+      const indicator = document.getElementById('live-indicator');
+      if (indicator) {
+        const now = new Date();
+        const t   = now.toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'});
+        if (liveCount > 0) {
+          indicator.textContent = `● ${liveCount} game${liveCount>1?'s':''} live · ${t}`;
+          indicator.className = 'live-status is-live';
+          reschedule(INTERVAL);
+        } else {
+          indicator.textContent = `Updated ${t}`;
+          indicator.className = 'live-status';
+          reschedule(IDLE_INT);
+        }
+      }
+    } catch(e) {
+      console.warn('Live poll error:', e);
+    }
+  }
+
+  function reschedule(ms) {
+    clearTimeout(timer);
+    timer = setTimeout(() => { poll(); }, ms);
+  }
+
+  // Start polling only when Today tab is active and has cards
+  function maybeStart() {
+    const todayPanel = document.getElementById('tab-today');
+    if (todayPanel && todayPanel.querySelector('[data-game-id]')) {
+      poll();
+    }
+  }
+
+  // Hook into tab switching so polling starts when user switches to Today
+  window._origSw = window.sw;
+  window.sw = function(el, name) {
+    window._origSw(el, name);
+    if (name === 'today') maybeStart();
+    else { clearTimeout(timer); }
+  };
+
+  document.addEventListener('DOMContentLoaded', maybeStart);
+})();
+</script>
+
 </body>
 </html>
