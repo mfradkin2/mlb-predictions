@@ -568,7 +568,7 @@ function renderTierSection(id,icon,label,color,games,defaultOpen){
 
 // ── Best Bets ─────────────────────────────────────────────────────────────────
 function renderBestBets(){
-  const all=GAMES.filter(g=>g.game_date===TODAY&&maxConf(g)>=55).sort((a,b)=>maxConf(b)-maxConf(a));
+  const all=GAMES.filter(g=>g.game_date===TODAY&&maxConf(g)>=50).sort((a,b)=>maxConf(b)-maxConf(a));
   // Dedupe: if same away+home team appear more than once (doubleheader), keep only the first
   const seen=new Set();
   const bets=[];
@@ -709,7 +709,7 @@ function renderAccuracy(){
   const f=getAccGames();
   const c=f.filter(g=>g.winner===g.favored_team);
   const acc=f.length?(c.length/f.length*100).toFixed(1):'—';
-  const hi=f.filter(g=>maxConf(g)>=55), hiC=hi.filter(g=>g.winner===g.favored_team);
+  const hi=f.filter(g=>maxConf(g)>=50), hiC=hi.filter(g=>g.winner===g.favored_team);
   const mid=f.filter(g=>{const m=maxConf(g);return m>=55&&m<65;}), midC=mid.filter(g=>g.winner===g.favored_team);
   const lo=f.filter(g=>maxConf(g)<55), loC=lo.filter(g=>g.winner===g.favored_team);
   const title=ACC_FILTER==='all'?'Full Season Accuracy':ACC_FILTER.startsWith('m:')?MONTH_NAMES[+ACC_FILTER.slice(5,7)]+' '+ACC_FILTER.slice(2,6)+' Accuracy':'Last '+ACC_FILTER+' Days Accuracy';
@@ -724,7 +724,7 @@ function renderAccuracy(){
   renderTeamAccuracy(f);
   // Build sorted tier lists (newest first within each tier)
   const byDate=(a,b)=>b.game_date.localeCompare(a.game_date);
-  const hiG=[...f].filter(g=>maxConf(g)>=55).sort(byDate);
+  const hiG=[...f].filter(g=>maxConf(g)>=50).sort(byDate);
   const midG=[...f].filter(g=>{const m=maxConf(g);return m>=55&&m<65;}).sort(byDate);
   const loG=[...f].filter(g=>maxConf(g)<55).sort(byDate);
   document.getElementById('list-accuracy').innerHTML=f.length?(
@@ -1050,7 +1050,7 @@ function renderTmBody(){
 }
 
 function tmTierStats(games,team){
-  const hi=games.filter(g=>maxConf(g)>=55);
+  const hi=games.filter(g=>maxConf(g)>=50);
   const mid=games.filter(g=>{const m=maxConf(g);return m>=55&&m<65;});
   const lo=games.filter(g=>maxConf(g)<55);
   return{hi,mid,lo,
