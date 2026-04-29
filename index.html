@@ -5,39 +5,27 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Sports Prediction Hub</title>
 <style>
-  :root {
-    --bg: #0d1117; --bg2: #161b22; --border: #30363d;
-    --text: #e6edf3; --muted: #8b949e;
-  }
+  :root { --bg: #0d1117; --bg2: #161b22; --border: #30363d; --text: #e6edf3; --muted: #8b949e; }
   * { box-sizing: border-box; margin: 0; padding: 0; }
   body { background: var(--bg); color: var(--text);
-          font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
-
-  .sport-nav {
-    display: flex; background: var(--bg2);
-    border-bottom: 2px solid var(--border);
-    position: sticky; top: 0; z-index: 100;
-  }
-  .sport-tab {
-    flex: 1; padding: 14px 8px; text-align: center; cursor: pointer;
-    font-size: 14px; font-weight: 600; color: var(--muted);
-    border-bottom: 3px solid transparent; transition: all .2s;
-    user-select: none;
-  }
+         font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif; }
+  .sport-nav { display: flex; background: var(--bg2); border-bottom: 2px solid var(--border);
+               position: sticky; top: 0; z-index: 100; }
+  .sport-tab { flex: 1; padding: 14px 8px; text-align: center; cursor: pointer;
+               font-size: 14px; font-weight: 600; color: var(--muted);
+               border-bottom: 3px solid transparent; transition: all .2s; user-select: none; }
   .sport-tab:hover { color: var(--text); background: #1c2128; }
   .sport-tab[data-sport="mlb"].active { border-color: #2563eb; color: #60a5fa; }
   .sport-tab[data-sport="nhl"].active { border-color: #0ea5e9; color: #38bdf8; }
   .sport-tab[data-sport="nba"].active { border-color: #ef4444; color: #f87171; }
   .sport-tab[data-sport="nfl"].active { border-color: #6366f1; color: #818cf8; }
   .sport-emoji { font-size: 20px; display: block; margin-bottom: 2px; }
-
   .sport-panel { display: none; }
   .sport-panel.active { display: block; }
   iframe { width: 100%; height: calc(100vh - 60px); border: none; display: block; }
 </style>
 </head>
 <body>
-
 <nav class="sport-nav">
   <div class="sport-tab active" data-sport="mlb" onclick="switchSport(this,'mlb')">
     <span class="sport-emoji">⚾</span>MLB
@@ -52,12 +40,10 @@
     <span class="sport-emoji">🏈</span>NFL
   </div>
 </nav>
-
 <div id="panel-mlb" class="sport-panel active"><iframe src="mlb.html" title="MLB"></iframe></div>
 <div id="panel-nhl" class="sport-panel"><iframe src="nhl.html" title="NHL" loading="lazy"></iframe></div>
 <div id="panel-nba" class="sport-panel"><iframe src="nba.html" title="NBA" loading="lazy"></iframe></div>
 <div id="panel-nfl" class="sport-panel"><iframe src="nfl.html" title="NFL" loading="lazy"></iframe></div>
-
 <script>
 function switchSport(el, sport) {
   document.querySelectorAll('.sport-tab').forEach(t => t.classList.remove('active'));
