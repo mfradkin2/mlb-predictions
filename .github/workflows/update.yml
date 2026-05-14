@@ -23,10 +23,17 @@ jobs:
         with:
           r-version: '4.3'
 
-      # ── 3. Install R packages ──────────────────────────────────────────────
+      # ── 2b. System libs httr/curl need when compiling from source ─────────
+      - name: Install system dependencies for R
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y libcurl4-openssl-dev libssl-dev libxml2-dev
+
+      # ── 3. Install R packages (use Posit PPM for prebuilt binaries) ───────
       - name: Install R packages
         run: |
-          Rscript -e "install.packages(c('httr','jsonlite','dplyr'), repos='https://cloud.r-project.org')"
+          Rscript -e 'options(repos = c(CRAN = "https://packagemanager.posit.co/cran/__linux__/jammy/latest")); install.packages(c("httr","jsonlite","dplyr"))'
+          Rscript -e 'for (p in c("httr","jsonlite","dplyr")) if (!requireNamespace(p, quietly = TRUE)) stop("Failed to install ", p)'
 
       # ── 4. Run MLB model ───────────────────────────────────────────────────
       - name: Run MLB predictions model
