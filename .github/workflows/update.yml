@@ -2,8 +2,8 @@ name: Refresh Sports Predictions
 
 on:
   schedule:
-    # Runs daily at 11:00 AM ET (15:00 UTC) — after morning lines set
-    - cron: '0 15 * * *'
+    # Runs every hour on the hour
+    - cron: '0 * * * *'
   workflow_dispatch:   # allow manual trigger from GitHub Actions tab
 
 jobs:
