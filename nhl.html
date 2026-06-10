@@ -257,10 +257,10 @@ body {
   <div class="hdr-emoji">🏒</div>
   <div class="hdr-info">
     <div class="hdr-name">NHL Predictions</div>
-    <div class="hdr-sub">2025–26 Season  ·  Today: 1  ·  Recent: 3  ·  Upcoming: 3</div>
+    <div class="hdr-sub">2025–26 Season  ·  Today: 0  ·  Recent: 3  ·  Upcoming: 3</div>
   </div>
   <div class="hdr-right">
-    <div class="hdr-date">Updated 2026-06-09</div>
+    <div class="hdr-date">Updated 2026-06-10</div>
     <div class="live-status" id="live-indicator">Checking for live games…</div>
   </div>
 </div>
@@ -272,49 +272,7 @@ body {
   <div class="sub-tab" onclick="sw(this,'accuracy')">Accuracy</div>
 </div>
 
-<div id="tab-today"    class="sub-panel active"><div class="filter-bar" id="fb-today"><div class="fg"><span class="fl">Confidence</span><button class="fb active" data-tab="today" data-filter="conf" data-value="all" onclick="setFilter(this)">All</button><button class="fb" data-tab="today" data-filter="conf" data-value="high" onclick="setFilter(this)">High</button><button class="fb" data-tab="today" data-filter="conf" data-value="med" onclick="setFilter(this)">Med</button><button class="fb" data-tab="today" data-filter="conf" data-value="low" onclick="setFilter(this)">Low</button></div><div class="fg"><span class="fl">Favored</span><button class="fb active" data-tab="today" data-filter="pick" data-value="all" onclick="setFilter(this)">All</button><button class="fb" data-tab="today" data-filter="pick" data-value="home" onclick="setFilter(this)">Home</button><button class="fb" data-tab="today" data-filter="pick" data-value="away" onclick="setFilter(this)">Away</button></div><span class="game-count" id="count-today">1 game</span></div><div class="game-list" id="list-today"><div class="game-row"
-     data-conf="med"
-     data-pick="away"
-     data-result=""
-     data-date="2026-06-09"
-     data-status="scheduled"
-     data-game-id="401874174"
-     data-away="Carolina Hurricanes"
-     data-home="Vegas Golden Knights"
-     data-pred="away"
-     data-espn-path="hockey/nhl">
-  <div class="row-main" onclick="toggleRow('det-today-0',this,'401874174','scheduled')">
-    <span class="row-date">Jun 9</span>
-    <div class="row-teams">
-      <div class="row-team fav">
-        <span class="rtn">Carolina Hurricanes</span>
-        <span class="rrec">53-22-7</span>
-      </div>
-      <div class="row-time" id="ctr-401874174">12:00 AM ET</div>
-      <div class="row-team right">
-        <span class="rtn">Vegas Golden Knights</span>
-        <span class="rrec">39-26-17</span>
-      </div>
-    </div>
-    <div class="row-meta">
-      <div class="row-bar"><div class="rb-away" style="width:63.4%"></div><div class="rb-home" style="width:36.6%"></div></div>
-      <span class="row-pick">← Carolina Hurricanes 63%</span>
-      <span class="pill conf-med">MED CONF</span>
-      <span class="result-area"></span>
-      <span class="expand-btn">▾</span>
-    </div>
-  </div>
-  <div class="row-detail" id="det-today-0">
-    <div class="detail-inner"><table class="detail-stats pregame-stats">
-      <thead><tr>
-        <th class="ds-away">Carolina Hurricanes</th>
-        <th class="ds-lbl">SEASON STATS</th>
-        <th class="ds-home">Vegas Golden Knights</th>
-      </tr></thead>
-      <tbody><tr><td class="ds-away better">68.9%</td><td class="ds-lbl">Points%</td><td class="ds-home worse">57.9%</td></tr><tr><td class="ds-away better">3.6</td><td class="ds-lbl">GF/G</td><td class="ds-home worse">3.2</td></tr><tr><td class="ds-away better">2.9</td><td class="ds-lbl">GA/G</td><td class="ds-home worse">3.0</td></tr><tr><td class="ds-away ">20.0%</td><td class="ds-lbl">PP%</td><td class="ds-home ">20.0%</td></tr><tr><td class="ds-away ">0.910</td><td class="ds-lbl">Save%</td><td class="ds-home ">0.910</td></tr></tbody>
-    </table></div>
-  </div>
-</div></div></div>
+<div id="tab-today"    class="sub-panel active"><div class="empty"><span class="e-icon">🏒</span>No NHL games to show.</div></div>
 <div id="tab-recent"   class="sub-panel"><div class="filter-bar" id="fb-recent"><div class="fg"><span class="fl">Result</span><button class="fb active" data-tab="recent" data-filter="result" data-value="all" onclick="setFilter(this)">All</button><button class="fb" data-tab="recent" data-filter="result" data-value="correct" onclick="setFilter(this)">✓ Correct</button><button class="fb" data-tab="recent" data-filter="result" data-value="wrong" onclick="setFilter(this)">✗ Wrong</button></div><div class="fg"><span class="fl">Confidence</span><button class="fb active" data-tab="recent" data-filter="conf" data-value="all" onclick="setFilter(this)">All</button><button class="fb" data-tab="recent" data-filter="conf" data-value="high" onclick="setFilter(this)">High</button><button class="fb" data-tab="recent" data-filter="conf" data-value="med" onclick="setFilter(this)">Med</button><button class="fb" data-tab="recent" data-filter="conf" data-value="low" onclick="setFilter(this)">Low</button></div><div class="fg"><span class="fl">Period</span><button class="fb active" data-tab="recent" data-filter="days" data-value="3" onclick="setFilter(this)">Last 3 days</button><button class="fb" data-tab="recent" data-filter="days" data-value="7" onclick="setFilter(this)">Last 7 days</button><button class="fb" data-tab="recent" data-filter="days" data-value="10" onclick="setFilter(this)">Last 10 days</button></div><span class="game-count" id="count-recent">3 games</span></div><div class="game-list" id="list-recent"><div class="game-row"
      data-conf="med"
      data-pick="away"
