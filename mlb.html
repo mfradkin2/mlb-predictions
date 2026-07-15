@@ -257,7 +257,7 @@ body {
   <div class="hdr-emoji">⚾</div>
   <div class="hdr-info">
     <div class="hdr-name">MLB Predictions</div>
-    <div class="hdr-sub">2026 Season  ·  Today: 0  ·  Recent: 110  ·  Upcoming: 182</div>
+    <div class="hdr-sub">2026 Season  ·  Today: 0  ·  Recent: 111  ·  Upcoming: 182</div>
   </div>
   <div class="hdr-right">
     <div class="hdr-date">Updated 2026-07-15</div>
@@ -273,7 +273,49 @@ body {
 </div>
 
 <div id="tab-today"    class="sub-panel active"><div class="empty"><span class="e-icon">⚾</span>No MLB games to show.</div></div>
-<div id="tab-recent"   class="sub-panel"><div class="filter-bar" id="fb-recent"><div class="fg"><span class="fl">Result</span><button class="fb active" data-tab="recent" data-filter="result" data-value="all" onclick="setFilter(this)">All</button><button class="fb" data-tab="recent" data-filter="result" data-value="correct" onclick="setFilter(this)">✓ Correct</button><button class="fb" data-tab="recent" data-filter="result" data-value="wrong" onclick="setFilter(this)">✗ Wrong</button></div><div class="fg"><span class="fl">Confidence</span><button class="fb active" data-tab="recent" data-filter="conf" data-value="all" onclick="setFilter(this)">All</button><button class="fb" data-tab="recent" data-filter="conf" data-value="high" onclick="setFilter(this)">High</button><button class="fb" data-tab="recent" data-filter="conf" data-value="med" onclick="setFilter(this)">Med</button><button class="fb" data-tab="recent" data-filter="conf" data-value="low" onclick="setFilter(this)">Low</button></div><div class="fg"><span class="fl">Period</span><button class="fb active" data-tab="recent" data-filter="days" data-value="3" onclick="setFilter(this)">Last 3 days</button><button class="fb" data-tab="recent" data-filter="days" data-value="7" onclick="setFilter(this)">Last 7 days</button><button class="fb" data-tab="recent" data-filter="days" data-value="10" onclick="setFilter(this)">Last 10 days</button></div><span class="game-count" id="count-recent">110 games</span></div><div class="game-list" id="list-recent"><div class="game-row"
+<div id="tab-recent"   class="sub-panel"><div class="filter-bar" id="fb-recent"><div class="fg"><span class="fl">Result</span><button class="fb active" data-tab="recent" data-filter="result" data-value="all" onclick="setFilter(this)">All</button><button class="fb" data-tab="recent" data-filter="result" data-value="correct" onclick="setFilter(this)">✓ Correct</button><button class="fb" data-tab="recent" data-filter="result" data-value="wrong" onclick="setFilter(this)">✗ Wrong</button></div><div class="fg"><span class="fl">Confidence</span><button class="fb active" data-tab="recent" data-filter="conf" data-value="all" onclick="setFilter(this)">All</button><button class="fb" data-tab="recent" data-filter="conf" data-value="high" onclick="setFilter(this)">High</button><button class="fb" data-tab="recent" data-filter="conf" data-value="med" onclick="setFilter(this)">Med</button><button class="fb" data-tab="recent" data-filter="conf" data-value="low" onclick="setFilter(this)">Low</button></div><div class="fg"><span class="fl">Period</span><button class="fb active" data-tab="recent" data-filter="days" data-value="3" onclick="setFilter(this)">Last 3 days</button><button class="fb" data-tab="recent" data-filter="days" data-value="7" onclick="setFilter(this)">Last 7 days</button><button class="fb" data-tab="recent" data-filter="days" data-value="10" onclick="setFilter(this)">Last 10 days</button></div><span class="game-count" id="count-recent">111 games</span></div><div class="game-list" id="list-recent"><div class="game-row"
+     data-conf="low"
+     data-pick="home"
+     data-result="wrong"
+     data-date="2026-07-14"
+     data-status="final"
+     data-game-id="401817370"
+     data-away="American All-Stars"
+     data-home="National All-Stars"
+     data-pred="home"
+     data-espn-path="baseball/mlb">
+  <div class="row-main" onclick="toggleRow('det-recent-0',this,'401817370','final')">
+    <span class="row-date">Jul 14</span>
+    <div class="row-teams">
+      <div class="row-team winner">
+        <span class="rtn">American All-Stars</span>
+        <span class="rrec"></span>
+      </div>
+      <div class="row-score" id="ctr-401817370"><span class="sc">4–0</span><span class="sc-lbl">FINAL</span></div>
+      <div class="row-team right fav">
+        <span class="rtn">National All-Stars</span>
+        <span class="rrec"></span>
+      </div>
+    </div>
+    <div class="row-meta">
+      <div class="row-bar"><div class="rb-away" style="width:47.5%"></div><div class="rb-home" style="width:52.5%"></div></div>
+      <span class="row-pick">→ National All-Stars 52%</span>
+      <span class="pill conf-low">LOW CONF</span>
+      <span class="result-area"><span class="pill pill-wrong">✗</span></span>
+      <span class="expand-btn">▾</span>
+    </div>
+  </div>
+  <div class="row-detail" id="det-recent-0">
+    <div class="detail-inner"><table class="detail-stats pregame-stats">
+      <thead><tr>
+        <th class="ds-away">American All-Stars</th>
+        <th class="ds-lbl">SEASON STATS</th>
+        <th class="ds-home">National All-Stars</th>
+      </tr></thead>
+      <tbody><tr><td class="ds-away ">NA</td><td class="ds-lbl">Win%</td><td class="ds-home ">NA</td></tr><tr><td class="ds-away ">NA</td><td class="ds-lbl">Pyth Win%</td><td class="ds-home ">NA</td></tr><tr><td class="ds-away ">NA</td><td class="ds-lbl">Run Diff/G</td><td class="ds-home ">NA</td></tr><tr><td class="ds-away ">NA</td><td class="ds-lbl">RS/G</td><td class="ds-home ">NA</td></tr><tr><td class="ds-away ">NA</td><td class="ds-lbl">Team ERA</td><td class="ds-home ">NA</td></tr></tbody>
+    </table></div>
+  </div>
+</div><div class="game-row"
      data-conf="low"
      data-pick="away"
      data-result="wrong"
@@ -284,7 +326,7 @@ body {
      data-home="Pittsburgh Pirates"
      data-pred="away"
      data-espn-path="baseball/mlb">
-  <div class="row-main" onclick="toggleRow('det-recent-0',this,'401816130','final')">
+  <div class="row-main" onclick="toggleRow('det-recent-1',this,'401816130','final')">
     <span class="row-date">Jul 12</span>
     <div class="row-teams">
       <div class="row-team fav">
@@ -305,7 +347,7 @@ body {
       <span class="expand-btn">▾</span>
     </div>
   </div>
-  <div class="row-detail" id="det-recent-0">
+  <div class="row-detail" id="det-recent-1">
     <div class="detail-inner"><table class="detail-stats pregame-stats">
       <thead><tr>
         <th class="ds-away">Milwaukee Brewers</th>
@@ -326,7 +368,7 @@ body {
      data-home="Baltimore Orioles"
      data-pred="home"
      data-espn-path="baseball/mlb">
-  <div class="row-main" onclick="toggleRow('det-recent-1',this,'401816129','final')">
+  <div class="row-main" onclick="toggleRow('det-recent-2',this,'401816129','final')">
     <span class="row-date">Jul 12</span>
     <div class="row-teams">
       <div class="row-team">
@@ -347,7 +389,7 @@ body {
       <span class="expand-btn">▾</span>
     </div>
   </div>
-  <div class="row-detail" id="det-recent-1">
+  <div class="row-detail" id="det-recent-2">
     <div class="detail-inner"><table class="detail-stats pregame-stats">
       <thead><tr>
         <th class="ds-away">Kansas City Royals</th>
@@ -368,7 +410,7 @@ body {
      data-home="Washington Nationals"
      data-pred="away"
      data-espn-path="baseball/mlb">
-  <div class="row-main" onclick="toggleRow('det-recent-2',this,'401816131','final')">
+  <div class="row-main" onclick="toggleRow('det-recent-3',this,'401816131','final')">
     <span class="row-date">Jul 12</span>
     <div class="row-teams">
       <div class="row-team winner">
@@ -389,7 +431,7 @@ body {
       <span class="expand-btn">▾</span>
     </div>
   </div>
-  <div class="row-detail" id="det-recent-2">
+  <div class="row-detail" id="det-recent-3">
     <div class="detail-inner"><table class="detail-stats pregame-stats">
       <thead><tr>
         <th class="ds-away">New York Yankees</th>
@@ -410,7 +452,7 @@ body {
      data-home="New York Mets"
      data-pred="away"
      data-espn-path="baseball/mlb">
-  <div class="row-main" onclick="toggleRow('det-recent-3',this,'401816126','final')">
+  <div class="row-main" onclick="toggleRow('det-recent-4',this,'401816126','final')">
     <span class="row-date">Jul 12</span>
     <div class="row-teams">
       <div class="row-team winner">
@@ -431,7 +473,7 @@ body {
       <span class="expand-btn">▾</span>
     </div>
   </div>
-  <div class="row-detail" id="det-recent-3">
+  <div class="row-detail" id="det-recent-4">
     <div class="detail-inner"><table class="detail-stats pregame-stats">
       <thead><tr>
         <th class="ds-away">Boston Red Sox</th>
@@ -452,7 +494,7 @@ body {
      data-home="Cincinnati Reds"
      data-pred="away"
      data-espn-path="baseball/mlb">
-  <div class="row-main" onclick="toggleRow('det-recent-4',this,'401816127','final')">
+  <div class="row-main" onclick="toggleRow('det-recent-5',this,'401816127','final')">
     <span class="row-date">Jul 12</span>
     <div class="row-teams">
       <div class="row-team winner">
@@ -473,7 +515,7 @@ body {
       <span class="expand-btn">▾</span>
     </div>
   </div>
-  <div class="row-detail" id="det-recent-4">
+  <div class="row-detail" id="det-recent-5">
     <div class="detail-inner"><table class="detail-stats pregame-stats">
       <thead><tr>
         <th class="ds-away">Chicago Cubs</th>
@@ -494,7 +536,7 @@ body {
      data-home="Miami Marlins"
      data-pred="home"
      data-espn-path="baseball/mlb">
-  <div class="row-main" onclick="toggleRow('det-recent-5',this,'401816128','final')">
+  <div class="row-main" onclick="toggleRow('det-recent-6',this,'401816128','final')">
     <span class="row-date">Jul 12</span>
     <div class="row-teams">
       <div class="row-team winner">
@@ -515,7 +557,7 @@ body {
       <span class="expand-btn">▾</span>
     </div>
   </div>
-  <div class="row-detail" id="det-recent-5">
+  <div class="row-detail" id="det-recent-6">
     <div class="detail-inner"><table class="detail-stats pregame-stats">
       <thead><tr>
         <th class="ds-away">Cleveland Guardians</th>
@@ -536,7 +578,7 @@ body {
      data-home="Detroit Tigers"
      data-pred="away"
      data-espn-path="baseball/mlb">
-  <div class="row-main" onclick="toggleRow('det-recent-6',this,'401816132','final')">
+  <div class="row-main" onclick="toggleRow('det-recent-7',this,'401816132','final')">
     <span class="row-date">Jul 12</span>
     <div class="row-teams">
       <div class="row-team winner">
@@ -557,7 +599,7 @@ body {
       <span class="expand-btn">▾</span>
     </div>
   </div>
-  <div class="row-detail" id="det-recent-6">
+  <div class="row-detail" id="det-recent-7">
     <div class="detail-inner"><table class="detail-stats pregame-stats">
       <thead><tr>
         <th class="ds-away">Philadelphia Phillies</th>
@@ -578,7 +620,7 @@ body {
      data-home="Tampa Bay Rays"
      data-pred="home"
      data-espn-path="baseball/mlb">
-  <div class="row-main" onclick="toggleRow('det-recent-7',this,'401816133','final')">
+  <div class="row-main" onclick="toggleRow('det-recent-8',this,'401816133','final')">
     <span class="row-date">Jul 12</span>
     <div class="row-teams">
       <div class="row-team winner">
@@ -599,7 +641,7 @@ body {
       <span class="expand-btn">▾</span>
     </div>
   </div>
-  <div class="row-detail" id="det-recent-7">
+  <div class="row-detail" id="det-recent-8">
     <div class="detail-inner"><table class="detail-stats pregame-stats">
       <thead><tr>
         <th class="ds-away">Seattle Mariners</th>
@@ -620,7 +662,7 @@ body {
      data-home="Minnesota Twins"
      data-pred="home"
      data-espn-path="baseball/mlb">
-  <div class="row-main" onclick="toggleRow('det-recent-8',this,'401816134','final')">
+  <div class="row-main" onclick="toggleRow('det-recent-9',this,'401816134','final')">
     <span class="row-date">Jul 12</span>
     <div class="row-teams">
       <div class="row-team">
@@ -641,7 +683,7 @@ body {
       <span class="expand-btn">▾</span>
     </div>
   </div>
-  <div class="row-detail" id="det-recent-8">
+  <div class="row-detail" id="det-recent-9">
     <div class="detail-inner"><table class="detail-stats pregame-stats">
       <thead><tr>
         <th class="ds-away">Los Angeles Angels</th>
@@ -662,7 +704,7 @@ body {
      data-home="Chicago White Sox"
      data-pred="home"
      data-espn-path="baseball/mlb">
-  <div class="row-main" onclick="toggleRow('det-recent-9',this,'401816135','final')">
+  <div class="row-main" onclick="toggleRow('det-recent-10',this,'401816135','final')">
     <span class="row-date">Jul 12</span>
     <div class="row-teams">
       <div class="row-team">
@@ -683,7 +725,7 @@ body {
       <span class="expand-btn">▾</span>
     </div>
   </div>
-  <div class="row-detail" id="det-recent-9">
+  <div class="row-detail" id="det-recent-10">
     <div class="detail-inner"><table class="detail-stats pregame-stats">
       <thead><tr>
         <th class="ds-away">Athletics</th>
@@ -704,7 +746,7 @@ body {
      data-home="St. Louis Cardinals"
      data-pred="away"
      data-espn-path="baseball/mlb">
-  <div class="row-main" onclick="toggleRow('det-recent-10',this,'401816136','final')">
+  <div class="row-main" onclick="toggleRow('det-recent-11',this,'401816136','final')">
     <span class="row-date">Jul 12</span>
     <div class="row-teams">
       <div class="row-team winner">
@@ -725,7 +767,7 @@ body {
       <span class="expand-btn">▾</span>
     </div>
   </div>
-  <div class="row-detail" id="det-recent-10">
+  <div class="row-detail" id="det-recent-11">
     <div class="detail-inner"><table class="detail-stats pregame-stats">
       <thead><tr>
         <th class="ds-away">Atlanta Braves</th>
@@ -746,7 +788,7 @@ body {
      data-home="Texas Rangers"
      data-pred="home"
      data-espn-path="baseball/mlb">
-  <div class="row-main" onclick="toggleRow('det-recent-11',this,'401816137','final')">
+  <div class="row-main" onclick="toggleRow('det-recent-12',this,'401816137','final')">
     <span class="row-date">Jul 12</span>
     <div class="row-teams">
       <div class="row-team">
@@ -767,7 +809,7 @@ body {
       <span class="expand-btn">▾</span>
     </div>
   </div>
-  <div class="row-detail" id="det-recent-11">
+  <div class="row-detail" id="det-recent-12">
     <div class="detail-inner"><table class="detail-stats pregame-stats">
       <thead><tr>
         <th class="ds-away">Houston Astros</th>
@@ -788,7 +830,7 @@ body {
      data-home="San Francisco Giants"
      data-pred="home"
      data-espn-path="baseball/mlb">
-  <div class="row-main" onclick="toggleRow('det-recent-12',this,'401816139','final')">
+  <div class="row-main" onclick="toggleRow('det-recent-13',this,'401816139','final')">
     <span class="row-date">Jul 12</span>
     <div class="row-teams">
       <div class="row-team">
@@ -809,7 +851,7 @@ body {
       <span class="expand-btn">▾</span>
     </div>
   </div>
-  <div class="row-detail" id="det-recent-12">
+  <div class="row-detail" id="det-recent-13">
     <div class="detail-inner"><table class="detail-stats pregame-stats">
       <thead><tr>
         <th class="ds-away">Colorado Rockies</th>
@@ -830,7 +872,7 @@ body {
      data-home="Los Angeles Dodgers"
      data-pred="home"
      data-espn-path="baseball/mlb">
-  <div class="row-main" onclick="toggleRow('det-recent-13',this,'401816138','final')">
+  <div class="row-main" onclick="toggleRow('det-recent-14',this,'401816138','final')">
     <span class="row-date">Jul 12</span>
     <div class="row-teams">
       <div class="row-team winner">
@@ -851,7 +893,7 @@ body {
       <span class="expand-btn">▾</span>
     </div>
   </div>
-  <div class="row-detail" id="det-recent-13">
+  <div class="row-detail" id="det-recent-14">
     <div class="detail-inner"><table class="detail-stats pregame-stats">
       <thead><tr>
         <th class="ds-away">Arizona Diamondbacks</th>
@@ -872,7 +914,7 @@ body {
      data-home="San Diego Padres"
      data-pred="home"
      data-espn-path="baseball/mlb">
-  <div class="row-main" onclick="toggleRow('det-recent-14',this,'401816140','final')">
+  <div class="row-main" onclick="toggleRow('det-recent-15',this,'401816140','final')">
     <span class="row-date">Jul 12</span>
     <div class="row-teams">
       <div class="row-team">
@@ -893,7 +935,7 @@ body {
       <span class="expand-btn">▾</span>
     </div>
   </div>
-  <div class="row-detail" id="det-recent-14">
+  <div class="row-detail" id="det-recent-15">
     <div class="detail-inner"><table class="detail-stats pregame-stats">
       <thead><tr>
         <th class="ds-away">Toronto Blue Jays</th>
@@ -914,7 +956,7 @@ body {
      data-home="Pittsburgh Pirates"
      data-pred="away"
      data-espn-path="baseball/mlb">
-  <div class="row-main" onclick="toggleRow('det-recent-15',this,'401889917','final')">
+  <div class="row-main" onclick="toggleRow('det-recent-16',this,'401889917','final')">
     <span class="row-date">Jul 11</span>
     <div class="row-teams">
       <div class="row-team fav">
@@ -935,7 +977,7 @@ body {
       <span class="expand-btn">▾</span>
     </div>
   </div>
-  <div class="row-detail" id="det-recent-15">
+  <div class="row-detail" id="det-recent-16">
     <div class="detail-inner"><table class="detail-stats pregame-stats">
       <thead><tr>
         <th class="ds-away">Milwaukee Brewers</th>
@@ -956,7 +998,7 @@ body {
      data-home="Minnesota Twins"
      data-pred="home"
      data-espn-path="baseball/mlb">
-  <div class="row-main" onclick="toggleRow('det-recent-16',this,'401816119','final')">
+  <div class="row-main" onclick="toggleRow('det-recent-17',this,'401816119','final')">
     <span class="row-date">Jul 11</span>
     <div class="row-teams">
       <div class="row-team">
@@ -977,7 +1019,7 @@ body {
       <span class="expand-btn">▾</span>
     </div>
   </div>
-  <div class="row-detail" id="det-recent-16">
+  <div class="row-detail" id="det-recent-17">
     <div class="detail-inner"><table class="detail-stats pregame-stats">
       <thead><tr>
         <th class="ds-away">Los Angeles Angels</th>
@@ -998,7 +1040,7 @@ body {
      data-home="Chicago White Sox"
      data-pred="home"
      data-espn-path="baseball/mlb">
-  <div class="row-main" onclick="toggleRow('det-recent-17',this,'401816120','final')">
+  <div class="row-main" onclick="toggleRow('det-recent-18',this,'401816120','final')">
     <span class="row-date">Jul 11</span>
     <div class="row-teams">
       <div class="row-team">
@@ -1019,7 +1061,7 @@ body {
       <span class="expand-btn">▾</span>
     </div>
   </div>
-  <div class="row-detail" id="det-recent-17">
+  <div class="row-detail" id="det-recent-18">
     <div class="detail-inner"><table class="detail-stats pregame-stats">
       <thead><tr>
         <th class="ds-away">Athletics</th>
@@ -1040,7 +1082,7 @@ body {
      data-home="Washington Nationals"
      data-pred="away"
      data-espn-path="baseball/mlb">
-  <div class="row-main" onclick="toggleRow('det-recent-18',this,'401816116','final')">
+  <div class="row-main" onclick="toggleRow('det-recent-19',this,'401816116','final')">
     <span class="row-date">Jul 11</span>
     <div class="row-teams">
       <div class="row-team winner">
@@ -1061,7 +1103,7 @@ body {
       <span class="expand-btn">▾</span>
     </div>
   </div>
-  <div class="row-detail" id="det-recent-18">
+  <div class="row-detail" id="det-recent-19">
     <div class="detail-inner"><table class="detail-stats pregame-stats">
       <thead><tr>
         <th class="ds-away">New York Yankees</th>
@@ -1082,7 +1124,7 @@ body {
      data-home="San Francisco Giants"
      data-pred="home"
      data-espn-path="baseball/mlb">
-  <div class="row-main" onclick="toggleRow('det-recent-19',this,'401816124','final')">
+  <div class="row-main" onclick="toggleRow('det-recent-20',this,'401816124','final')">
     <span class="row-date">Jul 11</span>
     <div class="row-teams">
       <div class="row-team">
@@ -1103,7 +1145,7 @@ body {
       <span class="expand-btn">▾</span>
     </div>
   </div>
-  <div class="row-detail" id="det-recent-19">
+  <div class="row-detail" id="det-recent-20">
     <div class="detail-inner"><table class="detail-stats pregame-stats">
       <thead><tr>
         <th class="ds-away">Colorado Rockies</th>
@@ -1124,7 +1166,7 @@ body {
      data-home="New York Mets"
      data-pred="away"
      data-espn-path="baseball/mlb">
-  <div class="row-main" onclick="toggleRow('det-recent-20',this,'401816111','final')">
+  <div class="row-main" onclick="toggleRow('det-recent-21',this,'401816111','final')">
     <span class="row-date">Jul 11</span>
     <div class="row-teams">
       <div class="row-team winner">
@@ -1145,7 +1187,7 @@ body {
       <span class="expand-btn">▾</span>
     </div>
   </div>
-  <div class="row-detail" id="det-recent-20">
+  <div class="row-detail" id="det-recent-21">
     <div class="detail-inner"><table class="detail-stats pregame-stats">
       <thead><tr>
         <th class="ds-away">Boston Red Sox</th>
@@ -1166,7 +1208,7 @@ body {
      data-home="Miami Marlins"
      data-pred="home"
      data-espn-path="baseball/mlb">
-  <div class="row-main" onclick="toggleRow('det-recent-21',this,'401816113','final')">
+  <div class="row-main" onclick="toggleRow('det-recent-22',this,'401816113','final')">
     <span class="row-date">Jul 11</span>
     <div class="row-teams">
       <div class="row-team winner">
@@ -1187,7 +1229,7 @@ body {
       <span class="expand-btn">▾</span>
     </div>
   </div>
-  <div class="row-detail" id="det-recent-21">
+  <div class="row-detail" id="det-recent-22">
     <div class="detail-inner"><table class="detail-stats pregame-stats">
       <thead><tr>
         <th class="ds-away">Cleveland Guardians</th>
@@ -1208,7 +1250,7 @@ body {
      data-home="Tampa Bay Rays"
      data-pred="home"
      data-espn-path="baseball/mlb">
-  <div class="row-main" onclick="toggleRow('det-recent-22',this,'401816118','final')">
+  <div class="row-main" onclick="toggleRow('det-recent-23',this,'401816118','final')">
     <span class="row-date">Jul 11</span>
     <div class="row-teams">
       <div class="row-team">
@@ -1229,7 +1271,7 @@ body {
       <span class="expand-btn">▾</span>
     </div>
   </div>
-  <div class="row-detail" id="det-recent-22">
+  <div class="row-detail" id="det-recent-23">
     <div class="detail-inner"><table class="detail-stats pregame-stats">
       <thead><tr>
         <th class="ds-away">Seattle Mariners</th>
@@ -1250,7 +1292,7 @@ body {
      data-home="Detroit Tigers"
      data-pred="away"
      data-espn-path="baseball/mlb">
-  <div class="row-main" onclick="toggleRow('det-recent-23',this,'401816117','final')">
+  <div class="row-main" onclick="toggleRow('det-recent-24',this,'401816117','final')">
     <span class="row-date">Jul 11</span>
     <div class="row-teams">
       <div class="row-team winner">
@@ -1271,7 +1313,7 @@ body {
       <span class="expand-btn">▾</span>
     </div>
   </div>
-  <div class="row-detail" id="det-recent-23">
+  <div class="row-detail" id="det-recent-24">
     <div class="detail-inner"><table class="detail-stats pregame-stats">
       <thead><tr>
         <th class="ds-away">Philadelphia Phillies</th>
@@ -1292,7 +1334,7 @@ body {
      data-home="Baltimore Orioles"
      data-pred="home"
      data-espn-path="baseball/mlb">
-  <div class="row-main" onclick="toggleRow('det-recent-24',this,'401816114','final')">
+  <div class="row-main" onclick="toggleRow('det-recent-25',this,'401816114','final')">
     <span class="row-date">Jul 11</span>
     <div class="row-teams">
       <div class="row-team">
@@ -1313,7 +1355,7 @@ body {
       <span class="expand-btn">▾</span>
     </div>
   </div>
-  <div class="row-detail" id="det-recent-24">
+  <div class="row-detail" id="det-recent-25">
     <div class="detail-inner"><table class="detail-stats pregame-stats">
       <thead><tr>
         <th class="ds-away">Kansas City Royals</th>
@@ -1334,7 +1376,7 @@ body {
      data-home="Texas Rangers"
      data-pred="home"
      data-espn-path="baseball/mlb">
-  <div class="row-main" onclick="toggleRow('det-recent-25',this,'401816122','final')">
+  <div class="row-main" onclick="toggleRow('det-recent-26',this,'401816122','final')">
     <span class="row-date">Jul 11</span>
     <div class="row-teams">
       <div class="row-team winner">
@@ -1355,7 +1397,7 @@ body {
       <span class="expand-btn">▾</span>
     </div>
   </div>
-  <div class="row-detail" id="det-recent-25">
+  <div class="row-detail" id="det-recent-26">
     <div class="detail-inner"><table class="detail-stats pregame-stats">
       <thead><tr>
         <th class="ds-away">Houston Astros</th>
@@ -1376,7 +1418,7 @@ body {
      data-home="Cincinnati Reds"
      data-pred="away"
      data-espn-path="baseball/mlb">
-  <div class="row-main" onclick="toggleRow('det-recent-26',this,'401816112','final')">
+  <div class="row-main" onclick="toggleRow('det-recent-27',this,'401816112','final')">
     <span class="row-date">Jul 11</span>
     <div class="row-teams">
       <div class="row-team winner">
@@ -1397,7 +1439,7 @@ body {
       <span class="expand-btn">▾</span>
     </div>
   </div>
-  <div class="row-detail" id="det-recent-26">
+  <div class="row-detail" id="det-recent-27">
     <div class="detail-inner"><table class="detail-stats pregame-stats">
       <thead><tr>
         <th class="ds-away">Chicago Cubs</th>
@@ -1418,7 +1460,7 @@ body {
      data-home="St. Louis Cardinals"
      data-pred="away"
      data-espn-path="baseball/mlb">
-  <div class="row-main" onclick="toggleRow('det-recent-27',this,'401816121','final')">
+  <div class="row-main" onclick="toggleRow('det-recent-28',this,'401816121','final')">
     <span class="row-date">Jul 11</span>
     <div class="row-teams">
       <div class="row-team fav">
@@ -1439,7 +1481,7 @@ body {
       <span class="expand-btn">▾</span>
     </div>
   </div>
-  <div class="row-detail" id="det-recent-27">
+  <div class="row-detail" id="det-recent-28">
     <div class="detail-inner"><table class="detail-stats pregame-stats">
       <thead><tr>
         <th class="ds-away">Atlanta Braves</th>
@@ -1460,7 +1502,7 @@ body {
      data-home="San Diego Padres"
      data-pred="home"
      data-espn-path="baseball/mlb">
-  <div class="row-main" onclick="toggleRow('det-recent-28',this,'401816125','final')">
+  <div class="row-main" onclick="toggleRow('det-recent-29',this,'401816125','final')">
     <span class="row-date">Jul 11</span>
     <div class="row-teams">
       <div class="row-team">
@@ -1481,7 +1523,7 @@ body {
       <span class="expand-btn">▾</span>
     </div>
   </div>
-  <div class="row-detail" id="det-recent-28">
+  <div class="row-detail" id="det-recent-29">
     <div class="detail-inner"><table class="detail-stats pregame-stats">
       <thead><tr>
         <th class="ds-away">Toronto Blue Jays</th>
@@ -1502,7 +1544,7 @@ body {
      data-home="Los Angeles Dodgers"
      data-pred="home"
      data-espn-path="baseball/mlb">
-  <div class="row-main" onclick="toggleRow('det-recent-29',this,'401816123','final')">
+  <div class="row-main" onclick="toggleRow('det-recent-30',this,'401816123','final')">
     <span class="row-date">Jul 11</span>
     <div class="row-teams">
       <div class="row-team winner">
@@ -1523,7 +1565,7 @@ body {
       <span class="expand-btn">▾</span>
     </div>
   </div>
-  <div class="row-detail" id="det-recent-29">
+  <div class="row-detail" id="det-recent-30">
     <div class="detail-inner"><table class="detail-stats pregame-stats">
       <thead><tr>
         <th class="ds-away">Arizona Diamondbacks</th>
@@ -1544,7 +1586,7 @@ body {
      data-home="Detroit Tigers"
      data-pred="away"
      data-espn-path="baseball/mlb">
-  <div class="row-main" onclick="toggleRow('det-recent-30',this,'401816102','final')">
+  <div class="row-main" onclick="toggleRow('det-recent-31',this,'401816102','final')">
     <span class="row-date">Jul 10</span>
     <div class="row-teams">
       <div class="row-team fav">
@@ -1565,7 +1607,7 @@ body {
       <span class="expand-btn">▾</span>
     </div>
   </div>
-  <div class="row-detail" id="det-recent-30">
+  <div class="row-detail" id="det-recent-31">
     <div class="detail-inner"><table class="detail-stats pregame-stats">
       <thead><tr>
         <th class="ds-away">Philadelphia Phillies</th>
@@ -1586,7 +1628,7 @@ body {
      data-home="Washington Nationals"
      data-pred="away"
      data-espn-path="baseball/mlb">
-  <div class="row-main" onclick="toggleRow('det-recent-31',this,'401816101','final')">
+  <div class="row-main" onclick="toggleRow('det-recent-32',this,'401816101','final')">
     <span class="row-date">Jul 10</span>
     <div class="row-teams">
       <div class="row-team winner">
@@ -1607,7 +1649,7 @@ body {
       <span class="expand-btn">▾</span>
     </div>
   </div>
-  <div class="row-detail" id="det-recent-31">
+  <div class="row-detail" id="det-recent-32">
     <div class="detail-inner"><table class="detail-stats pregame-stats">
       <thead><tr>
         <th class="ds-away">New York Yankees</th>
@@ -1628,7 +1670,7 @@ body {
      data-home="Baltimore Orioles"
      data-pred="home"
      data-espn-path="baseball/mlb">
-  <div class="row-main" onclick="toggleRow('det-recent-32',this,'401816099','final')">
+  <div class="row-main" onclick="toggleRow('det-recent-33',this,'401816099','final')">
     <span class="row-date">Jul 10</span>
     <div class="row-teams">
       <div class="row-team">
@@ -1649,7 +1691,7 @@ body {
       <span class="expand-btn">▾</span>
     </div>
   </div>
-  <div class="row-detail" id="det-recent-32">
+  <div class="row-detail" id="det-recent-33">
     <div class="detail-inner"><table class="detail-stats pregame-stats">
       <thead><tr>
         <th class="ds-away">Kansas City Royals</th>
@@ -1670,7 +1712,7 @@ body {
      data-home="Cincinnati Reds"
      data-pred="away"
      data-espn-path="baseball/mlb">
-  <div class="row-main" onclick="toggleRow('det-recent-33',this,'401816097','final')">
+  <div class="row-main" onclick="toggleRow('det-recent-34',this,'401816097','final')">
     <span class="row-date">Jul 10</span>
     <div class="row-teams">
       <div class="row-team fav">
@@ -1691,7 +1733,7 @@ body {
       <span class="expand-btn">▾</span>
     </div>
   </div>
-  <div class="row-detail" id="det-recent-33">
+  <div class="row-detail" id="det-recent-34">
     <div class="detail-inner"><table class="detail-stats pregame-stats">
       <thead><tr>
         <th class="ds-away">Chicago Cubs</th>
@@ -1712,7 +1754,7 @@ body {
      data-home="Miami Marlins"
      data-pred="home"
      data-espn-path="baseball/mlb">
-  <div class="row-main" onclick="toggleRow('det-recent-34',this,'401816098','final')">
+  <div class="row-main" onclick="toggleRow('det-recent-35',this,'401816098','final')">
     <span class="row-date">Jul 10</span>
     <div class="row-teams">
       <div class="row-team winner">
@@ -1733,7 +1775,7 @@ body {
       <span class="expand-btn">▾</span>
     </div>
   </div>
-  <div class="row-detail" id="det-recent-34">
+  <div class="row-detail" id="det-recent-35">
     <div class="detail-inner"><table class="detail-stats pregame-stats">
       <thead><tr>
         <th class="ds-away">Cleveland Guardians</th>
@@ -1754,7 +1796,7 @@ body {
      data-home="Tampa Bay Rays"
      data-pred="home"
      data-espn-path="baseball/mlb">
-  <div class="row-main" onclick="toggleRow('det-recent-35',this,'401816103','final')">
+  <div class="row-main" onclick="toggleRow('det-recent-36',this,'401816103','final')">
     <span class="row-date">Jul 10</span>
     <div class="row-teams">
       <div class="row-team">
@@ -1775,7 +1817,7 @@ body {
       <span class="expand-btn">▾</span>
     </div>
   </div>
-  <div class="row-detail" id="det-recent-35">
+  <div class="row-detail" id="det-recent-36">
     <div class="detail-inner"><table class="detail-stats pregame-stats">
       <thead><tr>
         <th class="ds-away">Seattle Mariners</th>
@@ -1796,7 +1838,7 @@ body {
      data-home="Chicago White Sox"
      data-pred="home"
      data-espn-path="baseball/mlb">
-  <div class="row-main" onclick="toggleRow('det-recent-36',this,'401816105','final')">
+  <div class="row-main" onclick="toggleRow('det-recent-37',this,'401816105','final')">
     <span class="row-date">Jul 10</span>
     <div class="row-teams">
       <div class="row-team">
@@ -1817,7 +1859,7 @@ body {
       <span class="expand-btn">▾</span>
     </div>
   </div>
-  <div class="row-detail" id="det-recent-36">
+  <div class="row-detail" id="det-recent-37">
     <div class="detail-inner"><table class="detail-stats pregame-stats">
       <thead><tr>
         <th class="ds-away">Athletics</th>
@@ -1838,7 +1880,7 @@ body {
      data-home="New York Mets"
      data-pred="away"
      data-espn-path="baseball/mlb">
-  <div class="row-main" onclick="toggleRow('det-recent-37',this,'401816096','final')">
+  <div class="row-main" onclick="toggleRow('det-recent-38',this,'401816096','final')">
     <span class="row-date">Jul 10</span>
     <div class="row-teams">
       <div class="row-team winner">
@@ -1859,7 +1901,7 @@ body {
       <span class="expand-btn">▾</span>
     </div>
   </div>
-  <div class="row-detail" id="det-recent-37">
+  <div class="row-detail" id="det-recent-38">
     <div class="detail-inner"><table class="detail-stats pregame-stats">
       <thead><tr>
         <th class="ds-away">Boston Red Sox</th>
@@ -1880,7 +1922,7 @@ body {
      data-home="Texas Rangers"
      data-pred="home"
      data-espn-path="baseball/mlb">
-  <div class="row-main" onclick="toggleRow('det-recent-38',this,'401816107','final')">
+  <div class="row-main" onclick="toggleRow('det-recent-39',this,'401816107','final')">
     <span class="row-date">Jul 10</span>
     <div class="row-teams">
       <div class="row-team">
@@ -1901,7 +1943,7 @@ body {
       <span class="expand-btn">▾</span>
     </div>
   </div>
-  <div class="row-detail" id="det-recent-38">
+  <div class="row-detail" id="det-recent-39">
     <div class="detail-inner"><table class="detail-stats pregame-stats">
       <thead><tr>
         <th class="ds-away">Houston Astros</th>
@@ -1922,7 +1964,7 @@ body {
      data-home="Minnesota Twins"
      data-pred="home"
      data-espn-path="baseball/mlb">
-  <div class="row-main" onclick="toggleRow('det-recent-39',this,'401816104','final')">
+  <div class="row-main" onclick="toggleRow('det-recent-40',this,'401816104','final')">
     <span class="row-date">Jul 10</span>
     <div class="row-teams">
       <div class="row-team winner">
@@ -1943,7 +1985,7 @@ body {
       <span class="expand-btn">▾</span>
     </div>
   </div>
-  <div class="row-detail" id="det-recent-39">
+  <div class="row-detail" id="det-recent-40">
     <div class="detail-inner"><table class="detail-stats pregame-stats">
       <thead><tr>
         <th class="ds-away">Los Angeles Angels</th>
@@ -1964,7 +2006,7 @@ body {
      data-home="St. Louis Cardinals"
      data-pred="away"
      data-espn-path="baseball/mlb">
-  <div class="row-main" onclick="toggleRow('det-recent-40',this,'401816106','final')">
+  <div class="row-main" onclick="toggleRow('det-recent-41',this,'401816106','final')">
     <span class="row-date">Jul 10</span>
     <div class="row-teams">
       <div class="row-team fav">
@@ -1985,7 +2027,7 @@ body {
       <span class="expand-btn">▾</span>
     </div>
   </div>
-  <div class="row-detail" id="det-recent-40">
+  <div class="row-detail" id="det-recent-41">
     <div class="detail-inner"><table class="detail-stats pregame-stats">
       <thead><tr>
         <th class="ds-away">Atlanta Braves</th>
@@ -2006,7 +2048,7 @@ body {
      data-home="San Diego Padres"
      data-pred="home"
      data-espn-path="baseball/mlb">
-  <div class="row-main" onclick="toggleRow('det-recent-41',this,'401816110','final')">
+  <div class="row-main" onclick="toggleRow('det-recent-42',this,'401816110','final')">
     <span class="row-date">Jul 10</span>
     <div class="row-teams">
       <div class="row-team winner">
@@ -2027,7 +2069,7 @@ body {
       <span class="expand-btn">▾</span>
     </div>
   </div>
-  <div class="row-detail" id="det-recent-41">
+  <div class="row-detail" id="det-recent-42">
     <div class="detail-inner"><table class="detail-stats pregame-stats">
       <thead><tr>
         <th class="ds-away">Toronto Blue Jays</th>
@@ -2048,7 +2090,7 @@ body {
      data-home="Los Angeles Dodgers"
      data-pred="home"
      data-espn-path="baseball/mlb">
-  <div class="row-main" onclick="toggleRow('det-recent-42',this,'401816108','final')">
+  <div class="row-main" onclick="toggleRow('det-recent-43',this,'401816108','final')">
     <span class="row-date">Jul 10</span>
     <div class="row-teams">
       <div class="row-team winner">
@@ -2069,7 +2111,7 @@ body {
       <span class="expand-btn">▾</span>
     </div>
   </div>
-  <div class="row-detail" id="det-recent-42">
+  <div class="row-detail" id="det-recent-43">
     <div class="detail-inner"><table class="detail-stats pregame-stats">
       <thead><tr>
         <th class="ds-away">Arizona Diamondbacks</th>
@@ -2090,7 +2132,7 @@ body {
      data-home="San Francisco Giants"
      data-pred="home"
      data-espn-path="baseball/mlb">
-  <div class="row-main" onclick="toggleRow('det-recent-43',this,'401816109','final')">
+  <div class="row-main" onclick="toggleRow('det-recent-44',this,'401816109','final')">
     <span class="row-date">Jul 10</span>
     <div class="row-teams">
       <div class="row-team winner">
@@ -2111,7 +2153,7 @@ body {
       <span class="expand-btn">▾</span>
     </div>
   </div>
-  <div class="row-detail" id="det-recent-43">
+  <div class="row-detail" id="det-recent-44">
     <div class="detail-inner"><table class="detail-stats pregame-stats">
       <thead><tr>
         <th class="ds-away">Colorado Rockies</th>
@@ -2132,7 +2174,7 @@ body {
      data-home="Pittsburgh Pirates"
      data-pred="away"
      data-espn-path="baseball/mlb">
-  <div class="row-main" onclick="toggleRow('det-recent-44',this,'401816084','final')">
+  <div class="row-main" onclick="toggleRow('det-recent-45',this,'401816084','final')">
     <span class="row-date">Jul 9</span>
     <div class="row-teams">
       <div class="row-team winner">
@@ -2153,7 +2195,7 @@ body {
       <span class="expand-btn">▾</span>
     </div>
   </div>
-  <div class="row-detail" id="det-recent-44">
+  <div class="row-detail" id="det-recent-45">
     <div class="detail-inner"><table class="detail-stats pregame-stats">
       <thead><tr>
         <th class="ds-away">Atlanta Braves</th>
@@ -2174,7 +2216,7 @@ body {
      data-home="New York Mets"
      data-pred="home"
      data-espn-path="baseball/mlb">
-  <div class="row-main" onclick="toggleRow('det-recent-45',this,'401816086','final')">
+  <div class="row-main" onclick="toggleRow('det-recent-46',this,'401816086','final')">
     <span class="row-date">Jul 9</span>
     <div class="row-teams">
       <div class="row-team">
@@ -2195,7 +2237,7 @@ body {
       <span class="expand-btn">▾</span>
     </div>
   </div>
-  <div class="row-detail" id="det-recent-45">
+  <div class="row-detail" id="det-recent-46">
     <div class="detail-inner"><table class="detail-stats pregame-stats">
       <thead><tr>
         <th class="ds-away">Kansas City Royals</th>
@@ -2216,7 +2258,7 @@ body {
      data-home="Tampa Bay Rays"
      data-pred="home"
      data-espn-path="baseball/mlb">
-  <div class="row-main" onclick="toggleRow('det-recent-46',this,'401816087','final')">
+  <div class="row-main" onclick="toggleRow('det-recent-47',this,'401816087','final')">
     <span class="row-date">Jul 9</span>
     <div class="row-teams">
       <div class="row-team winner">
@@ -2237,7 +2279,7 @@ body {
       <span class="expand-btn">▾</span>
     </div>
   </div>
-  <div class="row-detail" id="det-recent-46">
+  <div class="row-detail" id="det-recent-47">
     <div class="detail-inner"><table class="detail-stats pregame-stats">
       <thead><tr>
         <th class="ds-away">New York Yankees</th>
@@ -2258,7 +2300,7 @@ body {
      data-home="Baltimore Orioles"
      data-pred="away"
      data-espn-path="baseball/mlb">
-  <div class="row-main" onclick="toggleRow('det-recent-47',this,'401816085','final')">
+  <div class="row-main" onclick="toggleRow('det-recent-48',this,'401816085','final')">
     <span class="row-date">Jul 9</span>
     <div class="row-teams">
       <div class="row-team fav">
@@ -2279,7 +2321,7 @@ body {
       <span class="expand-btn">▾</span>
     </div>
   </div>
-  <div class="row-detail" id="det-recent-47">
+  <div class="row-detail" id="det-recent-48">
     <div class="detail-inner"><table class="detail-stats pregame-stats">
       <thead><tr>
         <th class="ds-away">Chicago Cubs</th>
@@ -2300,7 +2342,7 @@ body {
      data-home="Minnesota Twins"
      data-pred="away"
      data-espn-path="baseball/mlb">
-  <div class="row-main" onclick="toggleRow('det-recent-48',this,'401816092','final')">
+  <div class="row-main" onclick="toggleRow('det-recent-49',this,'401816092','final')">
     <span class="row-date">Jul 9</span>
     <div class="row-teams">
       <div class="row-team winner">
@@ -2321,7 +2363,7 @@ body {
       <span class="expand-btn">▾</span>
     </div>
   </div>
-  <div class="row-detail" id="det-recent-48">
+  <div class="row-detail" id="det-recent-49">
     <div class="detail-inner"><table class="detail-stats pregame-stats">
       <thead><tr>
         <th class="ds-away">Cleveland Guardians</th>
@@ -2342,7 +2384,7 @@ body {
      data-home="Chicago White Sox"
      data-pred="home"
      data-espn-path="baseball/mlb">
-  <div class="row-main" onclick="toggleRow('det-recent-49',this,'401816091','final')">
+  <div class="row-main" onclick="toggleRow('det-recent-50',this,'401816091','final')">
     <span class="row-date">Jul 9</span>
     <div class="row-teams">
       <div class="row-team winner">
@@ -2363,7 +2405,7 @@ body {
       <span class="expand-btn">▾</span>
     </div>
   </div>
-  <div class="row-detail" id="det-recent-49">
+  <div class="row-detail" id="det-recent-50">
     <div class="detail-inner"><table class="detail-stats pregame-stats">
       <thead><tr>
         <th class="ds-away">Boston Red Sox</th>
@@ -2384,7 +2426,7 @@ body {
      data-home="Detroit Tigers"
      data-pred="home"
      data-espn-path="baseball/mlb">
-  <div class="row-main" onclick="toggleRow('det-recent-50',this,'401816083','final')">
+  <div class="row-main" onclick="toggleRow('det-recent-51',this,'401816083','final')">
     <span class="row-date">Jul 9</span>
     <div class="row-teams">
       <div class="row-team">
@@ -2405,7 +2447,7 @@ body {
       <span class="expand-btn">▾</span>
     </div>
   </div>
-  <div class="row-detail" id="det-recent-50">
+  <div class="row-detail" id="det-recent-51">
     <div class="detail-inner"><table class="detail-stats pregame-stats">
       <thead><tr>
         <th class="ds-away">Athletics</th>
@@ -2426,7 +2468,7 @@ body {
      data-home="Miami Marlins"
      data-pred="home"
      data-espn-path="baseball/mlb">
-  <div class="row-main" onclick="toggleRow('det-recent-51',this,'401816089','final')">
+  <div class="row-main" onclick="toggleRow('det-recent-52',this,'401816089','final')">
     <span class="row-date">Jul 9</span>
     <div class="row-teams">
       <div class="row-team">
@@ -2447,7 +2489,7 @@ body {
       <span class="expand-btn">▾</span>
     </div>
   </div>
-  <div class="row-detail" id="det-recent-51">
+  <div class="row-detail" id="det-recent-52">
     <div class="detail-inner"><table class="detail-stats pregame-stats">
       <thead><tr>
         <th class="ds-away">Seattle Mariners</th>
@@ -2468,7 +2510,7 @@ body {
      data-home="Cincinnati Reds"
      data-pred="away"
      data-espn-path="baseball/mlb">
-  <div class="row-main" onclick="toggleRow('det-recent-52',this,'401816088','final')">
+  <div class="row-main" onclick="toggleRow('det-recent-53',this,'401816088','final')">
     <span class="row-date">Jul 9</span>
     <div class="row-teams">
       <div class="row-team winner">
@@ -2489,7 +2531,7 @@ body {
       <span class="expand-btn">▾</span>
     </div>
   </div>
-  <div class="row-detail" id="det-recent-52">
+  <div class="row-detail" id="det-recent-53">
     <div class="detail-inner"><table class="detail-stats pregame-stats">
       <thead><tr>
         <th class="ds-away">Philadelphia Phillies</th>
@@ -2510,7 +2552,7 @@ body {
      data-home="St. Louis Cardinals"
      data-pred="away"
      data-espn-path="baseball/mlb">
-  <div class="row-main" onclick="toggleRow('det-recent-53',this,'401816093','final')">
+  <div class="row-main" onclick="toggleRow('det-recent-54',this,'401816093','final')">
     <span class="row-date">Jul 9</span>
     <div class="row-teams">
       <div class="row-team winner">
@@ -2531,7 +2573,7 @@ body {
       <span class="expand-btn">▾</span>
     </div>
   </div>
-  <div class="row-detail" id="det-recent-53">
+  <div class="row-detail" id="det-recent-54">
     <div class="detail-inner"><table class="detail-stats pregame-stats">
       <thead><tr>
         <th class="ds-away">Milwaukee Brewers</th>
@@ -2552,7 +2594,7 @@ body {
      data-home="Texas Rangers"
      data-pred="home"
      data-espn-path="baseball/mlb">
-  <div class="row-main" onclick="toggleRow('det-recent-54',this,'401816090','final')">
+  <div class="row-main" onclick="toggleRow('det-recent-55',this,'401816090','final')">
     <span class="row-date">Jul 9</span>
     <div class="row-teams">
       <div class="row-team">
@@ -2573,7 +2615,7 @@ body {
       <span class="expand-btn">▾</span>
     </div>
   </div>
-  <div class="row-detail" id="det-recent-54">
+  <div class="row-detail" id="det-recent-55">
     <div class="detail-inner"><table class="detail-stats pregame-stats">
       <thead><tr>
         <th class="ds-away">Los Angeles Angels</th>
@@ -2594,7 +2636,7 @@ body {
      data-home="San Diego Padres"
      data-pred="home"
      data-espn-path="baseball/mlb">
-  <div class="row-main" onclick="toggleRow('det-recent-55',this,'401816094','final')">
+  <div class="row-main" onclick="toggleRow('det-recent-56',this,'401816094','final')">
     <span class="row-date">Jul 9</span>
     <div class="row-teams">
       <div class="row-team winner">
@@ -2615,7 +2657,7 @@ body {
       <span class="expand-btn">▾</span>
     </div>
   </div>
-  <div class="row-detail" id="det-recent-55">
+  <div class="row-detail" id="det-recent-56">
     <div class="detail-inner"><table class="detail-stats pregame-stats">
       <thead><tr>
         <th class="ds-away">Arizona Diamondbacks</th>
@@ -2636,7 +2678,7 @@ body {
      data-home="San Francisco Giants"
      data-pred="home"
      data-espn-path="baseball/mlb">
-  <div class="row-main" onclick="toggleRow('det-recent-56',this,'401816095','final')">
+  <div class="row-main" onclick="toggleRow('det-recent-57',this,'401816095','final')">
     <span class="row-date">Jul 9</span>
     <div class="row-teams">
       <div class="row-team">
@@ -2657,7 +2699,7 @@ body {
       <span class="expand-btn">▾</span>
     </div>
   </div>
-  <div class="row-detail" id="det-recent-56">
+  <div class="row-detail" id="det-recent-57">
     <div class="detail-inner"><table class="detail-stats pregame-stats">
       <thead><tr>
         <th class="ds-away">Colorado Rockies</th>
@@ -2678,7 +2720,7 @@ body {
      data-home="San Francisco Giants"
      data-pred="away"
      data-espn-path="baseball/mlb">
-  <div class="row-main" onclick="toggleRow('det-recent-57',this,'401816082','final')">
+  <div class="row-main" onclick="toggleRow('det-recent-58',this,'401816082','final')">
     <span class="row-date">Jul 8</span>
     <div class="row-teams">
       <div class="row-team winner">
@@ -2699,7 +2741,7 @@ body {
       <span class="expand-btn">▾</span>
     </div>
   </div>
-  <div class="row-detail" id="det-recent-57">
+  <div class="row-detail" id="det-recent-58">
     <div class="detail-inner"><table class="detail-stats pregame-stats">
       <thead><tr>
         <th class="ds-away">Toronto Blue Jays</th>
@@ -2720,7 +2762,7 @@ body {
      data-home="Baltimore Orioles"
      data-pred="away"
      data-espn-path="baseball/mlb">
-  <div class="row-main" onclick="toggleRow('det-recent-58',this,'401816070','final')">
+  <div class="row-main" onclick="toggleRow('det-recent-59',this,'401816070','final')">
     <span class="row-date">Jul 8</span>
     <div class="row-teams">
       <div class="row-team winner">
@@ -2741,7 +2783,7 @@ body {
       <span class="expand-btn">▾</span>
     </div>
   </div>
-  <div class="row-detail" id="det-recent-58">
+  <div class="row-detail" id="det-recent-59">
     <div class="detail-inner"><table class="detail-stats pregame-stats">
       <thead><tr>
         <th class="ds-away">Chicago Cubs</th>
@@ -2762,7 +2804,7 @@ body {
      data-home="Detroit Tigers"
      data-pred="home"
      data-espn-path="baseball/mlb">
-  <div class="row-main" onclick="toggleRow('det-recent-59',this,'401816068','final')">
+  <div class="row-main" onclick="toggleRow('det-recent-60',this,'401816068','final')">
     <span class="row-date">Jul 8</span>
     <div class="row-teams">
       <div class="row-team">
@@ -2783,7 +2825,7 @@ body {
       <span class="expand-btn">▾</span>
     </div>
   </div>
-  <div class="row-detail" id="det-recent-59">
+  <div class="row-detail" id="det-recent-60">
     <div class="detail-inner"><table class="detail-stats pregame-stats">
       <thead><tr>
         <th class="ds-away">Athletics</th>
@@ -2804,7 +2846,7 @@ body {
      data-home="Pittsburgh Pirates"
      data-pred="away"
      data-espn-path="baseball/mlb">
-  <div class="row-main" onclick="toggleRow('det-recent-60',this,'401816069','final')">
+  <div class="row-main" onclick="toggleRow('det-recent-61',this,'401816069','final')">
     <span class="row-date">Jul 8</span>
     <div class="row-teams">
       <div class="row-team winner">
@@ -2825,7 +2867,7 @@ body {
       <span class="expand-btn">▾</span>
     </div>
   </div>
-  <div class="row-detail" id="det-recent-60">
+  <div class="row-detail" id="det-recent-61">
     <div class="detail-inner"><table class="detail-stats pregame-stats">
       <thead><tr>
         <th class="ds-away">Atlanta Braves</th>
@@ -2846,7 +2888,7 @@ body {
      data-home="Tampa Bay Rays"
      data-pred="home"
      data-espn-path="baseball/mlb">
-  <div class="row-main" onclick="toggleRow('det-recent-61',this,'401816073','final')">
+  <div class="row-main" onclick="toggleRow('det-recent-62',this,'401816073','final')">
     <span class="row-date">Jul 8</span>
     <div class="row-teams">
       <div class="row-team">
@@ -2867,7 +2909,7 @@ body {
       <span class="expand-btn">▾</span>
     </div>
   </div>
-  <div class="row-detail" id="det-recent-61">
+  <div class="row-detail" id="det-recent-62">
     <div class="detail-inner"><table class="detail-stats pregame-stats">
       <thead><tr>
         <th class="ds-away">New York Yankees</th>
@@ -2888,7 +2930,7 @@ body {
      data-home="Miami Marlins"
      data-pred="home"
      data-espn-path="baseball/mlb">
-  <div class="row-main" onclick="toggleRow('det-recent-62',this,'401816075','final')">
+  <div class="row-main" onclick="toggleRow('det-recent-63',this,'401816075','final')">
     <span class="row-date">Jul 8</span>
     <div class="row-teams">
       <div class="row-team">
@@ -2909,7 +2951,7 @@ body {
       <span class="expand-btn">▾</span>
     </div>
   </div>
-  <div class="row-detail" id="det-recent-62">
+  <div class="row-detail" id="det-recent-63">
     <div class="detail-inner"><table class="detail-stats pregame-stats">
       <thead><tr>
         <th class="ds-away">Seattle Mariners</th>
@@ -2930,7 +2972,7 @@ body {
      data-home="Washington Nationals"
      data-pred="home"
      data-espn-path="baseball/mlb">
-  <div class="row-main" onclick="toggleRow('det-recent-63',this,'401816071','final')">
+  <div class="row-main" onclick="toggleRow('det-recent-64',this,'401816071','final')">
     <span class="row-date">Jul 8</span>
     <div class="row-teams">
       <div class="row-team">
@@ -2951,7 +2993,7 @@ body {
       <span class="expand-btn">▾</span>
     </div>
   </div>
-  <div class="row-detail" id="det-recent-63">
+  <div class="row-detail" id="det-recent-64">
     <div class="detail-inner"><table class="detail-stats pregame-stats">
       <thead><tr>
         <th class="ds-away">Houston Astros</th>
@@ -2972,7 +3014,7 @@ body {
      data-home="Cincinnati Reds"
      data-pred="away"
      data-espn-path="baseball/mlb">
-  <div class="row-main" onclick="toggleRow('det-recent-64',this,'401816074','final')">
+  <div class="row-main" onclick="toggleRow('det-recent-65',this,'401816074','final')">
     <span class="row-date">Jul 8</span>
     <div class="row-teams">
       <div class="row-team fav">
@@ -2993,7 +3035,7 @@ body {
       <span class="expand-btn">▾</span>
     </div>
   </div>
-  <div class="row-detail" id="det-recent-64">
+  <div class="row-detail" id="det-recent-65">
     <div class="detail-inner"><table class="detail-stats pregame-stats">
       <thead><tr>
         <th class="ds-away">Philadelphia Phillies</th>
@@ -3014,7 +3056,7 @@ body {
      data-home="New York Mets"
      data-pred="home"
      data-espn-path="baseball/mlb">
-  <div class="row-main" onclick="toggleRow('det-recent-65',this,'401816072','final')">
+  <div class="row-main" onclick="toggleRow('det-recent-66',this,'401816072','final')">
     <span class="row-date">Jul 8</span>
     <div class="row-teams">
       <div class="row-team">
@@ -3035,7 +3077,7 @@ body {
       <span class="expand-btn">▾</span>
     </div>
   </div>
-  <div class="row-detail" id="det-recent-65">
+  <div class="row-detail" id="det-recent-66">
     <div class="detail-inner"><table class="detail-stats pregame-stats">
       <thead><tr>
         <th class="ds-away">Kansas City Royals</th>
@@ -3056,7 +3098,7 @@ body {
      data-home="Chicago White Sox"
      data-pred="home"
      data-espn-path="baseball/mlb">
-  <div class="row-main" onclick="toggleRow('det-recent-66',this,'401816077','final')">
+  <div class="row-main" onclick="toggleRow('det-recent-67',this,'401816077','final')">
     <span class="row-date">Jul 8</span>
     <div class="row-teams">
       <div class="row-team winner">
@@ -3077,7 +3119,7 @@ body {
       <span class="expand-btn">▾</span>
     </div>
   </div>
-  <div class="row-detail" id="det-recent-66">
+  <div class="row-detail" id="det-recent-67">
     <div class="detail-inner"><table class="detail-stats pregame-stats">
       <thead><tr>
         <th class="ds-away">Boston Red Sox</th>
@@ -3098,7 +3140,7 @@ body {
      data-home="Minnesota Twins"
      data-pred="away"
      data-espn-path="baseball/mlb">
-  <div class="row-main" onclick="toggleRow('det-recent-67',this,'401816078','final')">
+  <div class="row-main" onclick="toggleRow('det-recent-68',this,'401816078','final')">
     <span class="row-date">Jul 8</span>
     <div class="row-teams">
       <div class="row-team fav">
@@ -3119,7 +3161,7 @@ body {
       <span class="expand-btn">▾</span>
     </div>
   </div>
-  <div class="row-detail" id="det-recent-67">
+  <div class="row-detail" id="det-recent-68">
     <div class="detail-inner"><table class="detail-stats pregame-stats">
       <thead><tr>
         <th class="ds-away">Cleveland Guardians</th>
@@ -3140,7 +3182,7 @@ body {
      data-home="St. Louis Cardinals"
      data-pred="away"
      data-espn-path="baseball/mlb">
-  <div class="row-main" onclick="toggleRow('det-recent-68',this,'401816079','final')">
+  <div class="row-main" onclick="toggleRow('det-recent-69',this,'401816079','final')">
     <span class="row-date">Jul 8</span>
     <div class="row-teams">
       <div class="row-team fav">
@@ -3161,7 +3203,7 @@ body {
       <span class="expand-btn">▾</span>
     </div>
   </div>
-  <div class="row-detail" id="det-recent-68">
+  <div class="row-detail" id="det-recent-69">
     <div class="detail-inner"><table class="detail-stats pregame-stats">
       <thead><tr>
         <th class="ds-away">Milwaukee Brewers</th>
@@ -3182,7 +3224,7 @@ body {
      data-home="Texas Rangers"
      data-pred="home"
      data-espn-path="baseball/mlb">
-  <div class="row-main" onclick="toggleRow('det-recent-69',this,'401816076','final')">
+  <div class="row-main" onclick="toggleRow('det-recent-70',this,'401816076','final')">
     <span class="row-date">Jul 8</span>
     <div class="row-teams">
       <div class="row-team winner">
@@ -3203,7 +3245,7 @@ body {
       <span class="expand-btn">▾</span>
     </div>
   </div>
-  <div class="row-detail" id="det-recent-69">
+  <div class="row-detail" id="det-recent-70">
     <div class="detail-inner"><table class="detail-stats pregame-stats">
       <thead><tr>
         <th class="ds-away">Los Angeles Angels</th>
@@ -3224,7 +3266,7 @@ body {
      data-home="San Diego Padres"
      data-pred="home"
      data-espn-path="baseball/mlb">
-  <div class="row-main" onclick="toggleRow('det-recent-70',this,'401816080','final')">
+  <div class="row-main" onclick="toggleRow('det-recent-71',this,'401816080','final')">
     <span class="row-date">Jul 8</span>
     <div class="row-teams">
       <div class="row-team">
@@ -3245,7 +3287,7 @@ body {
       <span class="expand-btn">▾</span>
     </div>
   </div>
-  <div class="row-detail" id="det-recent-70">
+  <div class="row-detail" id="det-recent-71">
     <div class="detail-inner"><table class="detail-stats pregame-stats">
       <thead><tr>
         <th class="ds-away">Arizona Diamondbacks</th>
@@ -3266,7 +3308,7 @@ body {
      data-home="Los Angeles Dodgers"
      data-pred="home"
      data-espn-path="baseball/mlb">
-  <div class="row-main" onclick="toggleRow('det-recent-71',this,'401816081','final')">
+  <div class="row-main" onclick="toggleRow('det-recent-72',this,'401816081','final')">
     <span class="row-date">Jul 8</span>
     <div class="row-teams">
       <div class="row-team">
@@ -3287,7 +3329,7 @@ body {
       <span class="expand-btn">▾</span>
     </div>
   </div>
-  <div class="row-detail" id="det-recent-71">
+  <div class="row-detail" id="det-recent-72">
     <div class="detail-inner"><table class="detail-stats pregame-stats">
       <thead><tr>
         <th class="ds-away">Colorado Rockies</th>
@@ -3308,7 +3350,7 @@ body {
      data-home="St. Louis Cardinals"
      data-pred="away"
      data-espn-path="baseball/mlb">
-  <div class="row-main" onclick="toggleRow('det-recent-72',this,'401871790','final')">
+  <div class="row-main" onclick="toggleRow('det-recent-73',this,'401871790','final')">
     <span class="row-date">Jul 7</span>
     <div class="row-teams">
       <div class="row-team winner">
@@ -3329,7 +3371,7 @@ body {
       <span class="expand-btn">▾</span>
     </div>
   </div>
-  <div class="row-detail" id="det-recent-72">
+  <div class="row-detail" id="det-recent-73">
     <div class="detail-inner"><table class="detail-stats pregame-stats">
       <thead><tr>
         <th class="ds-away">Milwaukee Brewers</th>
@@ -3350,7 +3392,7 @@ body {
      data-home="Baltimore Orioles"
      data-pred="away"
      data-espn-path="baseball/mlb">
-  <div class="row-main" onclick="toggleRow('det-recent-73',this,'401816055','final')">
+  <div class="row-main" onclick="toggleRow('det-recent-74',this,'401816055','final')">
     <span class="row-date">Jul 7</span>
     <div class="row-teams">
       <div class="row-team winner">
@@ -3371,7 +3413,7 @@ body {
       <span class="expand-btn">▾</span>
     </div>
   </div>
-  <div class="row-detail" id="det-recent-73">
+  <div class="row-detail" id="det-recent-74">
     <div class="detail-inner"><table class="detail-stats pregame-stats">
       <thead><tr>
         <th class="ds-away">Chicago Cubs</th>
@@ -3392,7 +3434,7 @@ body {
      data-home="Detroit Tigers"
      data-pred="home"
      data-espn-path="baseball/mlb">
-  <div class="row-main" onclick="toggleRow('det-recent-74',this,'401816053','final')">
+  <div class="row-main" onclick="toggleRow('det-recent-75',this,'401816053','final')">
     <span class="row-date">Jul 7</span>
     <div class="row-teams">
       <div class="row-team">
@@ -3413,7 +3455,7 @@ body {
       <span class="expand-btn">▾</span>
     </div>
   </div>
-  <div class="row-detail" id="det-recent-74">
+  <div class="row-detail" id="det-recent-75">
     <div class="detail-inner"><table class="detail-stats pregame-stats">
       <thead><tr>
         <th class="ds-away">Athletics</th>
@@ -3434,7 +3476,7 @@ body {
      data-home="Pittsburgh Pirates"
      data-pred="away"
      data-espn-path="baseball/mlb">
-  <div class="row-main" onclick="toggleRow('det-recent-75',this,'401816054','final')">
+  <div class="row-main" onclick="toggleRow('det-recent-76',this,'401816054','final')">
     <span class="row-date">Jul 7</span>
     <div class="row-teams">
       <div class="row-team fav">
@@ -3455,7 +3497,7 @@ body {
       <span class="expand-btn">▾</span>
     </div>
   </div>
-  <div class="row-detail" id="det-recent-75">
+  <div class="row-detail" id="det-recent-76">
     <div class="detail-inner"><table class="detail-stats pregame-stats">
       <thead><tr>
         <th class="ds-away">Atlanta Braves</th>
@@ -3476,7 +3518,7 @@ body {
      data-home="Tampa Bay Rays"
      data-pred="home"
      data-espn-path="baseball/mlb">
-  <div class="row-main" onclick="toggleRow('det-recent-76',this,'401816058','final')">
+  <div class="row-main" onclick="toggleRow('det-recent-77',this,'401816058','final')">
     <span class="row-date">Jul 7</span>
     <div class="row-teams">
       <div class="row-team">
@@ -3497,7 +3539,7 @@ body {
       <span class="expand-btn">▾</span>
     </div>
   </div>
-  <div class="row-detail" id="det-recent-76">
+  <div class="row-detail" id="det-recent-77">
     <div class="detail-inner"><table class="detail-stats pregame-stats">
       <thead><tr>
         <th class="ds-away">New York Yankees</th>
@@ -3518,7 +3560,7 @@ body {
      data-home="Miami Marlins"
      data-pred="home"
      data-espn-path="baseball/mlb">
-  <div class="row-main" onclick="toggleRow('det-recent-77',this,'401816060','final')">
+  <div class="row-main" onclick="toggleRow('det-recent-78',this,'401816060','final')">
     <span class="row-date">Jul 7</span>
     <div class="row-teams">
       <div class="row-team">
@@ -3539,7 +3581,7 @@ body {
       <span class="expand-btn">▾</span>
     </div>
   </div>
-  <div class="row-detail" id="det-recent-77">
+  <div class="row-detail" id="det-recent-78">
     <div class="detail-inner"><table class="detail-stats pregame-stats">
       <thead><tr>
         <th class="ds-away">Seattle Mariners</th>
@@ -3560,7 +3602,7 @@ body {
      data-home="Washington Nationals"
      data-pred="home"
      data-espn-path="baseball/mlb">
-  <div class="row-main" onclick="toggleRow('det-recent-78',this,'401816056','final')">
+  <div class="row-main" onclick="toggleRow('det-recent-79',this,'401816056','final')">
     <span class="row-date">Jul 7</span>
     <div class="row-teams">
       <div class="row-team winner">
@@ -3581,7 +3623,7 @@ body {
       <span class="expand-btn">▾</span>
     </div>
   </div>
-  <div class="row-detail" id="det-recent-78">
+  <div class="row-detail" id="det-recent-79">
     <div class="detail-inner"><table class="detail-stats pregame-stats">
       <thead><tr>
         <th class="ds-away">Houston Astros</th>
@@ -3602,7 +3644,7 @@ body {
      data-home="New York Mets"
      data-pred="home"
      data-espn-path="baseball/mlb">
-  <div class="row-main" onclick="toggleRow('det-recent-79',this,'401816057','final')">
+  <div class="row-main" onclick="toggleRow('det-recent-80',this,'401816057','final')">
     <span class="row-date">Jul 7</span>
     <div class="row-teams">
       <div class="row-team winner">
@@ -3623,7 +3665,7 @@ body {
       <span class="expand-btn">▾</span>
     </div>
   </div>
-  <div class="row-detail" id="det-recent-79">
+  <div class="row-detail" id="det-recent-80">
     <div class="detail-inner"><table class="detail-stats pregame-stats">
       <thead><tr>
         <th class="ds-away">Kansas City Royals</th>
@@ -3644,7 +3686,7 @@ body {
      data-home="Cincinnati Reds"
      data-pred="away"
      data-espn-path="baseball/mlb">
-  <div class="row-main" onclick="toggleRow('det-recent-80',this,'401816059','final')">
+  <div class="row-main" onclick="toggleRow('det-recent-81',this,'401816059','final')">
     <span class="row-date">Jul 7</span>
     <div class="row-teams">
       <div class="row-team winner">
@@ -3665,7 +3707,7 @@ body {
       <span class="expand-btn">▾</span>
     </div>
   </div>
-  <div class="row-detail" id="det-recent-80">
+  <div class="row-detail" id="det-recent-81">
     <div class="detail-inner"><table class="detail-stats pregame-stats">
       <thead><tr>
         <th class="ds-away">Philadelphia Phillies</th>
@@ -3686,7 +3728,7 @@ body {
      data-home="Chicago White Sox"
      data-pred="home"
      data-espn-path="baseball/mlb">
-  <div class="row-main" onclick="toggleRow('det-recent-81',this,'401816062','final')">
+  <div class="row-main" onclick="toggleRow('det-recent-82',this,'401816062','final')">
     <span class="row-date">Jul 7</span>
     <div class="row-teams">
       <div class="row-team winner">
@@ -3707,7 +3749,7 @@ body {
       <span class="expand-btn">▾</span>
     </div>
   </div>
-  <div class="row-detail" id="det-recent-81">
+  <div class="row-detail" id="det-recent-82">
     <div class="detail-inner"><table class="detail-stats pregame-stats">
       <thead><tr>
         <th class="ds-away">Boston Red Sox</th>
@@ -3728,7 +3770,7 @@ body {
      data-home="Minnesota Twins"
      data-pred="away"
      data-espn-path="baseball/mlb">
-  <div class="row-main" onclick="toggleRow('det-recent-82',this,'401816063','final')">
+  <div class="row-main" onclick="toggleRow('det-recent-83',this,'401816063','final')">
     <span class="row-date">Jul 7</span>
     <div class="row-teams">
       <div class="row-team fav">
@@ -3749,7 +3791,7 @@ body {
       <span class="expand-btn">▾</span>
     </div>
   </div>
-  <div class="row-detail" id="det-recent-82">
+  <div class="row-detail" id="det-recent-83">
     <div class="detail-inner"><table class="detail-stats pregame-stats">
       <thead><tr>
         <th class="ds-away">Cleveland Guardians</th>
@@ -3770,7 +3812,7 @@ body {
      data-home="Texas Rangers"
      data-pred="home"
      data-espn-path="baseball/mlb">
-  <div class="row-main" onclick="toggleRow('det-recent-83',this,'401816061','final')">
+  <div class="row-main" onclick="toggleRow('det-recent-84',this,'401816061','final')">
     <span class="row-date">Jul 7</span>
     <div class="row-teams">
       <div class="row-team">
@@ -3791,7 +3833,7 @@ body {
       <span class="expand-btn">▾</span>
     </div>
   </div>
-  <div class="row-detail" id="det-recent-83">
+  <div class="row-detail" id="det-recent-84">
     <div class="detail-inner"><table class="detail-stats pregame-stats">
       <thead><tr>
         <th class="ds-away">Los Angeles Angels</th>
@@ -3812,7 +3854,7 @@ body {
      data-home="San Diego Padres"
      data-pred="home"
      data-espn-path="baseball/mlb">
-  <div class="row-main" onclick="toggleRow('det-recent-84',this,'401816065','final')">
+  <div class="row-main" onclick="toggleRow('det-recent-85',this,'401816065','final')">
     <span class="row-date">Jul 7</span>
     <div class="row-teams">
       <div class="row-team">
@@ -3833,7 +3875,7 @@ body {
       <span class="expand-btn">▾</span>
     </div>
   </div>
-  <div class="row-detail" id="det-recent-84">
+  <div class="row-detail" id="det-recent-85">
     <div class="detail-inner"><table class="detail-stats pregame-stats">
       <thead><tr>
         <th class="ds-away">Arizona Diamondbacks</th>
@@ -3854,7 +3896,7 @@ body {
      data-home="San Francisco Giants"
      data-pred="away"
      data-espn-path="baseball/mlb">
-  <div class="row-main" onclick="toggleRow('det-recent-85',this,'401816067','final')">
+  <div class="row-main" onclick="toggleRow('det-recent-86',this,'401816067','final')">
     <span class="row-date">Jul 7</span>
     <div class="row-teams">
       <div class="row-team winner">
@@ -3875,7 +3917,7 @@ body {
       <span class="expand-btn">▾</span>
     </div>
   </div>
-  <div class="row-detail" id="det-recent-85">
+  <div class="row-detail" id="det-recent-86">
     <div class="detail-inner"><table class="detail-stats pregame-stats">
       <thead><tr>
         <th class="ds-away">Toronto Blue Jays</th>
@@ -3896,7 +3938,7 @@ body {
      data-home="Los Angeles Dodgers"
      data-pred="home"
      data-espn-path="baseball/mlb">
-  <div class="row-main" onclick="toggleRow('det-recent-86',this,'401816066','final')">
+  <div class="row-main" onclick="toggleRow('det-recent-87',this,'401816066','final')">
     <span class="row-date">Jul 7</span>
     <div class="row-teams">
       <div class="row-team winner">
@@ -3917,7 +3959,7 @@ body {
       <span class="expand-btn">▾</span>
     </div>
   </div>
-  <div class="row-detail" id="det-recent-86">
+  <div class="row-detail" id="det-recent-87">
     <div class="detail-inner"><table class="detail-stats pregame-stats">
       <thead><tr>
         <th class="ds-away">Colorado Rockies</th>
@@ -3938,7 +3980,7 @@ body {
      data-home="Kansas City Royals"
      data-pred="away"
      data-espn-path="baseball/mlb">
-  <div class="row-main" onclick="toggleRow('det-recent-87',this,'401816049','final')">
+  <div class="row-main" onclick="toggleRow('det-recent-88',this,'401816049','final')">
     <span class="row-date">Jul 6</span>
     <div class="row-teams">
       <div class="row-team fav">
@@ -3959,7 +4001,7 @@ body {
       <span class="expand-btn">▾</span>
     </div>
   </div>
-  <div class="row-detail" id="det-recent-87">
+  <div class="row-detail" id="det-recent-88">
     <div class="detail-inner"><table class="detail-stats pregame-stats">
       <thead><tr>
         <th class="ds-away">Philadelphia Phillies</th>
@@ -3980,7 +4022,7 @@ body {
      data-home="Tampa Bay Rays"
      data-pred="home"
      data-espn-path="baseball/mlb">
-  <div class="row-main" onclick="toggleRow('det-recent-88',this,'401816046','final')">
+  <div class="row-main" onclick="toggleRow('det-recent-89',this,'401816046','final')">
     <span class="row-date">Jul 6</span>
     <div class="row-teams">
       <div class="row-team winner">
@@ -4001,7 +4043,7 @@ body {
       <span class="expand-btn">▾</span>
     </div>
   </div>
-  <div class="row-detail" id="det-recent-88">
+  <div class="row-detail" id="det-recent-89">
     <div class="detail-inner"><table class="detail-stats pregame-stats">
       <thead><tr>
         <th class="ds-away">New York Yankees</th>
@@ -4022,7 +4064,7 @@ body {
      data-home="Washington Nationals"
      data-pred="home"
      data-espn-path="baseball/mlb">
-  <div class="row-main" onclick="toggleRow('det-recent-89',this,'401816045','final')">
+  <div class="row-main" onclick="toggleRow('det-recent-90',this,'401816045','final')">
     <span class="row-date">Jul 6</span>
     <div class="row-teams">
       <div class="row-team">
@@ -4043,7 +4085,7 @@ body {
       <span class="expand-btn">▾</span>
     </div>
   </div>
-  <div class="row-detail" id="det-recent-89">
+  <div class="row-detail" id="det-recent-90">
     <div class="detail-inner"><table class="detail-stats pregame-stats">
       <thead><tr>
         <th class="ds-away">Houston Astros</th>
@@ -4064,7 +4106,7 @@ body {
      data-home="Atlanta Braves"
      data-pred="home"
      data-espn-path="baseball/mlb">
-  <div class="row-main" onclick="toggleRow('det-recent-90',this,'401816047','final')">
+  <div class="row-main" onclick="toggleRow('det-recent-91',this,'401816047','final')">
     <span class="row-date">Jul 6</span>
     <div class="row-teams">
       <div class="row-team winner">
@@ -4085,7 +4127,7 @@ body {
       <span class="expand-btn">▾</span>
     </div>
   </div>
-  <div class="row-detail" id="det-recent-90">
+  <div class="row-detail" id="det-recent-91">
     <div class="detail-inner"><table class="detail-stats pregame-stats">
       <thead><tr>
         <th class="ds-away">New York Mets</th>
@@ -4106,7 +4148,7 @@ body {
      data-home="St. Louis Cardinals"
      data-pred="away"
      data-espn-path="baseball/mlb">
-  <div class="row-main" onclick="toggleRow('det-recent-91',this,'401816048','final')">
+  <div class="row-main" onclick="toggleRow('det-recent-92',this,'401816048','final')">
     <span class="row-date">Jul 6</span>
     <div class="row-teams">
       <div class="row-team winner">
@@ -4127,7 +4169,7 @@ body {
       <span class="expand-btn">▾</span>
     </div>
   </div>
-  <div class="row-detail" id="det-recent-91">
+  <div class="row-detail" id="det-recent-92">
     <div class="detail-inner"><table class="detail-stats pregame-stats">
       <thead><tr>
         <th class="ds-away">Milwaukee Brewers</th>
@@ -4148,7 +4190,7 @@ body {
      data-home="San Diego Padres"
      data-pred="home"
      data-espn-path="baseball/mlb">
-  <div class="row-main" onclick="toggleRow('det-recent-92',this,'401816050','final')">
+  <div class="row-main" onclick="toggleRow('det-recent-93',this,'401816050','final')">
     <span class="row-date">Jul 6</span>
     <div class="row-teams">
       <div class="row-team winner">
@@ -4169,7 +4211,7 @@ body {
       <span class="expand-btn">▾</span>
     </div>
   </div>
-  <div class="row-detail" id="det-recent-92">
+  <div class="row-detail" id="det-recent-93">
     <div class="detail-inner"><table class="detail-stats pregame-stats">
       <thead><tr>
         <th class="ds-away">Arizona Diamondbacks</th>
@@ -4190,7 +4232,7 @@ body {
      data-home="San Francisco Giants"
      data-pred="away"
      data-espn-path="baseball/mlb">
-  <div class="row-main" onclick="toggleRow('det-recent-93',this,'401816052','final')">
+  <div class="row-main" onclick="toggleRow('det-recent-94',this,'401816052','final')">
     <span class="row-date">Jul 6</span>
     <div class="row-teams">
       <div class="row-team fav">
@@ -4211,7 +4253,7 @@ body {
       <span class="expand-btn">▾</span>
     </div>
   </div>
-  <div class="row-detail" id="det-recent-93">
+  <div class="row-detail" id="det-recent-94">
     <div class="detail-inner"><table class="detail-stats pregame-stats">
       <thead><tr>
         <th class="ds-away">Toronto Blue Jays</th>
@@ -4232,7 +4274,7 @@ body {
      data-home="Los Angeles Dodgers"
      data-pred="home"
      data-espn-path="baseball/mlb">
-  <div class="row-main" onclick="toggleRow('det-recent-94',this,'401816051','final')">
+  <div class="row-main" onclick="toggleRow('det-recent-95',this,'401816051','final')">
     <span class="row-date">Jul 6</span>
     <div class="row-teams">
       <div class="row-team">
@@ -4253,7 +4295,7 @@ body {
       <span class="expand-btn">▾</span>
     </div>
   </div>
-  <div class="row-detail" id="det-recent-94">
+  <div class="row-detail" id="det-recent-95">
     <div class="detail-inner"><table class="detail-stats pregame-stats">
       <thead><tr>
         <th class="ds-away">Colorado Rockies</th>
@@ -4274,7 +4316,7 @@ body {
      data-home="Atlanta Braves"
      data-pred="home"
      data-espn-path="baseball/mlb">
-  <div class="row-main" onclick="toggleRow('det-recent-95',this,'401816033','final')">
+  <div class="row-main" onclick="toggleRow('det-recent-96',this,'401816033','final')">
     <span class="row-date">Jul 5</span>
     <div class="row-teams">
       <div class="row-team winner">
@@ -4295,7 +4337,7 @@ body {
       <span class="expand-btn">▾</span>
     </div>
   </div>
-  <div class="row-detail" id="det-recent-95">
+  <div class="row-detail" id="det-recent-96">
     <div class="detail-inner"><table class="detail-stats pregame-stats">
       <thead><tr>
         <th class="ds-away">New York Mets</th>
@@ -4316,7 +4358,7 @@ body {
      data-home="Washington Nationals"
      data-pred="away"
      data-espn-path="baseball/mlb">
-  <div class="row-main" onclick="toggleRow('det-recent-96',this,'401816034','final')">
+  <div class="row-main" onclick="toggleRow('det-recent-97',this,'401816034','final')">
     <span class="row-date">Jul 5</span>
     <div class="row-teams">
       <div class="row-team winner">
@@ -4337,7 +4379,7 @@ body {
       <span class="expand-btn">▾</span>
     </div>
   </div>
-  <div class="row-detail" id="det-recent-96">
+  <div class="row-detail" id="det-recent-97">
     <div class="detail-inner"><table class="detail-stats pregame-stats">
       <thead><tr>
         <th class="ds-away">Pittsburgh Pirates</th>
@@ -4358,7 +4400,7 @@ body {
      data-home="Cincinnati Reds"
      data-pred="away"
      data-espn-path="baseball/mlb">
-  <div class="row-main" onclick="toggleRow('det-recent-97',this,'401816030','final')">
+  <div class="row-main" onclick="toggleRow('det-recent-98',this,'401816030','final')">
     <span class="row-date">Jul 5</span>
     <div class="row-teams">
       <div class="row-team fav">
@@ -4379,7 +4421,7 @@ body {
       <span class="expand-btn">▾</span>
     </div>
   </div>
-  <div class="row-detail" id="det-recent-97">
+  <div class="row-detail" id="det-recent-98">
     <div class="detail-inner"><table class="detail-stats pregame-stats">
       <thead><tr>
         <th class="ds-away">Baltimore Orioles</th>
@@ -4400,7 +4442,7 @@ body {
      data-home="New York Yankees"
      data-pred="home"
      data-espn-path="baseball/mlb">
-  <div class="row-main" onclick="toggleRow('det-recent-98',this,'401816032','final')">
+  <div class="row-main" onclick="toggleRow('det-recent-99',this,'401816032','final')">
     <span class="row-date">Jul 5</span>
     <div class="row-teams">
       <div class="row-team winner">
@@ -4421,7 +4463,7 @@ body {
       <span class="expand-btn">▾</span>
     </div>
   </div>
-  <div class="row-detail" id="det-recent-98">
+  <div class="row-detail" id="det-recent-99">
     <div class="detail-inner"><table class="detail-stats pregame-stats">
       <thead><tr>
         <th class="ds-away">Minnesota Twins</th>
@@ -4442,7 +4484,7 @@ body {
      data-home="Cleveland Guardians"
      data-pred="home"
      data-espn-path="baseball/mlb">
-  <div class="row-main" onclick="toggleRow('det-recent-99',this,'401816031','final')">
+  <div class="row-main" onclick="toggleRow('det-recent-100',this,'401816031','final')">
     <span class="row-date">Jul 5</span>
     <div class="row-teams">
       <div class="row-team winner">
@@ -4463,7 +4505,7 @@ body {
       <span class="expand-btn">▾</span>
     </div>
   </div>
-  <div class="row-detail" id="det-recent-99">
+  <div class="row-detail" id="det-recent-100">
     <div class="detail-inner"><table class="detail-stats pregame-stats">
       <thead><tr>
         <th class="ds-away">Chicago White Sox</th>
@@ -4484,7 +4526,7 @@ body {
      data-home="Chicago Cubs"
      data-pred="home"
      data-espn-path="baseball/mlb">
-  <div class="row-main" onclick="toggleRow('det-recent-100',this,'401816037','final')">
+  <div class="row-main" onclick="toggleRow('det-recent-101',this,'401816037','final')">
     <span class="row-date">Jul 5</span>
     <div class="row-teams">
       <div class="row-team">
@@ -4505,7 +4547,7 @@ body {
       <span class="expand-btn">▾</span>
     </div>
   </div>
-  <div class="row-detail" id="det-recent-100">
+  <div class="row-detail" id="det-recent-101">
     <div class="detail-inner"><table class="detail-stats pregame-stats">
       <thead><tr>
         <th class="ds-away">St. Louis Cardinals</th>
@@ -4526,7 +4568,7 @@ body {
      data-home="Kansas City Royals"
      data-pred="away"
      data-espn-path="baseball/mlb">
-  <div class="row-main" onclick="toggleRow('det-recent-101',this,'401816036','final')">
+  <div class="row-main" onclick="toggleRow('det-recent-102',this,'401816036','final')">
     <span class="row-date">Jul 5</span>
     <div class="row-teams">
       <div class="row-team fav">
@@ -4547,7 +4589,7 @@ body {
       <span class="expand-btn">▾</span>
     </div>
   </div>
-  <div class="row-detail" id="det-recent-101">
+  <div class="row-detail" id="det-recent-102">
     <div class="detail-inner"><table class="detail-stats pregame-stats">
       <thead><tr>
         <th class="ds-away">Philadelphia Phillies</th>
@@ -4568,7 +4610,7 @@ body {
      data-home="Texas Rangers"
      data-pred="home"
      data-espn-path="baseball/mlb">
-  <div class="row-main" onclick="toggleRow('det-recent-102',this,'401816035','final')">
+  <div class="row-main" onclick="toggleRow('det-recent-103',this,'401816035','final')">
     <span class="row-date">Jul 5</span>
     <div class="row-teams">
       <div class="row-team winner">
@@ -4589,7 +4631,7 @@ body {
       <span class="expand-btn">▾</span>
     </div>
   </div>
-  <div class="row-detail" id="det-recent-102">
+  <div class="row-detail" id="det-recent-103">
     <div class="detail-inner"><table class="detail-stats pregame-stats">
       <thead><tr>
         <th class="ds-away">Detroit Tigers</th>
@@ -4610,7 +4652,7 @@ body {
      data-home="Houston Astros"
      data-pred="away"
      data-espn-path="baseball/mlb">
-  <div class="row-main" onclick="toggleRow('det-recent-103',this,'401816038','final')">
+  <div class="row-main" onclick="toggleRow('det-recent-104',this,'401816038','final')">
     <span class="row-date">Jul 5</span>
     <div class="row-teams">
       <div class="row-team fav">
@@ -4631,7 +4673,7 @@ body {
       <span class="expand-btn">▾</span>
     </div>
   </div>
-  <div class="row-detail" id="det-recent-103">
+  <div class="row-detail" id="det-recent-104">
     <div class="detail-inner"><table class="detail-stats pregame-stats">
       <thead><tr>
         <th class="ds-away">Tampa Bay Rays</th>
@@ -4652,7 +4694,7 @@ body {
      data-home="Colorado Rockies"
      data-pred="away"
      data-espn-path="baseball/mlb">
-  <div class="row-main" onclick="toggleRow('det-recent-104',this,'401816039','final')">
+  <div class="row-main" onclick="toggleRow('det-recent-105',this,'401816039','final')">
     <span class="row-date">Jul 5</span>
     <div class="row-teams">
       <div class="row-team fav">
@@ -4673,7 +4715,7 @@ body {
       <span class="expand-btn">▾</span>
     </div>
   </div>
-  <div class="row-detail" id="det-recent-104">
+  <div class="row-detail" id="det-recent-105">
     <div class="detail-inner"><table class="detail-stats pregame-stats">
       <thead><tr>
         <th class="ds-away">San Francisco Giants</th>
@@ -4694,7 +4736,7 @@ body {
      data-home="Arizona Diamondbacks"
      data-pred="away"
      data-espn-path="baseball/mlb">
-  <div class="row-main" onclick="toggleRow('det-recent-105',this,'401816042','final')">
+  <div class="row-main" onclick="toggleRow('det-recent-106',this,'401816042','final')">
     <span class="row-date">Jul 5</span>
     <div class="row-teams">
       <div class="row-team winner">
@@ -4715,7 +4757,7 @@ body {
       <span class="expand-btn">▾</span>
     </div>
   </div>
-  <div class="row-detail" id="det-recent-105">
+  <div class="row-detail" id="det-recent-106">
     <div class="detail-inner"><table class="detail-stats pregame-stats">
       <thead><tr>
         <th class="ds-away">Milwaukee Brewers</th>
@@ -4736,7 +4778,7 @@ body {
      data-home="Athletics"
      data-pred="away"
      data-espn-path="baseball/mlb">
-  <div class="row-main" onclick="toggleRow('det-recent-106',this,'401816041','final')">
+  <div class="row-main" onclick="toggleRow('det-recent-107',this,'401816041','final')">
     <span class="row-date">Jul 5</span>
     <div class="row-teams">
       <div class="row-team winner">
@@ -4757,7 +4799,7 @@ body {
       <span class="expand-btn">▾</span>
     </div>
   </div>
-  <div class="row-detail" id="det-recent-106">
+  <div class="row-detail" id="det-recent-107">
     <div class="detail-inner"><table class="detail-stats pregame-stats">
       <thead><tr>
         <th class="ds-away">Miami Marlins</th>
@@ -4778,7 +4820,7 @@ body {
      data-home="Seattle Mariners"
      data-pred="home"
      data-espn-path="baseball/mlb">
-  <div class="row-main" onclick="toggleRow('det-recent-107',this,'401816044','final')">
+  <div class="row-main" onclick="toggleRow('det-recent-108',this,'401816044','final')">
     <span class="row-date">Jul 5</span>
     <div class="row-teams">
       <div class="row-team">
@@ -4799,7 +4841,7 @@ body {
       <span class="expand-btn">▾</span>
     </div>
   </div>
-  <div class="row-detail" id="det-recent-107">
+  <div class="row-detail" id="det-recent-108">
     <div class="detail-inner"><table class="detail-stats pregame-stats">
       <thead><tr>
         <th class="ds-away">Toronto Blue Jays</th>
@@ -4820,7 +4862,7 @@ body {
      data-home="Los Angeles Dodgers"
      data-pred="home"
      data-espn-path="baseball/mlb">
-  <div class="row-main" onclick="toggleRow('det-recent-108',this,'401816043','final')">
+  <div class="row-main" onclick="toggleRow('det-recent-109',this,'401816043','final')">
     <span class="row-date">Jul 5</span>
     <div class="row-teams">
       <div class="row-team winner">
@@ -4841,7 +4883,7 @@ body {
       <span class="expand-btn">▾</span>
     </div>
   </div>
-  <div class="row-detail" id="det-recent-108">
+  <div class="row-detail" id="det-recent-109">
     <div class="detail-inner"><table class="detail-stats pregame-stats">
       <thead><tr>
         <th class="ds-away">San Diego Padres</th>
@@ -4862,7 +4904,7 @@ body {
      data-home="Los Angeles Angels"
      data-pred="away"
      data-espn-path="baseball/mlb">
-  <div class="row-main" onclick="toggleRow('det-recent-109',this,'401816040','final')">
+  <div class="row-main" onclick="toggleRow('det-recent-110',this,'401816040','final')">
     <span class="row-date">Jul 5</span>
     <div class="row-teams">
       <div class="row-team winner">
@@ -4883,7 +4925,7 @@ body {
       <span class="expand-btn">▾</span>
     </div>
   </div>
-  <div class="row-detail" id="det-recent-109">
+  <div class="row-detail" id="det-recent-110">
     <div class="detail-inner"><table class="detail-stats pregame-stats">
       <thead><tr>
         <th class="ds-away">Boston Red Sox</th>
@@ -12542,11 +12584,11 @@ body {
 <div id="tab-accuracy" class="sub-panel">
   <div style="padding-bottom:32px">
 <div class="acc-grid">
-  <div class="acc-card"><div class="acc-big">57.0%</div><div class="acc-lbl">Overall Accuracy</div></div>
-  <div class="acc-card"><div class="acc-big">439/770</div><div class="acc-lbl">Correct Picks</div></div>
+  <div class="acc-card"><div class="acc-big">56.9%</div><div class="acc-lbl">Overall Accuracy</div></div>
+  <div class="acc-card"><div class="acc-big">439/771</div><div class="acc-lbl">Correct Picks</div></div>
   <div class="acc-card acc-hi"><div class="acc-big">82.4%</div><div class="acc-lbl">High Conf (17)</div></div>
   <div class="acc-card acc-md"><div class="acc-big">57.5%</div><div class="acc-lbl">Med Conf (259)</div></div>
-  <div class="acc-card acc-lo"><div class="acc-big">55.9%</div><div class="acc-lbl">Low Conf (494)</div></div>
+  <div class="acc-card acc-lo"><div class="acc-big">55.8%</div><div class="acc-lbl">Low Conf (495)</div></div>
 </div>
 
 <div class="acc-section-tabs">
@@ -12571,9 +12613,9 @@ body {
     </div>
     <div class="fg">
       <span class="fl">Team</span>
-      <select class="team-select" id="team-filter-accuracy" onchange="setTeamFilter(this,'accuracy')"><option value="all">All Teams</option><option value="Arizona Diamondbacks">Arizona Diamondbacks</option><option value="Colorado Rockies">Colorado Rockies</option><option value="Athletics">Athletics</option><option value="Philadelphia Phillies">Philadelphia Phillies</option><option value="Milwaukee Brewers">Milwaukee Brewers</option><option value="Los Angeles Dodgers">Los Angeles Dodgers</option><option value="Kansas City Royals">Kansas City Royals</option><option value="Miami Marlins">Miami Marlins</option><option value="San Diego Padres">San Diego Padres</option><option value="Washington Nationals">Washington Nationals</option><option value="New York Mets">New York Mets</option><option value="Toronto Blue Jays">Toronto Blue Jays</option><option value="Los Angeles Angels">Los Angeles Angels</option><option value="Texas Rangers">Texas Rangers</option><option value="Minnesota Twins">Minnesota Twins</option><option value="Houston Astros">Houston Astros</option><option value="Seattle Mariners">Seattle Mariners</option><option value="San Francisco Giants">San Francisco Giants</option><option value="Baltimore Orioles">Baltimore Orioles</option><option value="Tampa Bay Rays">Tampa Bay Rays</option><option value="Pittsburgh Pirates">Pittsburgh Pirates</option><option value="Cleveland Guardians">Cleveland Guardians</option><option value="New York Yankees">New York Yankees</option><option value="Chicago White Sox">Chicago White Sox</option><option value="Chicago Cubs">Chicago Cubs</option><option value="Detroit Tigers">Detroit Tigers</option><option value="Atlanta Braves">Atlanta Braves</option><option value="Boston Red Sox">Boston Red Sox</option><option value="Cincinnati Reds">Cincinnati Reds</option><option value="St. Louis Cardinals">St. Louis Cardinals</option></select>
+      <select class="team-select" id="team-filter-accuracy" onchange="setTeamFilter(this,'accuracy')"><option value="all">All Teams</option><option value="Arizona Diamondbacks">Arizona Diamondbacks</option><option value="Colorado Rockies">Colorado Rockies</option><option value="Athletics">Athletics</option><option value="Philadelphia Phillies">Philadelphia Phillies</option><option value="Milwaukee Brewers">Milwaukee Brewers</option><option value="Los Angeles Dodgers">Los Angeles Dodgers</option><option value="Kansas City Royals">Kansas City Royals</option><option value="Miami Marlins">Miami Marlins</option><option value="San Diego Padres">San Diego Padres</option><option value="Washington Nationals">Washington Nationals</option><option value="New York Mets">New York Mets</option><option value="Toronto Blue Jays">Toronto Blue Jays</option><option value="Los Angeles Angels">Los Angeles Angels</option><option value="Texas Rangers">Texas Rangers</option><option value="Minnesota Twins">Minnesota Twins</option><option value="Houston Astros">Houston Astros</option><option value="Seattle Mariners">Seattle Mariners</option><option value="San Francisco Giants">San Francisco Giants</option><option value="Baltimore Orioles">Baltimore Orioles</option><option value="Tampa Bay Rays">Tampa Bay Rays</option><option value="Pittsburgh Pirates">Pittsburgh Pirates</option><option value="Cleveland Guardians">Cleveland Guardians</option><option value="New York Yankees">New York Yankees</option><option value="Chicago White Sox">Chicago White Sox</option><option value="Chicago Cubs">Chicago Cubs</option><option value="Detroit Tigers">Detroit Tigers</option><option value="Atlanta Braves">Atlanta Braves</option><option value="Boston Red Sox">Boston Red Sox</option><option value="Cincinnati Reds">Cincinnati Reds</option><option value="St. Louis Cardinals">St. Louis Cardinals</option><option value="American All-Stars">American All-Stars</option><option value="National All-Stars">National All-Stars</option></select>
     </div>
-    <span class="game-count" id="count-accuracy">770 games</span>
+    <span class="game-count" id="count-accuracy">771 games</span>
   </div>
   <table class="acc-table">
     <thead><tr>
@@ -12597,7 +12639,7 @@ body {
       <span class="fl">Search</span>
       <input class="team-search" id="team-search" placeholder="Filter team…" oninput="filterTeamSearch(this)">
     </div>
-    <span class="game-count" id="count-teams">30 teams</span>
+    <span class="game-count" id="count-teams">32 teams</span>
   </div>
   <table class="acc-table sortable-team-table" id="team-breakdown-table">
     <thead><tr>
@@ -12608,7 +12650,7 @@ body {
       <th>As Favorite</th>
       <th>As Underdog</th>
     </tr></thead>
-    <tbody id="team-tbody"><tr class="team-row" data-team="Arizona Diamondbacks"><td class="team-name-cell">Arizona Diamondbacks</td><td>53</td><td class="acc-ok">64%</td><td>34/53</td><td>67% <span class="prob-txt">(18/27)</span></td><td>62% <span class="prob-txt">(16/26)</span></td></tr><tr class="team-row" data-team="Colorado Rockies"><td class="team-name-cell">Colorado Rockies</td><td>53</td><td class="acc-warn">58%</td><td>31/53</td><td>— <span class="prob-txt">(0/0)</span></td><td>58% <span class="prob-txt">(31/53)</span></td></tr><tr class="team-row" data-team="Athletics"><td class="team-name-cell">Athletics</td><td>52</td><td class="acc-ok">67%</td><td>35/52</td><td>57% <span class="prob-txt">(4/7)</span></td><td>69% <span class="prob-txt">(31/45)</span></td></tr><tr class="team-row" data-team="Philadelphia Phillies"><td class="team-name-cell">Philadelphia Phillies</td><td>52</td><td class="acc-ok">65%</td><td>34/52</td><td>65% <span class="prob-txt">(30/46)</span></td><td>67% <span class="prob-txt">(4/6)</span></td></tr><tr class="team-row" data-team="Milwaukee Brewers"><td class="team-name-cell">Milwaukee Brewers</td><td>52</td><td class="acc-ok">65%</td><td>34/52</td><td>65% <span class="prob-txt">(32/49)</span></td><td>67% <span class="prob-txt">(2/3)</span></td></tr><tr class="team-row" data-team="Los Angeles Dodgers"><td class="team-name-cell">Los Angeles Dodgers</td><td>52</td><td class="acc-ok">65%</td><td>34/52</td><td>65% <span class="prob-txt">(34/52)</span></td><td>— <span class="prob-txt">(0/0)</span></td></tr><tr class="team-row" data-team="Kansas City Royals"><td class="team-name-cell">Kansas City Royals</td><td>52</td><td class="acc-ok">63%</td><td>33/52</td><td>— <span class="prob-txt">(0/0)</span></td><td>63% <span class="prob-txt">(33/52)</span></td></tr><tr class="team-row" data-team="Miami Marlins"><td class="team-name-cell">Miami Marlins</td><td>52</td><td class="acc-ok">63%</td><td>33/52</td><td>68% <span class="prob-txt">(25/37)</span></td><td>53% <span class="prob-txt">(8/15)</span></td></tr><tr class="team-row" data-team="San Diego Padres"><td class="team-name-cell">San Diego Padres</td><td>52</td><td class="acc-ok">62%</td><td>32/52</td><td>55% <span class="prob-txt">(12/22)</span></td><td>67% <span class="prob-txt">(20/30)</span></td></tr><tr class="team-row" data-team="Washington Nationals"><td class="team-name-cell">Washington Nationals</td><td>52</td><td class="acc-warn">60%</td><td>31/52</td><td>62% <span class="prob-txt">(13/21)</span></td><td>58% <span class="prob-txt">(18/31)</span></td></tr><tr class="team-row" data-team="New York Mets"><td class="team-name-cell">New York Mets</td><td>52</td><td class="acc-warn">60%</td><td>31/52</td><td>67% <span class="prob-txt">(2/3)</span></td><td>59% <span class="prob-txt">(29/49)</span></td></tr><tr class="team-row" data-team="Toronto Blue Jays"><td class="team-name-cell">Toronto Blue Jays</td><td>52</td><td class="acc-warn">54%</td><td>28/52</td><td>58% <span class="prob-txt">(7/12)</span></td><td>52% <span class="prob-txt">(21/40)</span></td></tr><tr class="team-row" data-team="Los Angeles Angels"><td class="team-name-cell">Los Angeles Angels</td><td>52</td><td class="acc-warn">54%</td><td>28/52</td><td>40% <span class="prob-txt">(4/10)</span></td><td>57% <span class="prob-txt">(24/42)</span></td></tr><tr class="team-row" data-team="Texas Rangers"><td class="team-name-cell">Texas Rangers</td><td>52</td><td class="acc-warn">50%</td><td>26/52</td><td>52% <span class="prob-txt">(21/40)</span></td><td>42% <span class="prob-txt">(5/12)</span></td></tr><tr class="team-row" data-team="Minnesota Twins"><td class="team-name-cell">Minnesota Twins</td><td>52</td><td class="acc-no">48%</td><td>25/52</td><td>53% <span class="prob-txt">(10/19)</span></td><td>45% <span class="prob-txt">(15/33)</span></td></tr><tr class="team-row" data-team="Houston Astros"><td class="team-name-cell">Houston Astros</td><td>52</td><td class="acc-no">48%</td><td>25/52</td><td>58% <span class="prob-txt">(7/12)</span></td><td>45% <span class="prob-txt">(18/40)</span></td></tr><tr class="team-row" data-team="Seattle Mariners"><td class="team-name-cell">Seattle Mariners</td><td>51</td><td class="acc-ok">63%</td><td>32/51</td><td>61% <span class="prob-txt">(20/33)</span></td><td>67% <span class="prob-txt">(12/18)</span></td></tr><tr class="team-row" data-team="San Francisco Giants"><td class="team-name-cell">San Francisco Giants</td><td>51</td><td class="acc-ok">61%</td><td>31/51</td><td>60% <span class="prob-txt">(9/15)</span></td><td>61% <span class="prob-txt">(22/36)</span></td></tr><tr class="team-row" data-team="Baltimore Orioles"><td class="team-name-cell">Baltimore Orioles</td><td>51</td><td class="acc-warn">59%</td><td>30/51</td><td>67% <span class="prob-txt">(10/15)</span></td><td>56% <span class="prob-txt">(20/36)</span></td></tr><tr class="team-row" data-team="Tampa Bay Rays"><td class="team-name-cell">Tampa Bay Rays</td><td>51</td><td class="acc-warn">59%</td><td>30/51</td><td>56% <span class="prob-txt">(27/48)</span></td><td>100% <span class="prob-txt">(3/3)</span></td></tr><tr class="team-row" data-team="Pittsburgh Pirates"><td class="team-name-cell">Pittsburgh Pirates</td><td>51</td><td class="acc-warn">57%</td><td>29/51</td><td>56% <span class="prob-txt">(15/27)</span></td><td>58% <span class="prob-txt">(14/24)</span></td></tr><tr class="team-row" data-team="Cleveland Guardians"><td class="team-name-cell">Cleveland Guardians</td><td>51</td><td class="acc-warn">53%</td><td>27/51</td><td>55% <span class="prob-txt">(18/33)</span></td><td>50% <span class="prob-txt">(9/18)</span></td></tr><tr class="team-row" data-team="New York Yankees"><td class="team-name-cell">New York Yankees</td><td>51</td><td class="acc-warn">51%</td><td>26/51</td><td>51% <span class="prob-txt">(23/45)</span></td><td>50% <span class="prob-txt">(3/6)</span></td></tr><tr class="team-row" data-team="Chicago White Sox"><td class="team-name-cell">Chicago White Sox</td><td>51</td><td class="acc-no">49%</td><td>25/51</td><td>53% <span class="prob-txt">(18/34)</span></td><td>41% <span class="prob-txt">(7/17)</span></td></tr><tr class="team-row" data-team="Chicago Cubs"><td class="team-name-cell">Chicago Cubs</td><td>50</td><td class="acc-warn">52%</td><td>26/50</td><td>50% <span class="prob-txt">(22/44)</span></td><td>67% <span class="prob-txt">(4/6)</span></td></tr><tr class="team-row" data-team="Detroit Tigers"><td class="team-name-cell">Detroit Tigers</td><td>50</td><td class="acc-warn">50%</td><td>25/50</td><td>42% <span class="prob-txt">(5/12)</span></td><td>53% <span class="prob-txt">(20/38)</span></td></tr><tr class="team-row" data-team="Atlanta Braves"><td class="team-name-cell">Atlanta Braves</td><td>50</td><td class="acc-no">46%</td><td>23/50</td><td>47% <span class="prob-txt">(22/47)</span></td><td>33% <span class="prob-txt">(1/3)</span></td></tr><tr class="team-row" data-team="Boston Red Sox"><td class="team-name-cell">Boston Red Sox</td><td>50</td><td class="acc-no">44%</td><td>22/50</td><td>50% <span class="prob-txt">(12/24)</span></td><td>38% <span class="prob-txt">(10/26)</span></td></tr><tr class="team-row" data-team="Cincinnati Reds"><td class="team-name-cell">Cincinnati Reds</td><td>49</td><td class="acc-ok">65%</td><td>32/49</td><td>56% <span class="prob-txt">(5/9)</span></td><td>68% <span class="prob-txt">(27/40)</span></td></tr><tr class="team-row" data-team="St. Louis Cardinals"><td class="team-name-cell">St. Louis Cardinals</td><td>49</td><td class="acc-warn">53%</td><td>26/49</td><td>52% <span class="prob-txt">(14/27)</span></td><td>55% <span class="prob-txt">(12/22)</span></td></tr></tbody>
+    <tbody id="team-tbody"><tr class="team-row" data-team="Arizona Diamondbacks"><td class="team-name-cell">Arizona Diamondbacks</td><td>53</td><td class="acc-ok">64%</td><td>34/53</td><td>67% <span class="prob-txt">(18/27)</span></td><td>62% <span class="prob-txt">(16/26)</span></td></tr><tr class="team-row" data-team="Colorado Rockies"><td class="team-name-cell">Colorado Rockies</td><td>53</td><td class="acc-warn">58%</td><td>31/53</td><td>— <span class="prob-txt">(0/0)</span></td><td>58% <span class="prob-txt">(31/53)</span></td></tr><tr class="team-row" data-team="Athletics"><td class="team-name-cell">Athletics</td><td>52</td><td class="acc-ok">67%</td><td>35/52</td><td>57% <span class="prob-txt">(4/7)</span></td><td>69% <span class="prob-txt">(31/45)</span></td></tr><tr class="team-row" data-team="Philadelphia Phillies"><td class="team-name-cell">Philadelphia Phillies</td><td>52</td><td class="acc-ok">65%</td><td>34/52</td><td>65% <span class="prob-txt">(30/46)</span></td><td>67% <span class="prob-txt">(4/6)</span></td></tr><tr class="team-row" data-team="Milwaukee Brewers"><td class="team-name-cell">Milwaukee Brewers</td><td>52</td><td class="acc-ok">65%</td><td>34/52</td><td>65% <span class="prob-txt">(32/49)</span></td><td>67% <span class="prob-txt">(2/3)</span></td></tr><tr class="team-row" data-team="Los Angeles Dodgers"><td class="team-name-cell">Los Angeles Dodgers</td><td>52</td><td class="acc-ok">65%</td><td>34/52</td><td>65% <span class="prob-txt">(34/52)</span></td><td>— <span class="prob-txt">(0/0)</span></td></tr><tr class="team-row" data-team="Kansas City Royals"><td class="team-name-cell">Kansas City Royals</td><td>52</td><td class="acc-ok">63%</td><td>33/52</td><td>— <span class="prob-txt">(0/0)</span></td><td>63% <span class="prob-txt">(33/52)</span></td></tr><tr class="team-row" data-team="Miami Marlins"><td class="team-name-cell">Miami Marlins</td><td>52</td><td class="acc-ok">63%</td><td>33/52</td><td>68% <span class="prob-txt">(25/37)</span></td><td>53% <span class="prob-txt">(8/15)</span></td></tr><tr class="team-row" data-team="San Diego Padres"><td class="team-name-cell">San Diego Padres</td><td>52</td><td class="acc-ok">62%</td><td>32/52</td><td>55% <span class="prob-txt">(12/22)</span></td><td>67% <span class="prob-txt">(20/30)</span></td></tr><tr class="team-row" data-team="Washington Nationals"><td class="team-name-cell">Washington Nationals</td><td>52</td><td class="acc-warn">60%</td><td>31/52</td><td>62% <span class="prob-txt">(13/21)</span></td><td>58% <span class="prob-txt">(18/31)</span></td></tr><tr class="team-row" data-team="New York Mets"><td class="team-name-cell">New York Mets</td><td>52</td><td class="acc-warn">60%</td><td>31/52</td><td>67% <span class="prob-txt">(2/3)</span></td><td>59% <span class="prob-txt">(29/49)</span></td></tr><tr class="team-row" data-team="Toronto Blue Jays"><td class="team-name-cell">Toronto Blue Jays</td><td>52</td><td class="acc-warn">54%</td><td>28/52</td><td>58% <span class="prob-txt">(7/12)</span></td><td>52% <span class="prob-txt">(21/40)</span></td></tr><tr class="team-row" data-team="Los Angeles Angels"><td class="team-name-cell">Los Angeles Angels</td><td>52</td><td class="acc-warn">54%</td><td>28/52</td><td>40% <span class="prob-txt">(4/10)</span></td><td>57% <span class="prob-txt">(24/42)</span></td></tr><tr class="team-row" data-team="Texas Rangers"><td class="team-name-cell">Texas Rangers</td><td>52</td><td class="acc-warn">50%</td><td>26/52</td><td>52% <span class="prob-txt">(21/40)</span></td><td>42% <span class="prob-txt">(5/12)</span></td></tr><tr class="team-row" data-team="Minnesota Twins"><td class="team-name-cell">Minnesota Twins</td><td>52</td><td class="acc-no">48%</td><td>25/52</td><td>53% <span class="prob-txt">(10/19)</span></td><td>45% <span class="prob-txt">(15/33)</span></td></tr><tr class="team-row" data-team="Houston Astros"><td class="team-name-cell">Houston Astros</td><td>52</td><td class="acc-no">48%</td><td>25/52</td><td>58% <span class="prob-txt">(7/12)</span></td><td>45% <span class="prob-txt">(18/40)</span></td></tr><tr class="team-row" data-team="Seattle Mariners"><td class="team-name-cell">Seattle Mariners</td><td>51</td><td class="acc-ok">63%</td><td>32/51</td><td>61% <span class="prob-txt">(20/33)</span></td><td>67% <span class="prob-txt">(12/18)</span></td></tr><tr class="team-row" data-team="San Francisco Giants"><td class="team-name-cell">San Francisco Giants</td><td>51</td><td class="acc-ok">61%</td><td>31/51</td><td>60% <span class="prob-txt">(9/15)</span></td><td>61% <span class="prob-txt">(22/36)</span></td></tr><tr class="team-row" data-team="Baltimore Orioles"><td class="team-name-cell">Baltimore Orioles</td><td>51</td><td class="acc-warn">59%</td><td>30/51</td><td>67% <span class="prob-txt">(10/15)</span></td><td>56% <span class="prob-txt">(20/36)</span></td></tr><tr class="team-row" data-team="Tampa Bay Rays"><td class="team-name-cell">Tampa Bay Rays</td><td>51</td><td class="acc-warn">59%</td><td>30/51</td><td>56% <span class="prob-txt">(27/48)</span></td><td>100% <span class="prob-txt">(3/3)</span></td></tr><tr class="team-row" data-team="Pittsburgh Pirates"><td class="team-name-cell">Pittsburgh Pirates</td><td>51</td><td class="acc-warn">57%</td><td>29/51</td><td>56% <span class="prob-txt">(15/27)</span></td><td>58% <span class="prob-txt">(14/24)</span></td></tr><tr class="team-row" data-team="Cleveland Guardians"><td class="team-name-cell">Cleveland Guardians</td><td>51</td><td class="acc-warn">53%</td><td>27/51</td><td>55% <span class="prob-txt">(18/33)</span></td><td>50% <span class="prob-txt">(9/18)</span></td></tr><tr class="team-row" data-team="New York Yankees"><td class="team-name-cell">New York Yankees</td><td>51</td><td class="acc-warn">51%</td><td>26/51</td><td>51% <span class="prob-txt">(23/45)</span></td><td>50% <span class="prob-txt">(3/6)</span></td></tr><tr class="team-row" data-team="Chicago White Sox"><td class="team-name-cell">Chicago White Sox</td><td>51</td><td class="acc-no">49%</td><td>25/51</td><td>53% <span class="prob-txt">(18/34)</span></td><td>41% <span class="prob-txt">(7/17)</span></td></tr><tr class="team-row" data-team="Chicago Cubs"><td class="team-name-cell">Chicago Cubs</td><td>50</td><td class="acc-warn">52%</td><td>26/50</td><td>50% <span class="prob-txt">(22/44)</span></td><td>67% <span class="prob-txt">(4/6)</span></td></tr><tr class="team-row" data-team="Detroit Tigers"><td class="team-name-cell">Detroit Tigers</td><td>50</td><td class="acc-warn">50%</td><td>25/50</td><td>42% <span class="prob-txt">(5/12)</span></td><td>53% <span class="prob-txt">(20/38)</span></td></tr><tr class="team-row" data-team="Atlanta Braves"><td class="team-name-cell">Atlanta Braves</td><td>50</td><td class="acc-no">46%</td><td>23/50</td><td>47% <span class="prob-txt">(22/47)</span></td><td>33% <span class="prob-txt">(1/3)</span></td></tr><tr class="team-row" data-team="Boston Red Sox"><td class="team-name-cell">Boston Red Sox</td><td>50</td><td class="acc-no">44%</td><td>22/50</td><td>50% <span class="prob-txt">(12/24)</span></td><td>38% <span class="prob-txt">(10/26)</span></td></tr><tr class="team-row" data-team="Cincinnati Reds"><td class="team-name-cell">Cincinnati Reds</td><td>49</td><td class="acc-ok">65%</td><td>32/49</td><td>56% <span class="prob-txt">(5/9)</span></td><td>68% <span class="prob-txt">(27/40)</span></td></tr><tr class="team-row" data-team="St. Louis Cardinals"><td class="team-name-cell">St. Louis Cardinals</td><td>49</td><td class="acc-warn">53%</td><td>26/49</td><td>52% <span class="prob-txt">(14/27)</span></td><td>55% <span class="prob-txt">(12/22)</span></td></tr><tr class="team-row" data-team="American All-Stars"><td class="team-name-cell">American All-Stars</td><td>1</td><td class="acc-no">0%</td><td>0/1</td><td>— <span class="prob-txt">(0/0)</span></td><td>0% <span class="prob-txt">(0/1)</span></td></tr><tr class="team-row" data-team="National All-Stars"><td class="team-name-cell">National All-Stars</td><td>1</td><td class="acc-no">0%</td><td>0/1</td><td>0% <span class="prob-txt">(0/1)</span></td><td>— <span class="prob-txt">(0/0)</span></td></tr></tbody>
   </table>
 </div></div>
 </div>
