@@ -257,7 +257,7 @@ body {
   <div class="hdr-emoji">🏈</div>
   <div class="hdr-info">
     <div class="hdr-name">NFL Predictions</div>
-    <div class="hdr-sub">2026 Season  ·  Today: 0  ·  Recent: 0  ·  Upcoming: 21</div>
+    <div class="hdr-sub">2026 Season  ·  Today: 0  ·  Recent: 1  ·  Upcoming: 21</div>
   </div>
   <div class="hdr-right">
     <div class="hdr-date">Updated 2026-08-07</div>
@@ -273,7 +273,49 @@ body {
 </div>
 
 <div id="tab-today"    class="sub-panel active"><div class="empty"><span class="e-icon">🏈</span>No NFL games to show.</div></div>
-<div id="tab-recent"   class="sub-panel"><div class="empty"><span class="e-icon">🏈</span>No NFL games to show.</div></div>
+<div id="tab-recent"   class="sub-panel"><div class="filter-bar" id="fb-recent"><div class="fg"><span class="fl">Result</span><button class="fb active" data-tab="recent" data-filter="result" data-value="all" onclick="setFilter(this)">All</button><button class="fb" data-tab="recent" data-filter="result" data-value="correct" onclick="setFilter(this)">✓ Correct</button><button class="fb" data-tab="recent" data-filter="result" data-value="wrong" onclick="setFilter(this)">✗ Wrong</button></div><div class="fg"><span class="fl">Confidence</span><button class="fb active" data-tab="recent" data-filter="conf" data-value="all" onclick="setFilter(this)">All</button><button class="fb" data-tab="recent" data-filter="conf" data-value="high" onclick="setFilter(this)">High</button><button class="fb" data-tab="recent" data-filter="conf" data-value="med" onclick="setFilter(this)">Med</button><button class="fb" data-tab="recent" data-filter="conf" data-value="low" onclick="setFilter(this)">Low</button></div><div class="fg"><span class="fl">Period</span><button class="fb active" data-tab="recent" data-filter="days" data-value="3" onclick="setFilter(this)">Last 3 days</button><button class="fb" data-tab="recent" data-filter="days" data-value="7" onclick="setFilter(this)">Last 7 days</button><button class="fb" data-tab="recent" data-filter="days" data-value="10" onclick="setFilter(this)">Last 10 days</button></div><span class="game-count" id="count-recent">1 game</span></div><div class="game-list" id="list-recent"><div class="game-row"
+     data-conf="med"
+     data-pick="away"
+     data-result="correct"
+     data-date="2026-08-06"
+     data-status="final"
+     data-game-id="401873271"
+     data-away="Carolina Panthers"
+     data-home="Arizona Cardinals"
+     data-pred="away"
+     data-espn-path="football/nfl">
+  <div class="row-main" onclick="toggleRow('det-recent-0',this,'401873271','final')">
+    <span class="row-date">Aug 6</span>
+    <div class="row-teams">
+      <div class="row-team winner">
+        <span class="rtn">Carolina Panthers</span>
+        <span class="rrec">1-0</span>
+      </div>
+      <div class="row-score" id="ctr-401873271"><span class="sc">33–30</span><span class="sc-lbl">FINAL</span></div>
+      <div class="row-team right">
+        <span class="rtn">Arizona Cardinals</span>
+        <span class="rrec">0-1</span>
+      </div>
+    </div>
+    <div class="row-meta">
+      <div class="row-bar"><div class="rb-away" style="width:67.6%"></div><div class="rb-home" style="width:32.4%"></div></div>
+      <span class="row-pick">← Carolina Panthers 68%</span>
+      <span class="pill conf-med">MED CONF</span>
+      <span class="result-area"><span class="pill pill-correct">✓</span></span>
+      <span class="expand-btn">▾</span>
+    </div>
+  </div>
+  <div class="row-detail" id="det-recent-0">
+    <div class="detail-inner"><table class="detail-stats pregame-stats">
+      <thead><tr>
+        <th class="ds-away">Carolina Panthers</th>
+        <th class="ds-lbl">SEASON STATS</th>
+        <th class="ds-home">Arizona Cardinals</th>
+      </tr></thead>
+      <tbody><tr><td class="ds-away better">1.0</td><td class="ds-lbl">Win%</td><td class="ds-home worse">0.0</td></tr><tr><td class="ds-away better">3.0</td><td class="ds-lbl">Pt Diff/G</td><td class="ds-home worse">-3.0</td></tr><tr><td class="ds-away ">340.0</td><td class="ds-lbl">YPG Off</td><td class="ds-home ">340.0</td></tr><tr><td class="ds-away ">340.0</td><td class="ds-lbl">YPG Def</td><td class="ds-home ">340.0</td></tr><tr><td class="ds-away ">0.0</td><td class="ds-lbl">TO Margin</td><td class="ds-home ">0.0</td></tr></tbody>
+    </table></div>
+  </div>
+</div></div></div>
 <div id="tab-upcoming" class="sub-panel"><div class="filter-bar" id="fb-upcoming"><div class="fg"><span class="fl">Confidence</span><button class="fb active" data-tab="upcoming" data-filter="conf" data-value="all" onclick="setFilter(this)">All</button><button class="fb" data-tab="upcoming" data-filter="conf" data-value="high" onclick="setFilter(this)">High</button><button class="fb" data-tab="upcoming" data-filter="conf" data-value="med" onclick="setFilter(this)">Med</button><button class="fb" data-tab="upcoming" data-filter="conf" data-value="low" onclick="setFilter(this)">Low</button></div><div class="fg"><span class="fl">Window</span><button class="fb active" data-tab="upcoming" data-filter="days" data-value="1" onclick="setFilter(this)">Tomorrow</button><button class="fb" data-tab="upcoming" data-filter="days" data-value="3" onclick="setFilter(this)">Next 3 days</button><button class="fb" data-tab="upcoming" data-filter="days" data-value="7" onclick="setFilter(this)">Next week</button><button class="fb" data-tab="upcoming" data-filter="days" data-value="14" onclick="setFilter(this)">All</button></div><div class="fg"><span class="fl">Favored</span><button class="fb active" data-tab="upcoming" data-filter="pick" data-value="all" onclick="setFilter(this)">All</button><button class="fb" data-tab="upcoming" data-filter="pick" data-value="home" onclick="setFilter(this)">Home</button><button class="fb" data-tab="upcoming" data-filter="pick" data-value="away" onclick="setFilter(this)">Away</button></div><span class="game-count" id="count-upcoming">21 games</span></div><div class="game-list" id="list-upcoming"><div class="game-row"
      data-conf="med"
      data-pick="home"
@@ -401,7 +443,7 @@ body {
     </table></div>
   </div>
 </div><div class="game-row"
-     data-conf="med"
+     data-conf="high"
      data-pick="home"
      data-result=""
      data-date="2026-08-13"
@@ -416,7 +458,7 @@ body {
     <div class="row-teams">
       <div class="row-team">
         <span class="rtn">Arizona Cardinals</span>
-        <span class="rrec">0-0</span>
+        <span class="rrec">0-1</span>
       </div>
       <div class="row-time" id="ctr-401873640">12:00 AM ET</div>
       <div class="row-team right fav">
@@ -425,9 +467,9 @@ body {
       </div>
     </div>
     <div class="row-meta">
-      <div class="row-bar"><div class="rb-away" style="width:40.1%"></div><div class="rb-home" style="width:59.9%"></div></div>
-      <span class="row-pick">→ Las Vegas Raiders 60%</span>
-      <span class="pill conf-med">MED CONF</span>
+      <div class="row-bar"><div class="rb-away" style="width:27.5%"></div><div class="rb-home" style="width:72.5%"></div></div>
+      <span class="row-pick">→ Las Vegas Raiders 72%</span>
+      <span class="pill conf-high">HIGH CONF</span>
       <span class="result-area"></span>
       <span class="expand-btn">▾</span>
     </div>
@@ -439,7 +481,7 @@ body {
         <th class="ds-lbl">SEASON STATS</th>
         <th class="ds-home">Las Vegas Raiders</th>
       </tr></thead>
-      <tbody><tr><td class="ds-away ">0.500</td><td class="ds-lbl">Win%</td><td class="ds-home ">0.500</td></tr><tr><td class="ds-away ">0.0</td><td class="ds-lbl">Pt Diff/G</td><td class="ds-home ">0.0</td></tr><tr><td class="ds-away ">340.0</td><td class="ds-lbl">YPG Off</td><td class="ds-home ">340.0</td></tr><tr><td class="ds-away ">340.0</td><td class="ds-lbl">YPG Def</td><td class="ds-home ">340.0</td></tr><tr><td class="ds-away ">0.0</td><td class="ds-lbl">TO Margin</td><td class="ds-home ">0.0</td></tr></tbody>
+      <tbody><tr><td class="ds-away worse">0.0</td><td class="ds-lbl">Win%</td><td class="ds-home better">0.500</td></tr><tr><td class="ds-away worse">-3.0</td><td class="ds-lbl">Pt Diff/G</td><td class="ds-home better">0.0</td></tr><tr><td class="ds-away ">340.0</td><td class="ds-lbl">YPG Off</td><td class="ds-home ">340.0</td></tr><tr><td class="ds-away ">340.0</td><td class="ds-lbl">YPG Def</td><td class="ds-home ">340.0</td></tr><tr><td class="ds-away ">0.0</td><td class="ds-lbl">TO Margin</td><td class="ds-home ">0.0</td></tr></tbody>
     </table></div>
   </div>
 </div><div class="game-row"
@@ -653,33 +695,33 @@ body {
     </table></div>
   </div>
 </div><div class="game-row"
-     data-conf="med"
-     data-pick="home"
+     data-conf="low"
+     data-pick="away"
      data-result=""
      data-date="2026-08-15"
      data-status="scheduled"
      data-game-id="401873282"
      data-away="Carolina Panthers"
      data-home="Buffalo Bills"
-     data-pred="home"
+     data-pred="away"
      data-espn-path="football/nfl">
   <div class="row-main" onclick="toggleRow('det-upcoming-9',this,'401873282','scheduled')">
     <span class="row-date">Aug 15</span>
     <div class="row-teams">
-      <div class="row-team">
+      <div class="row-team fav">
         <span class="rtn">Carolina Panthers</span>
-        <span class="rrec">0-0</span>
+        <span class="rrec">1-0</span>
       </div>
       <div class="row-time" id="ctr-401873282">05:00 PM ET</div>
-      <div class="row-team right fav">
+      <div class="row-team right">
         <span class="rtn">Buffalo Bills</span>
         <span class="rrec">0-0</span>
       </div>
     </div>
     <div class="row-meta">
-      <div class="row-bar"><div class="rb-away" style="width:40.1%"></div><div class="rb-home" style="width:59.9%"></div></div>
-      <span class="row-pick">→ Buffalo Bills 60%</span>
-      <span class="pill conf-med">MED CONF</span>
+      <div class="row-bar"><div class="rb-away" style="width:54.2%"></div><div class="rb-home" style="width:45.8%"></div></div>
+      <span class="row-pick">← Carolina Panthers 54%</span>
+      <span class="pill conf-low">LOW CONF</span>
       <span class="result-area"></span>
       <span class="expand-btn">▾</span>
     </div>
@@ -691,7 +733,7 @@ body {
         <th class="ds-lbl">SEASON STATS</th>
         <th class="ds-home">Buffalo Bills</th>
       </tr></thead>
-      <tbody><tr><td class="ds-away ">0.500</td><td class="ds-lbl">Win%</td><td class="ds-home ">0.500</td></tr><tr><td class="ds-away ">0.0</td><td class="ds-lbl">Pt Diff/G</td><td class="ds-home ">0.0</td></tr><tr><td class="ds-away ">340.0</td><td class="ds-lbl">YPG Off</td><td class="ds-home ">340.0</td></tr><tr><td class="ds-away ">340.0</td><td class="ds-lbl">YPG Def</td><td class="ds-home ">340.0</td></tr><tr><td class="ds-away ">0.0</td><td class="ds-lbl">TO Margin</td><td class="ds-home ">0.0</td></tr></tbody>
+      <tbody><tr><td class="ds-away better">1.0</td><td class="ds-lbl">Win%</td><td class="ds-home worse">0.500</td></tr><tr><td class="ds-away better">3.0</td><td class="ds-lbl">Pt Diff/G</td><td class="ds-home worse">0.0</td></tr><tr><td class="ds-away ">340.0</td><td class="ds-lbl">YPG Off</td><td class="ds-home ">340.0</td></tr><tr><td class="ds-away ">340.0</td><td class="ds-lbl">YPG Def</td><td class="ds-home ">340.0</td></tr><tr><td class="ds-away ">0.0</td><td class="ds-lbl">TO Margin</td><td class="ds-home ">0.0</td></tr></tbody>
     </table></div>
   </div>
 </div><div class="game-row"
@@ -1073,33 +1115,33 @@ body {
     </table></div>
   </div>
 </div><div class="game-row"
-     data-conf="med"
-     data-pick="home"
+     data-conf="low"
+     data-pick="away"
      data-result=""
      data-date="2026-08-21"
      data-status="scheduled"
      data-game-id="401873287"
      data-away="Carolina Panthers"
      data-home="Jacksonville Jaguars"
-     data-pred="home"
+     data-pred="away"
      data-espn-path="football/nfl">
   <div class="row-main" onclick="toggleRow('det-upcoming-19',this,'401873287','scheduled')">
     <span class="row-date">Aug 21</span>
     <div class="row-teams">
-      <div class="row-team">
+      <div class="row-team fav">
         <span class="rtn">Carolina Panthers</span>
-        <span class="rrec">0-0</span>
+        <span class="rrec">1-0</span>
       </div>
       <div class="row-time" id="ctr-401873287">11:30 PM ET</div>
-      <div class="row-team right fav">
+      <div class="row-team right">
         <span class="rtn">Jacksonville Jaguars</span>
         <span class="rrec">0-0</span>
       </div>
     </div>
     <div class="row-meta">
-      <div class="row-bar"><div class="rb-away" style="width:40.1%"></div><div class="rb-home" style="width:59.9%"></div></div>
-      <span class="row-pick">→ Jacksonville Jaguars 60%</span>
-      <span class="pill conf-med">MED CONF</span>
+      <div class="row-bar"><div class="rb-away" style="width:54.2%"></div><div class="rb-home" style="width:45.8%"></div></div>
+      <span class="row-pick">← Carolina Panthers 54%</span>
+      <span class="pill conf-low">LOW CONF</span>
       <span class="result-area"></span>
       <span class="expand-btn">▾</span>
     </div>
@@ -1111,7 +1153,7 @@ body {
         <th class="ds-lbl">SEASON STATS</th>
         <th class="ds-home">Jacksonville Jaguars</th>
       </tr></thead>
-      <tbody><tr><td class="ds-away ">0.500</td><td class="ds-lbl">Win%</td><td class="ds-home ">0.500</td></tr><tr><td class="ds-away ">0.0</td><td class="ds-lbl">Pt Diff/G</td><td class="ds-home ">0.0</td></tr><tr><td class="ds-away ">340.0</td><td class="ds-lbl">YPG Off</td><td class="ds-home ">340.0</td></tr><tr><td class="ds-away ">340.0</td><td class="ds-lbl">YPG Def</td><td class="ds-home ">340.0</td></tr><tr><td class="ds-away ">0.0</td><td class="ds-lbl">TO Margin</td><td class="ds-home ">0.0</td></tr></tbody>
+      <tbody><tr><td class="ds-away better">1.0</td><td class="ds-lbl">Win%</td><td class="ds-home worse">0.500</td></tr><tr><td class="ds-away better">3.0</td><td class="ds-lbl">Pt Diff/G</td><td class="ds-home worse">0.0</td></tr><tr><td class="ds-away ">340.0</td><td class="ds-lbl">YPG Off</td><td class="ds-home ">340.0</td></tr><tr><td class="ds-away ">340.0</td><td class="ds-lbl">YPG Def</td><td class="ds-home ">340.0</td></tr><tr><td class="ds-away ">0.0</td><td class="ds-lbl">TO Margin</td><td class="ds-home ">0.0</td></tr></tbody>
     </table></div>
   </div>
 </div><div class="game-row"
@@ -1160,10 +1202,10 @@ body {
 <div id="tab-accuracy" class="sub-panel">
   <div style="padding-bottom:32px">
 <div class="acc-grid">
-  <div class="acc-card"><div class="acc-big">0.0%</div><div class="acc-lbl">Overall Accuracy</div></div>
-  <div class="acc-card"><div class="acc-big">0/1</div><div class="acc-lbl">Correct Picks</div></div>
+  <div class="acc-card"><div class="acc-big">50.0%</div><div class="acc-lbl">Overall Accuracy</div></div>
+  <div class="acc-card"><div class="acc-big">1/2</div><div class="acc-lbl">Correct Picks</div></div>
   <div class="acc-card acc-hi"><div class="acc-big">—</div><div class="acc-lbl">High Conf (0)</div></div>
-  <div class="acc-card acc-md"><div class="acc-big">0.0%</div><div class="acc-lbl">Med Conf (1)</div></div>
+  <div class="acc-card acc-md"><div class="acc-big">50.0%</div><div class="acc-lbl">Med Conf (2)</div></div>
   <div class="acc-card acc-lo"><div class="acc-big">—</div><div class="acc-lbl">Low Conf (0)</div></div>
 </div>
 
@@ -1189,16 +1231,16 @@ body {
     </div>
     <div class="fg">
       <span class="fl">Team</span>
-      <select class="team-select" id="team-filter-accuracy" onchange="setTeamFilter(this,'accuracy')"><option value="all">All Teams</option><option value="Seattle Seahawks">Seattle Seahawks</option><option value="New England Patriots">New England Patriots</option></select>
+      <select class="team-select" id="team-filter-accuracy" onchange="setTeamFilter(this,'accuracy')"><option value="all">All Teams</option><option value="Carolina Panthers">Carolina Panthers</option><option value="Arizona Cardinals">Arizona Cardinals</option><option value="Seattle Seahawks">Seattle Seahawks</option><option value="New England Patriots">New England Patriots</option></select>
     </div>
-    <span class="game-count" id="count-accuracy">1 games</span>
+    <span class="game-count" id="count-accuracy">2 games</span>
   </div>
   <table class="acc-table">
     <thead><tr>
       <th>Date</th><th>Matchup</th><th>Predicted</th>
       <th>Actual</th><th>Conf</th><th>Result</th>
     </tr></thead>
-    <tbody id="acc-tbody"><tr class="acc-row" data-conf="med" data-result="wrong" data-away="Seattle Seahawks" data-home="New England Patriots"><td>2026-02-08</td><td class="matchup-cell">Seattle Seahawks <span class="vs-sep">@</span> New England Patriots</td><td>New England Patriots <span class="prob-txt">(60%)</span></td><td>Seattle Seahawks <span class="prob-txt">(29–13)</span></td><td><span class="pill conf-med">MED CONF</span></td><td class="acc-no">✗ Wrong</td></tr></tbody>
+    <tbody id="acc-tbody"><tr class="acc-row" data-conf="med" data-result="wrong" data-away="Seattle Seahawks" data-home="New England Patriots"><td>2026-02-08</td><td class="matchup-cell">Seattle Seahawks <span class="vs-sep">@</span> New England Patriots</td><td>New England Patriots <span class="prob-txt">(60%)</span></td><td>Seattle Seahawks <span class="prob-txt">(29–13)</span></td><td><span class="pill conf-med">MED CONF</span></td><td class="acc-no">✗ Wrong</td></tr><tr class="acc-row" data-conf="med" data-result="correct" data-away="Carolina Panthers" data-home="Arizona Cardinals"><td>2026-08-06</td><td class="matchup-cell">Carolina Panthers <span class="vs-sep">@</span> Arizona Cardinals</td><td>Carolina Panthers <span class="prob-txt">(68%)</span></td><td>Carolina Panthers <span class="prob-txt">(33–30)</span></td><td><span class="pill conf-med">MED CONF</span></td><td class="acc-ok">✓ Correct</td></tr></tbody>
   </table>
 </div>
 
@@ -1215,7 +1257,7 @@ body {
       <span class="fl">Search</span>
       <input class="team-search" id="team-search" placeholder="Filter team…" oninput="filterTeamSearch(this)">
     </div>
-    <span class="game-count" id="count-teams">2 teams</span>
+    <span class="game-count" id="count-teams">4 teams</span>
   </div>
   <table class="acc-table sortable-team-table" id="team-breakdown-table">
     <thead><tr>
@@ -1226,7 +1268,7 @@ body {
       <th>As Favorite</th>
       <th>As Underdog</th>
     </tr></thead>
-    <tbody id="team-tbody"><tr class="team-row" data-team="Seattle Seahawks"><td class="team-name-cell">Seattle Seahawks</td><td>1</td><td class="acc-no">0%</td><td>0/1</td><td>— <span class="prob-txt">(0/0)</span></td><td>0% <span class="prob-txt">(0/1)</span></td></tr><tr class="team-row" data-team="New England Patriots"><td class="team-name-cell">New England Patriots</td><td>1</td><td class="acc-no">0%</td><td>0/1</td><td>0% <span class="prob-txt">(0/1)</span></td><td>— <span class="prob-txt">(0/0)</span></td></tr></tbody>
+    <tbody id="team-tbody"><tr class="team-row" data-team="Carolina Panthers"><td class="team-name-cell">Carolina Panthers</td><td>1</td><td class="acc-ok">100%</td><td>1/1</td><td>100% <span class="prob-txt">(1/1)</span></td><td>— <span class="prob-txt">(0/0)</span></td></tr><tr class="team-row" data-team="Arizona Cardinals"><td class="team-name-cell">Arizona Cardinals</td><td>1</td><td class="acc-ok">100%</td><td>1/1</td><td>— <span class="prob-txt">(0/0)</span></td><td>100% <span class="prob-txt">(1/1)</span></td></tr><tr class="team-row" data-team="Seattle Seahawks"><td class="team-name-cell">Seattle Seahawks</td><td>1</td><td class="acc-no">0%</td><td>0/1</td><td>— <span class="prob-txt">(0/0)</span></td><td>0% <span class="prob-txt">(0/1)</span></td></tr><tr class="team-row" data-team="New England Patriots"><td class="team-name-cell">New England Patriots</td><td>1</td><td class="acc-no">0%</td><td>0/1</td><td>0% <span class="prob-txt">(0/1)</span></td><td>— <span class="prob-txt">(0/0)</span></td></tr></tbody>
   </table>
 </div></div>
 </div>
