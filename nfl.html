@@ -257,10 +257,10 @@ body {
   <div class="hdr-emoji">🏈</div>
   <div class="hdr-info">
     <div class="hdr-name">NFL Predictions</div>
-    <div class="hdr-sub">2026 Season  ·  Today: 0  ·  Recent: 1  ·  Upcoming: 32</div>
+    <div class="hdr-sub">2026 Season  ·  Today: 6  ·  Recent: 1  ·  Upcoming: 30</div>
   </div>
   <div class="hdr-right">
-    <div class="hdr-date">Updated 2026-08-12</div>
+    <div class="hdr-date">Updated 2026-08-13</div>
     <div class="live-status" id="live-indicator">Checking for live games…</div>
   </div>
 </div>
@@ -272,7 +272,259 @@ body {
   <div class="sub-tab" onclick="sw(this,'accuracy')">Accuracy</div>
 </div>
 
-<div id="tab-today"    class="sub-panel active"><div class="empty"><span class="e-icon">🏈</span>No NFL games to show.</div></div>
+<div id="tab-today"    class="sub-panel active"><div class="filter-bar" id="fb-today"><div class="fg"><span class="fl">Confidence</span><button class="fb active" data-tab="today" data-filter="conf" data-value="all" onclick="setFilter(this)">All</button><button class="fb" data-tab="today" data-filter="conf" data-value="high" onclick="setFilter(this)">High</button><button class="fb" data-tab="today" data-filter="conf" data-value="med" onclick="setFilter(this)">Med</button><button class="fb" data-tab="today" data-filter="conf" data-value="low" onclick="setFilter(this)">Low</button></div><div class="fg"><span class="fl">Favored</span><button class="fb active" data-tab="today" data-filter="pick" data-value="all" onclick="setFilter(this)">All</button><button class="fb" data-tab="today" data-filter="pick" data-value="home" onclick="setFilter(this)">Home</button><button class="fb" data-tab="today" data-filter="pick" data-value="away" onclick="setFilter(this)">Away</button></div><span class="game-count" id="count-today">6 games</span></div><div class="game-list" id="list-today"><div class="game-row"
+     data-conf="med"
+     data-pick="home"
+     data-result=""
+     data-date="2026-08-13"
+     data-status="scheduled"
+     data-game-id="401873272"
+     data-away="Detroit Lions"
+     data-home="Cincinnati Bengals"
+     data-pred="home"
+     data-espn-path="football/nfl">
+  <div class="row-main" onclick="toggleRow('det-today-0',this,'401873272','scheduled')">
+    <span class="row-date">Aug 13</span>
+    <div class="row-teams">
+      <div class="row-team">
+        <span class="rtn">Detroit Lions</span>
+        <span class="rrec">0-0</span>
+      </div>
+      <div class="row-time" id="ctr-401873272">11:00 PM ET</div>
+      <div class="row-team right fav">
+        <span class="rtn">Cincinnati Bengals</span>
+        <span class="rrec">0-0</span>
+      </div>
+    </div>
+    <div class="row-meta">
+      <div class="row-bar"><div class="rb-away" style="width:40.1%"></div><div class="rb-home" style="width:59.9%"></div></div>
+      <span class="row-pick">→ Cincinnati Bengals 60%</span>
+      <span class="pill conf-med">MED CONF</span>
+      <span class="result-area"></span>
+      <span class="expand-btn">▾</span>
+    </div>
+  </div>
+  <div class="row-detail" id="det-today-0">
+    <div class="detail-inner"><table class="detail-stats pregame-stats">
+      <thead><tr>
+        <th class="ds-away">Detroit Lions</th>
+        <th class="ds-lbl">SEASON STATS</th>
+        <th class="ds-home">Cincinnati Bengals</th>
+      </tr></thead>
+      <tbody><tr><td class="ds-away ">0.500</td><td class="ds-lbl">Win%</td><td class="ds-home ">0.500</td></tr><tr><td class="ds-away ">0.0</td><td class="ds-lbl">Pt Diff/G</td><td class="ds-home ">0.0</td></tr><tr><td class="ds-away ">340.0</td><td class="ds-lbl">YPG Off</td><td class="ds-home ">340.0</td></tr><tr><td class="ds-away ">340.0</td><td class="ds-lbl">YPG Def</td><td class="ds-home ">340.0</td></tr><tr><td class="ds-away ">0.0</td><td class="ds-lbl">TO Margin</td><td class="ds-home ">0.0</td></tr></tbody>
+    </table></div>
+  </div>
+</div><div class="game-row"
+     data-conf="med"
+     data-pick="home"
+     data-result=""
+     data-date="2026-08-13"
+     data-status="scheduled"
+     data-game-id="401873275"
+     data-away="Green Bay Packers"
+     data-home="Pittsburgh Steelers"
+     data-pred="home"
+     data-espn-path="football/nfl">
+  <div class="row-main" onclick="toggleRow('det-today-1',this,'401873275','scheduled')">
+    <span class="row-date">Aug 13</span>
+    <div class="row-teams">
+      <div class="row-team">
+        <span class="rtn">Green Bay Packers</span>
+        <span class="rrec">0-0</span>
+      </div>
+      <div class="row-time" id="ctr-401873275">11:00 PM ET</div>
+      <div class="row-team right fav">
+        <span class="rtn">Pittsburgh Steelers</span>
+        <span class="rrec">0-0</span>
+      </div>
+    </div>
+    <div class="row-meta">
+      <div class="row-bar"><div class="rb-away" style="width:40.1%"></div><div class="rb-home" style="width:59.9%"></div></div>
+      <span class="row-pick">→ Pittsburgh Steelers 60%</span>
+      <span class="pill conf-med">MED CONF</span>
+      <span class="result-area"></span>
+      <span class="expand-btn">▾</span>
+    </div>
+  </div>
+  <div class="row-detail" id="det-today-1">
+    <div class="detail-inner"><table class="detail-stats pregame-stats">
+      <thead><tr>
+        <th class="ds-away">Green Bay Packers</th>
+        <th class="ds-lbl">SEASON STATS</th>
+        <th class="ds-home">Pittsburgh Steelers</th>
+      </tr></thead>
+      <tbody><tr><td class="ds-away ">0.500</td><td class="ds-lbl">Win%</td><td class="ds-home ">0.500</td></tr><tr><td class="ds-away ">0.0</td><td class="ds-lbl">Pt Diff/G</td><td class="ds-home ">0.0</td></tr><tr><td class="ds-away ">340.0</td><td class="ds-lbl">YPG Off</td><td class="ds-home ">340.0</td></tr><tr><td class="ds-away ">340.0</td><td class="ds-lbl">YPG Def</td><td class="ds-home ">340.0</td></tr><tr><td class="ds-away ">0.0</td><td class="ds-lbl">TO Margin</td><td class="ds-home ">0.0</td></tr></tbody>
+    </table></div>
+  </div>
+</div><div class="game-row"
+     data-conf="med"
+     data-pick="home"
+     data-result=""
+     data-date="2026-08-13"
+     data-status="scheduled"
+     data-game-id="401873273"
+     data-away="Indianapolis Colts"
+     data-home="New England Patriots"
+     data-pred="home"
+     data-espn-path="football/nfl">
+  <div class="row-main" onclick="toggleRow('det-today-2',this,'401873273','scheduled')">
+    <span class="row-date">Aug 13</span>
+    <div class="row-teams">
+      <div class="row-team">
+        <span class="rtn">Indianapolis Colts</span>
+        <span class="rrec">0-0</span>
+      </div>
+      <div class="row-time" id="ctr-401873273">11:30 PM ET</div>
+      <div class="row-team right fav">
+        <span class="rtn">New England Patriots</span>
+        <span class="rrec">0-0</span>
+      </div>
+    </div>
+    <div class="row-meta">
+      <div class="row-bar"><div class="rb-away" style="width:40.1%"></div><div class="rb-home" style="width:59.9%"></div></div>
+      <span class="row-pick">→ New England Patriots 60%</span>
+      <span class="pill conf-med">MED CONF</span>
+      <span class="result-area"></span>
+      <span class="expand-btn">▾</span>
+    </div>
+  </div>
+  <div class="row-detail" id="det-today-2">
+    <div class="detail-inner"><table class="detail-stats pregame-stats">
+      <thead><tr>
+        <th class="ds-away">Indianapolis Colts</th>
+        <th class="ds-lbl">SEASON STATS</th>
+        <th class="ds-home">New England Patriots</th>
+      </tr></thead>
+      <tbody><tr><td class="ds-away ">0.500</td><td class="ds-lbl">Win%</td><td class="ds-home ">0.500</td></tr><tr><td class="ds-away ">0.0</td><td class="ds-lbl">Pt Diff/G</td><td class="ds-home ">0.0</td></tr><tr><td class="ds-away ">340.0</td><td class="ds-lbl">YPG Off</td><td class="ds-home ">340.0</td></tr><tr><td class="ds-away ">340.0</td><td class="ds-lbl">YPG Def</td><td class="ds-home ">340.0</td></tr><tr><td class="ds-away ">0.0</td><td class="ds-lbl">TO Margin</td><td class="ds-home ">0.0</td></tr></tbody>
+    </table></div>
+  </div>
+</div><div class="game-row"
+     data-conf="high"
+     data-pick="home"
+     data-result=""
+     data-date="2026-08-13"
+     data-status="scheduled"
+     data-game-id="401873640"
+     data-away="Arizona Cardinals"
+     data-home="Las Vegas Raiders"
+     data-pred="home"
+     data-espn-path="football/nfl">
+  <div class="row-main" onclick="toggleRow('det-today-3',this,'401873640','scheduled')">
+    <span class="row-date">Aug 13</span>
+    <div class="row-teams">
+      <div class="row-team">
+        <span class="rtn">Arizona Cardinals</span>
+        <span class="rrec">0-1</span>
+      </div>
+      <div class="row-time" id="ctr-401873640">12:00 AM ET</div>
+      <div class="row-team right fav">
+        <span class="rtn">Las Vegas Raiders</span>
+        <span class="rrec">0-0</span>
+      </div>
+    </div>
+    <div class="row-meta">
+      <div class="row-bar"><div class="rb-away" style="width:27.5%"></div><div class="rb-home" style="width:72.5%"></div></div>
+      <span class="row-pick">→ Las Vegas Raiders 72%</span>
+      <span class="pill conf-high">HIGH CONF</span>
+      <span class="result-area"></span>
+      <span class="expand-btn">▾</span>
+    </div>
+  </div>
+  <div class="row-detail" id="det-today-3">
+    <div class="detail-inner"><table class="detail-stats pregame-stats">
+      <thead><tr>
+        <th class="ds-away">Arizona Cardinals</th>
+        <th class="ds-lbl">SEASON STATS</th>
+        <th class="ds-home">Las Vegas Raiders</th>
+      </tr></thead>
+      <tbody><tr><td class="ds-away worse">0.0</td><td class="ds-lbl">Win%</td><td class="ds-home better">0.500</td></tr><tr><td class="ds-away worse">-3.0</td><td class="ds-lbl">Pt Diff/G</td><td class="ds-home better">0.0</td></tr><tr><td class="ds-away ">340.0</td><td class="ds-lbl">YPG Off</td><td class="ds-home ">340.0</td></tr><tr><td class="ds-away ">340.0</td><td class="ds-lbl">YPG Def</td><td class="ds-home ">340.0</td></tr><tr><td class="ds-away ">0.0</td><td class="ds-lbl">TO Margin</td><td class="ds-home ">0.0</td></tr></tbody>
+    </table></div>
+  </div>
+</div><div class="game-row"
+     data-conf="med"
+     data-pick="home"
+     data-result=""
+     data-date="2026-08-13"
+     data-status="scheduled"
+     data-game-id="401873274"
+     data-away="Los Angeles Chargers"
+     data-home="Houston Texans"
+     data-pred="home"
+     data-espn-path="football/nfl">
+  <div class="row-main" onclick="toggleRow('det-today-4',this,'401873274','scheduled')">
+    <span class="row-date">Aug 13</span>
+    <div class="row-teams">
+      <div class="row-team">
+        <span class="rtn">Los Angeles Chargers</span>
+        <span class="rrec">0-0</span>
+      </div>
+      <div class="row-time" id="ctr-401873274">12:00 AM ET</div>
+      <div class="row-team right fav">
+        <span class="rtn">Houston Texans</span>
+        <span class="rrec">0-0</span>
+      </div>
+    </div>
+    <div class="row-meta">
+      <div class="row-bar"><div class="rb-away" style="width:40.1%"></div><div class="rb-home" style="width:59.9%"></div></div>
+      <span class="row-pick">→ Houston Texans 60%</span>
+      <span class="pill conf-med">MED CONF</span>
+      <span class="result-area"></span>
+      <span class="expand-btn">▾</span>
+    </div>
+  </div>
+  <div class="row-detail" id="det-today-4">
+    <div class="detail-inner"><table class="detail-stats pregame-stats">
+      <thead><tr>
+        <th class="ds-away">Los Angeles Chargers</th>
+        <th class="ds-lbl">SEASON STATS</th>
+        <th class="ds-home">Houston Texans</th>
+      </tr></thead>
+      <tbody><tr><td class="ds-away ">0.500</td><td class="ds-lbl">Win%</td><td class="ds-home ">0.500</td></tr><tr><td class="ds-away ">0.0</td><td class="ds-lbl">Pt Diff/G</td><td class="ds-home ">0.0</td></tr><tr><td class="ds-away ">340.0</td><td class="ds-lbl">YPG Off</td><td class="ds-home ">340.0</td></tr><tr><td class="ds-away ">340.0</td><td class="ds-lbl">YPG Def</td><td class="ds-home ">340.0</td></tr><tr><td class="ds-away ">0.0</td><td class="ds-lbl">TO Margin</td><td class="ds-home ">0.0</td></tr></tbody>
+    </table></div>
+  </div>
+</div><div class="game-row"
+     data-conf="med"
+     data-pick="home"
+     data-result=""
+     data-date="2026-08-13"
+     data-status="scheduled"
+     data-game-id="401874392"
+     data-away="Tennessee Titans"
+     data-home="San Francisco 49ers"
+     data-pred="home"
+     data-espn-path="football/nfl">
+  <div class="row-main" onclick="toggleRow('det-today-5',this,'401874392','scheduled')">
+    <span class="row-date">Aug 13</span>
+    <div class="row-teams">
+      <div class="row-team">
+        <span class="rtn">Tennessee Titans</span>
+        <span class="rrec">0-0</span>
+      </div>
+      <div class="row-time" id="ctr-401874392">01:00 AM ET</div>
+      <div class="row-team right fav">
+        <span class="rtn">San Francisco 49ers</span>
+        <span class="rrec">0-0</span>
+      </div>
+    </div>
+    <div class="row-meta">
+      <div class="row-bar"><div class="rb-away" style="width:40.1%"></div><div class="rb-home" style="width:59.9%"></div></div>
+      <span class="row-pick">→ San Francisco 49ers 60%</span>
+      <span class="pill conf-med">MED CONF</span>
+      <span class="result-area"></span>
+      <span class="expand-btn">▾</span>
+    </div>
+  </div>
+  <div class="row-detail" id="det-today-5">
+    <div class="detail-inner"><table class="detail-stats pregame-stats">
+      <thead><tr>
+        <th class="ds-away">Tennessee Titans</th>
+        <th class="ds-lbl">SEASON STATS</th>
+        <th class="ds-home">San Francisco 49ers</th>
+      </tr></thead>
+      <tbody><tr><td class="ds-away ">0.500</td><td class="ds-lbl">Win%</td><td class="ds-home ">0.500</td></tr><tr><td class="ds-away ">0.0</td><td class="ds-lbl">Pt Diff/G</td><td class="ds-home ">0.0</td></tr><tr><td class="ds-away ">340.0</td><td class="ds-lbl">YPG Off</td><td class="ds-home ">340.0</td></tr><tr><td class="ds-away ">340.0</td><td class="ds-lbl">YPG Def</td><td class="ds-home ">340.0</td></tr><tr><td class="ds-away ">0.0</td><td class="ds-lbl">TO Margin</td><td class="ds-home ">0.0</td></tr></tbody>
+    </table></div>
+  </div>
+</div></div></div>
 <div id="tab-recent"   class="sub-panel"><div class="filter-bar" id="fb-recent"><div class="fg"><span class="fl">Result</span><button class="fb active" data-tab="recent" data-filter="result" data-value="all" onclick="setFilter(this)">All</button><button class="fb" data-tab="recent" data-filter="result" data-value="correct" onclick="setFilter(this)">✓ Correct</button><button class="fb" data-tab="recent" data-filter="result" data-value="wrong" onclick="setFilter(this)">✗ Wrong</button></div><div class="fg"><span class="fl">Confidence</span><button class="fb active" data-tab="recent" data-filter="conf" data-value="all" onclick="setFilter(this)">All</button><button class="fb" data-tab="recent" data-filter="conf" data-value="high" onclick="setFilter(this)">High</button><button class="fb" data-tab="recent" data-filter="conf" data-value="med" onclick="setFilter(this)">Med</button><button class="fb" data-tab="recent" data-filter="conf" data-value="low" onclick="setFilter(this)">Low</button></div><div class="fg"><span class="fl">Period</span><button class="fb active" data-tab="recent" data-filter="days" data-value="3" onclick="setFilter(this)">Last 3 days</button><button class="fb" data-tab="recent" data-filter="days" data-value="7" onclick="setFilter(this)">Last 7 days</button><button class="fb" data-tab="recent" data-filter="days" data-value="10" onclick="setFilter(this)">Last 10 days</button></div><span class="game-count" id="count-recent">1 game</span></div><div class="game-list" id="list-recent"><div class="game-row"
      data-conf="med"
      data-pick="away"
@@ -316,259 +568,7 @@ body {
     </table></div>
   </div>
 </div></div></div>
-<div id="tab-upcoming" class="sub-panel"><div class="filter-bar" id="fb-upcoming"><div class="fg"><span class="fl">Confidence</span><button class="fb active" data-tab="upcoming" data-filter="conf" data-value="all" onclick="setFilter(this)">All</button><button class="fb" data-tab="upcoming" data-filter="conf" data-value="high" onclick="setFilter(this)">High</button><button class="fb" data-tab="upcoming" data-filter="conf" data-value="med" onclick="setFilter(this)">Med</button><button class="fb" data-tab="upcoming" data-filter="conf" data-value="low" onclick="setFilter(this)">Low</button></div><div class="fg"><span class="fl">Window</span><button class="fb active" data-tab="upcoming" data-filter="days" data-value="1" onclick="setFilter(this)">Tomorrow</button><button class="fb" data-tab="upcoming" data-filter="days" data-value="3" onclick="setFilter(this)">Next 3 days</button><button class="fb" data-tab="upcoming" data-filter="days" data-value="7" onclick="setFilter(this)">Next week</button><button class="fb" data-tab="upcoming" data-filter="days" data-value="14" onclick="setFilter(this)">All</button></div><div class="fg"><span class="fl">Favored</span><button class="fb active" data-tab="upcoming" data-filter="pick" data-value="all" onclick="setFilter(this)">All</button><button class="fb" data-tab="upcoming" data-filter="pick" data-value="home" onclick="setFilter(this)">Home</button><button class="fb" data-tab="upcoming" data-filter="pick" data-value="away" onclick="setFilter(this)">Away</button></div><span class="game-count" id="count-upcoming">32 games</span></div><div class="game-list" id="list-upcoming"><div class="game-row"
-     data-conf="med"
-     data-pick="home"
-     data-result=""
-     data-date="2026-08-13"
-     data-status="scheduled"
-     data-game-id="401873272"
-     data-away="Detroit Lions"
-     data-home="Cincinnati Bengals"
-     data-pred="home"
-     data-espn-path="football/nfl">
-  <div class="row-main" onclick="toggleRow('det-upcoming-0',this,'401873272','scheduled')">
-    <span class="row-date">Aug 13</span>
-    <div class="row-teams">
-      <div class="row-team">
-        <span class="rtn">Detroit Lions</span>
-        <span class="rrec">0-0</span>
-      </div>
-      <div class="row-time" id="ctr-401873272">11:00 PM ET</div>
-      <div class="row-team right fav">
-        <span class="rtn">Cincinnati Bengals</span>
-        <span class="rrec">0-0</span>
-      </div>
-    </div>
-    <div class="row-meta">
-      <div class="row-bar"><div class="rb-away" style="width:40.1%"></div><div class="rb-home" style="width:59.9%"></div></div>
-      <span class="row-pick">→ Cincinnati Bengals 60%</span>
-      <span class="pill conf-med">MED CONF</span>
-      <span class="result-area"></span>
-      <span class="expand-btn">▾</span>
-    </div>
-  </div>
-  <div class="row-detail" id="det-upcoming-0">
-    <div class="detail-inner"><table class="detail-stats pregame-stats">
-      <thead><tr>
-        <th class="ds-away">Detroit Lions</th>
-        <th class="ds-lbl">SEASON STATS</th>
-        <th class="ds-home">Cincinnati Bengals</th>
-      </tr></thead>
-      <tbody><tr><td class="ds-away ">0.500</td><td class="ds-lbl">Win%</td><td class="ds-home ">0.500</td></tr><tr><td class="ds-away ">0.0</td><td class="ds-lbl">Pt Diff/G</td><td class="ds-home ">0.0</td></tr><tr><td class="ds-away ">340.0</td><td class="ds-lbl">YPG Off</td><td class="ds-home ">340.0</td></tr><tr><td class="ds-away ">340.0</td><td class="ds-lbl">YPG Def</td><td class="ds-home ">340.0</td></tr><tr><td class="ds-away ">0.0</td><td class="ds-lbl">TO Margin</td><td class="ds-home ">0.0</td></tr></tbody>
-    </table></div>
-  </div>
-</div><div class="game-row"
-     data-conf="med"
-     data-pick="home"
-     data-result=""
-     data-date="2026-08-13"
-     data-status="scheduled"
-     data-game-id="401873275"
-     data-away="Green Bay Packers"
-     data-home="Pittsburgh Steelers"
-     data-pred="home"
-     data-espn-path="football/nfl">
-  <div class="row-main" onclick="toggleRow('det-upcoming-1',this,'401873275','scheduled')">
-    <span class="row-date">Aug 13</span>
-    <div class="row-teams">
-      <div class="row-team">
-        <span class="rtn">Green Bay Packers</span>
-        <span class="rrec">0-0</span>
-      </div>
-      <div class="row-time" id="ctr-401873275">11:00 PM ET</div>
-      <div class="row-team right fav">
-        <span class="rtn">Pittsburgh Steelers</span>
-        <span class="rrec">0-0</span>
-      </div>
-    </div>
-    <div class="row-meta">
-      <div class="row-bar"><div class="rb-away" style="width:40.1%"></div><div class="rb-home" style="width:59.9%"></div></div>
-      <span class="row-pick">→ Pittsburgh Steelers 60%</span>
-      <span class="pill conf-med">MED CONF</span>
-      <span class="result-area"></span>
-      <span class="expand-btn">▾</span>
-    </div>
-  </div>
-  <div class="row-detail" id="det-upcoming-1">
-    <div class="detail-inner"><table class="detail-stats pregame-stats">
-      <thead><tr>
-        <th class="ds-away">Green Bay Packers</th>
-        <th class="ds-lbl">SEASON STATS</th>
-        <th class="ds-home">Pittsburgh Steelers</th>
-      </tr></thead>
-      <tbody><tr><td class="ds-away ">0.500</td><td class="ds-lbl">Win%</td><td class="ds-home ">0.500</td></tr><tr><td class="ds-away ">0.0</td><td class="ds-lbl">Pt Diff/G</td><td class="ds-home ">0.0</td></tr><tr><td class="ds-away ">340.0</td><td class="ds-lbl">YPG Off</td><td class="ds-home ">340.0</td></tr><tr><td class="ds-away ">340.0</td><td class="ds-lbl">YPG Def</td><td class="ds-home ">340.0</td></tr><tr><td class="ds-away ">0.0</td><td class="ds-lbl">TO Margin</td><td class="ds-home ">0.0</td></tr></tbody>
-    </table></div>
-  </div>
-</div><div class="game-row"
-     data-conf="med"
-     data-pick="home"
-     data-result=""
-     data-date="2026-08-13"
-     data-status="scheduled"
-     data-game-id="401873273"
-     data-away="Indianapolis Colts"
-     data-home="New England Patriots"
-     data-pred="home"
-     data-espn-path="football/nfl">
-  <div class="row-main" onclick="toggleRow('det-upcoming-2',this,'401873273','scheduled')">
-    <span class="row-date">Aug 13</span>
-    <div class="row-teams">
-      <div class="row-team">
-        <span class="rtn">Indianapolis Colts</span>
-        <span class="rrec">0-0</span>
-      </div>
-      <div class="row-time" id="ctr-401873273">11:30 PM ET</div>
-      <div class="row-team right fav">
-        <span class="rtn">New England Patriots</span>
-        <span class="rrec">0-0</span>
-      </div>
-    </div>
-    <div class="row-meta">
-      <div class="row-bar"><div class="rb-away" style="width:40.1%"></div><div class="rb-home" style="width:59.9%"></div></div>
-      <span class="row-pick">→ New England Patriots 60%</span>
-      <span class="pill conf-med">MED CONF</span>
-      <span class="result-area"></span>
-      <span class="expand-btn">▾</span>
-    </div>
-  </div>
-  <div class="row-detail" id="det-upcoming-2">
-    <div class="detail-inner"><table class="detail-stats pregame-stats">
-      <thead><tr>
-        <th class="ds-away">Indianapolis Colts</th>
-        <th class="ds-lbl">SEASON STATS</th>
-        <th class="ds-home">New England Patriots</th>
-      </tr></thead>
-      <tbody><tr><td class="ds-away ">0.500</td><td class="ds-lbl">Win%</td><td class="ds-home ">0.500</td></tr><tr><td class="ds-away ">0.0</td><td class="ds-lbl">Pt Diff/G</td><td class="ds-home ">0.0</td></tr><tr><td class="ds-away ">340.0</td><td class="ds-lbl">YPG Off</td><td class="ds-home ">340.0</td></tr><tr><td class="ds-away ">340.0</td><td class="ds-lbl">YPG Def</td><td class="ds-home ">340.0</td></tr><tr><td class="ds-away ">0.0</td><td class="ds-lbl">TO Margin</td><td class="ds-home ">0.0</td></tr></tbody>
-    </table></div>
-  </div>
-</div><div class="game-row"
-     data-conf="high"
-     data-pick="home"
-     data-result=""
-     data-date="2026-08-13"
-     data-status="scheduled"
-     data-game-id="401873640"
-     data-away="Arizona Cardinals"
-     data-home="Las Vegas Raiders"
-     data-pred="home"
-     data-espn-path="football/nfl">
-  <div class="row-main" onclick="toggleRow('det-upcoming-3',this,'401873640','scheduled')">
-    <span class="row-date">Aug 13</span>
-    <div class="row-teams">
-      <div class="row-team">
-        <span class="rtn">Arizona Cardinals</span>
-        <span class="rrec">0-1</span>
-      </div>
-      <div class="row-time" id="ctr-401873640">12:00 AM ET</div>
-      <div class="row-team right fav">
-        <span class="rtn">Las Vegas Raiders</span>
-        <span class="rrec">0-0</span>
-      </div>
-    </div>
-    <div class="row-meta">
-      <div class="row-bar"><div class="rb-away" style="width:27.5%"></div><div class="rb-home" style="width:72.5%"></div></div>
-      <span class="row-pick">→ Las Vegas Raiders 72%</span>
-      <span class="pill conf-high">HIGH CONF</span>
-      <span class="result-area"></span>
-      <span class="expand-btn">▾</span>
-    </div>
-  </div>
-  <div class="row-detail" id="det-upcoming-3">
-    <div class="detail-inner"><table class="detail-stats pregame-stats">
-      <thead><tr>
-        <th class="ds-away">Arizona Cardinals</th>
-        <th class="ds-lbl">SEASON STATS</th>
-        <th class="ds-home">Las Vegas Raiders</th>
-      </tr></thead>
-      <tbody><tr><td class="ds-away worse">0.0</td><td class="ds-lbl">Win%</td><td class="ds-home better">0.500</td></tr><tr><td class="ds-away worse">-3.0</td><td class="ds-lbl">Pt Diff/G</td><td class="ds-home better">0.0</td></tr><tr><td class="ds-away ">340.0</td><td class="ds-lbl">YPG Off</td><td class="ds-home ">340.0</td></tr><tr><td class="ds-away ">340.0</td><td class="ds-lbl">YPG Def</td><td class="ds-home ">340.0</td></tr><tr><td class="ds-away ">0.0</td><td class="ds-lbl">TO Margin</td><td class="ds-home ">0.0</td></tr></tbody>
-    </table></div>
-  </div>
-</div><div class="game-row"
-     data-conf="med"
-     data-pick="home"
-     data-result=""
-     data-date="2026-08-13"
-     data-status="scheduled"
-     data-game-id="401873274"
-     data-away="Los Angeles Chargers"
-     data-home="Houston Texans"
-     data-pred="home"
-     data-espn-path="football/nfl">
-  <div class="row-main" onclick="toggleRow('det-upcoming-4',this,'401873274','scheduled')">
-    <span class="row-date">Aug 13</span>
-    <div class="row-teams">
-      <div class="row-team">
-        <span class="rtn">Los Angeles Chargers</span>
-        <span class="rrec">0-0</span>
-      </div>
-      <div class="row-time" id="ctr-401873274">12:00 AM ET</div>
-      <div class="row-team right fav">
-        <span class="rtn">Houston Texans</span>
-        <span class="rrec">0-0</span>
-      </div>
-    </div>
-    <div class="row-meta">
-      <div class="row-bar"><div class="rb-away" style="width:40.1%"></div><div class="rb-home" style="width:59.9%"></div></div>
-      <span class="row-pick">→ Houston Texans 60%</span>
-      <span class="pill conf-med">MED CONF</span>
-      <span class="result-area"></span>
-      <span class="expand-btn">▾</span>
-    </div>
-  </div>
-  <div class="row-detail" id="det-upcoming-4">
-    <div class="detail-inner"><table class="detail-stats pregame-stats">
-      <thead><tr>
-        <th class="ds-away">Los Angeles Chargers</th>
-        <th class="ds-lbl">SEASON STATS</th>
-        <th class="ds-home">Houston Texans</th>
-      </tr></thead>
-      <tbody><tr><td class="ds-away ">0.500</td><td class="ds-lbl">Win%</td><td class="ds-home ">0.500</td></tr><tr><td class="ds-away ">0.0</td><td class="ds-lbl">Pt Diff/G</td><td class="ds-home ">0.0</td></tr><tr><td class="ds-away ">340.0</td><td class="ds-lbl">YPG Off</td><td class="ds-home ">340.0</td></tr><tr><td class="ds-away ">340.0</td><td class="ds-lbl">YPG Def</td><td class="ds-home ">340.0</td></tr><tr><td class="ds-away ">0.0</td><td class="ds-lbl">TO Margin</td><td class="ds-home ">0.0</td></tr></tbody>
-    </table></div>
-  </div>
-</div><div class="game-row"
-     data-conf="med"
-     data-pick="home"
-     data-result=""
-     data-date="2026-08-13"
-     data-status="scheduled"
-     data-game-id="401874392"
-     data-away="Tennessee Titans"
-     data-home="San Francisco 49ers"
-     data-pred="home"
-     data-espn-path="football/nfl">
-  <div class="row-main" onclick="toggleRow('det-upcoming-5',this,'401874392','scheduled')">
-    <span class="row-date">Aug 13</span>
-    <div class="row-teams">
-      <div class="row-team">
-        <span class="rtn">Tennessee Titans</span>
-        <span class="rrec">0-0</span>
-      </div>
-      <div class="row-time" id="ctr-401874392">01:00 AM ET</div>
-      <div class="row-team right fav">
-        <span class="rtn">San Francisco 49ers</span>
-        <span class="rrec">0-0</span>
-      </div>
-    </div>
-    <div class="row-meta">
-      <div class="row-bar"><div class="rb-away" style="width:40.1%"></div><div class="rb-home" style="width:59.9%"></div></div>
-      <span class="row-pick">→ San Francisco 49ers 60%</span>
-      <span class="pill conf-med">MED CONF</span>
-      <span class="result-area"></span>
-      <span class="expand-btn">▾</span>
-    </div>
-  </div>
-  <div class="row-detail" id="det-upcoming-5">
-    <div class="detail-inner"><table class="detail-stats pregame-stats">
-      <thead><tr>
-        <th class="ds-away">Tennessee Titans</th>
-        <th class="ds-lbl">SEASON STATS</th>
-        <th class="ds-home">San Francisco 49ers</th>
-      </tr></thead>
-      <tbody><tr><td class="ds-away ">0.500</td><td class="ds-lbl">Win%</td><td class="ds-home ">0.500</td></tr><tr><td class="ds-away ">0.0</td><td class="ds-lbl">Pt Diff/G</td><td class="ds-home ">0.0</td></tr><tr><td class="ds-away ">340.0</td><td class="ds-lbl">YPG Off</td><td class="ds-home ">340.0</td></tr><tr><td class="ds-away ">340.0</td><td class="ds-lbl">YPG Def</td><td class="ds-home ">340.0</td></tr><tr><td class="ds-away ">0.0</td><td class="ds-lbl">TO Margin</td><td class="ds-home ">0.0</td></tr></tbody>
-    </table></div>
-  </div>
-</div><div class="game-row"
+<div id="tab-upcoming" class="sub-panel"><div class="filter-bar" id="fb-upcoming"><div class="fg"><span class="fl">Confidence</span><button class="fb active" data-tab="upcoming" data-filter="conf" data-value="all" onclick="setFilter(this)">All</button><button class="fb" data-tab="upcoming" data-filter="conf" data-value="high" onclick="setFilter(this)">High</button><button class="fb" data-tab="upcoming" data-filter="conf" data-value="med" onclick="setFilter(this)">Med</button><button class="fb" data-tab="upcoming" data-filter="conf" data-value="low" onclick="setFilter(this)">Low</button></div><div class="fg"><span class="fl">Window</span><button class="fb active" data-tab="upcoming" data-filter="days" data-value="1" onclick="setFilter(this)">Tomorrow</button><button class="fb" data-tab="upcoming" data-filter="days" data-value="3" onclick="setFilter(this)">Next 3 days</button><button class="fb" data-tab="upcoming" data-filter="days" data-value="7" onclick="setFilter(this)">Next week</button><button class="fb" data-tab="upcoming" data-filter="days" data-value="14" onclick="setFilter(this)">All</button></div><div class="fg"><span class="fl">Favored</span><button class="fb active" data-tab="upcoming" data-filter="pick" data-value="all" onclick="setFilter(this)">All</button><button class="fb" data-tab="upcoming" data-filter="pick" data-value="home" onclick="setFilter(this)">Home</button><button class="fb" data-tab="upcoming" data-filter="pick" data-value="away" onclick="setFilter(this)">Away</button></div><span class="game-count" id="count-upcoming">30 games</span></div><div class="game-list" id="list-upcoming"><div class="game-row"
      data-conf="med"
      data-pick="home"
      data-result=""
@@ -579,7 +579,7 @@ body {
      data-home="Atlanta Falcons"
      data-pred="home"
      data-espn-path="football/nfl">
-  <div class="row-main" onclick="toggleRow('det-upcoming-6',this,'401873278','scheduled')">
+  <div class="row-main" onclick="toggleRow('det-upcoming-0',this,'401873278','scheduled')">
     <span class="row-date">Aug 14</span>
     <div class="row-teams">
       <div class="row-team">
@@ -600,7 +600,7 @@ body {
       <span class="expand-btn">▾</span>
     </div>
   </div>
-  <div class="row-detail" id="det-upcoming-6">
+  <div class="row-detail" id="det-upcoming-0">
     <div class="detail-inner"><table class="detail-stats pregame-stats">
       <thead><tr>
         <th class="ds-away">Denver Broncos</th>
@@ -621,7 +621,7 @@ body {
      data-home="New York Jets"
      data-pred="home"
      data-espn-path="football/nfl">
-  <div class="row-main" onclick="toggleRow('det-upcoming-7',this,'401873276','scheduled')">
+  <div class="row-main" onclick="toggleRow('det-upcoming-1',this,'401873276','scheduled')">
     <span class="row-date">Aug 14</span>
     <div class="row-teams">
       <div class="row-team">
@@ -642,7 +642,7 @@ body {
       <span class="expand-btn">▾</span>
     </div>
   </div>
-  <div class="row-detail" id="det-upcoming-7">
+  <div class="row-detail" id="det-upcoming-1">
     <div class="detail-inner"><table class="detail-stats pregame-stats">
       <thead><tr>
         <th class="ds-away">Tampa Bay Buccaneers</th>
@@ -663,7 +663,7 @@ body {
      data-home="Washington Commanders"
      data-pred="home"
      data-espn-path="football/nfl">
-  <div class="row-main" onclick="toggleRow('det-upcoming-8',this,'401873277','scheduled')">
+  <div class="row-main" onclick="toggleRow('det-upcoming-2',this,'401873277','scheduled')">
     <span class="row-date">Aug 14</span>
     <div class="row-teams">
       <div class="row-team">
@@ -684,7 +684,7 @@ body {
       <span class="expand-btn">▾</span>
     </div>
   </div>
-  <div class="row-detail" id="det-upcoming-8">
+  <div class="row-detail" id="det-upcoming-2">
     <div class="detail-inner"><table class="detail-stats pregame-stats">
       <thead><tr>
         <th class="ds-away">Miami Dolphins</th>
@@ -705,7 +705,7 @@ body {
      data-home="Buffalo Bills"
      data-pred="away"
      data-espn-path="football/nfl">
-  <div class="row-main" onclick="toggleRow('det-upcoming-9',this,'401873282','scheduled')">
+  <div class="row-main" onclick="toggleRow('det-upcoming-3',this,'401873282','scheduled')">
     <span class="row-date">Aug 15</span>
     <div class="row-teams">
       <div class="row-team fav">
@@ -726,7 +726,7 @@ body {
       <span class="expand-btn">▾</span>
     </div>
   </div>
-  <div class="row-detail" id="det-upcoming-9">
+  <div class="row-detail" id="det-upcoming-3">
     <div class="detail-inner"><table class="detail-stats pregame-stats">
       <thead><tr>
         <th class="ds-away">Carolina Panthers</th>
@@ -747,7 +747,7 @@ body {
      data-home="Chicago Bears"
      data-pred="home"
      data-espn-path="football/nfl">
-  <div class="row-main" onclick="toggleRow('det-upcoming-10',this,'401874393','scheduled')">
+  <div class="row-main" onclick="toggleRow('det-upcoming-4',this,'401874393','scheduled')">
     <span class="row-date">Aug 15</span>
     <div class="row-teams">
       <div class="row-team">
@@ -768,7 +768,7 @@ body {
       <span class="expand-btn">▾</span>
     </div>
   </div>
-  <div class="row-detail" id="det-upcoming-10">
+  <div class="row-detail" id="det-upcoming-4">
     <div class="detail-inner"><table class="detail-stats pregame-stats">
       <thead><tr>
         <th class="ds-away">Cleveland Browns</th>
@@ -789,7 +789,7 @@ body {
      data-home="New York Giants"
      data-pred="home"
      data-espn-path="football/nfl">
-  <div class="row-main" onclick="toggleRow('det-upcoming-11',this,'401873280','scheduled')">
+  <div class="row-main" onclick="toggleRow('det-upcoming-5',this,'401873280','scheduled')">
     <span class="row-date">Aug 15</span>
     <div class="row-teams">
       <div class="row-team">
@@ -810,7 +810,7 @@ body {
       <span class="expand-btn">▾</span>
     </div>
   </div>
-  <div class="row-detail" id="det-upcoming-11">
+  <div class="row-detail" id="det-upcoming-5">
     <div class="detail-inner"><table class="detail-stats pregame-stats">
       <thead><tr>
         <th class="ds-away">Minnesota Vikings</th>
@@ -831,7 +831,7 @@ body {
      data-home="Kansas City Chiefs"
      data-pred="home"
      data-espn-path="football/nfl">
-  <div class="row-main" onclick="toggleRow('det-upcoming-12',this,'401873283','scheduled')">
+  <div class="row-main" onclick="toggleRow('det-upcoming-6',this,'401873283','scheduled')">
     <span class="row-date">Aug 15</span>
     <div class="row-teams">
       <div class="row-team">
@@ -852,7 +852,7 @@ body {
       <span class="expand-btn">▾</span>
     </div>
   </div>
-  <div class="row-detail" id="det-upcoming-12">
+  <div class="row-detail" id="det-upcoming-6">
     <div class="detail-inner"><table class="detail-stats pregame-stats">
       <thead><tr>
         <th class="ds-away">Los Angeles Rams</th>
@@ -873,7 +873,7 @@ body {
      data-home="New Orleans Saints"
      data-pred="home"
      data-espn-path="football/nfl">
-  <div class="row-main" onclick="toggleRow('det-upcoming-13',this,'401873281','scheduled')">
+  <div class="row-main" onclick="toggleRow('det-upcoming-7',this,'401873281','scheduled')">
     <span class="row-date">Aug 15</span>
     <div class="row-teams">
       <div class="row-team">
@@ -894,7 +894,7 @@ body {
       <span class="expand-btn">▾</span>
     </div>
   </div>
-  <div class="row-detail" id="det-upcoming-13">
+  <div class="row-detail" id="det-upcoming-7">
     <div class="detail-inner"><table class="detail-stats pregame-stats">
       <thead><tr>
         <th class="ds-away">Jacksonville Jaguars</th>
@@ -915,7 +915,7 @@ body {
      data-home="Baltimore Ravens"
      data-pred="home"
      data-espn-path="football/nfl">
-  <div class="row-main" onclick="toggleRow('det-upcoming-14',this,'401873284','scheduled')">
+  <div class="row-main" onclick="toggleRow('det-upcoming-8',this,'401873284','scheduled')">
     <span class="row-date">Aug 15</span>
     <div class="row-teams">
       <div class="row-team">
@@ -936,7 +936,7 @@ body {
       <span class="expand-btn">▾</span>
     </div>
   </div>
-  <div class="row-detail" id="det-upcoming-14">
+  <div class="row-detail" id="det-upcoming-8">
     <div class="detail-inner"><table class="detail-stats pregame-stats">
       <thead><tr>
         <th class="ds-away">Philadelphia Eagles</th>
@@ -957,7 +957,7 @@ body {
      data-home="Seattle Seahawks"
      data-pred="home"
      data-espn-path="football/nfl">
-  <div class="row-main" onclick="toggleRow('det-upcoming-15',this,'401873279','scheduled')">
+  <div class="row-main" onclick="toggleRow('det-upcoming-9',this,'401873279','scheduled')">
     <span class="row-date">Aug 15</span>
     <div class="row-teams">
       <div class="row-team">
@@ -978,7 +978,7 @@ body {
       <span class="expand-btn">▾</span>
     </div>
   </div>
-  <div class="row-detail" id="det-upcoming-15">
+  <div class="row-detail" id="det-upcoming-9">
     <div class="detail-inner"><table class="detail-stats pregame-stats">
       <thead><tr>
         <th class="ds-away">Dallas Cowboys</th>
@@ -999,7 +999,7 @@ body {
      data-home="Houston Texans"
      data-pred="home"
      data-espn-path="football/nfl">
-  <div class="row-main" onclick="toggleRow('det-upcoming-16',this,'401873286','scheduled')">
+  <div class="row-main" onclick="toggleRow('det-upcoming-10',this,'401873286','scheduled')">
     <span class="row-date">Aug 20</span>
     <div class="row-teams">
       <div class="row-team">
@@ -1020,7 +1020,7 @@ body {
       <span class="expand-btn">▾</span>
     </div>
   </div>
-  <div class="row-detail" id="det-upcoming-16">
+  <div class="row-detail" id="det-upcoming-10">
     <div class="detail-inner"><table class="detail-stats pregame-stats">
       <thead><tr>
         <th class="ds-away">Las Vegas Raiders</th>
@@ -1041,7 +1041,7 @@ body {
      data-home="Los Angeles Chargers"
      data-pred="home"
      data-espn-path="football/nfl">
-  <div class="row-main" onclick="toggleRow('det-upcoming-17',this,'401873285','scheduled')">
+  <div class="row-main" onclick="toggleRow('det-upcoming-11',this,'401873285','scheduled')">
     <span class="row-date">Aug 20</span>
     <div class="row-teams">
       <div class="row-team">
@@ -1062,7 +1062,7 @@ body {
       <span class="expand-btn">▾</span>
     </div>
   </div>
-  <div class="row-detail" id="det-upcoming-17">
+  <div class="row-detail" id="det-upcoming-11">
     <div class="detail-inner"><table class="detail-stats pregame-stats">
       <thead><tr>
         <th class="ds-away">San Francisco 49ers</th>
@@ -1083,7 +1083,7 @@ body {
      data-home="Pittsburgh Steelers"
      data-pred="home"
      data-espn-path="football/nfl">
-  <div class="row-main" onclick="toggleRow('det-upcoming-18',this,'401873288','scheduled')">
+  <div class="row-main" onclick="toggleRow('det-upcoming-12',this,'401873288','scheduled')">
     <span class="row-date">Aug 21</span>
     <div class="row-teams">
       <div class="row-team">
@@ -1104,7 +1104,7 @@ body {
       <span class="expand-btn">▾</span>
     </div>
   </div>
-  <div class="row-detail" id="det-upcoming-18">
+  <div class="row-detail" id="det-upcoming-12">
     <div class="detail-inner"><table class="detail-stats pregame-stats">
       <thead><tr>
         <th class="ds-away">New York Jets</th>
@@ -1125,7 +1125,7 @@ body {
      data-home="Jacksonville Jaguars"
      data-pred="away"
      data-espn-path="football/nfl">
-  <div class="row-main" onclick="toggleRow('det-upcoming-19',this,'401873287','scheduled')">
+  <div class="row-main" onclick="toggleRow('det-upcoming-13',this,'401873287','scheduled')">
     <span class="row-date">Aug 21</span>
     <div class="row-teams">
       <div class="row-team fav">
@@ -1146,7 +1146,7 @@ body {
       <span class="expand-btn">▾</span>
     </div>
   </div>
-  <div class="row-detail" id="det-upcoming-19">
+  <div class="row-detail" id="det-upcoming-13">
     <div class="detail-inner"><table class="detail-stats pregame-stats">
       <thead><tr>
         <th class="ds-away">Carolina Panthers</th>
@@ -1167,7 +1167,7 @@ body {
      data-home="Denver Broncos"
      data-pred="home"
      data-espn-path="football/nfl">
-  <div class="row-main" onclick="toggleRow('det-upcoming-20',this,'401873613','scheduled')">
+  <div class="row-main" onclick="toggleRow('det-upcoming-14',this,'401873613','scheduled')">
     <span class="row-date">Aug 21</span>
     <div class="row-teams">
       <div class="row-team">
@@ -1188,7 +1188,7 @@ body {
       <span class="expand-btn">▾</span>
     </div>
   </div>
-  <div class="row-detail" id="det-upcoming-20">
+  <div class="row-detail" id="det-upcoming-14">
     <div class="detail-inner"><table class="detail-stats pregame-stats">
       <thead><tr>
         <th class="ds-away">Green Bay Packers</th>
@@ -1209,7 +1209,7 @@ body {
      data-home="Detroit Lions"
      data-pred="home"
      data-espn-path="football/nfl">
-  <div class="row-main" onclick="toggleRow('det-upcoming-21',this,'401873601','scheduled')">
+  <div class="row-main" onclick="toggleRow('det-upcoming-15',this,'401873601','scheduled')">
     <span class="row-date">Aug 22</span>
     <div class="row-teams">
       <div class="row-team">
@@ -1230,7 +1230,7 @@ body {
       <span class="expand-btn">▾</span>
     </div>
   </div>
-  <div class="row-detail" id="det-upcoming-21">
+  <div class="row-detail" id="det-upcoming-15">
     <div class="detail-inner"><table class="detail-stats pregame-stats">
       <thead><tr>
         <th class="ds-away">Washington Commanders</th>
@@ -1251,7 +1251,7 @@ body {
      data-home="Cleveland Browns"
      data-pred="home"
      data-espn-path="football/nfl">
-  <div class="row-main" onclick="toggleRow('det-upcoming-22',this,'401873294','scheduled')">
+  <div class="row-main" onclick="toggleRow('det-upcoming-16',this,'401873294','scheduled')">
     <span class="row-date">Aug 22</span>
     <div class="row-teams">
       <div class="row-team">
@@ -1272,7 +1272,7 @@ body {
       <span class="expand-btn">▾</span>
     </div>
   </div>
-  <div class="row-detail" id="det-upcoming-22">
+  <div class="row-detail" id="det-upcoming-16">
     <div class="detail-inner"><table class="detail-stats pregame-stats">
       <thead><tr>
         <th class="ds-away">Buffalo Bills</th>
@@ -1293,7 +1293,7 @@ body {
      data-home="Indianapolis Colts"
      data-pred="home"
      data-espn-path="football/nfl">
-  <div class="row-main" onclick="toggleRow('det-upcoming-23',this,'401873295','scheduled')">
+  <div class="row-main" onclick="toggleRow('det-upcoming-17',this,'401873295','scheduled')">
     <span class="row-date">Aug 22</span>
     <div class="row-teams">
       <div class="row-team">
@@ -1314,7 +1314,7 @@ body {
       <span class="expand-btn">▾</span>
     </div>
   </div>
-  <div class="row-detail" id="det-upcoming-23">
+  <div class="row-detail" id="det-upcoming-17">
     <div class="detail-inner"><table class="detail-stats pregame-stats">
       <thead><tr>
         <th class="ds-away">Atlanta Falcons</th>
@@ -1335,7 +1335,7 @@ body {
      data-home="Minnesota Vikings"
      data-pred="home"
      data-espn-path="football/nfl">
-  <div class="row-main" onclick="toggleRow('det-upcoming-24',this,'401873291','scheduled')">
+  <div class="row-main" onclick="toggleRow('det-upcoming-18',this,'401873291','scheduled')">
     <span class="row-date">Aug 22</span>
     <div class="row-teams">
       <div class="row-team">
@@ -1356,7 +1356,7 @@ body {
       <span class="expand-btn">▾</span>
     </div>
   </div>
-  <div class="row-detail" id="det-upcoming-24">
+  <div class="row-detail" id="det-upcoming-18">
     <div class="detail-inner"><table class="detail-stats pregame-stats">
       <thead><tr>
         <th class="ds-away">Baltimore Ravens</th>
@@ -1377,7 +1377,7 @@ body {
      data-home="Los Angeles Rams"
      data-pred="home"
      data-espn-path="football/nfl">
-  <div class="row-main" onclick="toggleRow('det-upcoming-25',this,'401873290','scheduled')">
+  <div class="row-main" onclick="toggleRow('det-upcoming-19',this,'401873290','scheduled')">
     <span class="row-date">Aug 22</span>
     <div class="row-teams">
       <div class="row-team">
@@ -1398,7 +1398,7 @@ body {
       <span class="expand-btn">▾</span>
     </div>
   </div>
-  <div class="row-detail" id="det-upcoming-25">
+  <div class="row-detail" id="det-upcoming-19">
     <div class="detail-inner"><table class="detail-stats pregame-stats">
       <thead><tr>
         <th class="ds-away">New Orleans Saints</th>
@@ -1419,7 +1419,7 @@ body {
      data-home="Miami Dolphins"
      data-pred="home"
      data-espn-path="football/nfl">
-  <div class="row-main" onclick="toggleRow('det-upcoming-26',this,'401873292','scheduled')">
+  <div class="row-main" onclick="toggleRow('det-upcoming-20',this,'401873292','scheduled')">
     <span class="row-date">Aug 22</span>
     <div class="row-teams">
       <div class="row-team">
@@ -1440,7 +1440,7 @@ body {
       <span class="expand-btn">▾</span>
     </div>
   </div>
-  <div class="row-detail" id="det-upcoming-26">
+  <div class="row-detail" id="det-upcoming-20">
     <div class="detail-inner"><table class="detail-stats pregame-stats">
       <thead><tr>
         <th class="ds-away">New York Giants</th>
@@ -1461,7 +1461,7 @@ body {
      data-home="Cincinnati Bengals"
      data-pred="home"
      data-espn-path="football/nfl">
-  <div class="row-main" onclick="toggleRow('det-upcoming-27',this,'401873289','scheduled')">
+  <div class="row-main" onclick="toggleRow('det-upcoming-21',this,'401873289','scheduled')">
     <span class="row-date">Aug 22</span>
     <div class="row-teams">
       <div class="row-team">
@@ -1482,7 +1482,7 @@ body {
       <span class="expand-btn">▾</span>
     </div>
   </div>
-  <div class="row-detail" id="det-upcoming-27">
+  <div class="row-detail" id="det-upcoming-21">
     <div class="detail-inner"><table class="detail-stats pregame-stats">
       <thead><tr>
         <th class="ds-away">Chicago Bears</th>
@@ -1503,7 +1503,7 @@ body {
      data-home="New England Patriots"
      data-pred="home"
      data-espn-path="football/nfl">
-  <div class="row-main" onclick="toggleRow('det-upcoming-28',this,'401873293','scheduled')">
+  <div class="row-main" onclick="toggleRow('det-upcoming-22',this,'401873293','scheduled')">
     <span class="row-date">Aug 22</span>
     <div class="row-teams">
       <div class="row-team">
@@ -1524,7 +1524,7 @@ body {
       <span class="expand-btn">▾</span>
     </div>
   </div>
-  <div class="row-detail" id="det-upcoming-28">
+  <div class="row-detail" id="det-upcoming-22">
     <div class="detail-inner"><table class="detail-stats pregame-stats">
       <thead><tr>
         <th class="ds-away">Philadelphia Eagles</th>
@@ -1545,7 +1545,7 @@ body {
      data-home="Tampa Bay Buccaneers"
      data-pred="home"
      data-espn-path="football/nfl">
-  <div class="row-main" onclick="toggleRow('det-upcoming-29',this,'401873296','scheduled')">
+  <div class="row-main" onclick="toggleRow('det-upcoming-23',this,'401873296','scheduled')">
     <span class="row-date">Aug 22</span>
     <div class="row-teams">
       <div class="row-team">
@@ -1566,7 +1566,7 @@ body {
       <span class="expand-btn">▾</span>
     </div>
   </div>
-  <div class="row-detail" id="det-upcoming-29">
+  <div class="row-detail" id="det-upcoming-23">
     <div class="detail-inner"><table class="detail-stats pregame-stats">
       <thead><tr>
         <th class="ds-away">Kansas City Chiefs</th>
@@ -1587,7 +1587,7 @@ body {
      data-home="Arizona Cardinals"
      data-pred="away"
      data-espn-path="football/nfl">
-  <div class="row-main" onclick="toggleRow('det-upcoming-30',this,'401874101','scheduled')">
+  <div class="row-main" onclick="toggleRow('det-upcoming-24',this,'401874101','scheduled')">
     <span class="row-date">Aug 22</span>
     <div class="row-teams">
       <div class="row-team fav">
@@ -1608,7 +1608,7 @@ body {
       <span class="expand-btn">▾</span>
     </div>
   </div>
-  <div class="row-detail" id="det-upcoming-30">
+  <div class="row-detail" id="det-upcoming-24">
     <div class="detail-inner"><table class="detail-stats pregame-stats">
       <thead><tr>
         <th class="ds-away">Dallas Cowboys</th>
@@ -1629,7 +1629,7 @@ body {
      data-home="Tennessee Titans"
      data-pred="home"
      data-espn-path="football/nfl">
-  <div class="row-main" onclick="toggleRow('det-upcoming-31',this,'401873297','scheduled')">
+  <div class="row-main" onclick="toggleRow('det-upcoming-25',this,'401873297','scheduled')">
     <span class="row-date">Aug 23</span>
     <div class="row-teams">
       <div class="row-team">
@@ -1650,12 +1650,180 @@ body {
       <span class="expand-btn">▾</span>
     </div>
   </div>
-  <div class="row-detail" id="det-upcoming-31">
+  <div class="row-detail" id="det-upcoming-25">
     <div class="detail-inner"><table class="detail-stats pregame-stats">
       <thead><tr>
         <th class="ds-away">Seattle Seahawks</th>
         <th class="ds-lbl">SEASON STATS</th>
         <th class="ds-home">Tennessee Titans</th>
+      </tr></thead>
+      <tbody><tr><td class="ds-away ">0.500</td><td class="ds-lbl">Win%</td><td class="ds-home ">0.500</td></tr><tr><td class="ds-away ">0.0</td><td class="ds-lbl">Pt Diff/G</td><td class="ds-home ">0.0</td></tr><tr><td class="ds-away ">340.0</td><td class="ds-lbl">YPG Off</td><td class="ds-home ">340.0</td></tr><tr><td class="ds-away ">340.0</td><td class="ds-lbl">YPG Def</td><td class="ds-home ">340.0</td></tr><tr><td class="ds-away ">0.0</td><td class="ds-lbl">TO Margin</td><td class="ds-home ">0.0</td></tr></tbody>
+    </table></div>
+  </div>
+</div><div class="game-row"
+     data-conf="med"
+     data-pick="home"
+     data-result=""
+     data-date="2026-08-27"
+     data-status="scheduled"
+     data-game-id="401873298"
+     data-away="Pittsburgh Steelers"
+     data-home="Buffalo Bills"
+     data-pred="home"
+     data-espn-path="football/nfl">
+  <div class="row-main" onclick="toggleRow('det-upcoming-26',this,'401873298','scheduled')">
+    <span class="row-date">Aug 27</span>
+    <div class="row-teams">
+      <div class="row-team">
+        <span class="rtn">Pittsburgh Steelers</span>
+        <span class="rrec">0-0</span>
+      </div>
+      <div class="row-time" id="ctr-401873298">11:00 PM ET</div>
+      <div class="row-team right fav">
+        <span class="rtn">Buffalo Bills</span>
+        <span class="rrec">0-0</span>
+      </div>
+    </div>
+    <div class="row-meta">
+      <div class="row-bar"><div class="rb-away" style="width:40.1%"></div><div class="rb-home" style="width:59.9%"></div></div>
+      <span class="row-pick">→ Buffalo Bills 60%</span>
+      <span class="pill conf-med">MED CONF</span>
+      <span class="result-area"></span>
+      <span class="expand-btn">▾</span>
+    </div>
+  </div>
+  <div class="row-detail" id="det-upcoming-26">
+    <div class="detail-inner"><table class="detail-stats pregame-stats">
+      <thead><tr>
+        <th class="ds-away">Pittsburgh Steelers</th>
+        <th class="ds-lbl">SEASON STATS</th>
+        <th class="ds-home">Buffalo Bills</th>
+      </tr></thead>
+      <tbody><tr><td class="ds-away ">0.500</td><td class="ds-lbl">Win%</td><td class="ds-home ">0.500</td></tr><tr><td class="ds-away ">0.0</td><td class="ds-lbl">Pt Diff/G</td><td class="ds-home ">0.0</td></tr><tr><td class="ds-away ">340.0</td><td class="ds-lbl">YPG Off</td><td class="ds-home ">340.0</td></tr><tr><td class="ds-away ">340.0</td><td class="ds-lbl">YPG Def</td><td class="ds-home ">340.0</td></tr><tr><td class="ds-away ">0.0</td><td class="ds-lbl">TO Margin</td><td class="ds-home ">0.0</td></tr></tbody>
+    </table></div>
+  </div>
+</div><div class="game-row"
+     data-conf="med"
+     data-pick="home"
+     data-result=""
+     data-date="2026-08-27"
+     data-status="scheduled"
+     data-game-id="401873299"
+     data-away="New England Patriots"
+     data-home="Cleveland Browns"
+     data-pred="home"
+     data-espn-path="football/nfl">
+  <div class="row-main" onclick="toggleRow('det-upcoming-27',this,'401873299','scheduled')">
+    <span class="row-date">Aug 27</span>
+    <div class="row-teams">
+      <div class="row-team">
+        <span class="rtn">New England Patriots</span>
+        <span class="rrec">0-0</span>
+      </div>
+      <div class="row-time" id="ctr-401873299">12:00 AM ET</div>
+      <div class="row-team right fav">
+        <span class="rtn">Cleveland Browns</span>
+        <span class="rrec">0-0</span>
+      </div>
+    </div>
+    <div class="row-meta">
+      <div class="row-bar"><div class="rb-away" style="width:40.1%"></div><div class="rb-home" style="width:59.9%"></div></div>
+      <span class="row-pick">→ Cleveland Browns 60%</span>
+      <span class="pill conf-med">MED CONF</span>
+      <span class="result-area"></span>
+      <span class="expand-btn">▾</span>
+    </div>
+  </div>
+  <div class="row-detail" id="det-upcoming-27">
+    <div class="detail-inner"><table class="detail-stats pregame-stats">
+      <thead><tr>
+        <th class="ds-away">New England Patriots</th>
+        <th class="ds-lbl">SEASON STATS</th>
+        <th class="ds-home">Cleveland Browns</th>
+      </tr></thead>
+      <tbody><tr><td class="ds-away ">0.500</td><td class="ds-lbl">Win%</td><td class="ds-home ">0.500</td></tr><tr><td class="ds-away ">0.0</td><td class="ds-lbl">Pt Diff/G</td><td class="ds-home ">0.0</td></tr><tr><td class="ds-away ">340.0</td><td class="ds-lbl">YPG Off</td><td class="ds-home ">340.0</td></tr><tr><td class="ds-away ">340.0</td><td class="ds-lbl">YPG Def</td><td class="ds-home ">340.0</td></tr><tr><td class="ds-away ">0.0</td><td class="ds-lbl">TO Margin</td><td class="ds-home ">0.0</td></tr></tbody>
+    </table></div>
+  </div>
+</div><div class="game-row"
+     data-conf="med"
+     data-pick="home"
+     data-result=""
+     data-date="2026-08-27"
+     data-status="scheduled"
+     data-game-id="401873641"
+     data-away="San Francisco 49ers"
+     data-home="Las Vegas Raiders"
+     data-pred="home"
+     data-espn-path="football/nfl">
+  <div class="row-main" onclick="toggleRow('det-upcoming-28',this,'401873641','scheduled')">
+    <span class="row-date">Aug 27</span>
+    <div class="row-teams">
+      <div class="row-team">
+        <span class="rtn">San Francisco 49ers</span>
+        <span class="rrec">0-0</span>
+      </div>
+      <div class="row-time" id="ctr-401873641">12:00 AM ET</div>
+      <div class="row-team right fav">
+        <span class="rtn">Las Vegas Raiders</span>
+        <span class="rrec">0-0</span>
+      </div>
+    </div>
+    <div class="row-meta">
+      <div class="row-bar"><div class="rb-away" style="width:40.1%"></div><div class="rb-home" style="width:59.9%"></div></div>
+      <span class="row-pick">→ Las Vegas Raiders 60%</span>
+      <span class="pill conf-med">MED CONF</span>
+      <span class="result-area"></span>
+      <span class="expand-btn">▾</span>
+    </div>
+  </div>
+  <div class="row-detail" id="det-upcoming-28">
+    <div class="detail-inner"><table class="detail-stats pregame-stats">
+      <thead><tr>
+        <th class="ds-away">San Francisco 49ers</th>
+        <th class="ds-lbl">SEASON STATS</th>
+        <th class="ds-home">Las Vegas Raiders</th>
+      </tr></thead>
+      <tbody><tr><td class="ds-away ">0.500</td><td class="ds-lbl">Win%</td><td class="ds-home ">0.500</td></tr><tr><td class="ds-away ">0.0</td><td class="ds-lbl">Pt Diff/G</td><td class="ds-home ">0.0</td></tr><tr><td class="ds-away ">340.0</td><td class="ds-lbl">YPG Off</td><td class="ds-home ">340.0</td></tr><tr><td class="ds-away ">340.0</td><td class="ds-lbl">YPG Def</td><td class="ds-home ">340.0</td></tr><tr><td class="ds-away ">0.0</td><td class="ds-lbl">TO Margin</td><td class="ds-home ">0.0</td></tr></tbody>
+    </table></div>
+  </div>
+</div><div class="game-row"
+     data-conf="med"
+     data-pick="home"
+     data-result=""
+     data-date="2026-08-27"
+     data-status="scheduled"
+     data-game-id="401873300"
+     data-away="Los Angeles Rams"
+     data-home="Los Angeles Chargers"
+     data-pred="home"
+     data-espn-path="football/nfl">
+  <div class="row-main" onclick="toggleRow('det-upcoming-29',this,'401873300','scheduled')">
+    <span class="row-date">Aug 27</span>
+    <div class="row-teams">
+      <div class="row-team">
+        <span class="rtn">Los Angeles Rams</span>
+        <span class="rrec">0-0</span>
+      </div>
+      <div class="row-time" id="ctr-401873300">02:00 AM ET</div>
+      <div class="row-team right fav">
+        <span class="rtn">Los Angeles Chargers</span>
+        <span class="rrec">0-0</span>
+      </div>
+    </div>
+    <div class="row-meta">
+      <div class="row-bar"><div class="rb-away" style="width:40.1%"></div><div class="rb-home" style="width:59.9%"></div></div>
+      <span class="row-pick">→ Los Angeles Chargers 60%</span>
+      <span class="pill conf-med">MED CONF</span>
+      <span class="result-area"></span>
+      <span class="expand-btn">▾</span>
+    </div>
+  </div>
+  <div class="row-detail" id="det-upcoming-29">
+    <div class="detail-inner"><table class="detail-stats pregame-stats">
+      <thead><tr>
+        <th class="ds-away">Los Angeles Rams</th>
+        <th class="ds-lbl">SEASON STATS</th>
+        <th class="ds-home">Los Angeles Chargers</th>
       </tr></thead>
       <tbody><tr><td class="ds-away ">0.500</td><td class="ds-lbl">Win%</td><td class="ds-home ">0.500</td></tr><tr><td class="ds-away ">0.0</td><td class="ds-lbl">Pt Diff/G</td><td class="ds-home ">0.0</td></tr><tr><td class="ds-away ">340.0</td><td class="ds-lbl">YPG Off</td><td class="ds-home ">340.0</td></tr><tr><td class="ds-away ">340.0</td><td class="ds-lbl">YPG Def</td><td class="ds-home ">340.0</td></tr><tr><td class="ds-away ">0.0</td><td class="ds-lbl">TO Margin</td><td class="ds-home ">0.0</td></tr></tbody>
     </table></div>
