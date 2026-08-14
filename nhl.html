@@ -260,7 +260,7 @@ body {
     <div class="hdr-sub">2025–26 Season  ·  Today: 0  ·  Recent: 0  ·  Upcoming: 0</div>
   </div>
   <div class="hdr-right">
-    <div class="hdr-date">Updated 2026-08-13</div>
+    <div class="hdr-date">Updated 2026-08-14</div>
     <div class="live-status" id="live-indicator">Checking for live games…</div>
   </div>
 </div>
@@ -278,11 +278,11 @@ body {
 <div id="tab-accuracy" class="sub-panel">
   <div style="padding-bottom:32px">
 <div class="acc-grid">
-  <div class="acc-card"><div class="acc-big">100.0%</div><div class="acc-lbl">Overall Accuracy</div></div>
-  <div class="acc-card"><div class="acc-big">1/1</div><div class="acc-lbl">Correct Picks</div></div>
+  <div class="acc-card"><div class="acc-big">—</div><div class="acc-lbl">Overall Accuracy</div></div>
+  <div class="acc-card"><div class="acc-big">0/0</div><div class="acc-lbl">Correct Picks</div></div>
   <div class="acc-card acc-hi"><div class="acc-big">—</div><div class="acc-lbl">High Conf (0)</div></div>
   <div class="acc-card acc-md"><div class="acc-big">—</div><div class="acc-lbl">Med Conf (0)</div></div>
-  <div class="acc-card acc-lo"><div class="acc-big">100.0%</div><div class="acc-lbl">Low Conf (1)</div></div>
+  <div class="acc-card acc-lo"><div class="acc-big">—</div><div class="acc-lbl">Low Conf (0)</div></div>
 </div>
 
 <div class="acc-section-tabs">
@@ -307,16 +307,16 @@ body {
     </div>
     <div class="fg">
       <span class="fl">Team</span>
-      <select class="team-select" id="team-filter-accuracy" onchange="setTeamFilter(this,'accuracy')"><option value="all">All Teams</option><option value="Carolina Hurricanes">Carolina Hurricanes</option><option value="Vegas Golden Knights">Vegas Golden Knights</option></select>
+      <select class="team-select" id="team-filter-accuracy" onchange="setTeamFilter(this,'accuracy')"><option value="all">All Teams</option></select>
     </div>
-    <span class="game-count" id="count-accuracy">1 games</span>
+    <span class="game-count" id="count-accuracy">0 games</span>
   </div>
   <table class="acc-table">
     <thead><tr>
       <th>Date</th><th>Matchup</th><th>Predicted</th>
       <th>Actual</th><th>Conf</th><th>Result</th>
     </tr></thead>
-    <tbody id="acc-tbody"><tr class="acc-row" data-conf="low" data-result="correct" data-away="Carolina Hurricanes" data-home="Vegas Golden Knights"><td>2026-06-14</td><td class="matchup-cell">Carolina Hurricanes <span class="vs-sep">@</span> Vegas Golden Knights</td><td>Carolina Hurricanes <span class="prob-txt">(50%)</span></td><td>Carolina Hurricanes <span class="prob-txt">(3–0)</span></td><td><span class="pill conf-low">LOW CONF</span></td><td class="acc-ok">✓ Correct</td></tr></tbody>
+    <tbody id="acc-tbody"></tbody>
   </table>
 </div>
 
@@ -333,7 +333,7 @@ body {
       <span class="fl">Search</span>
       <input class="team-search" id="team-search" placeholder="Filter team…" oninput="filterTeamSearch(this)">
     </div>
-    <span class="game-count" id="count-teams">2 teams</span>
+    <span class="game-count" id="count-teams">0 teams</span>
   </div>
   <table class="acc-table sortable-team-table" id="team-breakdown-table">
     <thead><tr>
@@ -344,7 +344,7 @@ body {
       <th>As Favorite</th>
       <th>As Underdog</th>
     </tr></thead>
-    <tbody id="team-tbody"><tr class="team-row" data-team="Carolina Hurricanes"><td class="team-name-cell">Carolina Hurricanes</td><td>1</td><td class="acc-ok">100%</td><td>1/1</td><td>100% <span class="prob-txt">(1/1)</span></td><td>— <span class="prob-txt">(0/0)</span></td></tr><tr class="team-row" data-team="Vegas Golden Knights"><td class="team-name-cell">Vegas Golden Knights</td><td>1</td><td class="acc-ok">100%</td><td>1/1</td><td>— <span class="prob-txt">(0/0)</span></td><td>100% <span class="prob-txt">(1/1)</span></td></tr></tbody>
+    <tbody id="team-tbody"></tbody>
   </table>
 </div></div>
 </div>
