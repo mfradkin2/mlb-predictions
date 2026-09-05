@@ -257,10 +257,10 @@ body {
   <div class="hdr-emoji">🏒</div>
   <div class="hdr-info">
     <div class="hdr-name">NHL Predictions</div>
-    <div class="hdr-sub">2025–26 Season  ·  Today: 0  ·  Recent: 0  ·  Upcoming: 0</div>
+    <div class="hdr-sub">2025–26 Season  ·  Today: 0  ·  Recent: 0  ·  Upcoming: 7</div>
   </div>
   <div class="hdr-right">
-    <div class="hdr-date">Updated 2026-09-04</div>
+    <div class="hdr-date">Updated 2026-09-05</div>
     <div class="live-status" id="live-indicator">Checking for live games…</div>
   </div>
 </div>
@@ -274,7 +274,301 @@ body {
 
 <div id="tab-today"    class="sub-panel active"><div class="empty"><span class="e-icon">🏒</span>No NHL games to show.</div></div>
 <div id="tab-recent"   class="sub-panel"><div class="empty"><span class="e-icon">🏒</span>No NHL games to show.</div></div>
-<div id="tab-upcoming" class="sub-panel"><div class="empty"><span class="e-icon">🏒</span>No NHL games to show.</div></div>
+<div id="tab-upcoming" class="sub-panel"><div class="filter-bar" id="fb-upcoming"><div class="fg"><span class="fl">Confidence</span><button class="fb active" data-tab="upcoming" data-filter="conf" data-value="all" onclick="setFilter(this)">All</button><button class="fb" data-tab="upcoming" data-filter="conf" data-value="high" onclick="setFilter(this)">High</button><button class="fb" data-tab="upcoming" data-filter="conf" data-value="med" onclick="setFilter(this)">Med</button><button class="fb" data-tab="upcoming" data-filter="conf" data-value="low" onclick="setFilter(this)">Low</button></div><div class="fg"><span class="fl">Window</span><button class="fb active" data-tab="upcoming" data-filter="days" data-value="1" onclick="setFilter(this)">Tomorrow</button><button class="fb" data-tab="upcoming" data-filter="days" data-value="3" onclick="setFilter(this)">Next 3 days</button><button class="fb" data-tab="upcoming" data-filter="days" data-value="7" onclick="setFilter(this)">Next week</button><button class="fb" data-tab="upcoming" data-filter="days" data-value="14" onclick="setFilter(this)">All</button></div><div class="fg"><span class="fl">Favored</span><button class="fb active" data-tab="upcoming" data-filter="pick" data-value="all" onclick="setFilter(this)">All</button><button class="fb" data-tab="upcoming" data-filter="pick" data-value="home" onclick="setFilter(this)">Home</button><button class="fb" data-tab="upcoming" data-filter="pick" data-value="away" onclick="setFilter(this)">Away</button></div><span class="game-count" id="count-upcoming">7 games</span></div><div class="game-list" id="list-upcoming"><div class="game-row"
+     data-conf="low"
+     data-pick="away"
+     data-result=""
+     data-date="2026-09-19"
+     data-status="scheduled"
+     data-game-id="401881922"
+     data-away="Montreal Canadiens"
+     data-home="Toronto Maple Leafs"
+     data-pred="away"
+     data-espn-path="hockey/nhl">
+  <div class="row-main" onclick="toggleRow('det-upcoming-0',this,'401881922','scheduled')">
+    <span class="row-date">Sep 19</span>
+    <div class="row-teams">
+      <div class="row-team fav">
+        <span class="rtn">Montreal Canadiens</span>
+        <span class="rrec">48-24-10</span>
+      </div>
+      <div class="row-time" id="ctr-401881922">11:00 PM ET</div>
+      <div class="row-team right">
+        <span class="rtn">Toronto Maple Leafs</span>
+        <span class="rrec">32-36-14</span>
+      </div>
+    </div>
+    <div class="row-meta">
+      <div class="row-bar"><div class="rb-away" style="width:54.9%"></div><div class="rb-home" style="width:45.1%"></div></div>
+      <span class="row-pick">← Montreal Canadiens 55%</span>
+      <span class="pill conf-low">LOW CONF</span>
+      <span class="result-area"></span>
+      <span class="expand-btn">▾</span>
+    </div>
+  </div>
+  <div class="row-detail" id="det-upcoming-0">
+    <div class="detail-inner"><table class="detail-stats pregame-stats">
+      <thead><tr>
+        <th class="ds-away">Montreal Canadiens</th>
+        <th class="ds-lbl">SEASON STATS</th>
+        <th class="ds-home">Toronto Maple Leafs</th>
+      </tr></thead>
+      <tbody><tr><td class="ds-away better">64.6%</td><td class="ds-lbl">Points%</td><td class="ds-home worse">47.6%</td></tr><tr><td class="ds-away better">3.5</td><td class="ds-lbl">GF/G</td><td class="ds-home worse">3.1</td></tr><tr><td class="ds-away better">3.1</td><td class="ds-lbl">GA/G</td><td class="ds-home worse">3.6</td></tr><tr><td class="ds-away ">20.0%</td><td class="ds-lbl">PP%</td><td class="ds-home ">20.0%</td></tr><tr><td class="ds-away ">0.910</td><td class="ds-lbl">Save%</td><td class="ds-home ">0.910</td></tr></tbody>
+    </table></div>
+  </div>
+</div><div class="game-row"
+     data-conf="high"
+     data-pick="home"
+     data-result=""
+     data-date="2026-09-19"
+     data-status="scheduled"
+     data-game-id="401881923"
+     data-away="Toronto Maple Leafs"
+     data-home="Montreal Canadiens"
+     data-pred="home"
+     data-espn-path="hockey/nhl">
+  <div class="row-main" onclick="toggleRow('det-upcoming-1',this,'401881923','scheduled')">
+    <span class="row-date">Sep 19</span>
+    <div class="row-teams">
+      <div class="row-team">
+        <span class="rtn">Toronto Maple Leafs</span>
+        <span class="rrec">32-36-14</span>
+      </div>
+      <div class="row-time" id="ctr-401881923">11:00 PM ET</div>
+      <div class="row-team right fav">
+        <span class="rtn">Montreal Canadiens</span>
+        <span class="rrec">48-24-10</span>
+      </div>
+    </div>
+    <div class="row-meta">
+      <div class="row-bar"><div class="rb-away" style="width:31.1%"></div><div class="rb-home" style="width:68.9%"></div></div>
+      <span class="row-pick">→ Montreal Canadiens 69%</span>
+      <span class="pill conf-high">HIGH CONF</span>
+      <span class="result-area"></span>
+      <span class="expand-btn">▾</span>
+    </div>
+  </div>
+  <div class="row-detail" id="det-upcoming-1">
+    <div class="detail-inner"><table class="detail-stats pregame-stats">
+      <thead><tr>
+        <th class="ds-away">Toronto Maple Leafs</th>
+        <th class="ds-lbl">SEASON STATS</th>
+        <th class="ds-home">Montreal Canadiens</th>
+      </tr></thead>
+      <tbody><tr><td class="ds-away worse">47.6%</td><td class="ds-lbl">Points%</td><td class="ds-home better">64.6%</td></tr><tr><td class="ds-away worse">3.1</td><td class="ds-lbl">GF/G</td><td class="ds-home better">3.5</td></tr><tr><td class="ds-away worse">3.6</td><td class="ds-lbl">GA/G</td><td class="ds-home better">3.1</td></tr><tr><td class="ds-away ">20.0%</td><td class="ds-lbl">PP%</td><td class="ds-home ">20.0%</td></tr><tr><td class="ds-away ">0.910</td><td class="ds-lbl">Save%</td><td class="ds-home ">0.910</td></tr></tbody>
+    </table></div>
+  </div>
+</div><div class="game-row"
+     data-conf="low"
+     data-pick="away"
+     data-result=""
+     data-date="2026-09-19"
+     data-status="scheduled"
+     data-game-id="401886427"
+     data-away="Dallas Stars"
+     data-home="St. Louis Blues"
+     data-pred="away"
+     data-espn-path="hockey/nhl">
+  <div class="row-main" onclick="toggleRow('det-upcoming-2',this,'401886427','scheduled')">
+    <span class="row-date">Sep 19</span>
+    <div class="row-teams">
+      <div class="row-team fav">
+        <span class="rtn">Dallas Stars</span>
+        <span class="rrec">50-20-12</span>
+      </div>
+      <div class="row-time" id="ctr-401886427">11:00 PM ET</div>
+      <div class="row-team right">
+        <span class="rtn">St. Louis Blues</span>
+        <span class="rrec">37-33-12</span>
+      </div>
+    </div>
+    <div class="row-meta">
+      <div class="row-bar"><div class="rb-away" style="width:54.8%"></div><div class="rb-home" style="width:45.2%"></div></div>
+      <span class="row-pick">← Dallas Stars 55%</span>
+      <span class="pill conf-low">LOW CONF</span>
+      <span class="result-area"></span>
+      <span class="expand-btn">▾</span>
+    </div>
+  </div>
+  <div class="row-detail" id="det-upcoming-2">
+    <div class="detail-inner"><table class="detail-stats pregame-stats">
+      <thead><tr>
+        <th class="ds-away">Dallas Stars</th>
+        <th class="ds-lbl">SEASON STATS</th>
+        <th class="ds-home">St. Louis Blues</th>
+      </tr></thead>
+      <tbody><tr><td class="ds-away better">68.3%</td><td class="ds-lbl">Points%</td><td class="ds-home worse">52.4%</td></tr><tr><td class="ds-away better">3.4</td><td class="ds-lbl">GF/G</td><td class="ds-home worse">2.8</td></tr><tr><td class="ds-away better">2.8</td><td class="ds-lbl">GA/G</td><td class="ds-home worse">3.1</td></tr><tr><td class="ds-away ">20.0%</td><td class="ds-lbl">PP%</td><td class="ds-home ">20.0%</td></tr><tr><td class="ds-away ">0.910</td><td class="ds-lbl">Save%</td><td class="ds-home ">0.910</td></tr></tbody>
+    </table></div>
+  </div>
+</div><div class="game-row"
+     data-conf="med"
+     data-pick="home"
+     data-result=""
+     data-date="2026-09-19"
+     data-status="scheduled"
+     data-game-id="401878099"
+     data-away="Winnipeg Jets"
+     data-home="Edmonton Oilers"
+     data-pred="home"
+     data-espn-path="hockey/nhl">
+  <div class="row-main" onclick="toggleRow('det-upcoming-3',this,'401878099','scheduled')">
+    <span class="row-date">Sep 19</span>
+    <div class="row-teams">
+      <div class="row-team">
+        <span class="rtn">Winnipeg Jets</span>
+        <span class="rrec">35-35-12</span>
+      </div>
+      <div class="row-time" id="ctr-401878099">12:00 AM ET</div>
+      <div class="row-team right fav">
+        <span class="rtn">Edmonton Oilers</span>
+        <span class="rrec">41-30-11</span>
+      </div>
+    </div>
+    <div class="row-meta">
+      <div class="row-bar"><div class="rb-away" style="width:37.0%"></div><div class="rb-home" style="width:63.0%"></div></div>
+      <span class="row-pick">→ Edmonton Oilers 63%</span>
+      <span class="pill conf-med">MED CONF</span>
+      <span class="result-area"></span>
+      <span class="expand-btn">▾</span>
+    </div>
+  </div>
+  <div class="row-detail" id="det-upcoming-3">
+    <div class="detail-inner"><table class="detail-stats pregame-stats">
+      <thead><tr>
+        <th class="ds-away">Winnipeg Jets</th>
+        <th class="ds-lbl">SEASON STATS</th>
+        <th class="ds-home">Edmonton Oilers</th>
+      </tr></thead>
+      <tbody><tr><td class="ds-away worse">50.0%</td><td class="ds-lbl">Points%</td><td class="ds-home better">56.7%</td></tr><tr><td class="ds-away worse">2.8</td><td class="ds-lbl">GF/G</td><td class="ds-home better">3.4</td></tr><tr><td class="ds-away better">3.2</td><td class="ds-lbl">GA/G</td><td class="ds-home worse">3.3</td></tr><tr><td class="ds-away ">20.0%</td><td class="ds-lbl">PP%</td><td class="ds-home ">20.0%</td></tr><tr><td class="ds-away ">0.910</td><td class="ds-lbl">Save%</td><td class="ds-home ">0.910</td></tr></tbody>
+    </table></div>
+  </div>
+</div><div class="game-row"
+     data-conf="high"
+     data-pick="home"
+     data-result=""
+     data-date="2026-09-19"
+     data-status="scheduled"
+     data-game-id="401886258"
+     data-away="Chicago Blackhawks"
+     data-home="Minnesota Wild"
+     data-pred="home"
+     data-espn-path="hockey/nhl">
+  <div class="row-main" onclick="toggleRow('det-upcoming-4',this,'401886258','scheduled')">
+    <span class="row-date">Sep 19</span>
+    <div class="row-teams">
+      <div class="row-team">
+        <span class="rtn">Chicago Blackhawks</span>
+        <span class="rrec">29-39-14</span>
+      </div>
+      <div class="row-time" id="ctr-401886258">12:00 AM ET</div>
+      <div class="row-team right fav">
+        <span class="rtn">Minnesota Wild</span>
+        <span class="rrec">46-24-12</span>
+      </div>
+    </div>
+    <div class="row-meta">
+      <div class="row-bar"><div class="rb-away" style="width:29.0%"></div><div class="rb-home" style="width:71.0%"></div></div>
+      <span class="row-pick">→ Minnesota Wild 71%</span>
+      <span class="pill conf-high">HIGH CONF</span>
+      <span class="result-area"></span>
+      <span class="expand-btn">▾</span>
+    </div>
+  </div>
+  <div class="row-detail" id="det-upcoming-4">
+    <div class="detail-inner"><table class="detail-stats pregame-stats">
+      <thead><tr>
+        <th class="ds-away">Chicago Blackhawks</th>
+        <th class="ds-lbl">SEASON STATS</th>
+        <th class="ds-home">Minnesota Wild</th>
+      </tr></thead>
+      <tbody><tr><td class="ds-away worse">43.9%</td><td class="ds-lbl">Points%</td><td class="ds-home better">63.4%</td></tr><tr><td class="ds-away worse">2.6</td><td class="ds-lbl">GF/G</td><td class="ds-home better">3.3</td></tr><tr><td class="ds-away worse">3.4</td><td class="ds-lbl">GA/G</td><td class="ds-home better">2.9</td></tr><tr><td class="ds-away ">20.0%</td><td class="ds-lbl">PP%</td><td class="ds-home ">20.0%</td></tr><tr><td class="ds-away ">0.910</td><td class="ds-lbl">Save%</td><td class="ds-home ">0.910</td></tr></tbody>
+    </table></div>
+  </div>
+</div><div class="game-row"
+     data-conf="low"
+     data-pick="home"
+     data-result=""
+     data-date="2026-09-19"
+     data-status="scheduled"
+     data-game-id="401879412"
+     data-away="Vegas Golden Knights"
+     data-home="Los Angeles Kings"
+     data-pred="home"
+     data-espn-path="hockey/nhl">
+  <div class="row-main" onclick="toggleRow('det-upcoming-5',this,'401879412','scheduled')">
+    <span class="row-date">Sep 19</span>
+    <div class="row-teams">
+      <div class="row-team">
+        <span class="rtn">Vegas Golden Knights</span>
+        <span class="rrec">39-26-17</span>
+      </div>
+      <div class="row-time" id="ctr-401879412">01:00 AM ET</div>
+      <div class="row-team right fav">
+        <span class="rtn">Los Angeles Kings</span>
+        <span class="rrec">35-27-20</span>
+      </div>
+    </div>
+    <div class="row-meta">
+      <div class="row-bar"><div class="rb-away" style="width:46.4%"></div><div class="rb-home" style="width:53.6%"></div></div>
+      <span class="row-pick">→ Los Angeles Kings 54%</span>
+      <span class="pill conf-low">LOW CONF</span>
+      <span class="result-area"></span>
+      <span class="expand-btn">▾</span>
+    </div>
+  </div>
+  <div class="row-detail" id="det-upcoming-5">
+    <div class="detail-inner"><table class="detail-stats pregame-stats">
+      <thead><tr>
+        <th class="ds-away">Vegas Golden Knights</th>
+        <th class="ds-lbl">SEASON STATS</th>
+        <th class="ds-home">Los Angeles Kings</th>
+      </tr></thead>
+      <tbody><tr><td class="ds-away better">57.9%</td><td class="ds-lbl">Points%</td><td class="ds-home worse">54.9%</td></tr><tr><td class="ds-away better">3.2</td><td class="ds-lbl">GF/G</td><td class="ds-home worse">2.7</td></tr><tr><td class="ds-away worse">3.0</td><td class="ds-lbl">GA/G</td><td class="ds-home better">3.0</td></tr><tr><td class="ds-away ">20.0%</td><td class="ds-lbl">PP%</td><td class="ds-home ">20.0%</td></tr><tr><td class="ds-away ">0.910</td><td class="ds-lbl">Save%</td><td class="ds-home ">0.910</td></tr></tbody>
+    </table></div>
+  </div>
+</div><div class="game-row"
+     data-conf="med"
+     data-pick="home"
+     data-result=""
+     data-date="2026-09-19"
+     data-status="scheduled"
+     data-game-id="401879652"
+     data-away="Vancouver Canucks"
+     data-home="Seattle Kraken"
+     data-pred="home"
+     data-espn-path="hockey/nhl">
+  <div class="row-main" onclick="toggleRow('det-upcoming-6',this,'401879652','scheduled')">
+    <span class="row-date">Sep 19</span>
+    <div class="row-teams">
+      <div class="row-team">
+        <span class="rtn">Vancouver Canucks</span>
+        <span class="rrec">25-49-8</span>
+      </div>
+      <div class="row-time" id="ctr-401879652">02:00 AM ET</div>
+      <div class="row-team right fav">
+        <span class="rtn">Seattle Kraken</span>
+        <span class="rrec">34-37-11</span>
+      </div>
+    </div>
+    <div class="row-meta">
+      <div class="row-bar"><div class="rb-away" style="width:33.3%"></div><div class="rb-home" style="width:66.7%"></div></div>
+      <span class="row-pick">→ Seattle Kraken 67%</span>
+      <span class="pill conf-med">MED CONF</span>
+      <span class="result-area"></span>
+      <span class="expand-btn">▾</span>
+    </div>
+  </div>
+  <div class="row-detail" id="det-upcoming-6">
+    <div class="detail-inner"><table class="detail-stats pregame-stats">
+      <thead><tr>
+        <th class="ds-away">Vancouver Canucks</th>
+        <th class="ds-lbl">SEASON STATS</th>
+        <th class="ds-home">Seattle Kraken</th>
+      </tr></thead>
+      <tbody><tr><td class="ds-away worse">35.4%</td><td class="ds-lbl">Points%</td><td class="ds-home better">48.2%</td></tr><tr><td class="ds-away worse">2.6</td><td class="ds-lbl">GF/G</td><td class="ds-home better">2.8</td></tr><tr><td class="ds-away worse">3.9</td><td class="ds-lbl">GA/G</td><td class="ds-home better">3.2</td></tr><tr><td class="ds-away ">20.0%</td><td class="ds-lbl">PP%</td><td class="ds-home ">20.0%</td></tr><tr><td class="ds-away ">0.910</td><td class="ds-lbl">Save%</td><td class="ds-home ">0.910</td></tr></tbody>
+    </table></div>
+  </div>
+</div></div></div>
 <div id="tab-accuracy" class="sub-panel">
   <div style="padding-bottom:32px">
 <div class="acc-grid">
