@@ -257,7 +257,7 @@ body {
   <div class="hdr-emoji">🏈</div>
   <div class="hdr-info">
     <div class="hdr-name">NFL Predictions</div>
-    <div class="hdr-sub">2026 Season  ·  Today: 1  ·  Recent: 0  ·  Upcoming: 31</div>
+    <div class="hdr-sub">2026 Season  ·  Today: 1  ·  Recent: 1  ·  Upcoming: 31</div>
   </div>
   <div class="hdr-right">
     <div class="hdr-date">Updated 2026-09-10</div>
@@ -297,8 +297,8 @@ body {
       </div>
     </div>
     <div class="row-meta">
-      <div class="row-bar"><div class="rb-away" style="width:57.1%"></div><div class="rb-home" style="width:42.9%"></div></div>
-      <span class="row-pick">← San Francisco 49ers 57%</span>
+      <div class="row-bar"><div class="rb-away" style="width:56.1%"></div><div class="rb-home" style="width:43.9%"></div></div>
+      <span class="row-pick">← San Francisco 49ers 56%</span>
       <span class="pill conf-low">LOW CONF</span>
       <span class="result-area"></span>
       <span class="expand-btn">▾</span>
@@ -315,7 +315,49 @@ body {
     </table></div>
   </div>
 </div></div></div>
-<div id="tab-recent"   class="sub-panel"><div class="empty"><span class="e-icon">🏈</span>No NFL games to show.</div></div>
+<div id="tab-recent"   class="sub-panel"><div class="filter-bar" id="fb-recent"><div class="fg"><span class="fl">Result</span><button class="fb active" data-tab="recent" data-filter="result" data-value="all" onclick="setFilter(this)">All</button><button class="fb" data-tab="recent" data-filter="result" data-value="correct" onclick="setFilter(this)">✓ Correct</button><button class="fb" data-tab="recent" data-filter="result" data-value="wrong" onclick="setFilter(this)">✗ Wrong</button></div><div class="fg"><span class="fl">Confidence</span><button class="fb active" data-tab="recent" data-filter="conf" data-value="all" onclick="setFilter(this)">All</button><button class="fb" data-tab="recent" data-filter="conf" data-value="high" onclick="setFilter(this)">High</button><button class="fb" data-tab="recent" data-filter="conf" data-value="med" onclick="setFilter(this)">Med</button><button class="fb" data-tab="recent" data-filter="conf" data-value="low" onclick="setFilter(this)">Low</button></div><div class="fg"><span class="fl">Period</span><button class="fb active" data-tab="recent" data-filter="days" data-value="3" onclick="setFilter(this)">Last 3 days</button><button class="fb" data-tab="recent" data-filter="days" data-value="7" onclick="setFilter(this)">Last 7 days</button><button class="fb" data-tab="recent" data-filter="days" data-value="10" onclick="setFilter(this)">Last 10 days</button></div><span class="game-count" id="count-recent">1 game</span></div><div class="game-list" id="list-recent"><div class="game-row"
+     data-conf="high"
+     data-pick="away"
+     data-result="wrong"
+     data-date="2026-09-09"
+     data-status="final"
+     data-game-id="401872656"
+     data-away="New England Patriots"
+     data-home="Seattle Seahawks"
+     data-pred="away"
+     data-espn-path="football/nfl">
+  <div class="row-main" onclick="toggleRow('det-recent-0',this,'401872656','final')">
+    <span class="row-date">Sep 9</span>
+    <div class="row-teams">
+      <div class="row-team fav">
+        <span class="rtn">New England Patriots</span>
+        <span class="rrec">0-1</span>
+      </div>
+      <div class="row-score" id="ctr-401872656"><span class="sc">10–13</span><span class="sc-lbl">FINAL</span></div>
+      <div class="row-team right winner">
+        <span class="rtn">Seattle Seahawks</span>
+        <span class="rrec">1-0</span>
+      </div>
+    </div>
+    <div class="row-meta">
+      <div class="row-bar"><div class="rb-away" style="width:74.9%"></div><div class="rb-home" style="width:25.1%"></div></div>
+      <span class="row-pick">← New England Patriots 75%</span>
+      <span class="pill conf-high">HIGH CONF</span>
+      <span class="result-area"><span class="pill pill-wrong">✗</span></span>
+      <span class="expand-btn">▾</span>
+    </div>
+  </div>
+  <div class="row-detail" id="det-recent-0">
+    <div class="detail-inner"><table class="detail-stats pregame-stats">
+      <thead><tr>
+        <th class="ds-away">New England Patriots</th>
+        <th class="ds-lbl">SEASON STATS</th>
+        <th class="ds-home">Seattle Seahawks</th>
+      </tr></thead>
+      <tbody><tr><td class="ds-away worse">0.0</td><td class="ds-lbl">Win%</td><td class="ds-home better">1.0</td></tr><tr><td class="ds-away worse">-3.0</td><td class="ds-lbl">Pt Diff/G</td><td class="ds-home better">3.0</td></tr><tr><td class="ds-away ">340.0</td><td class="ds-lbl">YPG Off</td><td class="ds-home ">340.0</td></tr><tr><td class="ds-away ">340.0</td><td class="ds-lbl">YPG Def</td><td class="ds-home ">340.0</td></tr><tr><td class="ds-away ">0.0</td><td class="ds-lbl">TO Margin</td><td class="ds-home ">0.0</td></tr></tbody>
+    </table></div>
+  </div>
+</div></div></div>
 <div id="tab-upcoming" class="sub-panel"><div class="filter-bar" id="fb-upcoming"><div class="fg"><span class="fl">Confidence</span><button class="fb active" data-tab="upcoming" data-filter="conf" data-value="all" onclick="setFilter(this)">All</button><button class="fb" data-tab="upcoming" data-filter="conf" data-value="high" onclick="setFilter(this)">High</button><button class="fb" data-tab="upcoming" data-filter="conf" data-value="med" onclick="setFilter(this)">Med</button><button class="fb" data-tab="upcoming" data-filter="conf" data-value="low" onclick="setFilter(this)">Low</button></div><div class="fg"><span class="fl">Window</span><button class="fb active" data-tab="upcoming" data-filter="days" data-value="1" onclick="setFilter(this)">Tomorrow</button><button class="fb" data-tab="upcoming" data-filter="days" data-value="3" onclick="setFilter(this)">Next 3 days</button><button class="fb" data-tab="upcoming" data-filter="days" data-value="7" onclick="setFilter(this)">Next week</button><button class="fb" data-tab="upcoming" data-filter="days" data-value="14" onclick="setFilter(this)">All</button></div><div class="fg"><span class="fl">Favored</span><button class="fb active" data-tab="upcoming" data-filter="pick" data-value="all" onclick="setFilter(this)">All</button><button class="fb" data-tab="upcoming" data-filter="pick" data-value="home" onclick="setFilter(this)">Home</button><button class="fb" data-tab="upcoming" data-filter="pick" data-value="away" onclick="setFilter(this)">Away</button></div><span class="game-count" id="count-upcoming">31 games</span></div><div class="game-list" id="list-upcoming"><div class="game-row"
      data-conf="low"
      data-pick="away"
@@ -341,8 +383,8 @@ body {
       </div>
     </div>
     <div class="row-meta">
-      <div class="row-bar"><div class="rb-away" style="width:57.1%"></div><div class="rb-home" style="width:42.9%"></div></div>
-      <span class="row-pick">← Tampa Bay Buccaneers 57%</span>
+      <div class="row-bar"><div class="rb-away" style="width:56.1%"></div><div class="rb-home" style="width:43.9%"></div></div>
+      <span class="row-pick">← Tampa Bay Buccaneers 56%</span>
       <span class="pill conf-low">LOW CONF</span>
       <span class="result-area"></span>
       <span class="expand-btn">▾</span>
@@ -383,8 +425,8 @@ body {
       </div>
     </div>
     <div class="row-meta">
-      <div class="row-bar"><div class="rb-away" style="width:57.1%"></div><div class="rb-home" style="width:42.9%"></div></div>
-      <span class="row-pick">← New Orleans Saints 57%</span>
+      <div class="row-bar"><div class="rb-away" style="width:56.1%"></div><div class="rb-home" style="width:43.9%"></div></div>
+      <span class="row-pick">← New Orleans Saints 56%</span>
       <span class="pill conf-low">LOW CONF</span>
       <span class="result-area"></span>
       <span class="expand-btn">▾</span>
@@ -425,8 +467,8 @@ body {
       </div>
     </div>
     <div class="row-meta">
-      <div class="row-bar"><div class="rb-away" style="width:57.1%"></div><div class="rb-home" style="width:42.9%"></div></div>
-      <span class="row-pick">← New York Jets 57%</span>
+      <div class="row-bar"><div class="rb-away" style="width:56.1%"></div><div class="rb-home" style="width:43.9%"></div></div>
+      <span class="row-pick">← New York Jets 56%</span>
       <span class="pill conf-low">LOW CONF</span>
       <span class="result-area"></span>
       <span class="expand-btn">▾</span>
@@ -467,8 +509,8 @@ body {
       </div>
     </div>
     <div class="row-meta">
-      <div class="row-bar"><div class="rb-away" style="width:57.1%"></div><div class="rb-home" style="width:42.9%"></div></div>
-      <span class="row-pick">← Baltimore Ravens 57%</span>
+      <div class="row-bar"><div class="rb-away" style="width:56.1%"></div><div class="rb-home" style="width:43.9%"></div></div>
+      <span class="row-pick">← Baltimore Ravens 56%</span>
       <span class="pill conf-low">LOW CONF</span>
       <span class="result-area"></span>
       <span class="expand-btn">▾</span>
@@ -509,8 +551,8 @@ body {
       </div>
     </div>
     <div class="row-meta">
-      <div class="row-bar"><div class="rb-away" style="width:57.1%"></div><div class="rb-home" style="width:42.9%"></div></div>
-      <span class="row-pick">← Atlanta Falcons 57%</span>
+      <div class="row-bar"><div class="rb-away" style="width:56.1%"></div><div class="rb-home" style="width:43.9%"></div></div>
+      <span class="row-pick">← Atlanta Falcons 56%</span>
       <span class="pill conf-low">LOW CONF</span>
       <span class="result-area"></span>
       <span class="expand-btn">▾</span>
@@ -551,8 +593,8 @@ body {
       </div>
     </div>
     <div class="row-meta">
-      <div class="row-bar"><div class="rb-away" style="width:57.1%"></div><div class="rb-home" style="width:42.9%"></div></div>
-      <span class="row-pick">← Chicago Bears 57%</span>
+      <div class="row-bar"><div class="rb-away" style="width:56.1%"></div><div class="rb-home" style="width:43.9%"></div></div>
+      <span class="row-pick">← Chicago Bears 56%</span>
       <span class="pill conf-low">LOW CONF</span>
       <span class="result-area"></span>
       <span class="expand-btn">▾</span>
@@ -593,8 +635,8 @@ body {
       </div>
     </div>
     <div class="row-meta">
-      <div class="row-bar"><div class="rb-away" style="width:57.1%"></div><div class="rb-home" style="width:42.9%"></div></div>
-      <span class="row-pick">← Cleveland Browns 57%</span>
+      <div class="row-bar"><div class="rb-away" style="width:56.1%"></div><div class="rb-home" style="width:43.9%"></div></div>
+      <span class="row-pick">← Cleveland Browns 56%</span>
       <span class="pill conf-low">LOW CONF</span>
       <span class="result-area"></span>
       <span class="expand-btn">▾</span>
@@ -635,8 +677,8 @@ body {
       </div>
     </div>
     <div class="row-meta">
-      <div class="row-bar"><div class="rb-away" style="width:57.1%"></div><div class="rb-home" style="width:42.9%"></div></div>
-      <span class="row-pick">← Buffalo Bills 57%</span>
+      <div class="row-bar"><div class="rb-away" style="width:56.1%"></div><div class="rb-home" style="width:43.9%"></div></div>
+      <span class="row-pick">← Buffalo Bills 56%</span>
       <span class="pill conf-low">LOW CONF</span>
       <span class="result-area"></span>
       <span class="expand-btn">▾</span>
@@ -677,8 +719,8 @@ body {
       </div>
     </div>
     <div class="row-meta">
-      <div class="row-bar"><div class="rb-away" style="width:57.1%"></div><div class="rb-home" style="width:42.9%"></div></div>
-      <span class="row-pick">← Miami Dolphins 57%</span>
+      <div class="row-bar"><div class="rb-away" style="width:56.1%"></div><div class="rb-home" style="width:43.9%"></div></div>
+      <span class="row-pick">← Miami Dolphins 56%</span>
       <span class="pill conf-low">LOW CONF</span>
       <span class="result-area"></span>
       <span class="expand-btn">▾</span>
@@ -719,8 +761,8 @@ body {
       </div>
     </div>
     <div class="row-meta">
-      <div class="row-bar"><div class="rb-away" style="width:57.1%"></div><div class="rb-home" style="width:42.9%"></div></div>
-      <span class="row-pick">← Green Bay Packers 57%</span>
+      <div class="row-bar"><div class="rb-away" style="width:56.1%"></div><div class="rb-home" style="width:43.9%"></div></div>
+      <span class="row-pick">← Green Bay Packers 56%</span>
       <span class="pill conf-low">LOW CONF</span>
       <span class="result-area"></span>
       <span class="expand-btn">▾</span>
@@ -761,8 +803,8 @@ body {
       </div>
     </div>
     <div class="row-meta">
-      <div class="row-bar"><div class="rb-away" style="width:57.1%"></div><div class="rb-home" style="width:42.9%"></div></div>
-      <span class="row-pick">← Washington Commanders 57%</span>
+      <div class="row-bar"><div class="rb-away" style="width:56.1%"></div><div class="rb-home" style="width:43.9%"></div></div>
+      <span class="row-pick">← Washington Commanders 56%</span>
       <span class="pill conf-low">LOW CONF</span>
       <span class="result-area"></span>
       <span class="expand-btn">▾</span>
@@ -803,8 +845,8 @@ body {
       </div>
     </div>
     <div class="row-meta">
-      <div class="row-bar"><div class="rb-away" style="width:57.1%"></div><div class="rb-home" style="width:42.9%"></div></div>
-      <span class="row-pick">← Arizona Cardinals 57%</span>
+      <div class="row-bar"><div class="rb-away" style="width:56.1%"></div><div class="rb-home" style="width:43.9%"></div></div>
+      <span class="row-pick">← Arizona Cardinals 56%</span>
       <span class="pill conf-low">LOW CONF</span>
       <span class="result-area"></span>
       <span class="expand-btn">▾</span>
@@ -845,8 +887,8 @@ body {
       </div>
     </div>
     <div class="row-meta">
-      <div class="row-bar"><div class="rb-away" style="width:57.1%"></div><div class="rb-home" style="width:42.9%"></div></div>
-      <span class="row-pick">← Dallas Cowboys 57%</span>
+      <div class="row-bar"><div class="rb-away" style="width:56.1%"></div><div class="rb-home" style="width:43.9%"></div></div>
+      <span class="row-pick">← Dallas Cowboys 56%</span>
       <span class="pill conf-low">LOW CONF</span>
       <span class="result-area"></span>
       <span class="expand-btn">▾</span>
@@ -887,8 +929,8 @@ body {
       </div>
     </div>
     <div class="row-meta">
-      <div class="row-bar"><div class="rb-away" style="width:57.1%"></div><div class="rb-home" style="width:42.9%"></div></div>
-      <span class="row-pick">← Denver Broncos 57%</span>
+      <div class="row-bar"><div class="rb-away" style="width:56.1%"></div><div class="rb-home" style="width:43.9%"></div></div>
+      <span class="row-pick">← Denver Broncos 56%</span>
       <span class="pill conf-low">LOW CONF</span>
       <span class="result-area"></span>
       <span class="expand-btn">▾</span>
@@ -929,8 +971,8 @@ body {
       </div>
     </div>
     <div class="row-meta">
-      <div class="row-bar"><div class="rb-away" style="width:57.1%"></div><div class="rb-home" style="width:42.9%"></div></div>
-      <span class="row-pick">← Detroit Lions 57%</span>
+      <div class="row-bar"><div class="rb-away" style="width:56.1%"></div><div class="rb-home" style="width:43.9%"></div></div>
+      <span class="row-pick">← Detroit Lions 56%</span>
       <span class="pill conf-low">LOW CONF</span>
       <span class="result-area"></span>
       <span class="expand-btn">▾</span>
@@ -971,8 +1013,8 @@ body {
       </div>
     </div>
     <div class="row-meta">
-      <div class="row-bar"><div class="rb-away" style="width:57.1%"></div><div class="rb-home" style="width:42.9%"></div></div>
-      <span class="row-pick">← Carolina Panthers 57%</span>
+      <div class="row-bar"><div class="rb-away" style="width:56.1%"></div><div class="rb-home" style="width:43.9%"></div></div>
+      <span class="row-pick">← Carolina Panthers 56%</span>
       <span class="pill conf-low">LOW CONF</span>
       <span class="result-area"></span>
       <span class="expand-btn">▾</span>
@@ -1013,8 +1055,8 @@ body {
       </div>
     </div>
     <div class="row-meta">
-      <div class="row-bar"><div class="rb-away" style="width:57.1%"></div><div class="rb-home" style="width:42.9%"></div></div>
-      <span class="row-pick">← Minnesota Vikings 57%</span>
+      <div class="row-bar"><div class="rb-away" style="width:56.1%"></div><div class="rb-home" style="width:43.9%"></div></div>
+      <span class="row-pick">← Minnesota Vikings 56%</span>
       <span class="pill conf-low">LOW CONF</span>
       <span class="result-area"></span>
       <span class="expand-btn">▾</span>
@@ -1055,8 +1097,8 @@ body {
       </div>
     </div>
     <div class="row-meta">
-      <div class="row-bar"><div class="rb-away" style="width:57.1%"></div><div class="rb-home" style="width:42.9%"></div></div>
-      <span class="row-pick">← Philadelphia Eagles 57%</span>
+      <div class="row-bar"><div class="rb-away" style="width:56.1%"></div><div class="rb-home" style="width:43.9%"></div></div>
+      <span class="row-pick">← Philadelphia Eagles 56%</span>
       <span class="pill conf-low">LOW CONF</span>
       <span class="result-area"></span>
       <span class="expand-btn">▾</span>
@@ -1074,31 +1116,31 @@ body {
   </div>
 </div><div class="game-row"
      data-conf="low"
-     data-pick="away"
+     data-pick="home"
      data-result=""
      data-date="2026-09-20"
      data-status="scheduled"
      data-game-id="401872946"
      data-away="Pittsburgh Steelers"
      data-home="New England Patriots"
-     data-pred="away"
+     data-pred="home"
      data-espn-path="football/nfl">
   <div class="row-main" onclick="toggleRow('det-upcoming-18',this,'401872946','scheduled')">
     <span class="row-date">Sep 20</span>
     <div class="row-teams">
-      <div class="row-team fav">
+      <div class="row-team">
         <span class="rtn">Pittsburgh Steelers</span>
         <span class="rrec">0-0</span>
       </div>
       <div class="row-time" id="ctr-401872946">05:00 PM ET</div>
-      <div class="row-team right">
+      <div class="row-team right fav">
         <span class="rtn">New England Patriots</span>
-        <span class="rrec">0-0</span>
+        <span class="rrec">0-1</span>
       </div>
     </div>
     <div class="row-meta">
-      <div class="row-bar"><div class="rb-away" style="width:57.1%"></div><div class="rb-home" style="width:42.9%"></div></div>
-      <span class="row-pick">← Pittsburgh Steelers 57%</span>
+      <div class="row-bar"><div class="rb-away" style="width:45.5%"></div><div class="rb-home" style="width:54.5%"></div></div>
+      <span class="row-pick">→ New England Patriots 55%</span>
       <span class="pill conf-low">LOW CONF</span>
       <span class="result-area"></span>
       <span class="expand-btn">▾</span>
@@ -1111,7 +1153,7 @@ body {
         <th class="ds-lbl">SEASON STATS</th>
         <th class="ds-home">New England Patriots</th>
       </tr></thead>
-      <tbody><tr><td class="ds-away ">0.500</td><td class="ds-lbl">Win%</td><td class="ds-home ">0.500</td></tr><tr><td class="ds-away ">0.0</td><td class="ds-lbl">Pt Diff/G</td><td class="ds-home ">0.0</td></tr><tr><td class="ds-away ">340.0</td><td class="ds-lbl">YPG Off</td><td class="ds-home ">340.0</td></tr><tr><td class="ds-away ">340.0</td><td class="ds-lbl">YPG Def</td><td class="ds-home ">340.0</td></tr><tr><td class="ds-away ">0.0</td><td class="ds-lbl">TO Margin</td><td class="ds-home ">0.0</td></tr></tbody>
+      <tbody><tr><td class="ds-away better">0.500</td><td class="ds-lbl">Win%</td><td class="ds-home worse">0.0</td></tr><tr><td class="ds-away better">0.0</td><td class="ds-lbl">Pt Diff/G</td><td class="ds-home worse">-3.0</td></tr><tr><td class="ds-away ">340.0</td><td class="ds-lbl">YPG Off</td><td class="ds-home ">340.0</td></tr><tr><td class="ds-away ">340.0</td><td class="ds-lbl">YPG Def</td><td class="ds-home ">340.0</td></tr><tr><td class="ds-away ">0.0</td><td class="ds-lbl">TO Margin</td><td class="ds-home ">0.0</td></tr></tbody>
     </table></div>
   </div>
 </div><div class="game-row"
@@ -1139,8 +1181,8 @@ body {
       </div>
     </div>
     <div class="row-meta">
-      <div class="row-bar"><div class="rb-away" style="width:57.1%"></div><div class="rb-home" style="width:42.9%"></div></div>
-      <span class="row-pick">← Green Bay Packers 57%</span>
+      <div class="row-bar"><div class="rb-away" style="width:56.1%"></div><div class="rb-home" style="width:43.9%"></div></div>
+      <span class="row-pick">← Green Bay Packers 56%</span>
       <span class="pill conf-low">LOW CONF</span>
       <span class="result-area"></span>
       <span class="expand-btn">▾</span>
@@ -1181,8 +1223,8 @@ body {
       </div>
     </div>
     <div class="row-meta">
-      <div class="row-bar"><div class="rb-away" style="width:57.1%"></div><div class="rb-home" style="width:42.9%"></div></div>
-      <span class="row-pick">← Cleveland Browns 57%</span>
+      <div class="row-bar"><div class="rb-away" style="width:56.1%"></div><div class="rb-home" style="width:43.9%"></div></div>
+      <span class="row-pick">← Cleveland Browns 56%</span>
       <span class="pill conf-low">LOW CONF</span>
       <span class="result-area"></span>
       <span class="expand-btn">▾</span>
@@ -1223,8 +1265,8 @@ body {
       </div>
     </div>
     <div class="row-meta">
-      <div class="row-bar"><div class="rb-away" style="width:57.1%"></div><div class="rb-home" style="width:42.9%"></div></div>
-      <span class="row-pick">← New Orleans Saints 57%</span>
+      <div class="row-bar"><div class="rb-away" style="width:56.1%"></div><div class="rb-home" style="width:43.9%"></div></div>
+      <span class="row-pick">← New Orleans Saints 56%</span>
       <span class="pill conf-low">LOW CONF</span>
       <span class="result-area"></span>
       <span class="expand-btn">▾</span>
@@ -1265,8 +1307,8 @@ body {
       </div>
     </div>
     <div class="row-meta">
-      <div class="row-bar"><div class="rb-away" style="width:57.1%"></div><div class="rb-home" style="width:42.9%"></div></div>
-      <span class="row-pick">← Cincinnati Bengals 57%</span>
+      <div class="row-bar"><div class="rb-away" style="width:56.1%"></div><div class="rb-home" style="width:43.9%"></div></div>
+      <span class="row-pick">← Cincinnati Bengals 56%</span>
       <span class="pill conf-low">LOW CONF</span>
       <span class="result-area"></span>
       <span class="expand-btn">▾</span>
@@ -1307,8 +1349,8 @@ body {
       </div>
     </div>
     <div class="row-meta">
-      <div class="row-bar"><div class="rb-away" style="width:57.1%"></div><div class="rb-home" style="width:42.9%"></div></div>
-      <span class="row-pick">← Jacksonville Jaguars 57%</span>
+      <div class="row-bar"><div class="rb-away" style="width:56.1%"></div><div class="rb-home" style="width:43.9%"></div></div>
+      <span class="row-pick">← Jacksonville Jaguars 56%</span>
       <span class="pill conf-low">LOW CONF</span>
       <span class="result-area"></span>
       <span class="expand-btn">▾</span>
@@ -1349,8 +1391,8 @@ body {
       </div>
     </div>
     <div class="row-meta">
-      <div class="row-bar"><div class="rb-away" style="width:57.1%"></div><div class="rb-home" style="width:42.9%"></div></div>
-      <span class="row-pick">← Las Vegas Raiders 57%</span>
+      <div class="row-bar"><div class="rb-away" style="width:56.1%"></div><div class="rb-home" style="width:43.9%"></div></div>
+      <span class="row-pick">← Las Vegas Raiders 56%</span>
       <span class="pill conf-low">LOW CONF</span>
       <span class="result-area"></span>
       <span class="expand-btn">▾</span>
@@ -1391,8 +1433,8 @@ body {
       </div>
     </div>
     <div class="row-meta">
-      <div class="row-bar"><div class="rb-away" style="width:57.1%"></div><div class="rb-home" style="width:42.9%"></div></div>
-      <span class="row-pick">← Washington Commanders 57%</span>
+      <div class="row-bar"><div class="rb-away" style="width:56.1%"></div><div class="rb-home" style="width:43.9%"></div></div>
+      <span class="row-pick">← Washington Commanders 56%</span>
       <span class="pill conf-low">LOW CONF</span>
       <span class="result-area"></span>
       <span class="expand-btn">▾</span>
@@ -1410,31 +1452,31 @@ body {
   </div>
 </div><div class="game-row"
      data-conf="low"
-     data-pick="away"
+     data-pick="home"
      data-result=""
      data-date="2026-09-20"
      data-status="scheduled"
      data-game-id="401872943"
      data-away="Seattle Seahawks"
      data-home="Arizona Cardinals"
-     data-pred="away"
+     data-pred="home"
      data-espn-path="football/nfl">
   <div class="row-main" onclick="toggleRow('det-upcoming-26',this,'401872943','scheduled')">
     <span class="row-date">Sep 20</span>
     <div class="row-teams">
-      <div class="row-team fav">
+      <div class="row-team">
         <span class="rtn">Seattle Seahawks</span>
-        <span class="rrec">0-0</span>
+        <span class="rrec">1-0</span>
       </div>
       <div class="row-time" id="ctr-401872943">08:25 PM ET</div>
-      <div class="row-team right">
+      <div class="row-team right fav">
         <span class="rtn">Arizona Cardinals</span>
         <span class="rrec">0-0</span>
       </div>
     </div>
     <div class="row-meta">
-      <div class="row-bar"><div class="rb-away" style="width:57.1%"></div><div class="rb-home" style="width:42.9%"></div></div>
-      <span class="row-pick">← Seattle Seahawks 57%</span>
+      <div class="row-bar"><div class="rb-away" style="width:45.5%"></div><div class="rb-home" style="width:54.5%"></div></div>
+      <span class="row-pick">→ Arizona Cardinals 55%</span>
       <span class="pill conf-low">LOW CONF</span>
       <span class="result-area"></span>
       <span class="expand-btn">▾</span>
@@ -1447,7 +1489,7 @@ body {
         <th class="ds-lbl">SEASON STATS</th>
         <th class="ds-home">Arizona Cardinals</th>
       </tr></thead>
-      <tbody><tr><td class="ds-away ">0.500</td><td class="ds-lbl">Win%</td><td class="ds-home ">0.500</td></tr><tr><td class="ds-away ">0.0</td><td class="ds-lbl">Pt Diff/G</td><td class="ds-home ">0.0</td></tr><tr><td class="ds-away ">340.0</td><td class="ds-lbl">YPG Off</td><td class="ds-home ">340.0</td></tr><tr><td class="ds-away ">340.0</td><td class="ds-lbl">YPG Def</td><td class="ds-home ">340.0</td></tr><tr><td class="ds-away ">0.0</td><td class="ds-lbl">TO Margin</td><td class="ds-home ">0.0</td></tr></tbody>
+      <tbody><tr><td class="ds-away better">1.0</td><td class="ds-lbl">Win%</td><td class="ds-home worse">0.500</td></tr><tr><td class="ds-away better">3.0</td><td class="ds-lbl">Pt Diff/G</td><td class="ds-home worse">0.0</td></tr><tr><td class="ds-away ">340.0</td><td class="ds-lbl">YPG Off</td><td class="ds-home ">340.0</td></tr><tr><td class="ds-away ">340.0</td><td class="ds-lbl">YPG Def</td><td class="ds-home ">340.0</td></tr><tr><td class="ds-away ">0.0</td><td class="ds-lbl">TO Margin</td><td class="ds-home ">0.0</td></tr></tbody>
     </table></div>
   </div>
 </div><div class="game-row"
@@ -1475,8 +1517,8 @@ body {
       </div>
     </div>
     <div class="row-meta">
-      <div class="row-bar"><div class="rb-away" style="width:57.1%"></div><div class="rb-home" style="width:42.9%"></div></div>
-      <span class="row-pick">← Miami Dolphins 57%</span>
+      <div class="row-bar"><div class="rb-away" style="width:56.1%"></div><div class="rb-home" style="width:43.9%"></div></div>
+      <span class="row-pick">← Miami Dolphins 56%</span>
       <span class="pill conf-low">LOW CONF</span>
       <span class="result-area"></span>
       <span class="expand-btn">▾</span>
@@ -1517,8 +1559,8 @@ body {
       </div>
     </div>
     <div class="row-meta">
-      <div class="row-bar"><div class="rb-away" style="width:57.1%"></div><div class="rb-home" style="width:42.9%"></div></div>
-      <span class="row-pick">← Indianapolis Colts 57%</span>
+      <div class="row-bar"><div class="rb-away" style="width:56.1%"></div><div class="rb-home" style="width:43.9%"></div></div>
+      <span class="row-pick">← Indianapolis Colts 56%</span>
       <span class="pill conf-low">LOW CONF</span>
       <span class="result-area"></span>
       <span class="expand-btn">▾</span>
@@ -1559,8 +1601,8 @@ body {
       </div>
     </div>
     <div class="row-meta">
-      <div class="row-bar"><div class="rb-away" style="width:57.1%"></div><div class="rb-home" style="width:42.9%"></div></div>
-      <span class="row-pick">← New York Giants 57%</span>
+      <div class="row-bar"><div class="rb-away" style="width:56.1%"></div><div class="rb-home" style="width:43.9%"></div></div>
+      <span class="row-pick">← New York Giants 56%</span>
       <span class="pill conf-low">LOW CONF</span>
       <span class="result-area"></span>
       <span class="expand-btn">▾</span>
@@ -1601,8 +1643,8 @@ body {
       </div>
     </div>
     <div class="row-meta">
-      <div class="row-bar"><div class="rb-away" style="width:57.1%"></div><div class="rb-home" style="width:42.9%"></div></div>
-      <span class="row-pick">← Atlanta Falcons 57%</span>
+      <div class="row-bar"><div class="rb-away" style="width:56.1%"></div><div class="rb-home" style="width:43.9%"></div></div>
+      <span class="row-pick">← Atlanta Falcons 56%</span>
       <span class="pill conf-low">LOW CONF</span>
       <span class="result-area"></span>
       <span class="expand-btn">▾</span>
@@ -1622,11 +1664,11 @@ body {
 <div id="tab-accuracy" class="sub-panel">
   <div style="padding-bottom:32px">
 <div class="acc-grid">
-  <div class="acc-card"><div class="acc-big">57.1%</div><div class="acc-lbl">Overall Accuracy</div></div>
-  <div class="acc-card"><div class="acc-big">28/49</div><div class="acc-lbl">Correct Picks</div></div>
-  <div class="acc-card acc-hi"><div class="acc-big">—</div><div class="acc-lbl">High Conf (0)</div></div>
-  <div class="acc-card acc-md"><div class="acc-big">—</div><div class="acc-lbl">Med Conf (0)</div></div>
-  <div class="acc-card acc-lo"><div class="acc-big">57.1%</div><div class="acc-lbl">Low Conf (49)</div></div>
+  <div class="acc-card"><div class="acc-big">64.0%</div><div class="acc-lbl">Overall Accuracy</div></div>
+  <div class="acc-card"><div class="acc-big">32/50</div><div class="acc-lbl">Correct Picks</div></div>
+  <div class="acc-card acc-hi"><div class="acc-big">0.0%</div><div class="acc-lbl">High Conf (1)</div></div>
+  <div class="acc-card acc-md"><div class="acc-big">50.0%</div><div class="acc-lbl">Med Conf (2)</div></div>
+  <div class="acc-card acc-lo"><div class="acc-big">66.0%</div><div class="acc-lbl">Low Conf (47)</div></div>
 </div>
 
 <div class="acc-section-tabs">
@@ -1651,16 +1693,16 @@ body {
     </div>
     <div class="fg">
       <span class="fl">Team</span>
-      <select class="team-select" id="team-filter-accuracy" onchange="setTeamFilter(this,'accuracy')"><option value="all">All Teams</option><option value="Arizona Cardinals">Arizona Cardinals</option><option value="Carolina Panthers">Carolina Panthers</option><option value="Las Vegas Raiders">Las Vegas Raiders</option><option value="Los Angeles Chargers">Los Angeles Chargers</option><option value="San Francisco 49ers">San Francisco 49ers</option><option value="Atlanta Falcons">Atlanta Falcons</option><option value="New York Jets">New York Jets</option><option value="New York Giants">New York Giants</option><option value="Dallas Cowboys">Dallas Cowboys</option><option value="Indianapolis Colts">Indianapolis Colts</option><option value="Houston Texans">Houston Texans</option><option value="Tennessee Titans">Tennessee Titans</option><option value="Denver Broncos">Denver Broncos</option><option value="Miami Dolphins">Miami Dolphins</option><option value="Minnesota Vikings">Minnesota Vikings</option><option value="Los Angeles Rams">Los Angeles Rams</option><option value="Jacksonville Jaguars">Jacksonville Jaguars</option><option value="New Orleans Saints">New Orleans Saints</option><option value="Detroit Lions">Detroit Lions</option><option value="Cincinnati Bengals">Cincinnati Bengals</option><option value="Green Bay Packers">Green Bay Packers</option><option value="Pittsburgh Steelers">Pittsburgh Steelers</option><option value="Tampa Bay Buccaneers">Tampa Bay Buccaneers</option><option value="Buffalo Bills">Buffalo Bills</option><option value="Cleveland Browns">Cleveland Browns</option><option value="Chicago Bears">Chicago Bears</option><option value="Kansas City Chiefs">Kansas City Chiefs</option><option value="Philadelphia Eagles">Philadelphia Eagles</option><option value="Baltimore Ravens">Baltimore Ravens</option><option value="Seattle Seahawks">Seattle Seahawks</option><option value="New England Patriots">New England Patriots</option><option value="Washington Commanders">Washington Commanders</option></select>
+      <select class="team-select" id="team-filter-accuracy" onchange="setTeamFilter(this,'accuracy')"><option value="all">All Teams</option><option value="Arizona Cardinals">Arizona Cardinals</option><option value="Seattle Seahawks">Seattle Seahawks</option><option value="Carolina Panthers">Carolina Panthers</option><option value="New England Patriots">New England Patriots</option><option value="Indianapolis Colts">Indianapolis Colts</option><option value="Las Vegas Raiders">Las Vegas Raiders</option><option value="Los Angeles Chargers">Los Angeles Chargers</option><option value="Tennessee Titans">Tennessee Titans</option><option value="San Francisco 49ers">San Francisco 49ers</option><option value="Atlanta Falcons">Atlanta Falcons</option><option value="New York Jets">New York Jets</option><option value="New York Giants">New York Giants</option><option value="Dallas Cowboys">Dallas Cowboys</option><option value="Houston Texans">Houston Texans</option><option value="Denver Broncos">Denver Broncos</option><option value="Miami Dolphins">Miami Dolphins</option><option value="Minnesota Vikings">Minnesota Vikings</option><option value="Los Angeles Rams">Los Angeles Rams</option><option value="Kansas City Chiefs">Kansas City Chiefs</option><option value="Jacksonville Jaguars">Jacksonville Jaguars</option><option value="New Orleans Saints">New Orleans Saints</option><option value="Philadelphia Eagles">Philadelphia Eagles</option><option value="Detroit Lions">Detroit Lions</option><option value="Cincinnati Bengals">Cincinnati Bengals</option><option value="Green Bay Packers">Green Bay Packers</option><option value="Pittsburgh Steelers">Pittsburgh Steelers</option><option value="Tampa Bay Buccaneers">Tampa Bay Buccaneers</option><option value="Buffalo Bills">Buffalo Bills</option><option value="Cleveland Browns">Cleveland Browns</option><option value="Chicago Bears">Chicago Bears</option><option value="Baltimore Ravens">Baltimore Ravens</option><option value="Washington Commanders">Washington Commanders</option></select>
     </div>
-    <span class="game-count" id="count-accuracy">49 games</span>
+    <span class="game-count" id="count-accuracy">50 games</span>
   </div>
   <table class="acc-table">
     <thead><tr>
       <th>Date</th><th>Matchup</th><th>Predicted</th>
       <th>Actual</th><th>Conf</th><th>Result</th>
     </tr></thead>
-    <tbody id="acc-tbody"><tr class="acc-row" data-conf="low" data-result="correct" data-away="Carolina Panthers" data-home="Arizona Cardinals"><td>2026-08-06</td><td class="matchup-cell">Carolina Panthers <span class="vs-sep">@</span> Arizona Cardinals</td><td>Carolina Panthers <span class="prob-txt">(57%)</span></td><td>Carolina Panthers <span class="prob-txt">(33–30)</span></td><td><span class="pill conf-low">LOW CONF</span></td><td class="acc-ok">✓ Correct</td></tr><tr class="acc-row" data-conf="low" data-result="wrong" data-away="Detroit Lions" data-home="Cincinnati Bengals"><td>2026-08-13</td><td class="matchup-cell">Detroit Lions <span class="vs-sep">@</span> Cincinnati Bengals</td><td>Detroit Lions <span class="prob-txt">(57%)</span></td><td>Cincinnati Bengals <span class="prob-txt">(14–16)</span></td><td><span class="pill conf-low">LOW CONF</span></td><td class="acc-no">✗ Wrong</td></tr><tr class="acc-row" data-conf="low" data-result="wrong" data-away="Green Bay Packers" data-home="Pittsburgh Steelers"><td>2026-08-13</td><td class="matchup-cell">Green Bay Packers <span class="vs-sep">@</span> Pittsburgh Steelers</td><td>Green Bay Packers <span class="prob-txt">(57%)</span></td><td>Pittsburgh Steelers <span class="prob-txt">(9–28)</span></td><td><span class="pill conf-low">LOW CONF</span></td><td class="acc-no">✗ Wrong</td></tr><tr class="acc-row" data-conf="low" data-result="wrong" data-away="Indianapolis Colts" data-home="New England Patriots"><td>2026-08-13</td><td class="matchup-cell">Indianapolis Colts <span class="vs-sep">@</span> New England Patriots</td><td>Indianapolis Colts <span class="prob-txt">(57%)</span></td><td>New England Patriots <span class="prob-txt">(13–13)</span></td><td><span class="pill conf-low">LOW CONF</span></td><td class="acc-no">✗ Wrong</td></tr><tr class="acc-row" data-conf="low" data-result="correct" data-away="Arizona Cardinals" data-home="Las Vegas Raiders"><td>2026-08-13</td><td class="matchup-cell">Arizona Cardinals <span class="vs-sep">@</span> Las Vegas Raiders</td><td>Arizona Cardinals <span class="prob-txt">(57%)</span></td><td>Arizona Cardinals <span class="prob-txt">(27–14)</span></td><td><span class="pill conf-low">LOW CONF</span></td><td class="acc-ok">✓ Correct</td></tr><tr class="acc-row" data-conf="low" data-result="correct" data-away="Los Angeles Chargers" data-home="Houston Texans"><td>2026-08-13</td><td class="matchup-cell">Los Angeles Chargers <span class="vs-sep">@</span> Houston Texans</td><td>Los Angeles Chargers <span class="prob-txt">(57%)</span></td><td>Los Angeles Chargers <span class="prob-txt">(27–7)</span></td><td><span class="pill conf-low">LOW CONF</span></td><td class="acc-ok">✓ Correct</td></tr><tr class="acc-row" data-conf="low" data-result="correct" data-away="Tennessee Titans" data-home="San Francisco 49ers"><td>2026-08-13</td><td class="matchup-cell">Tennessee Titans <span class="vs-sep">@</span> San Francisco 49ers</td><td>Tennessee Titans <span class="prob-txt">(57%)</span></td><td>Tennessee Titans <span class="prob-txt">(19–13)</span></td><td><span class="pill conf-low">LOW CONF</span></td><td class="acc-ok">✓ Correct</td></tr><tr class="acc-row" data-conf="low" data-result="correct" data-away="Denver Broncos" data-home="Atlanta Falcons"><td>2026-08-14</td><td class="matchup-cell">Denver Broncos <span class="vs-sep">@</span> Atlanta Falcons</td><td>Denver Broncos <span class="prob-txt">(57%)</span></td><td>Denver Broncos <span class="prob-txt">(27–7)</span></td><td><span class="pill conf-low">LOW CONF</span></td><td class="acc-ok">✓ Correct</td></tr><tr class="acc-row" data-conf="low" data-result="correct" data-away="Tampa Bay Buccaneers" data-home="New York Jets"><td>2026-08-14</td><td class="matchup-cell">Tampa Bay Buccaneers <span class="vs-sep">@</span> New York Jets</td><td>Tampa Bay Buccaneers <span class="prob-txt">(57%)</span></td><td>Tampa Bay Buccaneers <span class="prob-txt">(24–16)</span></td><td><span class="pill conf-low">LOW CONF</span></td><td class="acc-ok">✓ Correct</td></tr><tr class="acc-row" data-conf="low" data-result="wrong" data-away="Miami Dolphins" data-home="Washington Commanders"><td>2026-08-14</td><td class="matchup-cell">Miami Dolphins <span class="vs-sep">@</span> Washington Commanders</td><td>Miami Dolphins <span class="prob-txt">(57%)</span></td><td>Washington Commanders <span class="prob-txt">(7–20)</span></td><td><span class="pill conf-low">LOW CONF</span></td><td class="acc-no">✗ Wrong</td></tr><tr class="acc-row" data-conf="low" data-result="wrong" data-away="Carolina Panthers" data-home="Buffalo Bills"><td>2026-08-15</td><td class="matchup-cell">Carolina Panthers <span class="vs-sep">@</span> Buffalo Bills</td><td>Carolina Panthers <span class="prob-txt">(57%)</span></td><td>Buffalo Bills <span class="prob-txt">(14–29)</span></td><td><span class="pill conf-low">LOW CONF</span></td><td class="acc-no">✗ Wrong</td></tr><tr class="acc-row" data-conf="low" data-result="wrong" data-away="Cleveland Browns" data-home="Chicago Bears"><td>2026-08-15</td><td class="matchup-cell">Cleveland Browns <span class="vs-sep">@</span> Chicago Bears</td><td>Cleveland Browns <span class="prob-txt">(57%)</span></td><td>Chicago Bears <span class="prob-txt">(10–34)</span></td><td><span class="pill conf-low">LOW CONF</span></td><td class="acc-no">✗ Wrong</td></tr><tr class="acc-row" data-conf="low" data-result="correct" data-away="Minnesota Vikings" data-home="New York Giants"><td>2026-08-15</td><td class="matchup-cell">Minnesota Vikings <span class="vs-sep">@</span> New York Giants</td><td>Minnesota Vikings <span class="prob-txt">(57%)</span></td><td>Minnesota Vikings <span class="prob-txt">(13–10)</span></td><td><span class="pill conf-low">LOW CONF</span></td><td class="acc-ok">✓ Correct</td></tr><tr class="acc-row" data-conf="low" data-result="correct" data-away="Los Angeles Rams" data-home="Kansas City Chiefs"><td>2026-08-15</td><td class="matchup-cell">Los Angeles Rams <span class="vs-sep">@</span> Kansas City Chiefs</td><td>Los Angeles Rams <span class="prob-txt">(57%)</span></td><td>Los Angeles Rams <span class="prob-txt">(20–12)</span></td><td><span class="pill conf-low">LOW CONF</span></td><td class="acc-ok">✓ Correct</td></tr><tr class="acc-row" data-conf="low" data-result="correct" data-away="Jacksonville Jaguars" data-home="New Orleans Saints"><td>2026-08-15</td><td class="matchup-cell">Jacksonville Jaguars <span class="vs-sep">@</span> New Orleans Saints</td><td>Jacksonville Jaguars <span class="prob-txt">(57%)</span></td><td>Jacksonville Jaguars <span class="prob-txt">(24–20)</span></td><td><span class="pill conf-low">LOW CONF</span></td><td class="acc-ok">✓ Correct</td></tr><tr class="acc-row" data-conf="low" data-result="wrong" data-away="Philadelphia Eagles" data-home="Baltimore Ravens"><td>2026-08-15</td><td class="matchup-cell">Philadelphia Eagles <span class="vs-sep">@</span> Baltimore Ravens</td><td>Philadelphia Eagles <span class="prob-txt">(57%)</span></td><td>Baltimore Ravens <span class="prob-txt">(7–24)</span></td><td><span class="pill conf-low">LOW CONF</span></td><td class="acc-no">✗ Wrong</td></tr><tr class="acc-row" data-conf="low" data-result="correct" data-away="Dallas Cowboys" data-home="Seattle Seahawks"><td>2026-08-15</td><td class="matchup-cell">Dallas Cowboys <span class="vs-sep">@</span> Seattle Seahawks</td><td>Dallas Cowboys <span class="prob-txt">(57%)</span></td><td>Dallas Cowboys <span class="prob-txt">(17–7)</span></td><td><span class="pill conf-low">LOW CONF</span></td><td class="acc-ok">✓ Correct</td></tr><tr class="acc-row" data-conf="low" data-result="correct" data-away="Las Vegas Raiders" data-home="Houston Texans"><td>2026-08-20</td><td class="matchup-cell">Las Vegas Raiders <span class="vs-sep">@</span> Houston Texans</td><td>Las Vegas Raiders <span class="prob-txt">(57%)</span></td><td>Las Vegas Raiders <span class="prob-txt">(22–20)</span></td><td><span class="pill conf-low">LOW CONF</span></td><td class="acc-ok">✓ Correct</td></tr><tr class="acc-row" data-conf="low" data-result="correct" data-away="San Francisco 49ers" data-home="Los Angeles Chargers"><td>2026-08-20</td><td class="matchup-cell">San Francisco 49ers <span class="vs-sep">@</span> Los Angeles Chargers</td><td>San Francisco 49ers <span class="prob-txt">(57%)</span></td><td>San Francisco 49ers <span class="prob-txt">(41–17)</span></td><td><span class="pill conf-low">LOW CONF</span></td><td class="acc-ok">✓ Correct</td></tr><tr class="acc-row" data-conf="low" data-result="correct" data-away="New York Jets" data-home="Pittsburgh Steelers"><td>2026-08-21</td><td class="matchup-cell">New York Jets <span class="vs-sep">@</span> Pittsburgh Steelers</td><td>New York Jets <span class="prob-txt">(57%)</span></td><td>New York Jets <span class="prob-txt">(17–0)</span></td><td><span class="pill conf-low">LOW CONF</span></td><td class="acc-ok">✓ Correct</td></tr><tr class="acc-row" data-conf="low" data-result="correct" data-away="Carolina Panthers" data-home="Jacksonville Jaguars"><td>2026-08-21</td><td class="matchup-cell">Carolina Panthers <span class="vs-sep">@</span> Jacksonville Jaguars</td><td>Carolina Panthers <span class="prob-txt">(57%)</span></td><td>Carolina Panthers <span class="prob-txt">(34–17)</span></td><td><span class="pill conf-low">LOW CONF</span></td><td class="acc-ok">✓ Correct</td></tr><tr class="acc-row" data-conf="low" data-result="correct" data-away="Green Bay Packers" data-home="Denver Broncos"><td>2026-08-21</td><td class="matchup-cell">Green Bay Packers <span class="vs-sep">@</span> Denver Broncos</td><td>Green Bay Packers <span class="prob-txt">(57%)</span></td><td>Green Bay Packers <span class="prob-txt">(33–13)</span></td><td><span class="pill conf-low">LOW CONF</span></td><td class="acc-ok">✓ Correct</td></tr><tr class="acc-row" data-conf="low" data-result="wrong" data-away="Washington Commanders" data-home="Detroit Lions"><td>2026-08-22</td><td class="matchup-cell">Washington Commanders <span class="vs-sep">@</span> Detroit Lions</td><td>Washington Commanders <span class="prob-txt">(57%)</span></td><td>Detroit Lions <span class="prob-txt">(13–17)</span></td><td><span class="pill conf-low">LOW CONF</span></td><td class="acc-no">✗ Wrong</td></tr><tr class="acc-row" data-conf="low" data-result="correct" data-away="Buffalo Bills" data-home="Cleveland Browns"><td>2026-08-22</td><td class="matchup-cell">Buffalo Bills <span class="vs-sep">@</span> Cleveland Browns</td><td>Buffalo Bills <span class="prob-txt">(57%)</span></td><td>Buffalo Bills <span class="prob-txt">(31–7)</span></td><td><span class="pill conf-low">LOW CONF</span></td><td class="acc-ok">✓ Correct</td></tr><tr class="acc-row" data-conf="low" data-result="correct" data-away="Atlanta Falcons" data-home="Indianapolis Colts"><td>2026-08-22</td><td class="matchup-cell">Atlanta Falcons <span class="vs-sep">@</span> Indianapolis Colts</td><td>Atlanta Falcons <span class="prob-txt">(57%)</span></td><td>Atlanta Falcons <span class="prob-txt">(34–6)</span></td><td><span class="pill conf-low">LOW CONF</span></td><td class="acc-ok">✓ Correct</td></tr><tr class="acc-row" data-conf="low" data-result="correct" data-away="Baltimore Ravens" data-home="Minnesota Vikings"><td>2026-08-22</td><td class="matchup-cell">Baltimore Ravens <span class="vs-sep">@</span> Minnesota Vikings</td><td>Baltimore Ravens <span class="prob-txt">(57%)</span></td><td>Baltimore Ravens <span class="prob-txt">(13–3)</span></td><td><span class="pill conf-low">LOW CONF</span></td><td class="acc-ok">✓ Correct</td></tr><tr class="acc-row" data-conf="low" data-result="wrong" data-away="New Orleans Saints" data-home="Los Angeles Rams"><td>2026-08-22</td><td class="matchup-cell">New Orleans Saints <span class="vs-sep">@</span> Los Angeles Rams</td><td>New Orleans Saints <span class="prob-txt">(57%)</span></td><td>Los Angeles Rams <span class="prob-txt">(0–34)</span></td><td><span class="pill conf-low">LOW CONF</span></td><td class="acc-no">✗ Wrong</td></tr><tr class="acc-row" data-conf="low" data-result="correct" data-away="New York Giants" data-home="Miami Dolphins"><td>2026-08-22</td><td class="matchup-cell">New York Giants <span class="vs-sep">@</span> Miami Dolphins</td><td>New York Giants <span class="prob-txt">(57%)</span></td><td>New York Giants <span class="prob-txt">(26–3)</span></td><td><span class="pill conf-low">LOW CONF</span></td><td class="acc-ok">✓ Correct</td></tr><tr class="acc-row" data-conf="low" data-result="wrong" data-away="Chicago Bears" data-home="Cincinnati Bengals"><td>2026-08-22</td><td class="matchup-cell">Chicago Bears <span class="vs-sep">@</span> Cincinnati Bengals</td><td>Chicago Bears <span class="prob-txt">(57%)</span></td><td>Cincinnati Bengals <span class="prob-txt">(9–27)</span></td><td><span class="pill conf-low">LOW CONF</span></td><td class="acc-no">✗ Wrong</td></tr><tr class="acc-row" data-conf="low" data-result="wrong" data-away="Philadelphia Eagles" data-home="New England Patriots"><td>2026-08-22</td><td class="matchup-cell">Philadelphia Eagles <span class="vs-sep">@</span> New England Patriots</td><td>Philadelphia Eagles <span class="prob-txt">(57%)</span></td><td>New England Patriots <span class="prob-txt">(21–24)</span></td><td><span class="pill conf-low">LOW CONF</span></td><td class="acc-no">✗ Wrong</td></tr><tr class="acc-row" data-conf="low" data-result="wrong" data-away="Kansas City Chiefs" data-home="Tampa Bay Buccaneers"><td>2026-08-22</td><td class="matchup-cell">Kansas City Chiefs <span class="vs-sep">@</span> Tampa Bay Buccaneers</td><td>Kansas City Chiefs <span class="prob-txt">(57%)</span></td><td>Tampa Bay Buccaneers <span class="prob-txt">(15–16)</span></td><td><span class="pill conf-low">LOW CONF</span></td><td class="acc-no">✗ Wrong</td></tr><tr class="acc-row" data-conf="low" data-result="correct" data-away="Dallas Cowboys" data-home="Arizona Cardinals"><td>2026-08-22</td><td class="matchup-cell">Dallas Cowboys <span class="vs-sep">@</span> Arizona Cardinals</td><td>Dallas Cowboys <span class="prob-txt">(57%)</span></td><td>Dallas Cowboys <span class="prob-txt">(34–13)</span></td><td><span class="pill conf-low">LOW CONF</span></td><td class="acc-ok">✓ Correct</td></tr><tr class="acc-row" data-conf="low" data-result="wrong" data-away="Seattle Seahawks" data-home="Tennessee Titans"><td>2026-08-23</td><td class="matchup-cell">Seattle Seahawks <span class="vs-sep">@</span> Tennessee Titans</td><td>Seattle Seahawks <span class="prob-txt">(57%)</span></td><td>Tennessee Titans <span class="prob-txt">(16–19)</span></td><td><span class="pill conf-low">LOW CONF</span></td><td class="acc-no">✗ Wrong</td></tr><tr class="acc-row" data-conf="low" data-result="wrong" data-away="Pittsburgh Steelers" data-home="Buffalo Bills"><td>2026-08-27</td><td class="matchup-cell">Pittsburgh Steelers <span class="vs-sep">@</span> Buffalo Bills</td><td>Pittsburgh Steelers <span class="prob-txt">(57%)</span></td><td>Buffalo Bills <span class="prob-txt">(27–28)</span></td><td><span class="pill conf-low">LOW CONF</span></td><td class="acc-no">✗ Wrong</td></tr><tr class="acc-row" data-conf="low" data-result="wrong" data-away="New England Patriots" data-home="Cleveland Browns"><td>2026-08-27</td><td class="matchup-cell">New England Patriots <span class="vs-sep">@</span> Cleveland Browns</td><td>New England Patriots <span class="prob-txt">(57%)</span></td><td>Cleveland Browns <span class="prob-txt">(13–37)</span></td><td><span class="pill conf-low">LOW CONF</span></td><td class="acc-no">✗ Wrong</td></tr><tr class="acc-row" data-conf="low" data-result="correct" data-away="San Francisco 49ers" data-home="Las Vegas Raiders"><td>2026-08-27</td><td class="matchup-cell">San Francisco 49ers <span class="vs-sep">@</span> Las Vegas Raiders</td><td>San Francisco 49ers <span class="prob-txt">(57%)</span></td><td>San Francisco 49ers <span class="prob-txt">(18–12)</span></td><td><span class="pill conf-low">LOW CONF</span></td><td class="acc-ok">✓ Correct</td></tr><tr class="acc-row" data-conf="low" data-result="correct" data-away="Los Angeles Rams" data-home="Los Angeles Chargers"><td>2026-08-27</td><td class="matchup-cell">Los Angeles Rams <span class="vs-sep">@</span> Los Angeles Chargers</td><td>Los Angeles Rams <span class="prob-txt">(57%)</span></td><td>Los Angeles Rams <span class="prob-txt">(20–18)</span></td><td><span class="pill conf-low">LOW CONF</span></td><td class="acc-ok">✓ Correct</td></tr><tr class="acc-row" data-conf="low" data-result="wrong" data-away="Washington Commanders" data-home="Baltimore Ravens"><td>2026-08-28</td><td class="matchup-cell">Washington Commanders <span class="vs-sep">@</span> Baltimore Ravens</td><td>Washington Commanders <span class="prob-txt">(57%)</span></td><td>Baltimore Ravens <span class="prob-txt">(3–41)</span></td><td><span class="pill conf-low">LOW CONF</span></td><td class="acc-no">✗ Wrong</td></tr><tr class="acc-row" data-conf="low" data-result="correct" data-away="Atlanta Falcons" data-home="Miami Dolphins"><td>2026-08-28</td><td class="matchup-cell">Atlanta Falcons <span class="vs-sep">@</span> Miami Dolphins</td><td>Atlanta Falcons <span class="prob-txt">(57%)</span></td><td>Atlanta Falcons <span class="prob-txt">(17–12)</span></td><td><span class="pill conf-low">LOW CONF</span></td><td class="acc-ok">✓ Correct</td></tr><tr class="acc-row" data-conf="low" data-result="wrong" data-away="Houston Texans" data-home="Carolina Panthers"><td>2026-08-28</td><td class="matchup-cell">Houston Texans <span class="vs-sep">@</span> Carolina Panthers</td><td>Houston Texans <span class="prob-txt">(57%)</span></td><td>Carolina Panthers <span class="prob-txt">(13–16)</span></td><td><span class="pill conf-low">LOW CONF</span></td><td class="acc-no">✗ Wrong</td></tr><tr class="acc-row" data-conf="low" data-result="correct" data-away="New York Giants" data-home="New York Jets"><td>2026-08-28</td><td class="matchup-cell">New York Giants <span class="vs-sep">@</span> New York Jets</td><td>New York Giants <span class="prob-txt">(57%)</span></td><td>New York Giants <span class="prob-txt">(23–6)</span></td><td><span class="pill conf-low">LOW CONF</span></td><td class="acc-ok">✓ Correct</td></tr><tr class="acc-row" data-conf="low" data-result="wrong" data-away="Tampa Bay Buccaneers" data-home="Jacksonville Jaguars"><td>2026-08-28</td><td class="matchup-cell">Tampa Bay Buccaneers <span class="vs-sep">@</span> Jacksonville Jaguars</td><td>Tampa Bay Buccaneers <span class="prob-txt">(57%)</span></td><td>Jacksonville Jaguars <span class="prob-txt">(0–19)</span></td><td><span class="pill conf-low">LOW CONF</span></td><td class="acc-no">✗ Wrong</td></tr><tr class="acc-row" data-conf="low" data-result="correct" data-away="New Orleans Saints" data-home="Dallas Cowboys"><td>2026-08-28</td><td class="matchup-cell">New Orleans Saints <span class="vs-sep">@</span> Dallas Cowboys</td><td>New Orleans Saints <span class="prob-txt">(57%)</span></td><td>New Orleans Saints <span class="prob-txt">(27–24)</span></td><td><span class="pill conf-low">LOW CONF</span></td><td class="acc-ok">✓ Correct</td></tr><tr class="acc-row" data-conf="low" data-result="wrong" data-away="Arizona Cardinals" data-home="Green Bay Packers"><td>2026-08-28</td><td class="matchup-cell">Arizona Cardinals <span class="vs-sep">@</span> Green Bay Packers</td><td>Arizona Cardinals <span class="prob-txt">(57%)</span></td><td>Green Bay Packers <span class="prob-txt">(38–42)</span></td><td><span class="pill conf-low">LOW CONF</span></td><td class="acc-no">✗ Wrong</td></tr><tr class="acc-row" data-conf="low" data-result="wrong" data-away="Seattle Seahawks" data-home="Kansas City Chiefs"><td>2026-08-28</td><td class="matchup-cell">Seattle Seahawks <span class="vs-sep">@</span> Kansas City Chiefs</td><td>Seattle Seahawks <span class="prob-txt">(57%)</span></td><td>Kansas City Chiefs <span class="prob-txt">(9–9)</span></td><td><span class="pill conf-low">LOW CONF</span></td><td class="acc-no">✗ Wrong</td></tr><tr class="acc-row" data-conf="low" data-result="correct" data-away="Cincinnati Bengals" data-home="Philadelphia Eagles"><td>2026-08-28</td><td class="matchup-cell">Cincinnati Bengals <span class="vs-sep">@</span> Philadelphia Eagles</td><td>Cincinnati Bengals <span class="prob-txt">(57%)</span></td><td>Cincinnati Bengals <span class="prob-txt">(30–13)</span></td><td><span class="pill conf-low">LOW CONF</span></td><td class="acc-ok">✓ Correct</td></tr><tr class="acc-row" data-conf="low" data-result="wrong" data-away="Minnesota Vikings" data-home="Denver Broncos"><td>2026-08-28</td><td class="matchup-cell">Minnesota Vikings <span class="vs-sep">@</span> Denver Broncos</td><td>Minnesota Vikings <span class="prob-txt">(57%)</span></td><td>Denver Broncos <span class="prob-txt">(6–34)</span></td><td><span class="pill conf-low">LOW CONF</span></td><td class="acc-no">✗ Wrong</td></tr><tr class="acc-row" data-conf="low" data-result="correct" data-away="Detroit Lions" data-home="Indianapolis Colts"><td>2026-08-29</td><td class="matchup-cell">Detroit Lions <span class="vs-sep">@</span> Indianapolis Colts</td><td>Detroit Lions <span class="prob-txt">(57%)</span></td><td>Detroit Lions <span class="prob-txt">(25–16)</span></td><td><span class="pill conf-low">LOW CONF</span></td><td class="acc-ok">✓ Correct</td></tr><tr class="acc-row" data-conf="low" data-result="correct" data-away="Chicago Bears" data-home="Tennessee Titans"><td>2026-08-29</td><td class="matchup-cell">Chicago Bears <span class="vs-sep">@</span> Tennessee Titans</td><td>Chicago Bears <span class="prob-txt">(57%)</span></td><td>Chicago Bears <span class="prob-txt">(24–15)</span></td><td><span class="pill conf-low">LOW CONF</span></td><td class="acc-ok">✓ Correct</td></tr></tbody>
+    <tbody id="acc-tbody"><tr class="acc-row" data-conf="low" data-result="correct" data-away="Carolina Panthers" data-home="Arizona Cardinals"><td>2026-08-06</td><td class="matchup-cell">Carolina Panthers <span class="vs-sep">@</span> Arizona Cardinals</td><td>Carolina Panthers <span class="prob-txt">(56%)</span></td><td>Carolina Panthers <span class="prob-txt">(33–30)</span></td><td><span class="pill conf-low">LOW CONF</span></td><td class="acc-ok">✓ Correct</td></tr><tr class="acc-row" data-conf="low" data-result="wrong" data-away="Detroit Lions" data-home="Cincinnati Bengals"><td>2026-08-13</td><td class="matchup-cell">Detroit Lions <span class="vs-sep">@</span> Cincinnati Bengals</td><td>Detroit Lions <span class="prob-txt">(56%)</span></td><td>Cincinnati Bengals <span class="prob-txt">(14–16)</span></td><td><span class="pill conf-low">LOW CONF</span></td><td class="acc-no">✗ Wrong</td></tr><tr class="acc-row" data-conf="low" data-result="wrong" data-away="Green Bay Packers" data-home="Pittsburgh Steelers"><td>2026-08-13</td><td class="matchup-cell">Green Bay Packers <span class="vs-sep">@</span> Pittsburgh Steelers</td><td>Green Bay Packers <span class="prob-txt">(56%)</span></td><td>Pittsburgh Steelers <span class="prob-txt">(9–28)</span></td><td><span class="pill conf-low">LOW CONF</span></td><td class="acc-no">✗ Wrong</td></tr><tr class="acc-row" data-conf="low" data-result="correct" data-away="Indianapolis Colts" data-home="New England Patriots"><td>2026-08-13</td><td class="matchup-cell">Indianapolis Colts <span class="vs-sep">@</span> New England Patriots</td><td>New England Patriots <span class="prob-txt">(55%)</span></td><td>New England Patriots <span class="prob-txt">(13–13)</span></td><td><span class="pill conf-low">LOW CONF</span></td><td class="acc-ok">✓ Correct</td></tr><tr class="acc-row" data-conf="low" data-result="correct" data-away="Arizona Cardinals" data-home="Las Vegas Raiders"><td>2026-08-13</td><td class="matchup-cell">Arizona Cardinals <span class="vs-sep">@</span> Las Vegas Raiders</td><td>Arizona Cardinals <span class="prob-txt">(56%)</span></td><td>Arizona Cardinals <span class="prob-txt">(27–14)</span></td><td><span class="pill conf-low">LOW CONF</span></td><td class="acc-ok">✓ Correct</td></tr><tr class="acc-row" data-conf="low" data-result="correct" data-away="Los Angeles Chargers" data-home="Houston Texans"><td>2026-08-13</td><td class="matchup-cell">Los Angeles Chargers <span class="vs-sep">@</span> Houston Texans</td><td>Los Angeles Chargers <span class="prob-txt">(56%)</span></td><td>Los Angeles Chargers <span class="prob-txt">(27–7)</span></td><td><span class="pill conf-low">LOW CONF</span></td><td class="acc-ok">✓ Correct</td></tr><tr class="acc-row" data-conf="low" data-result="correct" data-away="Tennessee Titans" data-home="San Francisco 49ers"><td>2026-08-13</td><td class="matchup-cell">Tennessee Titans <span class="vs-sep">@</span> San Francisco 49ers</td><td>Tennessee Titans <span class="prob-txt">(56%)</span></td><td>Tennessee Titans <span class="prob-txt">(19–13)</span></td><td><span class="pill conf-low">LOW CONF</span></td><td class="acc-ok">✓ Correct</td></tr><tr class="acc-row" data-conf="low" data-result="correct" data-away="Denver Broncos" data-home="Atlanta Falcons"><td>2026-08-14</td><td class="matchup-cell">Denver Broncos <span class="vs-sep">@</span> Atlanta Falcons</td><td>Denver Broncos <span class="prob-txt">(56%)</span></td><td>Denver Broncos <span class="prob-txt">(27–7)</span></td><td><span class="pill conf-low">LOW CONF</span></td><td class="acc-ok">✓ Correct</td></tr><tr class="acc-row" data-conf="low" data-result="correct" data-away="Tampa Bay Buccaneers" data-home="New York Jets"><td>2026-08-14</td><td class="matchup-cell">Tampa Bay Buccaneers <span class="vs-sep">@</span> New York Jets</td><td>Tampa Bay Buccaneers <span class="prob-txt">(56%)</span></td><td>Tampa Bay Buccaneers <span class="prob-txt">(24–16)</span></td><td><span class="pill conf-low">LOW CONF</span></td><td class="acc-ok">✓ Correct</td></tr><tr class="acc-row" data-conf="low" data-result="wrong" data-away="Miami Dolphins" data-home="Washington Commanders"><td>2026-08-14</td><td class="matchup-cell">Miami Dolphins <span class="vs-sep">@</span> Washington Commanders</td><td>Miami Dolphins <span class="prob-txt">(56%)</span></td><td>Washington Commanders <span class="prob-txt">(7–20)</span></td><td><span class="pill conf-low">LOW CONF</span></td><td class="acc-no">✗ Wrong</td></tr><tr class="acc-row" data-conf="low" data-result="wrong" data-away="Carolina Panthers" data-home="Buffalo Bills"><td>2026-08-15</td><td class="matchup-cell">Carolina Panthers <span class="vs-sep">@</span> Buffalo Bills</td><td>Carolina Panthers <span class="prob-txt">(56%)</span></td><td>Buffalo Bills <span class="prob-txt">(14–29)</span></td><td><span class="pill conf-low">LOW CONF</span></td><td class="acc-no">✗ Wrong</td></tr><tr class="acc-row" data-conf="low" data-result="wrong" data-away="Cleveland Browns" data-home="Chicago Bears"><td>2026-08-15</td><td class="matchup-cell">Cleveland Browns <span class="vs-sep">@</span> Chicago Bears</td><td>Cleveland Browns <span class="prob-txt">(56%)</span></td><td>Chicago Bears <span class="prob-txt">(10–34)</span></td><td><span class="pill conf-low">LOW CONF</span></td><td class="acc-no">✗ Wrong</td></tr><tr class="acc-row" data-conf="low" data-result="correct" data-away="Minnesota Vikings" data-home="New York Giants"><td>2026-08-15</td><td class="matchup-cell">Minnesota Vikings <span class="vs-sep">@</span> New York Giants</td><td>Minnesota Vikings <span class="prob-txt">(56%)</span></td><td>Minnesota Vikings <span class="prob-txt">(13–10)</span></td><td><span class="pill conf-low">LOW CONF</span></td><td class="acc-ok">✓ Correct</td></tr><tr class="acc-row" data-conf="low" data-result="correct" data-away="Los Angeles Rams" data-home="Kansas City Chiefs"><td>2026-08-15</td><td class="matchup-cell">Los Angeles Rams <span class="vs-sep">@</span> Kansas City Chiefs</td><td>Los Angeles Rams <span class="prob-txt">(56%)</span></td><td>Los Angeles Rams <span class="prob-txt">(20–12)</span></td><td><span class="pill conf-low">LOW CONF</span></td><td class="acc-ok">✓ Correct</td></tr><tr class="acc-row" data-conf="low" data-result="correct" data-away="Jacksonville Jaguars" data-home="New Orleans Saints"><td>2026-08-15</td><td class="matchup-cell">Jacksonville Jaguars <span class="vs-sep">@</span> New Orleans Saints</td><td>Jacksonville Jaguars <span class="prob-txt">(56%)</span></td><td>Jacksonville Jaguars <span class="prob-txt">(24–20)</span></td><td><span class="pill conf-low">LOW CONF</span></td><td class="acc-ok">✓ Correct</td></tr><tr class="acc-row" data-conf="low" data-result="wrong" data-away="Philadelphia Eagles" data-home="Baltimore Ravens"><td>2026-08-15</td><td class="matchup-cell">Philadelphia Eagles <span class="vs-sep">@</span> Baltimore Ravens</td><td>Philadelphia Eagles <span class="prob-txt">(56%)</span></td><td>Baltimore Ravens <span class="prob-txt">(7–24)</span></td><td><span class="pill conf-low">LOW CONF</span></td><td class="acc-no">✗ Wrong</td></tr><tr class="acc-row" data-conf="med" data-result="correct" data-away="Dallas Cowboys" data-home="Seattle Seahawks"><td>2026-08-15</td><td class="matchup-cell">Dallas Cowboys <span class="vs-sep">@</span> Seattle Seahawks</td><td>Dallas Cowboys <span class="prob-txt">(66%)</span></td><td>Dallas Cowboys <span class="prob-txt">(17–7)</span></td><td><span class="pill conf-med">MED CONF</span></td><td class="acc-ok">✓ Correct</td></tr><tr class="acc-row" data-conf="low" data-result="correct" data-away="Las Vegas Raiders" data-home="Houston Texans"><td>2026-08-20</td><td class="matchup-cell">Las Vegas Raiders <span class="vs-sep">@</span> Houston Texans</td><td>Las Vegas Raiders <span class="prob-txt">(56%)</span></td><td>Las Vegas Raiders <span class="prob-txt">(22–20)</span></td><td><span class="pill conf-low">LOW CONF</span></td><td class="acc-ok">✓ Correct</td></tr><tr class="acc-row" data-conf="low" data-result="correct" data-away="San Francisco 49ers" data-home="Los Angeles Chargers"><td>2026-08-20</td><td class="matchup-cell">San Francisco 49ers <span class="vs-sep">@</span> Los Angeles Chargers</td><td>San Francisco 49ers <span class="prob-txt">(56%)</span></td><td>San Francisco 49ers <span class="prob-txt">(41–17)</span></td><td><span class="pill conf-low">LOW CONF</span></td><td class="acc-ok">✓ Correct</td></tr><tr class="acc-row" data-conf="low" data-result="correct" data-away="New York Jets" data-home="Pittsburgh Steelers"><td>2026-08-21</td><td class="matchup-cell">New York Jets <span class="vs-sep">@</span> Pittsburgh Steelers</td><td>New York Jets <span class="prob-txt">(56%)</span></td><td>New York Jets <span class="prob-txt">(17–0)</span></td><td><span class="pill conf-low">LOW CONF</span></td><td class="acc-ok">✓ Correct</td></tr><tr class="acc-row" data-conf="low" data-result="correct" data-away="Carolina Panthers" data-home="Jacksonville Jaguars"><td>2026-08-21</td><td class="matchup-cell">Carolina Panthers <span class="vs-sep">@</span> Jacksonville Jaguars</td><td>Carolina Panthers <span class="prob-txt">(56%)</span></td><td>Carolina Panthers <span class="prob-txt">(34–17)</span></td><td><span class="pill conf-low">LOW CONF</span></td><td class="acc-ok">✓ Correct</td></tr><tr class="acc-row" data-conf="low" data-result="correct" data-away="Green Bay Packers" data-home="Denver Broncos"><td>2026-08-21</td><td class="matchup-cell">Green Bay Packers <span class="vs-sep">@</span> Denver Broncos</td><td>Green Bay Packers <span class="prob-txt">(56%)</span></td><td>Green Bay Packers <span class="prob-txt">(33–13)</span></td><td><span class="pill conf-low">LOW CONF</span></td><td class="acc-ok">✓ Correct</td></tr><tr class="acc-row" data-conf="low" data-result="wrong" data-away="Washington Commanders" data-home="Detroit Lions"><td>2026-08-22</td><td class="matchup-cell">Washington Commanders <span class="vs-sep">@</span> Detroit Lions</td><td>Washington Commanders <span class="prob-txt">(56%)</span></td><td>Detroit Lions <span class="prob-txt">(13–17)</span></td><td><span class="pill conf-low">LOW CONF</span></td><td class="acc-no">✗ Wrong</td></tr><tr class="acc-row" data-conf="low" data-result="correct" data-away="Buffalo Bills" data-home="Cleveland Browns"><td>2026-08-22</td><td class="matchup-cell">Buffalo Bills <span class="vs-sep">@</span> Cleveland Browns</td><td>Buffalo Bills <span class="prob-txt">(56%)</span></td><td>Buffalo Bills <span class="prob-txt">(31–7)</span></td><td><span class="pill conf-low">LOW CONF</span></td><td class="acc-ok">✓ Correct</td></tr><tr class="acc-row" data-conf="low" data-result="correct" data-away="Atlanta Falcons" data-home="Indianapolis Colts"><td>2026-08-22</td><td class="matchup-cell">Atlanta Falcons <span class="vs-sep">@</span> Indianapolis Colts</td><td>Atlanta Falcons <span class="prob-txt">(56%)</span></td><td>Atlanta Falcons <span class="prob-txt">(34–6)</span></td><td><span class="pill conf-low">LOW CONF</span></td><td class="acc-ok">✓ Correct</td></tr><tr class="acc-row" data-conf="low" data-result="correct" data-away="Baltimore Ravens" data-home="Minnesota Vikings"><td>2026-08-22</td><td class="matchup-cell">Baltimore Ravens <span class="vs-sep">@</span> Minnesota Vikings</td><td>Baltimore Ravens <span class="prob-txt">(56%)</span></td><td>Baltimore Ravens <span class="prob-txt">(13–3)</span></td><td><span class="pill conf-low">LOW CONF</span></td><td class="acc-ok">✓ Correct</td></tr><tr class="acc-row" data-conf="low" data-result="wrong" data-away="New Orleans Saints" data-home="Los Angeles Rams"><td>2026-08-22</td><td class="matchup-cell">New Orleans Saints <span class="vs-sep">@</span> Los Angeles Rams</td><td>New Orleans Saints <span class="prob-txt">(56%)</span></td><td>Los Angeles Rams <span class="prob-txt">(0–34)</span></td><td><span class="pill conf-low">LOW CONF</span></td><td class="acc-no">✗ Wrong</td></tr><tr class="acc-row" data-conf="low" data-result="correct" data-away="New York Giants" data-home="Miami Dolphins"><td>2026-08-22</td><td class="matchup-cell">New York Giants <span class="vs-sep">@</span> Miami Dolphins</td><td>New York Giants <span class="prob-txt">(56%)</span></td><td>New York Giants <span class="prob-txt">(26–3)</span></td><td><span class="pill conf-low">LOW CONF</span></td><td class="acc-ok">✓ Correct</td></tr><tr class="acc-row" data-conf="low" data-result="wrong" data-away="Chicago Bears" data-home="Cincinnati Bengals"><td>2026-08-22</td><td class="matchup-cell">Chicago Bears <span class="vs-sep">@</span> Cincinnati Bengals</td><td>Chicago Bears <span class="prob-txt">(56%)</span></td><td>Cincinnati Bengals <span class="prob-txt">(9–27)</span></td><td><span class="pill conf-low">LOW CONF</span></td><td class="acc-no">✗ Wrong</td></tr><tr class="acc-row" data-conf="low" data-result="correct" data-away="Philadelphia Eagles" data-home="New England Patriots"><td>2026-08-22</td><td class="matchup-cell">Philadelphia Eagles <span class="vs-sep">@</span> New England Patriots</td><td>New England Patriots <span class="prob-txt">(55%)</span></td><td>New England Patriots <span class="prob-txt">(21–24)</span></td><td><span class="pill conf-low">LOW CONF</span></td><td class="acc-ok">✓ Correct</td></tr><tr class="acc-row" data-conf="low" data-result="wrong" data-away="Kansas City Chiefs" data-home="Tampa Bay Buccaneers"><td>2026-08-22</td><td class="matchup-cell">Kansas City Chiefs <span class="vs-sep">@</span> Tampa Bay Buccaneers</td><td>Kansas City Chiefs <span class="prob-txt">(56%)</span></td><td>Tampa Bay Buccaneers <span class="prob-txt">(15–16)</span></td><td><span class="pill conf-low">LOW CONF</span></td><td class="acc-no">✗ Wrong</td></tr><tr class="acc-row" data-conf="low" data-result="correct" data-away="Dallas Cowboys" data-home="Arizona Cardinals"><td>2026-08-22</td><td class="matchup-cell">Dallas Cowboys <span class="vs-sep">@</span> Arizona Cardinals</td><td>Dallas Cowboys <span class="prob-txt">(56%)</span></td><td>Dallas Cowboys <span class="prob-txt">(34–13)</span></td><td><span class="pill conf-low">LOW CONF</span></td><td class="acc-ok">✓ Correct</td></tr><tr class="acc-row" data-conf="low" data-result="correct" data-away="Seattle Seahawks" data-home="Tennessee Titans"><td>2026-08-23</td><td class="matchup-cell">Seattle Seahawks <span class="vs-sep">@</span> Tennessee Titans</td><td>Tennessee Titans <span class="prob-txt">(55%)</span></td><td>Tennessee Titans <span class="prob-txt">(16–19)</span></td><td><span class="pill conf-low">LOW CONF</span></td><td class="acc-ok">✓ Correct</td></tr><tr class="acc-row" data-conf="low" data-result="wrong" data-away="Pittsburgh Steelers" data-home="Buffalo Bills"><td>2026-08-27</td><td class="matchup-cell">Pittsburgh Steelers <span class="vs-sep">@</span> Buffalo Bills</td><td>Pittsburgh Steelers <span class="prob-txt">(56%)</span></td><td>Buffalo Bills <span class="prob-txt">(27–28)</span></td><td><span class="pill conf-low">LOW CONF</span></td><td class="acc-no">✗ Wrong</td></tr><tr class="acc-row" data-conf="med" data-result="wrong" data-away="New England Patriots" data-home="Cleveland Browns"><td>2026-08-27</td><td class="matchup-cell">New England Patriots <span class="vs-sep">@</span> Cleveland Browns</td><td>New England Patriots <span class="prob-txt">(66%)</span></td><td>Cleveland Browns <span class="prob-txt">(13–37)</span></td><td><span class="pill conf-med">MED CONF</span></td><td class="acc-no">✗ Wrong</td></tr><tr class="acc-row" data-conf="low" data-result="correct" data-away="San Francisco 49ers" data-home="Las Vegas Raiders"><td>2026-08-27</td><td class="matchup-cell">San Francisco 49ers <span class="vs-sep">@</span> Las Vegas Raiders</td><td>San Francisco 49ers <span class="prob-txt">(56%)</span></td><td>San Francisco 49ers <span class="prob-txt">(18–12)</span></td><td><span class="pill conf-low">LOW CONF</span></td><td class="acc-ok">✓ Correct</td></tr><tr class="acc-row" data-conf="low" data-result="correct" data-away="Los Angeles Rams" data-home="Los Angeles Chargers"><td>2026-08-27</td><td class="matchup-cell">Los Angeles Rams <span class="vs-sep">@</span> Los Angeles Chargers</td><td>Los Angeles Rams <span class="prob-txt">(56%)</span></td><td>Los Angeles Rams <span class="prob-txt">(20–18)</span></td><td><span class="pill conf-low">LOW CONF</span></td><td class="acc-ok">✓ Correct</td></tr><tr class="acc-row" data-conf="low" data-result="wrong" data-away="Washington Commanders" data-home="Baltimore Ravens"><td>2026-08-28</td><td class="matchup-cell">Washington Commanders <span class="vs-sep">@</span> Baltimore Ravens</td><td>Washington Commanders <span class="prob-txt">(56%)</span></td><td>Baltimore Ravens <span class="prob-txt">(3–41)</span></td><td><span class="pill conf-low">LOW CONF</span></td><td class="acc-no">✗ Wrong</td></tr><tr class="acc-row" data-conf="low" data-result="correct" data-away="Atlanta Falcons" data-home="Miami Dolphins"><td>2026-08-28</td><td class="matchup-cell">Atlanta Falcons <span class="vs-sep">@</span> Miami Dolphins</td><td>Atlanta Falcons <span class="prob-txt">(56%)</span></td><td>Atlanta Falcons <span class="prob-txt">(17–12)</span></td><td><span class="pill conf-low">LOW CONF</span></td><td class="acc-ok">✓ Correct</td></tr><tr class="acc-row" data-conf="low" data-result="wrong" data-away="Houston Texans" data-home="Carolina Panthers"><td>2026-08-28</td><td class="matchup-cell">Houston Texans <span class="vs-sep">@</span> Carolina Panthers</td><td>Houston Texans <span class="prob-txt">(56%)</span></td><td>Carolina Panthers <span class="prob-txt">(13–16)</span></td><td><span class="pill conf-low">LOW CONF</span></td><td class="acc-no">✗ Wrong</td></tr><tr class="acc-row" data-conf="low" data-result="correct" data-away="New York Giants" data-home="New York Jets"><td>2026-08-28</td><td class="matchup-cell">New York Giants <span class="vs-sep">@</span> New York Jets</td><td>New York Giants <span class="prob-txt">(56%)</span></td><td>New York Giants <span class="prob-txt">(23–6)</span></td><td><span class="pill conf-low">LOW CONF</span></td><td class="acc-ok">✓ Correct</td></tr><tr class="acc-row" data-conf="low" data-result="wrong" data-away="Tampa Bay Buccaneers" data-home="Jacksonville Jaguars"><td>2026-08-28</td><td class="matchup-cell">Tampa Bay Buccaneers <span class="vs-sep">@</span> Jacksonville Jaguars</td><td>Tampa Bay Buccaneers <span class="prob-txt">(56%)</span></td><td>Jacksonville Jaguars <span class="prob-txt">(0–19)</span></td><td><span class="pill conf-low">LOW CONF</span></td><td class="acc-no">✗ Wrong</td></tr><tr class="acc-row" data-conf="low" data-result="correct" data-away="New Orleans Saints" data-home="Dallas Cowboys"><td>2026-08-28</td><td class="matchup-cell">New Orleans Saints <span class="vs-sep">@</span> Dallas Cowboys</td><td>New Orleans Saints <span class="prob-txt">(56%)</span></td><td>New Orleans Saints <span class="prob-txt">(27–24)</span></td><td><span class="pill conf-low">LOW CONF</span></td><td class="acc-ok">✓ Correct</td></tr><tr class="acc-row" data-conf="low" data-result="wrong" data-away="Arizona Cardinals" data-home="Green Bay Packers"><td>2026-08-28</td><td class="matchup-cell">Arizona Cardinals <span class="vs-sep">@</span> Green Bay Packers</td><td>Arizona Cardinals <span class="prob-txt">(56%)</span></td><td>Green Bay Packers <span class="prob-txt">(38–42)</span></td><td><span class="pill conf-low">LOW CONF</span></td><td class="acc-no">✗ Wrong</td></tr><tr class="acc-row" data-conf="low" data-result="correct" data-away="Seattle Seahawks" data-home="Kansas City Chiefs"><td>2026-08-28</td><td class="matchup-cell">Seattle Seahawks <span class="vs-sep">@</span> Kansas City Chiefs</td><td>Kansas City Chiefs <span class="prob-txt">(55%)</span></td><td>Kansas City Chiefs <span class="prob-txt">(9–9)</span></td><td><span class="pill conf-low">LOW CONF</span></td><td class="acc-ok">✓ Correct</td></tr><tr class="acc-row" data-conf="low" data-result="correct" data-away="Cincinnati Bengals" data-home="Philadelphia Eagles"><td>2026-08-28</td><td class="matchup-cell">Cincinnati Bengals <span class="vs-sep">@</span> Philadelphia Eagles</td><td>Cincinnati Bengals <span class="prob-txt">(56%)</span></td><td>Cincinnati Bengals <span class="prob-txt">(30–13)</span></td><td><span class="pill conf-low">LOW CONF</span></td><td class="acc-ok">✓ Correct</td></tr><tr class="acc-row" data-conf="low" data-result="wrong" data-away="Minnesota Vikings" data-home="Denver Broncos"><td>2026-08-28</td><td class="matchup-cell">Minnesota Vikings <span class="vs-sep">@</span> Denver Broncos</td><td>Minnesota Vikings <span class="prob-txt">(56%)</span></td><td>Denver Broncos <span class="prob-txt">(6–34)</span></td><td><span class="pill conf-low">LOW CONF</span></td><td class="acc-no">✗ Wrong</td></tr><tr class="acc-row" data-conf="low" data-result="correct" data-away="Detroit Lions" data-home="Indianapolis Colts"><td>2026-08-29</td><td class="matchup-cell">Detroit Lions <span class="vs-sep">@</span> Indianapolis Colts</td><td>Detroit Lions <span class="prob-txt">(56%)</span></td><td>Detroit Lions <span class="prob-txt">(25–16)</span></td><td><span class="pill conf-low">LOW CONF</span></td><td class="acc-ok">✓ Correct</td></tr><tr class="acc-row" data-conf="low" data-result="correct" data-away="Chicago Bears" data-home="Tennessee Titans"><td>2026-08-29</td><td class="matchup-cell">Chicago Bears <span class="vs-sep">@</span> Tennessee Titans</td><td>Chicago Bears <span class="prob-txt">(56%)</span></td><td>Chicago Bears <span class="prob-txt">(24–15)</span></td><td><span class="pill conf-low">LOW CONF</span></td><td class="acc-ok">✓ Correct</td></tr><tr class="acc-row" data-conf="high" data-result="wrong" data-away="New England Patriots" data-home="Seattle Seahawks"><td>2026-09-09</td><td class="matchup-cell">New England Patriots <span class="vs-sep">@</span> Seattle Seahawks</td><td>New England Patriots <span class="prob-txt">(75%)</span></td><td>Seattle Seahawks <span class="prob-txt">(10–13)</span></td><td><span class="pill conf-high">HIGH CONF</span></td><td class="acc-no">✗ Wrong</td></tr></tbody>
   </table>
 </div>
 
@@ -1688,7 +1730,7 @@ body {
       <th>As Favorite</th>
       <th>As Underdog</th>
     </tr></thead>
-    <tbody id="team-tbody"><tr class="team-row" data-team="Arizona Cardinals"><td class="team-name-cell">Arizona Cardinals</td><td>4</td><td class="acc-ok">75%</td><td>3/4</td><td>50% <span class="prob-txt">(1/2)</span></td><td>100% <span class="prob-txt">(2/2)</span></td></tr><tr class="team-row" data-team="Carolina Panthers"><td class="team-name-cell">Carolina Panthers</td><td>4</td><td class="acc-warn">50%</td><td>2/4</td><td>67% <span class="prob-txt">(2/3)</span></td><td>0% <span class="prob-txt">(0/1)</span></td></tr><tr class="team-row" data-team="Las Vegas Raiders"><td class="team-name-cell">Las Vegas Raiders</td><td>3</td><td class="acc-ok">100%</td><td>3/3</td><td>100% <span class="prob-txt">(1/1)</span></td><td>100% <span class="prob-txt">(2/2)</span></td></tr><tr class="team-row" data-team="Los Angeles Chargers"><td class="team-name-cell">Los Angeles Chargers</td><td>3</td><td class="acc-ok">100%</td><td>3/3</td><td>100% <span class="prob-txt">(1/1)</span></td><td>100% <span class="prob-txt">(2/2)</span></td></tr><tr class="team-row" data-team="San Francisco 49ers"><td class="team-name-cell">San Francisco 49ers</td><td>3</td><td class="acc-ok">100%</td><td>3/3</td><td>100% <span class="prob-txt">(2/2)</span></td><td>100% <span class="prob-txt">(1/1)</span></td></tr><tr class="team-row" data-team="Atlanta Falcons"><td class="team-name-cell">Atlanta Falcons</td><td>3</td><td class="acc-ok">100%</td><td>3/3</td><td>100% <span class="prob-txt">(2/2)</span></td><td>100% <span class="prob-txt">(1/1)</span></td></tr><tr class="team-row" data-team="New York Jets"><td class="team-name-cell">New York Jets</td><td>3</td><td class="acc-ok">100%</td><td>3/3</td><td>100% <span class="prob-txt">(1/1)</span></td><td>100% <span class="prob-txt">(2/2)</span></td></tr><tr class="team-row" data-team="New York Giants"><td class="team-name-cell">New York Giants</td><td>3</td><td class="acc-ok">100%</td><td>3/3</td><td>100% <span class="prob-txt">(2/2)</span></td><td>100% <span class="prob-txt">(1/1)</span></td></tr><tr class="team-row" data-team="Dallas Cowboys"><td class="team-name-cell">Dallas Cowboys</td><td>3</td><td class="acc-ok">100%</td><td>3/3</td><td>100% <span class="prob-txt">(2/2)</span></td><td>100% <span class="prob-txt">(1/1)</span></td></tr><tr class="team-row" data-team="Indianapolis Colts"><td class="team-name-cell">Indianapolis Colts</td><td>3</td><td class="acc-ok">67%</td><td>2/3</td><td>0% <span class="prob-txt">(0/1)</span></td><td>100% <span class="prob-txt">(2/2)</span></td></tr><tr class="team-row" data-team="Houston Texans"><td class="team-name-cell">Houston Texans</td><td>3</td><td class="acc-ok">67%</td><td>2/3</td><td>0% <span class="prob-txt">(0/1)</span></td><td>100% <span class="prob-txt">(2/2)</span></td></tr><tr class="team-row" data-team="Tennessee Titans"><td class="team-name-cell">Tennessee Titans</td><td>3</td><td class="acc-ok">67%</td><td>2/3</td><td>100% <span class="prob-txt">(1/1)</span></td><td>50% <span class="prob-txt">(1/2)</span></td></tr><tr class="team-row" data-team="Denver Broncos"><td class="team-name-cell">Denver Broncos</td><td>3</td><td class="acc-ok">67%</td><td>2/3</td><td>100% <span class="prob-txt">(1/1)</span></td><td>50% <span class="prob-txt">(1/2)</span></td></tr><tr class="team-row" data-team="Miami Dolphins"><td class="team-name-cell">Miami Dolphins</td><td>3</td><td class="acc-ok">67%</td><td>2/3</td><td>0% <span class="prob-txt">(0/1)</span></td><td>100% <span class="prob-txt">(2/2)</span></td></tr><tr class="team-row" data-team="Minnesota Vikings"><td class="team-name-cell">Minnesota Vikings</td><td>3</td><td class="acc-ok">67%</td><td>2/3</td><td>50% <span class="prob-txt">(1/2)</span></td><td>100% <span class="prob-txt">(1/1)</span></td></tr><tr class="team-row" data-team="Los Angeles Rams"><td class="team-name-cell">Los Angeles Rams</td><td>3</td><td class="acc-ok">67%</td><td>2/3</td><td>100% <span class="prob-txt">(2/2)</span></td><td>0% <span class="prob-txt">(0/1)</span></td></tr><tr class="team-row" data-team="Jacksonville Jaguars"><td class="team-name-cell">Jacksonville Jaguars</td><td>3</td><td class="acc-ok">67%</td><td>2/3</td><td>100% <span class="prob-txt">(1/1)</span></td><td>50% <span class="prob-txt">(1/2)</span></td></tr><tr class="team-row" data-team="New Orleans Saints"><td class="team-name-cell">New Orleans Saints</td><td>3</td><td class="acc-ok">67%</td><td>2/3</td><td>50% <span class="prob-txt">(1/2)</span></td><td>100% <span class="prob-txt">(1/1)</span></td></tr><tr class="team-row" data-team="Detroit Lions"><td class="team-name-cell">Detroit Lions</td><td>3</td><td class="acc-no">33%</td><td>1/3</td><td>50% <span class="prob-txt">(1/2)</span></td><td>0% <span class="prob-txt">(0/1)</span></td></tr><tr class="team-row" data-team="Cincinnati Bengals"><td class="team-name-cell">Cincinnati Bengals</td><td>3</td><td class="acc-no">33%</td><td>1/3</td><td>100% <span class="prob-txt">(1/1)</span></td><td>0% <span class="prob-txt">(0/2)</span></td></tr><tr class="team-row" data-team="Green Bay Packers"><td class="team-name-cell">Green Bay Packers</td><td>3</td><td class="acc-no">33%</td><td>1/3</td><td>50% <span class="prob-txt">(1/2)</span></td><td>0% <span class="prob-txt">(0/1)</span></td></tr><tr class="team-row" data-team="Pittsburgh Steelers"><td class="team-name-cell">Pittsburgh Steelers</td><td>3</td><td class="acc-no">33%</td><td>1/3</td><td>0% <span class="prob-txt">(0/1)</span></td><td>50% <span class="prob-txt">(1/2)</span></td></tr><tr class="team-row" data-team="Tampa Bay Buccaneers"><td class="team-name-cell">Tampa Bay Buccaneers</td><td>3</td><td class="acc-no">33%</td><td>1/3</td><td>50% <span class="prob-txt">(1/2)</span></td><td>0% <span class="prob-txt">(0/1)</span></td></tr><tr class="team-row" data-team="Buffalo Bills"><td class="team-name-cell">Buffalo Bills</td><td>3</td><td class="acc-no">33%</td><td>1/3</td><td>100% <span class="prob-txt">(1/1)</span></td><td>0% <span class="prob-txt">(0/2)</span></td></tr><tr class="team-row" data-team="Cleveland Browns"><td class="team-name-cell">Cleveland Browns</td><td>3</td><td class="acc-no">33%</td><td>1/3</td><td>0% <span class="prob-txt">(0/1)</span></td><td>50% <span class="prob-txt">(1/2)</span></td></tr><tr class="team-row" data-team="Chicago Bears"><td class="team-name-cell">Chicago Bears</td><td>3</td><td class="acc-no">33%</td><td>1/3</td><td>50% <span class="prob-txt">(1/2)</span></td><td>0% <span class="prob-txt">(0/1)</span></td></tr><tr class="team-row" data-team="Kansas City Chiefs"><td class="team-name-cell">Kansas City Chiefs</td><td>3</td><td class="acc-no">33%</td><td>1/3</td><td>0% <span class="prob-txt">(0/1)</span></td><td>50% <span class="prob-txt">(1/2)</span></td></tr><tr class="team-row" data-team="Philadelphia Eagles"><td class="team-name-cell">Philadelphia Eagles</td><td>3</td><td class="acc-no">33%</td><td>1/3</td><td>0% <span class="prob-txt">(0/2)</span></td><td>100% <span class="prob-txt">(1/1)</span></td></tr><tr class="team-row" data-team="Baltimore Ravens"><td class="team-name-cell">Baltimore Ravens</td><td>3</td><td class="acc-no">33%</td><td>1/3</td><td>100% <span class="prob-txt">(1/1)</span></td><td>0% <span class="prob-txt">(0/2)</span></td></tr><tr class="team-row" data-team="Seattle Seahawks"><td class="team-name-cell">Seattle Seahawks</td><td>3</td><td class="acc-no">33%</td><td>1/3</td><td>0% <span class="prob-txt">(0/2)</span></td><td>100% <span class="prob-txt">(1/1)</span></td></tr><tr class="team-row" data-team="New England Patriots"><td class="team-name-cell">New England Patriots</td><td>3</td><td class="acc-no">0%</td><td>0/3</td><td>0% <span class="prob-txt">(0/1)</span></td><td>0% <span class="prob-txt">(0/2)</span></td></tr><tr class="team-row" data-team="Washington Commanders"><td class="team-name-cell">Washington Commanders</td><td>3</td><td class="acc-no">0%</td><td>0/3</td><td>0% <span class="prob-txt">(0/2)</span></td><td>0% <span class="prob-txt">(0/1)</span></td></tr></tbody>
+    <tbody id="team-tbody"><tr class="team-row" data-team="Arizona Cardinals"><td class="team-name-cell">Arizona Cardinals</td><td>4</td><td class="acc-ok">75%</td><td>3/4</td><td>50% <span class="prob-txt">(1/2)</span></td><td>100% <span class="prob-txt">(2/2)</span></td></tr><tr class="team-row" data-team="Seattle Seahawks"><td class="team-name-cell">Seattle Seahawks</td><td>4</td><td class="acc-ok">75%</td><td>3/4</td><td>— <span class="prob-txt">(0/0)</span></td><td>75% <span class="prob-txt">(3/4)</span></td></tr><tr class="team-row" data-team="Carolina Panthers"><td class="team-name-cell">Carolina Panthers</td><td>4</td><td class="acc-warn">50%</td><td>2/4</td><td>67% <span class="prob-txt">(2/3)</span></td><td>0% <span class="prob-txt">(0/1)</span></td></tr><tr class="team-row" data-team="New England Patriots"><td class="team-name-cell">New England Patriots</td><td>4</td><td class="acc-warn">50%</td><td>2/4</td><td>50% <span class="prob-txt">(2/4)</span></td><td>— <span class="prob-txt">(0/0)</span></td></tr><tr class="team-row" data-team="Indianapolis Colts"><td class="team-name-cell">Indianapolis Colts</td><td>3</td><td class="acc-ok">100%</td><td>3/3</td><td>— <span class="prob-txt">(0/0)</span></td><td>100% <span class="prob-txt">(3/3)</span></td></tr><tr class="team-row" data-team="Las Vegas Raiders"><td class="team-name-cell">Las Vegas Raiders</td><td>3</td><td class="acc-ok">100%</td><td>3/3</td><td>100% <span class="prob-txt">(1/1)</span></td><td>100% <span class="prob-txt">(2/2)</span></td></tr><tr class="team-row" data-team="Los Angeles Chargers"><td class="team-name-cell">Los Angeles Chargers</td><td>3</td><td class="acc-ok">100%</td><td>3/3</td><td>100% <span class="prob-txt">(1/1)</span></td><td>100% <span class="prob-txt">(2/2)</span></td></tr><tr class="team-row" data-team="Tennessee Titans"><td class="team-name-cell">Tennessee Titans</td><td>3</td><td class="acc-ok">100%</td><td>3/3</td><td>100% <span class="prob-txt">(2/2)</span></td><td>100% <span class="prob-txt">(1/1)</span></td></tr><tr class="team-row" data-team="San Francisco 49ers"><td class="team-name-cell">San Francisco 49ers</td><td>3</td><td class="acc-ok">100%</td><td>3/3</td><td>100% <span class="prob-txt">(2/2)</span></td><td>100% <span class="prob-txt">(1/1)</span></td></tr><tr class="team-row" data-team="Atlanta Falcons"><td class="team-name-cell">Atlanta Falcons</td><td>3</td><td class="acc-ok">100%</td><td>3/3</td><td>100% <span class="prob-txt">(2/2)</span></td><td>100% <span class="prob-txt">(1/1)</span></td></tr><tr class="team-row" data-team="New York Jets"><td class="team-name-cell">New York Jets</td><td>3</td><td class="acc-ok">100%</td><td>3/3</td><td>100% <span class="prob-txt">(1/1)</span></td><td>100% <span class="prob-txt">(2/2)</span></td></tr><tr class="team-row" data-team="New York Giants"><td class="team-name-cell">New York Giants</td><td>3</td><td class="acc-ok">100%</td><td>3/3</td><td>100% <span class="prob-txt">(2/2)</span></td><td>100% <span class="prob-txt">(1/1)</span></td></tr><tr class="team-row" data-team="Dallas Cowboys"><td class="team-name-cell">Dallas Cowboys</td><td>3</td><td class="acc-ok">100%</td><td>3/3</td><td>100% <span class="prob-txt">(2/2)</span></td><td>100% <span class="prob-txt">(1/1)</span></td></tr><tr class="team-row" data-team="Houston Texans"><td class="team-name-cell">Houston Texans</td><td>3</td><td class="acc-ok">67%</td><td>2/3</td><td>0% <span class="prob-txt">(0/1)</span></td><td>100% <span class="prob-txt">(2/2)</span></td></tr><tr class="team-row" data-team="Denver Broncos"><td class="team-name-cell">Denver Broncos</td><td>3</td><td class="acc-ok">67%</td><td>2/3</td><td>100% <span class="prob-txt">(1/1)</span></td><td>50% <span class="prob-txt">(1/2)</span></td></tr><tr class="team-row" data-team="Miami Dolphins"><td class="team-name-cell">Miami Dolphins</td><td>3</td><td class="acc-ok">67%</td><td>2/3</td><td>0% <span class="prob-txt">(0/1)</span></td><td>100% <span class="prob-txt">(2/2)</span></td></tr><tr class="team-row" data-team="Minnesota Vikings"><td class="team-name-cell">Minnesota Vikings</td><td>3</td><td class="acc-ok">67%</td><td>2/3</td><td>50% <span class="prob-txt">(1/2)</span></td><td>100% <span class="prob-txt">(1/1)</span></td></tr><tr class="team-row" data-team="Los Angeles Rams"><td class="team-name-cell">Los Angeles Rams</td><td>3</td><td class="acc-ok">67%</td><td>2/3</td><td>100% <span class="prob-txt">(2/2)</span></td><td>0% <span class="prob-txt">(0/1)</span></td></tr><tr class="team-row" data-team="Kansas City Chiefs"><td class="team-name-cell">Kansas City Chiefs</td><td>3</td><td class="acc-ok">67%</td><td>2/3</td><td>50% <span class="prob-txt">(1/2)</span></td><td>100% <span class="prob-txt">(1/1)</span></td></tr><tr class="team-row" data-team="Jacksonville Jaguars"><td class="team-name-cell">Jacksonville Jaguars</td><td>3</td><td class="acc-ok">67%</td><td>2/3</td><td>100% <span class="prob-txt">(1/1)</span></td><td>50% <span class="prob-txt">(1/2)</span></td></tr><tr class="team-row" data-team="New Orleans Saints"><td class="team-name-cell">New Orleans Saints</td><td>3</td><td class="acc-ok">67%</td><td>2/3</td><td>50% <span class="prob-txt">(1/2)</span></td><td>100% <span class="prob-txt">(1/1)</span></td></tr><tr class="team-row" data-team="Philadelphia Eagles"><td class="team-name-cell">Philadelphia Eagles</td><td>3</td><td class="acc-ok">67%</td><td>2/3</td><td>0% <span class="prob-txt">(0/1)</span></td><td>100% <span class="prob-txt">(2/2)</span></td></tr><tr class="team-row" data-team="Detroit Lions"><td class="team-name-cell">Detroit Lions</td><td>3</td><td class="acc-no">33%</td><td>1/3</td><td>50% <span class="prob-txt">(1/2)</span></td><td>0% <span class="prob-txt">(0/1)</span></td></tr><tr class="team-row" data-team="Cincinnati Bengals"><td class="team-name-cell">Cincinnati Bengals</td><td>3</td><td class="acc-no">33%</td><td>1/3</td><td>100% <span class="prob-txt">(1/1)</span></td><td>0% <span class="prob-txt">(0/2)</span></td></tr><tr class="team-row" data-team="Green Bay Packers"><td class="team-name-cell">Green Bay Packers</td><td>3</td><td class="acc-no">33%</td><td>1/3</td><td>50% <span class="prob-txt">(1/2)</span></td><td>0% <span class="prob-txt">(0/1)</span></td></tr><tr class="team-row" data-team="Pittsburgh Steelers"><td class="team-name-cell">Pittsburgh Steelers</td><td>3</td><td class="acc-no">33%</td><td>1/3</td><td>0% <span class="prob-txt">(0/1)</span></td><td>50% <span class="prob-txt">(1/2)</span></td></tr><tr class="team-row" data-team="Tampa Bay Buccaneers"><td class="team-name-cell">Tampa Bay Buccaneers</td><td>3</td><td class="acc-no">33%</td><td>1/3</td><td>50% <span class="prob-txt">(1/2)</span></td><td>0% <span class="prob-txt">(0/1)</span></td></tr><tr class="team-row" data-team="Buffalo Bills"><td class="team-name-cell">Buffalo Bills</td><td>3</td><td class="acc-no">33%</td><td>1/3</td><td>100% <span class="prob-txt">(1/1)</span></td><td>0% <span class="prob-txt">(0/2)</span></td></tr><tr class="team-row" data-team="Cleveland Browns"><td class="team-name-cell">Cleveland Browns</td><td>3</td><td class="acc-no">33%</td><td>1/3</td><td>0% <span class="prob-txt">(0/1)</span></td><td>50% <span class="prob-txt">(1/2)</span></td></tr><tr class="team-row" data-team="Chicago Bears"><td class="team-name-cell">Chicago Bears</td><td>3</td><td class="acc-no">33%</td><td>1/3</td><td>50% <span class="prob-txt">(1/2)</span></td><td>0% <span class="prob-txt">(0/1)</span></td></tr><tr class="team-row" data-team="Baltimore Ravens"><td class="team-name-cell">Baltimore Ravens</td><td>3</td><td class="acc-no">33%</td><td>1/3</td><td>100% <span class="prob-txt">(1/1)</span></td><td>0% <span class="prob-txt">(0/2)</span></td></tr><tr class="team-row" data-team="Washington Commanders"><td class="team-name-cell">Washington Commanders</td><td>3</td><td class="acc-no">0%</td><td>0/3</td><td>0% <span class="prob-txt">(0/2)</span></td><td>0% <span class="prob-txt">(0/1)</span></td></tr></tbody>
   </table>
 </div></div>
 </div>
