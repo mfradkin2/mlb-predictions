@@ -257,10 +257,10 @@ body {
   <div class="hdr-emoji">🏈</div>
   <div class="hdr-info">
     <div class="hdr-name">NFL Predictions</div>
-    <div class="hdr-sub">2026 Season  ·  Today: 1  ·  Recent: 1  ·  Upcoming: 31</div>
+    <div class="hdr-sub">2026 Season  ·  Today: 0  ·  Recent: 1  ·  Upcoming: 31</div>
   </div>
   <div class="hdr-right">
-    <div class="hdr-date">Updated 2026-09-10</div>
+    <div class="hdr-date">Updated 2026-09-11</div>
     <div class="live-status" id="live-indicator">Checking for live games…</div>
   </div>
 </div>
@@ -272,49 +272,7 @@ body {
   <div class="sub-tab" onclick="sw(this,'accuracy')">Accuracy</div>
 </div>
 
-<div id="tab-today"    class="sub-panel active"><div class="filter-bar" id="fb-today"><div class="fg"><span class="fl">Confidence</span><button class="fb active" data-tab="today" data-filter="conf" data-value="all" onclick="setFilter(this)">All</button><button class="fb" data-tab="today" data-filter="conf" data-value="high" onclick="setFilter(this)">High</button><button class="fb" data-tab="today" data-filter="conf" data-value="med" onclick="setFilter(this)">Med</button><button class="fb" data-tab="today" data-filter="conf" data-value="low" onclick="setFilter(this)">Low</button></div><div class="fg"><span class="fl">Favored</span><button class="fb active" data-tab="today" data-filter="pick" data-value="all" onclick="setFilter(this)">All</button><button class="fb" data-tab="today" data-filter="pick" data-value="home" onclick="setFilter(this)">Home</button><button class="fb" data-tab="today" data-filter="pick" data-value="away" onclick="setFilter(this)">Away</button></div><span class="game-count" id="count-today">1 game</span></div><div class="game-list" id="list-today"><div class="game-row"
-     data-conf="low"
-     data-pick="away"
-     data-result=""
-     data-date="2026-09-10"
-     data-status="scheduled"
-     data-game-id="401872657"
-     data-away="San Francisco 49ers"
-     data-home="Los Angeles Rams"
-     data-pred="away"
-     data-espn-path="football/nfl">
-  <div class="row-main" onclick="toggleRow('det-today-0',this,'401872657','scheduled')">
-    <span class="row-date">Sep 10</span>
-    <div class="row-teams">
-      <div class="row-team fav">
-        <span class="rtn">San Francisco 49ers</span>
-        <span class="rrec">0-0</span>
-      </div>
-      <div class="row-time" id="ctr-401872657">12:35 AM ET</div>
-      <div class="row-team right">
-        <span class="rtn">Los Angeles Rams</span>
-        <span class="rrec">0-0</span>
-      </div>
-    </div>
-    <div class="row-meta">
-      <div class="row-bar"><div class="rb-away" style="width:56.1%"></div><div class="rb-home" style="width:43.9%"></div></div>
-      <span class="row-pick">← San Francisco 49ers 56%</span>
-      <span class="pill conf-low">LOW CONF</span>
-      <span class="result-area"></span>
-      <span class="expand-btn">▾</span>
-    </div>
-  </div>
-  <div class="row-detail" id="det-today-0">
-    <div class="detail-inner"><table class="detail-stats pregame-stats">
-      <thead><tr>
-        <th class="ds-away">San Francisco 49ers</th>
-        <th class="ds-lbl">SEASON STATS</th>
-        <th class="ds-home">Los Angeles Rams</th>
-      </tr></thead>
-      <tbody><tr><td class="ds-away ">0.500</td><td class="ds-lbl">Win%</td><td class="ds-home ">0.500</td></tr><tr><td class="ds-away ">0.0</td><td class="ds-lbl">Pt Diff/G</td><td class="ds-home ">0.0</td></tr><tr><td class="ds-away ">340.0</td><td class="ds-lbl">YPG Off</td><td class="ds-home ">340.0</td></tr><tr><td class="ds-away ">340.0</td><td class="ds-lbl">YPG Def</td><td class="ds-home ">340.0</td></tr><tr><td class="ds-away ">0.0</td><td class="ds-lbl">TO Margin</td><td class="ds-home ">0.0</td></tr></tbody>
-    </table></div>
-  </div>
-</div></div></div>
+<div id="tab-today"    class="sub-panel active"><div class="empty"><span class="e-icon">🏈</span>No NFL games to show.</div></div>
 <div id="tab-recent"   class="sub-panel"><div class="filter-bar" id="fb-recent"><div class="fg"><span class="fl">Result</span><button class="fb active" data-tab="recent" data-filter="result" data-value="all" onclick="setFilter(this)">All</button><button class="fb" data-tab="recent" data-filter="result" data-value="correct" onclick="setFilter(this)">✓ Correct</button><button class="fb" data-tab="recent" data-filter="result" data-value="wrong" onclick="setFilter(this)">✗ Wrong</button></div><div class="fg"><span class="fl">Confidence</span><button class="fb active" data-tab="recent" data-filter="conf" data-value="all" onclick="setFilter(this)">All</button><button class="fb" data-tab="recent" data-filter="conf" data-value="high" onclick="setFilter(this)">High</button><button class="fb" data-tab="recent" data-filter="conf" data-value="med" onclick="setFilter(this)">Med</button><button class="fb" data-tab="recent" data-filter="conf" data-value="low" onclick="setFilter(this)">Low</button></div><div class="fg"><span class="fl">Period</span><button class="fb active" data-tab="recent" data-filter="days" data-value="3" onclick="setFilter(this)">Last 3 days</button><button class="fb" data-tab="recent" data-filter="days" data-value="7" onclick="setFilter(this)">Last 7 days</button><button class="fb" data-tab="recent" data-filter="days" data-value="10" onclick="setFilter(this)">Last 10 days</button></div><span class="game-count" id="count-recent">1 game</span></div><div class="game-list" id="list-recent"><div class="game-row"
      data-conf="high"
      data-pick="away"
