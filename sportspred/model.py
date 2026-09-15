@@ -31,11 +31,15 @@ def build_dataset(league_key, rows, cfg, elo_params):
 
 
 def outcomes_of(records):
-    """1 when the home team won, None when the game has not been played."""
+    """1 when the home team won, None when the game does not count.
+
+    Exhibition games are treated as unplayed: they finished, but nothing about
+    them should teach the model anything.
+    """
     out = []
     for r in records:
         g = r['game']
-        if not g['final']:
+        if not g['final'] or g.get('preseason'):
             out.append(None)
         else:
             out.append(1 if g['home_score'] > g['away_score']
@@ -72,7 +76,8 @@ def tune_elo(league_key, rows, cfg, warmup_frac=0.25, max_evals=260):
         engine = EloEngine(**params)
         recs = engine.replay(games)
         probs, ys = [], []
-        finals = [i for i, g in enumerate(games) if g['final']]
+        finals = [i for i, g in enumerate(games)
+                  if g['final'] and not g.get('preseason')]
         if len(finals) < 40:
             return None
         warm = int(len(finals) * warmup_frac)

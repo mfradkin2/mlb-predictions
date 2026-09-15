@@ -23,20 +23,12 @@
  "runs": [
   {
    "adopted": false,
-   "at": "2026-09-15T20:24:06Z",
-   "metrics": {},
-   "model_version": 3,
-   "notes": "0 completed games",
-   "reason": "challenger produced no validation score"
-  },
-  {
-   "adopted": false,
-   "at": "2026-09-15T20:24:33Z",
+   "at": "2026-09-15T20:49:23Z",
    "metrics": {},
    "model_version": 3,
    "notes": "0 completed games",
    "reason": "challenger produced no validation score"
   }
  ],
- "updated": "2026-09-15T20:24:33Z"
+ "updated": "2026-09-15T20:49:23Z"
 }

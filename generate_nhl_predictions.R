@@ -167,6 +167,8 @@ parse_day <- function(date_str) {
       if (!is.na(aw) && !is.na(hw)) winner <- if (aw > hw) away_name else home_name
     }
 
+    # season_type / season_slug let the model drop exhibition games, which
+    # are played by rosters that never take the field once the season starts.
     # game_time below is formatted in UTC but labelled ET; game_start_utc
     # carries the unambiguous timestamp so the site can localise it properly.
     game_time <- tryCatch({
@@ -200,6 +202,8 @@ parse_day <- function(date_str) {
       home_pk_pct          = if (!is.null(ht)) ht$pk_pct   else NA,
       away_save_pct        = if (!is.null(at)) at$save_pct else NA,
       home_save_pct        = if (!is.null(ht)) ht$save_pct else NA,
+      season_type          = as.integer(ev$season$type %||% NA),
+      season_slug          = as.character(ev$season$slug %||% ""),
       game_start_utc       = as.character(ev$date %||% ""),
       game_time            = game_time,
       stringsAsFactors     = FALSE

@@ -23,6 +23,7 @@ from __future__ import annotations
 import os
 
 from . import config
+from .features import detect_preseason
 from .glm import PlattCalibrator, score
 from .util import (clamp, logistic, logit, now_iso, num, parse_date, read_csv,
                    read_json, write_csv, write_json)
@@ -32,7 +33,8 @@ LEDGER_MATURITY = 150      # graded pre-game predictions before the ledger rules
 ARCHIVE_FIELDS = ['game_id', 'game_date', 'away_team', 'home_team',
                   'away_score', 'home_score', 'winner', 'first_seen']
 LEDGER_FIELDS = ['game_id', 'game_date', 'away_team', 'home_team', 'predicted_at',
-                 'model_version', 'p_final', 'p_elo', 'p_glm', 'p_prior',
+                 'model_version', 'pregame', 'preseason',
+                 'p_final', 'p_elo', 'p_glm', 'p_prior',
                  'favored_team', 'away_score', 'home_score', 'winner',
                  'graded', 'correct']
 
@@ -63,12 +65,20 @@ class LeagueMemory:
         self.state = read_json(self.state_path, {})
 
     # ── archive ─────────────────────────────────────────────────────────────
-    def merge_archive(self, rows):
-        """Fold this run's completed games into the permanent archive."""
+    def merge_archive(self, rows, league_key=None):
+        """Fold this run's completed games into the permanent archive.
+
+        Exhibition games are left out: the archive exists to give the ratings a
+        longer memory, and preseason results are not evidence about anybody.
+        """
         added = 0
         for r in rows:
             if (r.get('status') or '') != 'Final':
                 continue
+            if league_key:
+                d = parse_date(r.get('game_date'))
+                if d and detect_preseason(r, d, league_key):
+                    continue
             winner = (r.get('winner') or '').strip()
             hs, as_ = num(r.get('home_score')), num(r.get('away_score'))
             if not winner or hs is None or as_ is None:
@@ -112,15 +122,34 @@ class LeagueMemory:
         write_csv(self.archive_path, rows, ARCHIVE_FIELDS)
 
     # ── ledger ──────────────────────────────────────────────────────────────
-    def record(self, game, parts, favored):
-        """Log a pre-game prediction. Existing entries are never overwritten:
-        the first forecast we published is the one we are held to."""
-        if game['final']:
-            return
-        k = _key({'game_id': game['game_id'], 'game_date': str(game['date']),
-                  'away_team': game['away'], 'home_team': game['home']})
+    def entry_for(self, game):
+        """The stored forecast for a game, if we have already published one."""
+        return self.ledger.get(self._key_for(game))
+
+    @staticmethod
+    def _key_for(game):
+        return _key({'game_id': game.get('game_id'),
+                     'game_date': str(game.get('date')),
+                     'away_team': game.get('away'),
+                     'home_team': game.get('home')})
+
+    def record(self, game, parts, favored, pregame=True, preseason=False):
+        """Log a forecast, once.
+
+        Existing entries are never overwritten. A prediction published before
+        kickoff is the one we are held to, and re-running the model afterwards
+        must not quietly rewrite it — otherwise a finished game can change who
+        it says was favoured, because the standings model behind it now knows
+        the result.
+
+        ``pregame`` records whether the forecast beat the first pitch. Only
+        pre-game rows are used to score the model; back-filled rows, and
+        exhibition games, exist so that every game still displays a stable
+        number.
+        """
+        k = self._key_for(game)
         if k in self.ledger and (self.ledger[k].get('p_final') or '') != '':
-            return
+            return False
         self.ledger[k] = {
             'game_id': game['game_id'],
             'game_date': str(game['date']),
@@ -128,6 +157,8 @@ class LeagueMemory:
             'home_team': game['home'],
             'predicted_at': now_iso(),
             'model_version': MODEL_VERSION,
+            'pregame': '1' if pregame else '0',
+            'preseason': '1' if preseason else '0',
             'p_final': round(parts['prob'], 4),
             'p_elo': round(parts['elo_prob'], 4) if parts.get('elo_prob') is not None else '',
             'p_glm': round(parts['glm_prob'], 4) if parts.get('glm_prob') is not None else '',
@@ -136,6 +167,7 @@ class LeagueMemory:
             'away_score': '', 'home_score': '', 'winner': '',
             'graded': '0', 'correct': '',
         }
+        return True
 
     def grade(self):
         """Attach results to ledger entries whose games have since finished."""
@@ -161,9 +193,13 @@ class LeagueMemory:
             graded += 1
         return graded
 
-    def graded_rows(self):
-        return [e for e in self.ledger.values() if e.get('graded') == '1'
-                and e.get('winner')]
+    def graded_rows(self, pregame_only=False):
+        rows = [e for e in self.ledger.values()
+                if e.get('graded') == '1' and e.get('winner')
+                and e.get('preseason') != '1']
+        if pregame_only:
+            rows = [e for e in rows if e.get('pregame') == '1']
+        return rows
 
     def save_ledger(self):
         rows = sorted(self.ledger.values(),
@@ -172,7 +208,7 @@ class LeagueMemory:
 
     # ── leak-free scoring of each component ─────────────────────────────────
     def component_scores(self):
-        rows = self.graded_rows()
+        rows = self.graded_rows(pregame_only=True)
         if not rows:
             return {}, 0
         out = {}
@@ -188,7 +224,7 @@ class LeagueMemory:
     def tune_trust_from_ledger(self):
         """Choose how far to lean on the learned model rather than the
         standings prior, using only predictions recorded before kickoff."""
-        rows = self.graded_rows()
+        rows = self.graded_rows(pregame_only=True)
         usable = [r for r in rows
                   if num(r.get('p_elo')) is not None and num(r.get('p_prior')) is not None]
         if len(usable) < LEDGER_MATURITY:
@@ -213,7 +249,7 @@ class LeagueMemory:
 
     def ledger_calibrator(self):
         """Recalibrate on graded pre-game predictions once there are enough."""
-        rows = self.graded_rows()
+        rows = self.graded_rows(pregame_only=True)
         probs, ys = [], []
         for r in rows:
             p = num(r.get('p_final'))
@@ -279,7 +315,8 @@ class LeagueMemory:
     def learning_curve(self):
         """Rolling accuracy of graded pre-game picks — the 'is it improving?'
         chart on the site."""
-        rows = sorted(self.graded_rows(), key=lambda r: r.get('game_date', ''))
+        rows = sorted(self.graded_rows(pregame_only=True),
+                      key=lambda r: r.get('game_date', ''))
         by_day = {}
         for r in rows:
             if r.get('correct') not in ('0', '1'):

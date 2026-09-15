@@ -29,6 +29,21 @@ def asset_version():
     return h.hexdigest()[:8]
 
 
+def js_safe(text):
+    """Make a JSON string safe to sit inside a script.
+
+    The payload is loaded as an external file today, where these characters are
+    inert, but escaping them costs nothing and keeps the file safe if it is
+    ever inlined. U+2028 and U+2029 are escaped because they are valid JSON but
+    illegal raw inside a JavaScript string literal, and a single one anywhere
+    in a team or player name would stop the whole page parsing.
+    """
+    return (text.replace('<', '\\u003c')
+                .replace('>', '\\u003e')
+                .replace('\u2028', '\\u2028')
+                .replace('\u2029', '\\u2029'))
+
+
 def write_payload(payload):
     """Data as an assignment in a .js file rather than JSON fetched at runtime.
 
@@ -37,7 +52,7 @@ def write_payload(payload):
     """
     league = payload['league']
     history = payload.pop('history', [])
-    body = json.dumps(payload, separators=(',', ':'), default=str, sort_keys=False)
+    body = js_safe(json.dumps(payload, separators=(',', ':'), default=str, sort_keys=False))
     js = ('window.SP_DATA=window.SP_DATA||{};\n'
           f'window.SP_DATA[{json.dumps(league)}]={body};\n')
     os.makedirs(config.DATA_DIR, exist_ok=True)
@@ -48,7 +63,7 @@ def write_payload(payload):
     os.replace(tmp, path)
     hist_js = ('window.SP_HISTORY=window.SP_HISTORY||{};\n'
                f'window.SP_HISTORY[{json.dumps(league)}]='
-               + json.dumps(history, separators=(',', ':'), default=str) + ';\n')
+               + js_safe(json.dumps(history, separators=(',', ':'), default=str)) + ';\n')
     hist_path = os.path.join(config.DATA_DIR, f'{league}-history.js')
     tmp = hist_path + '.tmp'
     with open(tmp, 'w', encoding='utf-8') as f:

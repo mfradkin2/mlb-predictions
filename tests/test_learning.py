@@ -76,9 +76,19 @@ class TestLedger(unittest.TestCase):
         self.mem.record(self.game, self.parts, 'B')
         self.assertEqual(len(self.mem.ledger), 1)
 
-    def test_finished_games_are_not_recorded(self):
-        self.mem.record({**self.game, 'final': True}, self.parts, 'B')
-        self.assertEqual(len(self.mem.ledger), 0)
+    def test_finished_games_are_logged_but_flagged(self):
+        """A game first seen after it ended still needs a stable stored pick,
+        but must never count toward the model's record."""
+        self.mem.record({**self.game, 'final': True}, self.parts, 'B', pregame=False)
+        self.assertEqual(len(self.mem.ledger), 1)
+        self.assertEqual(list(self.mem.ledger.values())[0]['pregame'], '0')
+        self.mem.merge_archive([{'game_id': '77', 'game_date': '2026-05-01',
+                                 'away_team': 'A', 'home_team': 'B',
+                                 'status': 'Final', 'winner': 'B',
+                                 'away_score': '2', 'home_score': '5'}])
+        self.mem.grade()
+        self.assertEqual(self.mem.graded_rows(pregame_only=True), [])
+        self.assertEqual(len(self.mem.graded_rows()), 1)
 
     def test_the_first_forecast_is_the_one_we_are_held_to(self):
         """Re-running the hour must not quietly improve yesterday's call."""
@@ -144,6 +154,7 @@ class TestLedger(unittest.TestCase):
                 'game_id': gid, 'game_date': f'2026-05-{(i % 28) + 1:02d}',
                 'away_team': 'A', 'home_team': 'B', 'predicted_at': '',
                 'model_version': 3,
+                'pregame': '1',
                 'p_final': good if elo_good else bad,
                 'p_elo': good if elo_good else bad,
                 'p_glm': good if elo_good else bad,

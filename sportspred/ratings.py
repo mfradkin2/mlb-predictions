@@ -113,7 +113,11 @@ class EloEngine:
                 'final': bool(g.get('final')),
             }
             out.append(pre)
-            if g.get('final') and g.get('home_score') is not None and g.get('away_score') is not None:
+            counts = (g.get('final')
+                      and not g.get('preseason')
+                      and g.get('home_score') is not None
+                      and g.get('away_score') is not None)
+            if counts:
                 self.observe(home, away, g['home_score'], g['away_score'], neutral)
         return out
 

@@ -175,6 +175,8 @@ parse_day <- function(date_str) {
       last_game_date[[home_name]] <<- date_str
     }
 
+    # season_type / season_slug let the model drop exhibition games, which
+    # are played by rosters that never take the field once the season starts.
     # game_time below is formatted in UTC but labelled ET; game_start_utc
     # carries the unambiguous timestamp so the site can localise it properly.
     game_time <- tryCatch({
@@ -207,6 +209,8 @@ parse_day <- function(date_str) {
       away_pace            = if (!is.null(at)) at$pace     else NA,
       home_pace            = if (!is.null(ht)) ht$pace     else NA,
       rest_advantage       = rest_adv,
+      season_type          = as.integer(ev$season$type %||% NA),
+      season_slug          = as.character(ev$season$slug %||% ""),
       game_start_utc       = as.character(ev$date %||% ""),
       game_time            = game_time,
       stringsAsFactors     = FALSE

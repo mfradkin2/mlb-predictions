@@ -52,8 +52,16 @@ def main(argv):
             print(f'  warming up — {model["n_train"]} games on record, '
                   f'{model.get("min_train", 110)} needed before validation is meaningful')
         acc = payload['accuracy']
-        if acc['pct'] is not None:
-            print(f'  published picks {acc["correct"]}/{acc["total"]} = {acc["pct"]*100:.1f}%')
+        ver = acc['verified']
+        if ver['total']:
+            print(f'  verified pre-game record {ver["correct"]}/{ver["total"]} '
+                  f'= {ver["pct"]*100:.1f}%')
+        else:
+            print('  verified pre-game record: none yet '
+                  '(builds up as forecasts are published and graded)')
+        if acc.get('backfilled'):
+            print(f'  {acc["backfilled"]} completed games were first seen after the '
+                  'fact and are excluded from the record')
         props = sum(1 for g in payload['games'] if g.get('props'))
         print(f'  {len(payload["games"])} games · props on {props} · feed: {payload["props_status"]}')
         print(f'  wrote {path} ({size/1024:.0f} KB)')

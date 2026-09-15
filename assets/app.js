@@ -15,14 +15,19 @@
   var EMOJI = { mlb: '⚾', nfl: '🏈', nba: '🏀', nhl: '🏒' };
   var LABEL = { mlb: 'MLB', nfl: 'NFL', nba: 'NBA', nhl: 'NHL' };
   var VIEWS = [
-    ['today', 'Today'], ['upcoming', 'Upcoming'], ['results', 'Results'],
-    ['props', 'Player Props'], ['model', 'Model']
+    ['today', 'Today', 'Today'],
+    ['upcoming', 'Upcoming', 'Next'],
+    ['results', 'Results', 'Results'],
+    ['props', 'Player Props', 'Props'],
+    ['model', 'Model', 'Model']
   ];
 
   var state = {
     league: null,
     view: 'today',
     filters: {},
+    filtersOpen: false,
+    showCountBadge: false,
     search: '',
     loading: {},
     live: null,
@@ -104,7 +109,8 @@
     if (views && !views.dataset.built) {
       views.innerHTML = VIEWS.map(function (v) {
         return '<button class="view-tab" role="tab" data-view="' + v[0] + '" aria-selected="false">' +
-          v[1] + '</button>';
+          '<span class="t-full">' + v[1] + '</span>' +
+          '<span class="t-short">' + (v[2] || v[1]) + '</span></button>';
       }).join('');
       views.dataset.built = '1';
     }
@@ -120,18 +126,28 @@
       if (accent) accent.textContent = ':root{--accent:' + d.accent + '}';
       var sub = el('brand-sub');
       if (sub) {
-        var acc = d.accuracy && d.accuracy.pct != null
-          ? ' · ' + pct(d.accuracy.pct, 1) + ' on ' + d.accuracy.total + ' graded games' : '';
-        sub.textContent = d.name + ' ' + d.season + acc;
+        var a = d.accuracy || {};
+        var v = a.verified || {};
+        var tail = '';
+        if (v.total) {
+          tail = ' · ' + pct(v.pct, 1) + ' on ' + v.total + ' verified picks';
+        } else if (a.backtest && a.backtest.pct != null) {
+          tail = ' · ' + pct(a.backtest.pct, 1) + ' in backtest';
+        }
+        sub.textContent = d.name + ' ' + d.season + tail;
       }
       document.title = d.name + ' Predictions · Sports Predictions';
     }
   }
 
   // ── game rows ────────────────────────────────────────────────────────────
-  function teamCell(name, rec, cls, right) {
+  function teamCell(name, short, rec, cls, right) {
+    // Both spellings ship; the stylesheet shows the nickname on narrow screens
+    // so "Los Angeles Dodgers" does not truncate to "Los Angeles D…".
+    var shortName = short || name;
     return '<div class="team' + (right ? ' right' : '') + (cls ? ' ' + cls : '') + '">' +
-      '<span class="tname">' + esc(name) + '</span>' +
+      '<span class="tname"><span class="t-full">' + esc(name) + '</span>' +
+      '<span class="t-short">' + esc(shortName) + '</span></span>' +
       (rec ? '<span class="trec">' + esc(rec) + '</span>' : '') + '</div>';
   }
 
@@ -151,6 +167,9 @@
     var result = g.correct == null ? '' :
       '<span class="tag ' + (g.correct ? 'ok' : 'no') + '">' + (g.correct ? '✓' : '✗') + '</span>';
     var propCount = g.props ? countProps(g.props) : 0;
+    var flag = g.preseason ? '<span class="tag low">PRESEASON</span>'
+      : (g.final && !g.counted && state.showCountBadge
+          ? '<span class="tag low">NOT COUNTED</span>' : '');
 
     return '<article class="game" data-id="' + esc(g.id) + '" data-idx="' + idx + '"' +
       ' data-conf="' + g.conf + '" data-date="' + g.date + '"' +
@@ -160,17 +179,20 @@
       '<button class="game-head" aria-expanded="false">' +
         '<span class="gdate">' + shortDate(g.date) + '</span>' +
         '<span class="teams">' +
-          teamCell(g.away, g.away_rec, awayCls, false) +
+          teamCell(g.away, g.away_s, g.away_rec, awayCls, false) +
           centerCell(g) +
-          teamCell(g.home, g.home_rec, homeCls, true) +
+          teamCell(g.home, g.home_s, g.home_rec, homeCls, true) +
         '</span>' +
         '<span class="meta">' +
           '<span class="bar"><i class="a" style="width:' + (g.away_prob * 100).toFixed(1) + '%"></i>' +
           '<i class="h" style="width:' + (g.home_prob * 100).toFixed(1) + '%"></i></span>' +
           '<span class="metarow">' +
-            '<span class="pick">' + (homePick ? '→' : '←') + ' <b>' + esc(g.favored) + '</b> ' +
-              pct(g.pick_prob) + '</span>' +
+            '<span class="pick">' + (homePick ? '→' : '←') +
+              ' <b><span class="t-full">' + esc(g.favored) + '</span>' +
+              '<span class="t-short">' + esc(homePick ? (g.home_s || g.home) : (g.away_s || g.away)) +
+              '</span></b> ' + pct(g.pick_prob) + '</span>' +
             '<span class="tag ' + g.conf + '">' + g.conf.toUpperCase() + '</span>' +
+            flag +
             (propCount ? '<span class="tag props">' + propCount + ' PROPS</span>' : '') +
             result +
           '</span>' +
@@ -213,7 +235,10 @@
   function matchupPanel(g) {
     var c = g.components || {};
     var out = '<div class="cards">' +
-      card('Model pick', esc(g.favored), pct(g.pick_prob, 1) + ' · ' + g.conf + ' confidence') +
+      card('Model pick',
+           nameSpans(g.favored, g.favored === g.home ? (g.home_s || g.home)
+                                                     : (g.away_s || g.away)),
+           pct(g.pick_prob, 1) + ' · ' + g.conf + ' confidence') +
       card('Elo', pct(c.elo, 1), 'home win probability') +
       (c.model != null ? card('Learned model', pct(c.model, 1), 'form + rest + Elo') : '') +
       (c.standings != null ? card('Season stats', pct(c.standings, 1), 'standings model') : '') +
@@ -226,8 +251,13 @@
         g.drivers.map(function (d) {
           var w = Math.min(Math.abs(d[1]) / max, 1) * 50;
           var dir = d[1] >= 0 ? 'pos' : 'neg';
+          var side = d[1] >= 0
+            ? { full: g.home, short: g.home_s || g.home }
+            : { full: g.away, short: g.away_s || g.away };
           return '<div class="driver"><span class="dname">' + esc(labels[d[0]] || d[0]) +
-            ' <span style="color:var(--faint)">favours ' + esc(d[1] >= 0 ? g.home : g.away) +
+            ' <span style="color:var(--faint)">favours ' +
+            '<span class="t-full">' + esc(side.full) + '</span>' +
+            '<span class="t-short">' + esc(side.short) + '</span>' +
             '</span></span><span class="dbar"><i class="' + dir + '" style="width:' +
             w.toFixed(1) + '%"></i></span></div>';
         }).join('') + '</div></div>';
@@ -235,7 +265,8 @@
 
     var ctx = g.context || {};
     out += '<div><div class="section-title">Form &amp; situation</div><div class="scroll-x"><table class="grid">' +
-      '<thead><tr><th class="num">' + esc(g.away) + '</th><th class="mid">&nbsp;</th><th>' + esc(g.home) + '</th></tr></thead><tbody>' +
+      '<thead><tr><th class="num">' + nameSpans(g.away, g.away_s) + '</th>' +
+      '<th class="mid">&nbsp;</th><th>' + nameSpans(g.home, g.home_s) + '</th></tr></thead><tbody>' +
       ctxRow('Elo rating', ctx.away_elo, ctx.home_elo, false) +
       ctxRow('Recent record', ctx.away_last10, ctx.home_last10, false) +
       ctxRow('Recent margin', ctx.away_margin10, ctx.home_margin10, false) +
@@ -270,9 +301,10 @@
     }
 
     if (g.props && g.props.expected) {
-      out += '<div class="note">Projected score: <b>' + esc(g.away) + ' ' + g.props.expected.away +
-        '</b> – <b>' + g.props.expected.home + ' ' + esc(g.home) + '</b>. Player projections below are ' +
-        'scaled to this game environment.</div>';
+      out += '<div class="note">Projected score: <b>' + nameSpans(g.away, g.away_s) + ' ' +
+        g.props.expected.away + '</b> – <b>' + g.props.expected.home + ' ' +
+        nameSpans(g.home, g.home_s) + '</b>. Player projections below are scaled to this ' +
+        'game environment.</div>';
     }
     return out;
   }
@@ -289,6 +321,11 @@
     return '<tr><td class="num ' + ac + '">' + (a == null || a === '' ? '—' : esc(a)) + '</td>' +
       '<td class="mid" style="color:var(--faint)">' + esc(label) + '</td>' +
       '<td class="' + hc + '">' + (h == null || h === '' ? '—' : esc(h)) + '</td></tr>';
+  }
+
+  function nameSpans(full, short) {
+    return '<span class="t-full">' + esc(full) + '</span>' +
+      '<span class="t-short">' + esc(short || full) + '</span>';
   }
 
   function card(k, v, n) {
@@ -348,8 +385,10 @@
       '<span class="prop-name">' + esc(p.label) +
         '<span class="prop-sub">season ' + p.season + ' ' + esc(p.unit || '') +
         (deltaTxt ? ' · <span class="delta ' + deltaCls + '">' + deltaTxt + '</span>' : '') + '</span></span>' +
-      '<span class="prop-num"><span class="lbl">Line</span>' + p.line + '</span>' +
-      '<span class="prop-num"><span class="lbl">Proj</span>' + p.proj + '</span>' +
+      '<span class="prop-nums">' +
+        '<span class="prop-num"><span class="lbl">Line</span>' + p.line + '</span>' +
+        '<span class="prop-num"><span class="lbl">Proj</span>' + p.proj + '</span>' +
+      '</span>' +
       '<span class="prop-range" title="Likely range ' + lo + '–' + hi + '">' +
         '<i style="left:' + toPct(lo).toFixed(1) + '%;width:' + (toPct(hi) - toPct(lo)).toFixed(1) + '%"></i>' +
         '<u style="left:' + toPct(p.line).toFixed(1) + '%"></u></span>' +
@@ -371,7 +410,7 @@
     var games = source.filter(function (g) {
       if (scope === 'today') return g.date === t;
       if (scope === 'upcoming') return g.date > t && !g.final;
-      if (scope === 'results') return g.final;
+      if (scope === 'results') return g.final && !g.preseason;
       return true;
     });
 
@@ -412,10 +451,36 @@
             '" aria-pressed="' + (f[grp[0]] === o[0]) + '">' + o[1] + '</button>';
         }).join('') + '</div>';
     }).join('');
-    return '<div class="toolbar">' + groups +
+    return filterShell(groups +
       '<div class="fgroup"><input class="search" id="search" type="search" placeholder="Filter by team…" ' +
-      'value="' + esc(state.search) + '" aria-label="Filter by team"></div>' +
-      '<span class="count">' + count + ' game' + (count === 1 ? '' : 's') + '</span></div>';
+      'value="' + esc(state.search) + '" aria-label="Filter by team"></div>',
+      count + ' game' + (count === 1 ? '' : 's'));
+  }
+
+  function filterShell(inner, countLabel) {
+    // On a phone the filter block is taller than the first game, so it is
+    // collapsed behind a toggle and the active count stays visible.
+    var open = state.filtersOpen ? ' open' : '';
+    return '<div class="toolbar' + open + '">' +
+      '<button class="filter-toggle" id="filter-toggle" aria-expanded="' +
+        (state.filtersOpen ? 'true' : 'false') + '">' +
+        '<span class="ft-icon" aria-hidden="true">☰</span> Filters' +
+        (activeFilterCount() ? '<span class="ft-badge">' + activeFilterCount() + '</span>' : '') +
+      '</button>' +
+      '<span class="count count-mobile">' + countLabel + '</span>' +
+      '<div class="toolbar-body">' + inner +
+      '<span class="count count-wide">' + countLabel + '</span></div></div>';
+  }
+
+  function activeFilterCount() {
+    var f = state.filters[state.view] || {};
+    var base = defaults(state.view);
+    var n = 0;
+    Object.keys(f).forEach(function (k) {
+      if (f[k] !== (base[k] === undefined ? 'all' : base[k])) n++;
+    });
+    if (state.search.trim()) n++;
+    return n;
   }
 
   function defaults(scope) {
@@ -437,17 +502,50 @@
   function resultsView() {
     var d = cur();
     var a = d.accuracy || {};
-    if (!a.total) {
+    var v = a.verified || {};
+    var bt = a.backtest;
+    var played = filteredGames('results').length;
+
+    // Nothing has happened yet in this league: an empty state beats a wall of
+    // explanation about a record that could not exist.
+    if (!v.total && !a.backfilled && !played) {
       return '<div class="empty"><span class="icon">' + (EMOJI[state.league] || '🏟') + '</span>' +
-        'No graded games yet this season. Results appear here once games have been played.</div>';
+        'No completed games yet this season. Results appear here once games have been played.</div>';
     }
-    var b = a.buckets || {};
-    var cards = '<div class="cards">' +
-      card('Overall', pct(a.pct, 1), (a.correct || 0) + ' of ' + (a.total || 0) + ' correct') +
-      card('High confidence', pct(b.high && b.high.pct, 1), (b.high ? b.high.n : 0) + ' games') +
-      card('Medium', pct(b.med && b.med.pct, 1), (b.med ? b.med.n : 0) + ' games') +
-      card('Low', pct(b.low && b.low.pct, 1), (b.low ? b.low.n : 0) + ' games') +
-      '</div>';
+
+    var head = '';
+    if (v.total) {
+      var b = v.buckets || {};
+      head = '<div class="cards">' +
+        card('Verified record', pct(v.pct, 1), v.correct + ' of ' + v.total + ' correct') +
+        card('High confidence', pct(b.high && b.high.pct, 1), (b.high ? b.high.n : 0) + ' games') +
+        card('Medium', pct(b.med && b.med.pct, 1), (b.med ? b.med.n : 0) + ' games') +
+        card('Low', pct(b.low && b.low.pct, 1), (b.low ? b.low.n : 0) + ' games') +
+        '</div>' +
+        '<div class="note">Every game above was forecast and published <b>before</b> it started, ' +
+        'and the probability was frozen at that moment.</div>';
+    } else {
+      head = '<div class="cards">' +
+        card('Verified record', '0 games', 'starts once forecasts are graded') +
+        (bt && bt.pct != null
+          ? card('Backtest', pct(bt.pct, 1), 'walk-forward, ' + bt.total + ' games')
+          : '') +
+        '</div>' +
+        '<details class="explain"><summary>Why is the record empty?</summary>' +
+        '<p>Only games forecast <b>before</b> kickoff count. The ' + a.backfilled +
+        ' completed game' + (a.backfilled === 1 ? '' : 's') + ' below ' +
+        (a.backfilled === 1 ? 'was' : 'were') + ' first seen after the final whistle, so the ' +
+        'pick was made with standings that already contained the result — it would score ' +
+        'near-perfectly and prove nothing. The backtest figure is the honest alternative: the ' +
+        'model run over history using only what was known at the time.</p></details>';
+    }
+
+    // Every row in the list is uncounted right now, so the badge would just be
+    // noise; show it only once the list is actually mixed.
+    var scoped = filteredGames('results');
+    state.showCountBadge = scoped.some(function (g) { return g.counted; }) &&
+                           scoped.some(function (g) { return !g.counted; });
+
     var teams = (a.teams || []).slice(0, 40);
     var table = teams.length ? '<div><div class="section-title">By team</div><div class="scroll-x">' +
       '<table class="grid"><thead><tr><th>Team</th><th class="num">Games</th>' +
@@ -457,7 +555,13 @@
         return '<tr><td>' + esc(t.team) + '</td><td class="num">' + t.n + '</td>' +
           '<td class="num">' + t.ok + '</td><td class="num ' + cls + '">' + pct(t.acc) + '</td></tr>';
       }).join('') + '</tbody></table></div></div>' : '';
-    return cards + '<div class="section-title">Graded games</div>' + gamesView('results') + table;
+
+    var list = gamesView('results');
+    if (!scoped.length && !v.total) {
+      list = '<div class="empty"><span class="icon">' + (EMOJI[state.league] || '🏟') + '</span>' +
+        'No completed games on record yet this season.</div>';
+    }
+    return head + '<div class="section-title">Completed games</div>' + list + table;
   }
 
   // ── props board ──────────────────────────────────────────────────────────
@@ -514,7 +618,7 @@
       return Math.abs(b.prop.edge || 0) - Math.abs(a.prop.edge || 0);
     }).slice(0, 250);
 
-    var bar = '<div class="toolbar">' +
+    var bar = filterShell(
       '<div class="fgroup"><span class="flabel">Confidence</span>' +
         ['all', 'high', 'med', 'low'].map(function (v) {
           return '<button class="chip" data-filter="conf" data-value="' + v + '" aria-pressed="' +
@@ -532,8 +636,8 @@
         }).join('') + '</div>' +
       '<div class="fgroup"><select class="search" id="cat-filter" aria-label="Prop type">' + catOpts + '</select></div>' +
       '<div class="fgroup"><input class="search" id="search" type="search" placeholder="Player or team…" value="' +
-        esc(state.search) + '" aria-label="Filter players"></div>' +
-      '<span class="count">' + list.length + ' props</span></div>';
+        esc(state.search) + '" aria-label="Filter players"></div>',
+      list.length + ' props');
 
     var body = '<div class="scroll-x"><table class="grid"><thead><tr>' +
       '<th>Player</th><th>Prop</th><th class="num">Line</th><th class="num">Proj</th>' +
@@ -589,6 +693,12 @@
         'published yet. Until then predictions lean on the season-standings model, and the archive ' +
         'grows with every refresh.</div>';
     }
+
+    out += '<div class="note"><b>Predictions are frozen at kickoff.</b> The first forecast ' +
+      'published for a game is written to a ledger and is what the site shows from then on. ' +
+      'Without that, refitting hourly against updated standings lets a finished game drift — ' +
+      'and once the result is in the standings, the model can end up naming the winner as the ' +
+      'team it favoured all along.</div>';
 
     out += '<div class="note"><b>How this improves itself.</b> Every run appends completed games to a ' +
       'permanent archive, so the ratings keep a longer memory than the fetch window. Every prediction is ' +
@@ -724,6 +834,15 @@
     var view = ev.target.closest('.view-tab');
     if (view) { go(state.league, view.dataset.view); return; }
 
+    var toggle = ev.target.closest('.filter-toggle');
+    if (toggle) {
+      state.filtersOpen = !state.filtersOpen;
+      var bar = toggle.closest('.toolbar');
+      bar.classList.toggle('open', state.filtersOpen);
+      toggle.setAttribute('aria-expanded', String(state.filtersOpen));
+      return;
+    }
+
     var chip = ev.target.closest('.chip');
     if (chip) {
       var scope = state.view;
@@ -852,7 +971,11 @@
       } else if (isFinal) {
         var fin = '<span class="score">' + (away.score || 0) + '–' + (home.score || 0) +
           '</span><span class="slabel">FINAL</span>';
-        if (center.innerHTML !== fin) { center.innerHTML = fin; row.classList.remove('live'); }
+        if (center.innerHTML !== fin) {
+          center.innerHTML = fin;
+          row.classList.remove('live');
+          gradeRow(row, Number(away.score), Number(home.score));
+        }
       } else if (ev.date && center.dataset.time) {
         var t = new Date(ev.date).toLocaleTimeString('en-US',
           { timeZone: 'America/New_York', hour: 'numeric', minute: '2-digit' });
@@ -866,6 +989,21 @@
       pill.textContent = liveCount ? '● ' + liveCount + ' live · ' + clock : 'Updated ' + clock;
       pill.className = 'live-pill' + (liveCount ? ' on' : '');
     }
+  }
+
+  // The pick was frozen before kickoff, so the moment a final score lands we
+  // can say whether it was right without waiting for the next rebuild.
+  function gradeRow(row, awayScore, homeScore) {
+    if (!isFinite(awayScore) || !isFinite(homeScore) || awayScore === homeScore) return;
+    var meta = row.querySelector('.metarow');
+    if (!meta || meta.querySelector('.tag.ok, .tag.no')) return;
+    var winnerSide = awayScore > homeScore ? 'away' : 'home';
+    var ok = winnerSide === row.dataset.side;
+    var tag = document.createElement('span');
+    tag.className = 'tag ' + (ok ? 'ok' : 'no');
+    tag.textContent = ok ? '✓' : '✗';
+    meta.appendChild(tag);
+    row.dataset.result = ok ? 'correct' : 'wrong';
   }
 
   // ── boot ─────────────────────────────────────────────────────────────────

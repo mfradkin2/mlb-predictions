@@ -21,8 +21,16 @@ rushing and receiving lines in football; shots, points and saves in hockey.
 Each carries a projection, a line, a likely range, and an over/under
 probability. A league-wide **Player Props** board ranks the whole slate.
 
-**Honest accuracy reporting.** The Model tab shows out-of-sample accuracy,
-Brier score, log loss and a calibration table — not in-sample numbers.
+**Predictions are frozen at kickoff.** The first forecast published for a game
+is written to a ledger and is what the site shows from then on, so a finished
+game's probability never drifts and the favourite can never quietly change to
+the team that won.
+
+**Honest accuracy reporting.** The Results tab shows the *verified* record:
+games whose forecast was published before they started. Exhibition games are
+excluded everywhere, and so are games the site first saw after the final
+whistle. The Model tab adds out-of-sample accuracy, Brier score, log loss and a
+calibration table.
 
 ---
 
@@ -52,8 +60,33 @@ ESPN  ──R──▶  enriched CSV  ──Python──▶  archive + model + p
    per-game rate, adjusts it for the opponent and the projected game
    environment, and prices it with a Poisson, negative binomial or normal
    distribution.
-7. **Render** (`sportspred/render.py`) writes a data file per league plus a
+7. **Freeze** — the prediction is written to `history/<league>_ledger.csv` and
+   never rewritten. Later runs read it back rather than recomputing.
+8. **Render** (`sportspred/render.py`) writes a data file per league plus a
    few kilobytes of HTML shell.
+
+### Why predictions are frozen
+
+The model is refit every hour and the standings model behind it is recomputed
+from *current* standings. Left alone, that means a finished game's probability
+keeps moving — and once the result is in the standings, the model can end up
+naming the winner as the team it favoured all along. A prediction that changes
+after the fact is not a prediction, so the first one published is the one the
+site is held to.
+
+### What counts as a result
+
+Exhibition games are dropped from the ratings, the training data, the archive,
+the results list and the accuracy figures. They are played by rosters that will
+not take the field once the season starts, so a preseason result is not
+evidence about anybody. They still appear on the schedule, badged
+`PRESEASON`. Season type comes from ESPN, with a per-league date rule as a
+fallback for older rows.
+
+Games the site first saw *after* they finished are shown but never counted.
+Their pick was made with standings that already contained the result, so it
+would score near-perfectly and prove nothing. That is what the backtest figure
+is for instead.
 
 ### Why the accuracy number went down
 

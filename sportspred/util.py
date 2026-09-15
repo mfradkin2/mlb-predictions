@@ -136,6 +136,21 @@ def parse_date(s):
         return None
 
 
+def parse_iso(value):
+    """Parse an ISO-8601 UTC timestamp; returns None on anything unexpected."""
+    if not value:
+        return None
+    text = str(value).strip().replace('Z', '+0000')
+    for fmt in ('%Y-%m-%dT%H:%M:%S%z', '%Y-%m-%dT%H:%M%z',
+                '%Y-%m-%dT%H:%M:%S', '%Y-%m-%dT%H:%M'):
+        try:
+            dt = datetime.strptime(text, fmt)
+            return dt if dt.tzinfo else dt.replace(tzinfo=timezone.utc)
+        except ValueError:
+            continue
+    return None
+
+
 def days_between(a, b):
     if not a or not b:
         return None
@@ -304,6 +319,31 @@ class Http:
         if cache:
             _SESSION_CACHE[url] = None
         return None
+
+
+# ── team names ───────────────────────────────────────────────────────────────
+# Nicknames that are two words; everything else is the final word of the
+# display name. Used to keep matchups readable on a phone, where
+# "Los Angeles Dodgers @ Cincinnati Reds" has to truncate.
+TWO_WORD_NICKNAMES = (
+    'red sox', 'white sox', 'blue jays',
+    'maple leafs', 'blue jackets', 'red wings', 'golden knights',
+    'trail blazers',
+)
+
+
+def short_name(full):
+    """'Los Angeles Dodgers' -> 'Dodgers'; 'Boston Red Sox' -> 'Red Sox'."""
+    name = (full or '').strip()
+    if not name:
+        return ''
+    parts = name.split()
+    if len(parts) < 2:
+        return name
+    last_two = ' '.join(parts[-2:]).lower()
+    if last_two in TWO_WORD_NICKNAMES:
+        return ' '.join(parts[-2:])
+    return parts[-1]
 
 
 # ── dict digging ─────────────────────────────────────────────────────────────

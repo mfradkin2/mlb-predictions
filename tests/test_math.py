@@ -51,6 +51,33 @@ class TestParsing(unittest.TestCase):
         self.assertEqual(util.num(None, 3.0), 3.0)
 
 
+class TestShortNames(unittest.TestCase):
+    """Phone layouts show the nickname; the mapping has to be right."""
+
+    def test_drops_the_city(self):
+        self.assertEqual(util.short_name('Los Angeles Dodgers'), 'Dodgers')
+        self.assertEqual(util.short_name('Kansas City Chiefs'), 'Chiefs')
+        self.assertEqual(util.short_name('Denver Broncos'), 'Broncos')
+
+    def test_keeps_two_word_nicknames(self):
+        for full, want in (('Boston Red Sox', 'Red Sox'),
+                           ('Chicago White Sox', 'White Sox'),
+                           ('Toronto Blue Jays', 'Blue Jays'),
+                           ('Toronto Maple Leafs', 'Maple Leafs'),
+                           ('Columbus Blue Jackets', 'Blue Jackets'),
+                           ('Detroit Red Wings', 'Red Wings'),
+                           ('Vegas Golden Knights', 'Golden Knights'),
+                           ('Portland Trail Blazers', 'Trail Blazers')):
+            self.assertEqual(util.short_name(full), want, full)
+
+    def test_single_word_names_are_unchanged(self):
+        self.assertEqual(util.short_name('Athletics'), 'Athletics')
+
+    def test_empty_input(self):
+        self.assertEqual(util.short_name(''), '')
+        self.assertEqual(util.short_name(None), '')
+
+
 class TestEastern(unittest.TestCase):
     def test_summer_is_utc_minus_four(self):
         self.assertEqual(util.format_eastern('2026-07-04T23:10Z'), '7:10 PM ET')

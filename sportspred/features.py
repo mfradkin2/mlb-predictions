@@ -7,6 +7,7 @@ told it how the season turned out; walking the log forward removes that.
 from __future__ import annotations
 
 from collections import defaultdict, deque
+from datetime import date, timedelta
 
 from .util import clamp, num, parse_date
 
@@ -33,6 +34,47 @@ RECENT_N = 20
 FORM_DECAY = 0.90          # weight of each additional game back
 
 
+# ESPN season types: 1 preseason, 2 regular season, 3 postseason.
+ESPN_PRESEASON = 1
+
+
+def _first_weekday(year, month, weekday):
+    d = date(year, month, 1)
+    return d + timedelta(days=(weekday - d.weekday()) % 7)
+
+
+def preseason_by_date(d, league_key):
+    """Fallback when the feed did not tell us the season type.
+
+    Only needed for rows captured before the ingest started recording it; new
+    rows carry ESPN's own classification.
+    """
+    if league_key == 'nfl':
+        # Week 1 kicks off the Thursday after the first Monday in September.
+        season_year = d.year if d.month >= 3 else d.year - 1
+        opener = _first_weekday(season_year, 9, 0) + timedelta(days=3)
+        return d < opener
+    if league_key == 'nhl':
+        # Camp games run through September; the season opens in early October.
+        return d.month == 9 or (d.month == 10 and d.day < 5)
+    if league_key == 'nba':
+        return d.month == 9 or (d.month == 10 and d.day < 18)
+    if league_key == 'mlb':
+        # Spring training: February through the third week of March.
+        return d.month <= 2 or (d.month == 3 and d.day < 20)
+    return False
+
+
+def detect_preseason(row, d, league_key):
+    slug = (row.get('season_slug') or '').strip().lower()
+    if slug:
+        return slug.startswith('pre')
+    season_type = num(row.get('season_type'))
+    if season_type is not None:
+        return int(season_type) == ESPN_PRESEASON
+    return preseason_by_date(d, league_key)
+
+
 def normalize_games(rows, league_key):
     """Turn enriched-CSV rows into a clean, date-sorted game log."""
     games = []
@@ -54,6 +96,7 @@ def normalize_games(rows, league_key):
             'game_id': (r.get('game_id') or '').strip(),
             'date': d,
             'season': season_of(d, league_key),
+            'preseason': detect_preseason(r, d, league_key),
             'home': home,
             'away': away,
             'home_score': hs if final else None,
@@ -226,8 +269,11 @@ def build(games, league_key, elo_records, score_sigma=10.0):
             },
         })
 
-        # advance state only once the game is in the books
-        if g['final']:
+        # Advance state only for completed games that count. Exhibition games
+        # are played by rosters that will not take the field in the regular
+        # season, so letting them move ratings or form is worse than ignoring
+        # them.
+        if g['final'] and not g.get('preseason'):
             hs, as_ = g['home_score'], g['away_score']
             hs_t.opp_elo.append(elo.get('away_elo', 1500.0))
             as_t.opp_elo.append(elo.get('home_elo', 1500.0))
