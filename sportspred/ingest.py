@@ -28,8 +28,22 @@ from .util import (Http, dig, format_eastern, logistic, now_iso, num, parse_date
 
 SITE_API = 'https://site.api.espn.com/apis/site/v2/sports'
 STANDINGS_API = 'https://site.api.espn.com/apis/v2/sports'
+# The same document is served from more than one host; try each before
+# concluding the standings are unavailable.
+STANDINGS_URLS = (
+    'https://site.api.espn.com/apis/v2/sports/{path}/standings',
+    'https://site.web.api.espn.com/apis/v2/sports/{path}/standings?region=us&lang=en',
+    'https://site.api.espn.com/apis/v2/sports/{path}/standings?level=3',
+)
 
 MIN_REFIT_GAMES = 30      # the R scripts refit their standings model past this
+
+
+_LOG = [print]
+
+
+def log_line(msg):
+    _LOG[0](msg)
 
 
 # ─────────────────────────────────────────────────────────────────────────────
@@ -228,8 +242,17 @@ def fetch_standings(http, league_key):
     exactly as the R scripts indexed them."""
     cfg = config.LEAGUES[league_key]
     parse = LEAGUE_INGEST[league_key]['parse']
-    data = http.get_json(f'{STANDINGS_API}/{cfg["espn_path"]}/standings')
+    data, tried = None, []
+    for template in STANDINGS_URLS:
+        url = template.format(path=cfg['espn_path'])
+        data = http.get_json(url)
+        if data and (data.get('children') or data.get('standings') or data.get('entries')):
+            break
+        tried.append(f'{url} -> {http.why(url) or ("empty/unexpected shape: " + str(list((data or {}).keys())[:6]))}')
+        data = None
     if not data:
+        for line in tried:
+            log_line(f'    standings attempt: {line}')
         return {}
 
     teams = {}
@@ -597,6 +620,7 @@ def run(league_key, http=None, write=True, log=print):
     cfg = config.LEAGUES[league_key]
     http = http or Http(timeout=15, retries=2, pause=0.15)
     csv_path = os.path.join(config.BASE, cfg['csv_file'])
+    _LOG[0] = log
 
     log(f'  [{cfg["name"]}] standings…')
     teams = fetch_standings(http, league_key)

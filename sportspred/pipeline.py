@@ -213,8 +213,40 @@ def load_pool(league_key, cfg, http):
         pool = cached.get('pool') or {}
         status = 'cached' if pool else 'unavailable'
     else:
+        fill_games_played(league_key, pool)
         write_json(cache_path, {'updated': now_iso(), 'pool': pool}, indent=None)
     return pool, status
+
+
+def fill_games_played(league_key, pool):
+    """Hockey's player listing carries no games-played column, so a skater's
+    rate cannot be formed from it alone. Use the team's games played from the
+    latest standings snapshot as the denominator, flagged as an estimate; a
+    regular's rate is right, a part-timer's is understated (and so is priced
+    conservatively rather than inflated)."""
+    if league_key != 'nhl':
+        return
+    snap_path = os.path.join(config.HISTORY_DIR, f'{league_key}_team_stats.csv')
+    latest = {}
+    for r in read_csv(snap_path):
+        if (r.get('date') or '') >= (latest.get(r.get('team', ''), {}).get('date') or ''):
+            latest[r.get('team', '')] = r
+    team_gp = {}
+    for team, r in latest.items():
+        gp = num(r.get('gp'))
+        if gp:
+            for k in espn.team_keys(team):
+                team_gp[k] = gp
+    for key, roster in pool.items():
+        gp = team_gp.get(key)
+        if not gp:
+            continue
+        for p in roster:
+            st = p.get('stats') or {}
+            if not num(st.get('gp')):
+                st['gp'] = gp
+                st['gp_est'] = 1
+                p['stats'] = st
 
 
 def load_injuries(league_key, cfg, http):
@@ -354,7 +386,7 @@ def injuries_for_game(game, injuries, pool, limit=6):
     out = {}
     for side, team in (('away', game['away']), ('home', game['home'])):
         rows = []
-        for aid, rep in (injuries.get(espn.norm_team(team)) or {}).items():
+        for aid, rep in (espn.find_team(injuries, team) or {}).items():
             player = by_id.get(aid) or {}
             rows.append({'name': rep.get('name') or player.get('name', ''),
                          'pos': rep.get('pos') or player.get('pos', ''),

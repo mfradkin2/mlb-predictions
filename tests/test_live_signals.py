@@ -437,3 +437,106 @@ class TestPipelineWithLiveSignals(unittest.TestCase):
 
 if __name__ == '__main__':
     unittest.main()
+
+
+class TestRealFeedShapes(unittest.TestCase):
+    """Bugs the first cloud run exposed; each was invisible to the fixtures."""
+
+    def test_nickname_pool_matches_full_schedule_name(self):
+        # The player feed files the Angels under "angels"; the schedule says
+        # "Los Angeles Angels". Only the Athletics matched before this.
+        pool = {'angels': ['x'], 'redsox': ['y'], 'bluejackets': ['z'], '76ers': ['w']}
+        self.assertEqual(espn.find_team(pool, 'Los Angeles Angels'), ['x'])
+        self.assertEqual(espn.find_team(pool, 'Boston Red Sox'), ['y'])
+        self.assertEqual(espn.find_team(pool, 'Columbus Blue Jackets'), ['z'])
+        self.assertEqual(espn.find_team(pool, 'Philadelphia 76ers'), ['w'])
+        self.assertIsNone(espn.find_team(pool, 'Nowhere Nobodies'))
+
+    def test_full_name_pool_matches_nickname(self):
+        self.assertEqual(espn.find_team({'losangelesangels': 1}, 'Angels'), 1)
+
+    def test_unlabelled_totals_divide_even_below_the_ceiling(self):
+        # Two NFL games in: 410 passing yards is under the 520 per-game ceiling,
+        # but the feed labels nothing as an average, so it is a total.
+        out = props.per_game({'gp': 2, 'pass_yds': 410, 'pass_att': 50, 'pass_td': 3})
+        self.assertEqual(out['pass_yds'], 205)
+        self.assertEqual(out['pass_att'], 25)
+        self.assertEqual(out['pass_td'], 1.5)
+
+    def test_one_game_in_is_left_alone(self):
+        out = props.per_game({'gp': 1, 'pass_yds': 205})
+        self.assertEqual(out['pass_yds'], 205)
+
+    def test_mixed_nba_block_keeps_averages_and_fixes_the_one_total(self):
+        stats = {'gp': 71, 'pts': 28.7, 'ast': 5.1, 'blk': 0.4, 'reb': 492.0,
+                 '__avg__': ['pts', 'ast', 'blk']}
+        out = props.per_game(stats)
+        self.assertEqual(out['pts'], 28.7)
+        self.assertEqual(out['blk'], 0.4)
+        self.assertAlmostEqual(out['reb'], 492 / 71, places=4)
+
+    def test_pitching_category_maps_to_pitcher_keys(self):
+        st = espn.extract_stats('baseball', ['strikeouts', 'hits', 'walks', 'earnedRuns',
+                                             'inningsPitched', 'ERA', 'gamesStarted'],
+                                ['180', '120', '40', '55', '170.1', '2.91', '28'],
+                                category='pitching')
+        self.assertEqual(st['p_so'], 180)
+        self.assertEqual(st['p_h'], 120)
+        self.assertEqual(st['era'], 2.91)
+        self.assertNotIn('so', st)
+        bat = espn.extract_stats('baseball', ['strikeouts', 'hits'], ['110', '150'],
+                                 category='batting')
+        self.assertEqual(bat['so'], 110)
+        self.assertNotIn('p_so', bat)
+
+    def test_baseball_pool_merges_batting_and_pitching_passes(self):
+        def page(url):
+            if 'category=pitching' in url:
+                return {'categories': [{'name': 'pitching', 'names': ['gamesStarted', 'inningsPitched', 'strikeouts', 'ERA']}],
+                        'athletes': [{'athlete': {'id': '7', 'displayName': 'Ace', 'teamName': 'Angels',
+                                                  'position': {'abbreviation': 'SP'}},
+                                      'categories': [{'name': 'pitching', 'totals': ['28', '170.1', '180', '2.91']}]}]}
+            return {'categories': [{'name': 'batting', 'names': ['gamesPlayed', 'atBats', 'hits']}],
+                    'athletes': [{'athlete': {'id': '7', 'displayName': 'Ace', 'teamName': 'Angels',
+                                              'position': {'abbreviation': 'SP'}},
+                                  'categories': [{'name': 'batting', 'totals': ['30', '50', '8']}]},
+                                 {'athlete': {'id': '8', 'displayName': 'Slugger', 'teamName': 'Angels',
+                                              'position': {'abbreviation': 'RF'}},
+                                  'categories': [{'name': 'batting', 'totals': ['150', '560', '160']}]}]}
+        http = fx.FakeHttp([('statistics/byathlete', page)])
+        pool = espn.fetch_athlete_stats(http, 'baseball', 'mlb')
+        roster = pool['angels']
+        self.assertEqual(len(roster), 2)
+        ace = next(p for p in roster if p['id'] == '7')
+        self.assertEqual(ace['stats']['p_so'], 180)
+        self.assertEqual(ace['stats']['era'], 2.91)
+        self.assertEqual(ace['stats']['hits'], 8)          # batting line kept too
+        self.assertTrue(any('category=pitching' in u for u in http.requests))
+
+    def test_hockey_games_played_falls_back_to_the_team(self):
+        tmp = tempfile.mkdtemp()
+        saved = config.HISTORY_DIR
+        config.HISTORY_DIR = tmp
+        try:
+            write_csv(os.path.join(tmp, 'nhl_team_stats.csv'),
+                      [{'date': '2026-10-20', 'team': 'Colorado Avalanche', 'gp': 12}])
+            pool = {'avalanche': [{'id': '1', 'name': 'MacKinnon',
+                                   'stats': {'goals': 6, 'assists': 9, 'toi': 22.0}}]}
+            pipeline.fill_games_played('nhl', pool)
+            st = pool['avalanche'][0]['stats']
+            self.assertEqual(st['gp'], 12)
+            self.assertEqual(st['gp_est'], 1)
+            rates = props.per_game(st)
+            self.assertAlmostEqual(rates['goals'], 0.5, places=6)
+        finally:
+            config.HISTORY_DIR = saved
+            shutil.rmtree(tmp, ignore_errors=True)
+
+    def test_http_records_why_a_request_failed(self):
+        class Boom(Http):
+            def get_json(self, url, cache=True):
+                self.errors[url] = 'HTTP 403: \'blocked\''
+                return None
+        h = Boom()
+        self.assertIsNone(h.get_json('http://x'))
+        self.assertIn('403', h.why('http://x'))

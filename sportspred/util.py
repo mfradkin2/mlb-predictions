@@ -6,6 +6,7 @@ import json
 import math
 import os
 import random
+import re
 import ssl
 import time
 import urllib.error
@@ -288,7 +289,9 @@ class Http:
         self.started = time.time()
         self.calls = 0
         self.failures = 0
+        self.errors = {}              # url -> why the last attempt failed
         self.ctx = ssl.create_default_context()
+        self.dump_dir = os.environ.get('SP_DEBUG_DUMP', '').strip() or None
 
     def out_of_budget(self):
         return self.budget_s is not None and (time.time() - self.started) > self.budget_s
@@ -297,28 +300,63 @@ class Http:
         if cache and url in _SESSION_CACHE:
             return _SESSION_CACHE[url]
         if self.out_of_budget():
+            self.errors[url] = 'request budget exhausted'
             return None
-        last = None
         for attempt in range(self.retries + 1):
             try:
                 req = urllib.request.Request(url, headers={
-                    'User-Agent': _UA, 'Accept': 'application/json'})
+                    'User-Agent': _UA, 'Accept': 'application/json, text/plain, */*',
+                    'Accept-Encoding': 'identity', 'Accept-Language': 'en-US,en;q=0.9'})
                 with urllib.request.urlopen(req, timeout=self.timeout,
                                             context=self.ctx) as resp:
-                    data = json.loads(resp.read().decode('utf-8', 'replace'))
+                    raw = resp.read()
+                text = raw.decode('utf-8', 'replace')
+                try:
+                    data = json.loads(text)
+                except ValueError:
+                    self.errors[url] = f'not JSON ({len(raw)} bytes): {text[:160]!r}'
+                    break
                 self.calls += 1
+                self.errors.pop(url, None)
                 if cache:
                     _SESSION_CACHE[url] = data
+                self._dump(url, raw)
                 time.sleep(self.pause)
                 return data
-            except Exception as exc:          # noqa: BLE001 - never break the build
-                last = exc
-                if attempt < self.retries:
-                    time.sleep(min(2 ** attempt * 0.5, 4.0) + random.random() * 0.2)
+            except urllib.error.HTTPError as exc:
+                body = ''
+                try:
+                    body = exc.read().decode('utf-8', 'replace')[:160]
+                except Exception:          # noqa: BLE001
+                    pass
+                self.errors[url] = f'HTTP {exc.code}: {body!r}'
+                if exc.code in (400, 401, 403, 404, 410):
+                    break                  # a retry will not change the answer
+            except Exception as exc:       # noqa: BLE001 - never break the build
+                self.errors[url] = f'{type(exc).__name__}: {exc}'
+            if attempt < self.retries:
+                time.sleep(min(2 ** attempt * 0.5, 4.0) + random.random() * 0.2)
         self.failures += 1
-        if cache:
-            _SESSION_CACHE[url] = None
+        # Failures are deliberately not memoised: a later step may succeed.
         return None
+
+    def why(self, url):
+        return self.errors.get(url, '')
+
+    def _dump(self, url, raw):
+        """With SP_DEBUG_DUMP=<dir>, keep the first response per endpoint
+        family so the live shapes can be read back after a cloud run."""
+        if not self.dump_dir:
+            return
+        try:
+            name = re.sub(r'[^a-z0-9]+', '_', url.split('//', 1)[-1].lower())[:120]
+            os.makedirs(self.dump_dir, exist_ok=True)
+            path = os.path.join(self.dump_dir, name + '.json')
+            if not os.path.exists(path):
+                with open(path, 'wb') as f:
+                    f.write(raw[:400000])
+        except OSError:
+            pass
 
 
 # ── team names ───────────────────────────────────────────────────────────────

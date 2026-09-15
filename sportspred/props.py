@@ -18,7 +18,7 @@ import math
 from collections import defaultdict
 
 from .config import props_for, quota_for
-from .espn import norm_team
+from .espn import find_team, norm_team
 from .util import clamp, negbin_sf, norm_sf, num, poisson_sf
 
 # Ceiling on any per-game rate we will believe out of the raw feed; anything
@@ -73,12 +73,22 @@ def per_game(stats):
     gp = num(stats.get('gp')) or 0
     already_avg = set(stats.get('__avg__') or [])
     values = {k: num(v) for k, v in stats.items()
-              if k not in ('__avg__',) and num(v) is not None}
+              if k not in ('__avg__', 'gp_est') and num(v) is not None}
+    avg_counting = {k for k in already_avg if k not in RATE_STATS}
 
-    # Does this block hold season totals? One unambiguous overflow is enough.
-    block_is_totals = gp > 1 and any(
-        PER_GAME_MAX.get(k) is not None and v > PER_GAME_MAX[k]
-        for k, v in values.items() if k not in already_avg and k not in RATE_STATS)
+    # Does this block hold season totals?
+    #  * A feed that labels nothing as an average (the NFL, NHL and MLB
+    #    listings) is totals throughout, however small the numbers — two games
+    #    into a season nothing exceeds a per-game ceiling, so the magnitude
+    #    test alone would publish totals as rates.
+    #  * A mixed feed (the NBA listing marks most columns avg*) is judged by
+    #    magnitude for the unlabelled columns.
+    if gp >= 1 and not avg_counting:
+        block_is_totals = True
+    else:
+        block_is_totals = gp > 1 and any(
+            PER_GAME_MAX.get(k) is not None and v > PER_GAME_MAX[k]
+            for k, v in values.items() if k not in already_avg and k not in RATE_STATS)
 
     out = {}
     for key, v in values.items():
@@ -87,10 +97,10 @@ def per_game(stats):
             continue
         cap = PER_GAME_MAX.get(key)
         if cap is not None and v > cap:
-            if gp > 1:
+            if gp >= 1:
                 out[key] = v / gp
             continue                      # a total with no games to divide by
-        out[key] = v / gp if block_is_totals else v
+        out[key] = v / gp if (block_is_totals and gp >= 1) else v
     out['gp'] = gp
     return out
 
@@ -435,8 +445,8 @@ def build_for_game(game_row, pool, env, cfg, sport, home_win_prob,
     out = {}
 
     for side, team, is_home in (('away', away, False), ('home', home, True)):
-        roster = pool.get(norm_team(team)) or []
-        team_injuries = (injuries or {}).get(norm_team(team)) or {}
+        roster = find_team(pool, team) or []
+        team_injuries = find_team(injuries or {}, team) or {}
         by_group = {}
         sidelined = []
         for player in roster:

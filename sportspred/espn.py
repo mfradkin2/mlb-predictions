@@ -44,6 +44,39 @@ def norm_team(name):
     return aliases.get(n, n)
 
 
+def team_keys(name):
+    """Every key a team might be filed under, most specific first.
+
+    The player feed names teams by nickname ("Angels"); the schedule uses the
+    display name ("Los Angeles Angels"). Both, plus the nickname on its own,
+    are tried so the two sources meet.
+    """
+    from .util import short_name
+    full = norm_team(name)
+    nick = norm_team(short_name(name))
+    keys = [full]
+    if nick and nick != full:
+        keys.append(nick)
+    return keys
+
+
+def find_team(mapping, name):
+    """Look a team up in a dict keyed by normalised names, tolerating the
+    nickname / full-name mismatch in either direction."""
+    if not mapping or not name:
+        return None
+    for k in team_keys(name):
+        if k in mapping:
+            return mapping[k]
+    full = norm_team(name)
+    # Last resort: a stored nickname that ends the full name ("angels" in
+    # "losangelesangels"), or the reverse.
+    for k, v in mapping.items():
+        if k and (full.endswith(k) or k.endswith(full)) and len(k) >= 4:
+            return v
+    return None
+
+
 # ─────────────────────────────────────────────────────────────────────────────
 #  Stat extraction
 # ─────────────────────────────────────────────────────────────────────────────
@@ -70,13 +103,41 @@ def is_average_name(name):
     return any(m in n for m in AVG_MARKERS)
 
 
-def extract_stats(sport, names, values):
+PITCHING_ALIASES = {
+    'gp': ['gamesplayed', 'gp', 'g', 'appearances'],
+    'starts': ['gamesstarted', 'gs'],
+    'ip': ['inningspitched', 'ip'],
+    'p_so': ['strikeouts', 'so', 'k'],
+    'p_er': ['earnedruns', 'er'],
+    'p_h': ['hits', 'h', 'hitsallowed'],
+    'p_bb': ['walks', 'basesonballs', 'bb'],
+    'p_hr': ['homeruns', 'hr', 'homerunsallowed'],
+    'era': ['era', 'earnedrunaverage'],
+    'whip': ['whip'],
+    'wins': ['wins', 'w'],
+}
+
+
+def _pitching_alias_map():
+    out = {}
+    for internal, candidates in PITCHING_ALIASES.items():
+        for cand in candidates:
+            out.setdefault(norm(cand), internal)
+    return out
+
+
+def extract_stats(sport, names, values, category=''):
     """Zip parallel name/value arrays into our internal stat keys.
 
     ``__avg__`` records which keys arrived already expressed per game, so the
-    caller does not have to guess from the magnitude alone.
+    caller does not have to guess from the magnitude alone. For baseball the
+    category matters: "strikeouts" in a pitching line is the pitcher's, not
+    the batter's, so pitching categories use their own alias table.
     """
-    amap = _alias_map(sport)
+    if sport == 'baseball' and 'pitch' in norm(category):
+        amap = _pitching_alias_map()
+    else:
+        amap = _alias_map(sport)
     stats = {}
     avg_keys = []
     for name, value in zip(names or [], values or []):
@@ -116,28 +177,50 @@ def fetch_athlete_stats(http, sport, league, season=None, pages=BULK_PAGES):
     """Season statistics for the league's most-used players.
 
     Returns ``{normalised_team_name: [player, ...]}``. Empty on any failure.
+    Baseball needs two passes: the default listing is batting lines, and the
+    pitching lines come from ``category=pitching``; a pitcher present in both
+    ends up with one merged record.
     """
-    players = []
-    for page in range(1, pages + 1):
-        url = (f'{WEB_API}/common/v3/sports/{sport}/{league}/statistics/byathlete'
-               f'?region=us&lang=en&contentorigin=espn&isqualified=false'
-               f'&limit={BULK_LIMIT}&page={page}')
-        if season:
-            url += f'&season={season}'
-        sort = SORT_KEYS.get(sport)
-        if sort:
-            url += f'&sort={sort}'
-        data = http.get_json(url)
-        if not data:
-            break
-        batch = _parse_byathlete(data, sport)
-        players.extend(batch)
-        total_pages = num(dig(data, 'pagination', 'pages'), 1) or 1
-        if page >= total_pages or not batch:
-            break
+    by_id = {}
+    order = []
+    passes = [''] if sport != 'baseball' else ['', 'pitching']
+    for category in passes:
+        for page in range(1, pages + 1):
+            url = (f'{WEB_API}/common/v3/sports/{sport}/{league}/statistics/byathlete'
+                   f'?region=us&lang=en&contentorigin=espn&isqualified=false'
+                   f'&limit={BULK_LIMIT}&page={page}')
+            if category:
+                url += f'&category={category}'
+            if season:
+                url += f'&season={season}'
+            sort = SORT_KEYS.get(sport)
+            if sort and not category:
+                url += f'&sort={sort}'
+            data = http.get_json(url)
+            if not data:
+                break
+            batch = _parse_byathlete(data, sport)
+            for p in batch:
+                key = p.get('id') or p.get('name')
+                if key in by_id:
+                    have = by_id[key]
+                    merged_avg = list(have['stats'].get('__avg__', [])) + \
+                        list(p['stats'].get('__avg__', []))
+                    have['stats'].update({k: v for k, v in p['stats'].items() if k != '__avg__'})
+                    if merged_avg:
+                        have['stats']['__avg__'] = merged_avg
+                    if not have.get('pos') and p.get('pos'):
+                        have['pos'] = p['pos']
+                else:
+                    by_id[key] = p
+                    order.append(key)
+            total_pages = num(dig(data, 'pagination', 'pages'), 1) or 1
+            if page >= total_pages or not batch:
+                break
 
     pool = {}
-    for p in players:
+    for key in order:
+        p = by_id[key]
         if not p.get('team'):
             continue
         pool.setdefault(norm_team(p['team']), []).append(p)
@@ -164,7 +247,7 @@ def _parse_byathlete(data, sport):
             if isinstance(values, list) and values and isinstance(values[0], dict):
                 names = [v.get('name') or v.get('abbreviation') for v in values]
                 values = [v.get('value', v.get('displayValue')) for v in values]
-            found = extract_stats(sport, names, values)
+            found = extract_stats(sport, names, values, category=cname)
             merged_avg = list(stats.get('__avg__', [])) + list(found.pop('__avg__', []))
             stats.update(found)
             if merged_avg:
