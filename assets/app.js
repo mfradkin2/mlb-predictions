@@ -300,6 +300,28 @@
       }
     }
 
+    if (g.injuries && (g.injuries.away || g.injuries.home)) {
+      var inj = function (side, name, short) {
+        var rows = (g.injuries[side] || []);
+        if (!rows.length) return '';
+        return '<div class="inj-team"><div class="inj-head">' + nameSpans(name, short) + '</div>' +
+          rows.map(function (r) {
+            return '<div class="inj-row"><span class="tag ' + (r.level === 'out' ? 'no' : 'med') + '">' +
+              esc((r.status || r.level || '').toUpperCase()) + '</span> <b>' + esc(r.name) + '</b>' +
+              (r.pos ? ' <span style="color:var(--faint)">' + esc(r.pos) + '</span>' : '') +
+              (r.detail ? '<span class="inj-detail">' + esc(r.detail) + '</span>' : '') + '</div>';
+          }).join('') + '</div>';
+      };
+      out += '<div><div class="section-title">Availability</div><div class="inj-grid">' +
+        inj('away', g.away, g.away_s) + inj('home', g.home, g.home_s) + '</div></div>';
+    }
+
+    if (g.starter_edge) {
+      out += '<div class="note">Probable starters shift the standings model by ' +
+        (g.starter_edge > 0 ? '+' : '') + g.starter_edge.toFixed(2) + ' on the log-odds scale ' +
+        '(favouring ' + esc(g.starter_edge > 0 ? (g.home_s || g.home) : (g.away_s || g.away)) + ').</div>';
+    }
+
     if (g.props && g.props.expected) {
       out += '<div class="note">Projected score: <b>' + nameSpans(g.away, g.away_s) + ' ' +
         g.props.expected.away + '</b> – <b>' + g.props.expected.home + ' ' +
@@ -343,9 +365,11 @@
       var shot = p.headshot
         ? '<img class="pshot" src="' + esc(p.headshot) + '" alt="" loading="lazy" decoding="async">'
         : '<span class="pshot" aria-hidden="true"></span>';
-      return '<div class="player" data-player="' + i + '">' +
+      return '<div class="player" data-player="' + i + '" data-athlete="' + esc(p.id || '') + '">' +
         '<button class="player-head" aria-expanded="false">' + shot +
-          '<span class="pinfo"><span class="pname">' + esc(p.name) + '</span>' +
+          '<span class="pinfo"><span class="pname">' + esc(p.name) +
+            (p.status ? ' <span class="tag med" title="' + esc(p.status_detail || '') + '">' +
+              esc(p.status).toUpperCase() + '</span>' : '') + '</span>' +
           '<span class="pmeta">' + [p.pos, p.role, p.gp ? p.gp + ' GP' : '']
             .filter(Boolean).map(esc).join(' · ') + '</span></span>' +
           '<span class="pspacer"></span>' +
@@ -365,9 +389,17 @@
     var list = props || [];
     if (!list.length) return null;
     var popular = list.filter(function (p) { return (p.rank || 99) <= 3; });
-    return (popular.length ? popular : list).slice().sort(function (a, b) {
-      return b.pick_prob - a.pick_prob;
-    })[0];
+    var pool = popular.length ? popular : list;
+    // Prefer a prop the matchup actually moved (a real read); only when
+    // nothing moved fall back to the most confident popular market. Without
+    // this, "Home Run UNDER 0.5" headlines every hitter.
+    var moved = pool.filter(function (p) { return Math.abs(p.edge || 0) >= 0.15; });
+    if (moved.length) {
+      return moved.slice().sort(function (a, b) {
+        return Math.abs(b.edge || 0) - Math.abs(a.edge || 0);
+      })[0];
+    }
+    return pool.slice().sort(function (a, b) { return b.pick_prob - a.pick_prob; })[0];
   }
 
   function propRow(p) {
@@ -381,8 +413,11 @@
     var deltaTxt = p.delta == null || Math.abs(p.delta) < 0.01 ? ''
       : (p.delta > 0 ? '+' : '') + p.delta + ' vs season';
 
-    return '<div class="prop">' +
+    var boxKey = (p.stat || '').replace(/_pg$/, '');
+    return '<div class="prop" data-stat="' + esc(boxKey) + '" data-line="' + p.line + '"' +
+      ' data-lo="' + lo + '" data-hi="' + hi + '">' +
       '<span class="prop-name">' + esc(p.label) +
+        '<span class="prop-live" hidden></span>' +
         '<span class="prop-sub">season ' + p.season + ' ' + esc(p.unit || '') +
         (deltaTxt ? ' · <span class="delta ' + deltaCls + '">' + deltaTxt + '</span>' : '') + '</span></span>' +
       '<span class="prop-nums">' +
@@ -743,6 +778,39 @@
         }).join('') + '</tbody></table></div></div>';
     }
 
+    var pr = d.props_record || {};
+    if (pr.total) {
+      var bc = pr.by_conf || {};
+      out += '<div><div class="section-title">Player prop record (graded against box scores)</div>' +
+        '<div class="cards">' +
+        card('All props', pct(pr.pct, 1), pr.total + ' graded') +
+        card('High confidence', pct(bc.high && bc.high.pct, 1), (bc.high ? bc.high.n : 0) + ' props') +
+        card('Medium', pct(bc.med && bc.med.pct, 1), (bc.med ? bc.med.n : 0) + ' props') +
+        card('Low', pct(bc.low && bc.low.pct, 1), (bc.low ? bc.low.n : 0) + ' props') +
+        '</div>';
+      var keys = Object.keys(pr.by_key || {}).sort(function (a, b) {
+        return pr.by_key[b].n - pr.by_key[a].n;
+      });
+      if (keys.length) {
+        var tuning = d.props_tuning || {};
+        out += '<div class="scroll-x"><table class="grid"><thead><tr><th>Market</th>' +
+          '<th class="num">Graded</th><th class="num">Hit rate</th>' +
+          '<th class="num">Bias fix</th><th class="num">Spread fix</th></tr></thead><tbody>' +
+          keys.map(function (k) {
+            var r = pr.by_key[k], t = tuning[k];
+            return '<tr><td>' + esc(r.label || k) + '</td><td class="num">' + r.n + '</td>' +
+              '<td class="num ' + (r.pct >= 0.55 ? 'better' : (r.pct < 0.48 ? 'worse' : '')) + '">' +
+              pct(r.pct, 1) + '</td>' +
+              '<td class="num">' + (t ? '×' + t.bias.toFixed(2) : '—') + '</td>' +
+              '<td class="num">' + (t ? '×' + t.spread.toFixed(2) : '—') + '</td></tr>';
+          }).join('') + '</tbody></table></div>' +
+          '<div class="note">Once a market has 30 graded props, the ledger starts correcting its ' +
+          'projections: a bias multiplier when players systematically beat or miss the projection, ' +
+          'and a spread multiplier when outcomes scatter more or less than the distribution assumed. ' +
+          'Both phase in with sample size.</div></div>';
+      }
+    }
+
     if (m.runs && m.runs.length) {
       out += '<div><div class="section-title">Recent training runs</div><div class="scroll-x"><table class="grid">' +
         '<thead><tr><th>When</th><th>Adopted</th><th>Why</th></tr></thead><tbody>' +
@@ -864,6 +932,7 @@
       game.dataset.open = open ? '0' : '1';
       detail.hidden = open;
       head.setAttribute('aria-expanded', String(!open));
+      if (!open) maybeRefreshBox(game); else clearTimeout(boxTimers[game.dataset.id]);
       return;
     }
 
@@ -967,6 +1036,7 @@
           center.innerHTML = html;
           row.classList.add('live', 'flash');
           setTimeout(function () { row.classList.remove('flash'); }, 700);
+          if (row.dataset.open === '1' && !boxTimers[ev.id]) maybeRefreshBox(row);
         }
       } else if (isFinal) {
         var fin = '<span class="score">' + (away.score || 0) + '–' + (home.score || 0) +
@@ -975,6 +1045,7 @@
           center.innerHTML = fin;
           row.classList.remove('live');
           gradeRow(row, Number(away.score), Number(home.score));
+          if (row.dataset.open === '1') maybeRefreshBox(row);
         }
       } else if (ev.date && center.dataset.time) {
         var t = new Date(ev.date).toLocaleTimeString('en-US',
@@ -989,6 +1060,143 @@
       pill.textContent = liveCount ? '● ' + liveCount + ' live · ' + clock : 'Updated ' + clock;
       pill.className = 'live-pill' + (liveCount ? ' on' : '');
     }
+  }
+
+  // ── live box score → prop progress ────────────────────────────────────────
+  // While a game is in progress and its props are open, each prop row shows
+  // the player's actual number so far next to the line it was priced against.
+  var BOX = {
+    baseball: {
+      batting: { ab: 'ab', r: 'runs', h: 'hits', rbi: 'rbi', hr: 'hr', bb: 'bb', k: 'so', sb: 'sb',
+                 '2b': 'doubles', '3b': 'triples', tb: 'tb' },
+      pitching: { ip: 'ip', h: 'p_h', er: 'p_er', bb: 'p_bb', k: 'p_so' }
+    },
+    basketball: { '': { min: 'min', pts: 'pts', reb: 'reb', ast: 'ast', stl: 'stl', blk: 'blk',
+                        '3pt': 'fg3', to: 'tov' } },
+    football: {
+      passing: { 'c/att': 'pass_cmp', yds: 'pass_yds', td: 'pass_td', int: 'pass_int' },
+      rushing: { car: 'rush_att', yds: 'rush_yds', td: 'rush_td' },
+      receiving: { rec: 'rec', yds: 'rec_yds', td: 'rec_td', tgts: 'targets' },
+      defensive: { tot: 'tackles', sacks: 'sacks' }
+    },
+    hockey: {
+      skaters: { g: 'goals', a: 'assists', pts: 'points', s: 'sog', sog: 'sog', bs: 'blocks' },
+      goalies: { sa: 'shots_against', ga: 'ga', sv: 'saves' }
+    }
+  };
+
+  function boxValue(raw) {
+    var t = String(raw == null ? '' : raw).trim();
+    if (!t || t === '--') return null;
+    if (t.indexOf(':') > 0) { var mm = t.split(':'); return +mm[0] + (+mm[1] || 0) / 60; }
+    if (t.indexOf('/') > 0) t = t.split('/')[0];
+    else if (t.indexOf('-') > 0) t = t.split('-')[0];
+    var n = parseFloat(t);
+    return isNaN(n) ? null : n;
+  }
+
+  function parseBox(summary, sport) {
+    var table = BOX[sport] || {};
+    var out = {};
+    (((summary || {}).boxscore || {}).players || []).forEach(function (side) {
+      (side.statistics || []).forEach(function (group) {
+        var cat = String(group.name || group.type || '').toLowerCase();
+        var cols = table[cat];
+        if (!cols) {
+          if (sport === 'hockey' && cat !== 'goalies') cols = table.skaters;
+          else if (sport === 'basketball') cols = table[''];
+          else return;
+        }
+        var labels = (group.labels || group.names || []).map(function (x) { return String(x).toLowerCase(); });
+        (group.athletes || []).forEach(function (a) {
+          var id = String(((a.athlete || {}).id) || '');
+          if (!id) return;
+          var st = out[id] = out[id] || {};
+          (a.stats || []).forEach(function (raw, i) {
+            var key = cols[labels[i]];
+            if (!key || st[key] != null) return;
+            var v = boxValue(raw);
+            if (v != null) st[key] = v;
+          });
+        });
+      });
+    });
+    Object.keys(out).forEach(function (id) {
+      var st = out[id];
+      if (sport === 'baseball') {
+        if (st.tb == null && st.hits != null) {
+          var singles = st.hits - (st.doubles || 0) - (st.triples || 0) - (st.hr || 0);
+          st.tb = Math.max(singles, 0) + 2 * (st.doubles || 0) + 3 * (st.triples || 0) + 4 * (st.hr || 0);
+        }
+        if (st.ip != null) { var w = Math.floor(st.ip); st.outs = w * 3 + Math.round((st.ip - w) * 10); }
+      } else if (sport === 'basketball' && st.pts != null) {
+        st.pra = st.pts + (st.reb || 0) + (st.ast || 0);
+        st.pr = st.pts + (st.reb || 0);
+        st.pa = st.pts + (st.ast || 0);
+        st.stlblk = (st.stl || 0) + (st.blk || 0);
+      } else if (sport === 'football') {
+        st.scrim_yds = (st.rush_yds || 0) + (st.rec_yds || 0);
+        st.td = (st.rush_td || 0) + (st.rec_td || 0);
+      } else if (sport === 'hockey' && st.points == null) {
+        st.points = (st.goals || 0) + (st.assists || 0);
+      }
+    });
+    return out;
+  }
+
+  var boxTimers = {};
+
+  function refreshBox(gameEl) {
+    var d = cur();
+    if (!d || !gameEl) return;
+    var id = gameEl.dataset.id;
+    var sport = (d.espn_path || '').split('/')[0];
+    fetch('https://site.api.espn.com/apis/site/v2/sports/' + d.espn_path + '/summary?event=' + id)
+      .then(function (r) { return r.ok ? r.json() : null; })
+      .then(function (summary) {
+        if (!summary) return;
+        var box = parseBox(summary, sport);
+        var status = (((summary.header || {}).competitions || [])[0] || {}).status || {};
+        var final = (status.type || {}).name === 'STATUS_FINAL' || (status.type || {}).completed;
+        gameEl.querySelectorAll('.player[data-athlete]').forEach(function (pl) {
+          var st = box[pl.dataset.athlete];
+          if (!st) return;
+          pl.querySelectorAll('.prop[data-stat]').forEach(function (row) {
+            var v = st[row.dataset.stat];
+            if (v == null) return;
+            var chip = row.querySelector('.prop-live');
+            var line = parseFloat(row.dataset.line);
+            var over = v > line;
+            chip.hidden = false;
+            chip.className = 'prop-live ' + (final ? (over ? 'ok' : 'no') : 'live');
+            chip.textContent = (final ? 'Final: ' : 'Now: ') + (Math.round(v * 10) / 10) +
+              (final ? (over ? ' ✓ over' : ' ✓ under') : '');
+            var range = row.querySelector('.prop-range');
+            if (range) {
+              var lo = +row.dataset.lo, hi = +row.dataset.hi;
+              var span = Math.max(hi - lo, 1e-6), pad = span * 0.35;
+              var min = lo - pad, max = hi + pad;
+              var x = Math.max(0, Math.min(100, ((v - min) / (max - min)) * 100));
+              var dot = range.querySelector('.live-dot') || document.createElement('b');
+              dot.className = 'live-dot';
+              dot.style.left = x.toFixed(1) + '%';
+              if (!dot.parentNode) range.appendChild(dot);
+            }
+          });
+        });
+        if (!final && gameEl.dataset.open === '1') {
+          clearTimeout(boxTimers[id]);
+          boxTimers[id] = setTimeout(function () { refreshBox(gameEl); }, 30000);
+        }
+      })
+      .catch(function () { /* feed unreachable: leave the static projection */ });
+  }
+
+  function maybeRefreshBox(gameEl) {
+    var isLive = gameEl.classList.contains('live') || gameEl.dataset.status === 'final';
+    var center = gameEl.querySelector('.center');
+    var hasScore = center && center.querySelector('.score');
+    if ((isLive || hasScore) && gameEl.querySelector('.player[data-athlete]')) refreshBox(gameEl);
   }
 
   // The pick was frozen before kickoff, so the moment a final score lands we

@@ -327,3 +327,224 @@ def fetch_team_index(http, sport, league):
         if t.get('id'):
             out[str(t['id'])] = t.get('displayName') or t.get('name') or ''
     return out
+
+
+# ─────────────────────────────────────────────────────────────────────────────
+#  Injuries
+# ─────────────────────────────────────────────────────────────────────────────
+OUT_STATUSES = ('out', 'injured reserve', 'ir', 'suspended', 'suspension',
+                'season', 'doubtful', 'inactive', 'reserve')
+LIMITED_STATUSES = ('questionable', 'day-to-day', 'day to day', 'probable',
+                    'game time decision', 'gtd', 'limited')
+
+
+def fetch_injuries(http, sport, league):
+    """Current injury report, keyed by normalised team name.
+
+    ESPN nests this two ways depending on the sport, so both are read:
+    ``injuries[].injuries[]`` (team -> players) and a flat ``injuries[]``.
+    Returns ``{team: {athlete_id: {...}}}``; empty on any failure.
+    """
+    data = http.get_json(f'{SITE_API}/{sport}/{league}/injuries')
+    out = {}
+    for block in (data or {}).get('injuries') or []:
+        team = (block.get('displayName') or dig(block, 'team', 'displayName') or '')
+        entries = block.get('injuries')
+        if entries is None:
+            entries = [block]
+            team = team or dig(block, 'athlete', 'team', 'displayName') or ''
+        for e in entries or []:
+            ath = e.get('athlete') or {}
+            aid = str(ath.get('id') or '')
+            if not aid:
+                continue
+            status = str(e.get('status') or dig(e, 'type', 'description') or '').strip()
+            level = classify_status(status)
+            if level == 'active':
+                continue
+            record = {
+                'id': aid,
+                'name': ath.get('displayName') or ath.get('shortName') or '',
+                'pos': dig(ath, 'position', 'abbreviation') or '',
+                'status': status,
+                'level': level,
+                'detail': (dig(e, 'details', 'type') or dig(e, 'details', 'detail')
+                           or e.get('shortComment') or e.get('longComment') or ''),
+            }
+            key = norm_team(team) if team else norm_team(dig(ath, 'team', 'displayName') or '')
+            out.setdefault(key, {})[aid] = record
+    return out
+
+
+def classify_status(status):
+    """'out' | 'limited' | 'active' from ESPN's free-text status."""
+    s = (status or '').strip().lower()
+    if not s:
+        return 'active'
+    if any(w in s for w in LIMITED_STATUSES):
+        return 'limited'
+    if any(w in s for w in OUT_STATUSES):
+        return 'out'
+    return 'active'
+
+
+# ─────────────────────────────────────────────────────────────────────────────
+#  Game summary / box score
+# ─────────────────────────────────────────────────────────────────────────────
+def fetch_summary(http, sport, league, event_id):
+    return http.get_json(f'{SITE_API}/{sport}/{league}/summary?event={event_id}')
+
+
+# Box-score column names differ from the season-stat endpoints and are
+# grouped by category, which is what disambiguates "YDS" in passing from
+# "YDS" in rushing. Keys are normalised category name -> {column: internal}.
+BOX_COLUMNS = {
+    'baseball': {
+        'batting': {'ab': 'ab', 'r': 'runs', 'h': 'hits', 'rbi': 'rbi', 'hr': 'hr',
+                    'bb': 'bb', 'k': 'so', 'so': 'so', 'sb': 'sb', '2b': 'doubles',
+                    '3b': 'triples', 'tb': 'tb', 'atbats': 'ab', 'runs': 'runs',
+                    'hits': 'hits', 'rbis': 'rbi', 'homeruns': 'hr', 'walks': 'bb',
+                    'strikeouts': 'so', 'stolenbases': 'sb', 'doubles': 'doubles',
+                    'triples': 'triples', 'totalbases': 'tb'},
+        'pitching': {'ip': 'ip', 'h': 'p_h', 'r': 'p_r', 'er': 'p_er', 'bb': 'p_bb',
+                     'k': 'p_so', 'so': 'p_so', 'hr': 'p_hr', 'pc': 'pitches',
+                     'inningspitched': 'ip', 'hits': 'p_h', 'earnedruns': 'p_er',
+                     'walks': 'p_bb', 'strikeouts': 'p_so', 'pitches': 'pitches'},
+    },
+    'basketball': {
+        '': {'min': 'min', 'pts': 'pts', 'reb': 'reb', 'ast': 'ast', 'stl': 'stl',
+             'blk': 'blk', 'to': 'tov', '3pt': 'fg3', 'fg': 'fgm', 'ft': 'ftm',
+             'oreb': 'oreb', 'dreb': 'dreb', 'pf': 'pf', 'minutes': 'min',
+             'points': 'pts', 'rebounds': 'reb', 'assists': 'ast', 'steals': 'stl',
+             'blocks': 'blk', 'turnovers': 'tov', 'threepointfieldgoalsmade': 'fg3',
+             'threepointfieldgoalsmadethreepointfieldgoalsattempted': 'fg3',
+             'fieldgoalsmadefieldgoalsattempted': 'fgm'},
+    },
+    'football': {
+        'passing': {'catt': 'pass_cmp', 'yds': 'pass_yds', 'td': 'pass_td', 'int': 'pass_int',
+                    'completionsattempts': 'pass_cmp', 'completionspassingattempts': 'pass_cmp',
+                    'passingyards': 'pass_yds', 'passingtouchdowns': 'pass_td',
+                    'interceptions': 'pass_int', 'sacks': 'sacked'},
+        'rushing': {'car': 'rush_att', 'yds': 'rush_yds', 'td': 'rush_td', 'long': 'rush_long',
+                    'rushingattempts': 'rush_att', 'rushingyards': 'rush_yds',
+                    'rushingtouchdowns': 'rush_td'},
+        'receiving': {'rec': 'rec', 'yds': 'rec_yds', 'td': 'rec_td', 'tgts': 'targets',
+                      'long': 'rec_long', 'receptions': 'rec', 'receivingyards': 'rec_yds',
+                      'receivingtouchdowns': 'rec_td', 'receivingtargets': 'targets'},
+        'defensive': {'tot': 'tackles', 'solo': 'solo', 'sacks': 'sacks', 'tfl': 'tfl',
+                      'totaltackles': 'tackles', 'sacks': 'sacks'},
+        'kicking': {'fg': 'fgm', 'xp': 'xpm', 'pts': 'kick_pts'},
+    },
+    'hockey': {
+        'skaters': {'g': 'goals', 'a': 'assists', 'pts': 'points', 's': 'sog', 'sog': 'sog',
+                    'bs': 'blocks', 'hits': 'hits', 'toi': 'toi', 'goals': 'goals',
+                    'assists': 'assists', 'points': 'points', 'shotsongoal': 'sog',
+                    'shots': 'sog', 'blockedshots': 'blocks', 'timeonice': 'toi'},
+        'forwards': None, 'defenses': None, 'defensemen': None,   # alias skaters
+        'goalies': {'sa': 'shots_against', 'ga': 'ga', 'sv': 'saves', 'svpct': 'sv_pct',
+                    'toi': 'toi', 'shotsagainst': 'shots_against', 'goalsagainst': 'ga',
+                    'saves': 'saves', 'savepct': 'sv_pct'},
+    },
+}
+
+
+def _box_value(raw):
+    """'12' -> 12; '3-7' -> 3 (made-attempted); '18:42' -> minutes; '' -> None."""
+    if raw is None:
+        return None
+    s = str(raw).strip()
+    if not s or s in ('--', '-'):
+        return None
+    if ':' in s:
+        return _clock_to_minutes(s)
+    if '-' in s and not s.startswith('-'):
+        s = s.split('-', 1)[0]
+    if '/' in s:
+        s = s.split('/', 1)[0]
+    return num(s)
+
+
+def boxscore_player_stats(summary, sport):
+    """Every player's in-game line from a summary payload.
+
+    Returns ``{athlete_id: {'name':..., 'team':..., 'stats': {internal: value}}}``.
+    Categories map onto the same internal keys the props use, so a prop for
+    ``pass_yds`` can be checked against the live ``pass_yds``.
+    """
+    table = BOX_COLUMNS.get(sport) or {}
+    out = {}
+    for side in dig(summary, 'boxscore', 'players') or []:
+        team = dig(side, 'team', 'displayName') or ''
+        for group in side.get('statistics') or []:
+            cat = norm(group.get('name') or group.get('type') or '')
+            columns = table.get(cat)
+            if columns is None:
+                # Hockey lists forwards/defense separately; basketball has one
+                # unnamed group; fall back to whatever single mapping exists.
+                if sport == 'hockey' and cat not in ('goalies', 'goalie'):
+                    columns = table.get('skaters')
+                elif sport == 'basketball':
+                    columns = table.get('')
+                else:
+                    continue
+            labels = [norm(x) for x in (group.get('labels') or group.get('names') or [])]
+            names = [norm(x) for x in (group.get('names') or [])]
+            for entry in group.get('athletes') or []:
+                ath = entry.get('athlete') or {}
+                aid = str(ath.get('id') or '')
+                if not aid:
+                    continue
+                values = entry.get('stats') or []
+                rec = out.setdefault(aid, {
+                    'id': aid, 'name': ath.get('displayName') or ath.get('shortName') or '',
+                    'team': team, 'played': True, 'stats': {}})
+                if entry.get('didNotPlay') or entry.get('active') is False:
+                    rec['played'] = False
+                for i, raw in enumerate(values):
+                    key = None
+                    if i < len(names):
+                        key = columns.get(names[i])
+                    if key is None and i < len(labels):
+                        key = columns.get(labels[i])
+                    if key is None:
+                        continue
+                    v = _box_value(raw)
+                    if v is not None and key not in rec['stats']:
+                        rec['stats'][key] = v
+    # Derived lines the props are priced on.
+    for rec in out.values():
+        st = rec['stats']
+        if sport == 'baseball':
+            if 'tb' not in st and 'hits' in st:
+                singles = st['hits'] - st.get('doubles', 0) - st.get('triples', 0) - st.get('hr', 0)
+                st['tb'] = max(singles, 0) + 2 * st.get('doubles', 0) + 3 * st.get('triples', 0) + 4 * st.get('hr', 0)
+            if 'ip' in st:
+                whole = int(st['ip'])
+                st['outs'] = whole * 3 + round((st['ip'] - whole) * 10)
+        elif sport == 'basketball':
+            if 'pts' in st:
+                st['pra'] = st['pts'] + st.get('reb', 0) + st.get('ast', 0)
+                st['pr'] = st['pts'] + st.get('reb', 0)
+                st['pa'] = st['pts'] + st.get('ast', 0)
+            st['stlblk'] = st.get('stl', 0) + st.get('blk', 0)
+        elif sport == 'football':
+            st['scrim_yds'] = st.get('rush_yds', 0) + st.get('rec_yds', 0)
+            st['td'] = st.get('rush_td', 0) + st.get('rec_td', 0)
+        elif sport == 'hockey':
+            if 'points' not in st and ('goals' in st or 'assists' in st):
+                st['points'] = st.get('goals', 0) + st.get('assists', 0)
+    return out
+
+
+def game_state(summary):
+    """('scheduled' | 'live' | 'final', detail string) from a summary payload."""
+    status = (dig(summary, 'header', 'competitions', 0, 'status') or
+              dig(summary, 'competitions', 0, 'status') or {})
+    name = dig(status, 'type', 'name') or ''
+    detail = dig(status, 'type', 'shortDetail') or dig(status, 'type', 'detail') or ''
+    if name == 'STATUS_FINAL' or dig(status, 'type', 'completed'):
+        return 'final', detail
+    if name in ('STATUS_IN_PROGRESS', 'STATUS_HALFTIME', 'STATUS_END_PERIOD',
+                'STATUS_DELAYED', 'STATUS_RAIN_DELAY'):
+        return 'live', detail
+    return 'scheduled', detail

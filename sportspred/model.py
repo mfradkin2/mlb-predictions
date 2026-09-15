@@ -288,7 +288,7 @@ def train(league_key, rows, cfg, elo_params=None, tune=True):
 # ─────────────────────────────────────────────────────────────────────────────
 #  Prediction
 # ─────────────────────────────────────────────────────────────────────────────
-def predict(record, trained, cfg, league_key, trust_override=None):
+def predict(record, trained, cfg, league_key, trust_override=None, prior_shift=0.0):
     """Final home win probability for one game, with its components.
 
     The learned model is faded toward the standings-based prior when there is
@@ -297,6 +297,9 @@ def predict(record, trained, cfg, league_key, trust_override=None):
     ``trust_override`` comes from the prediction ledger once it holds enough
     graded forecasts. That measurement is leak-free — every probability in it
     was written down before the game — so it supersedes the fixed schedule.
+
+    ``prior_shift`` is a log-odds adjustment to the standings prior for
+    information the standings cannot carry (in baseball, who is pitching).
     """
     elo_p = record['elo_prob']
     model = trained.get('model')
@@ -313,6 +316,8 @@ def predict(record, trained, cfg, league_key, trust_override=None):
 
     prior = num(record['game']['row'].get('home_win_probability'))
     prior = clamp(prior, 0.03, 0.97) if prior is not None else None
+    if prior is not None and prior_shift:
+        prior = clamp(logistic(logit(prior) + prior_shift), 0.03, 0.97)
 
     n_final = trained.get('n_final', 0)
     maturity = clamp(n_final / float(MIN_TRAIN + 60), 0.0, 1.0)
@@ -339,6 +344,7 @@ def predict(record, trained, cfg, league_key, trust_override=None):
         'elo_prob': elo_p,
         'glm_prob': glm_p,
         'prior_prob': prior,
+        'starter_edge': prior_shift or None,
         'trust': trust,
     }
 

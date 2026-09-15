@@ -37,12 +37,17 @@ calibration table.
 ## How the model works
 
 ```
-ESPN  ──R──▶  enriched CSV  ──Python──▶  archive + model + props  ──▶  static site
+ESPN ──▶ ingest ──▶ archive + ratings + model ──▶ predictions (frozen)
+                 └──▶ injuries + player pool ──▶ props (graded) ──▶ static site
 ```
 
-1. **Ingest** (`generate_*_predictions.R`) pulls standings and schedules from
-   ESPN into a per-league CSV. The window is set by `SP_LOOKBACK_DAYS` and
-   `SP_FORWARD_DAYS`.
+Everything is standard-library Python; there is nothing to install and no R.
+
+1. **Ingest** (`sportspred/ingest.py`) pulls standings, per-team statistics
+   and the schedule window from ESPN into a per-league CSV, computes the
+   standings-model prior, and snapshots every team's standings line for the
+   day. The window is set by `SP_LOOKBACK_DAYS` and `SP_FORWARD_DAYS`. A feed
+   outage keeps the previous CSV rather than blanking the site.
 2. **Archive** (`sportspred/learn.py`) folds each window's completed games
    into `history/<league>_games.csv`. The ingest only ever sees a few weeks;
    the archive is what gives the ratings a season-long memory.
@@ -57,9 +62,10 @@ ESPN  ──R──▶  enriched CSV  ──Python──▶  archive + model + p
    regression, picks the penalty and the Elo/model blend by walk-forward
    validation, and recalibrates with Platt scaling.
 6. **Project** (`sportspred/props.py`) turns each player's season line into a
-   per-game rate, adjusts it for the opponent and the projected game
-   environment, and prices it with a Poisson, negative binomial or normal
-   distribution.
+   per-game rate, adjusts it for the opponent, the projected game environment
+   and the injury report, and prices it with a Poisson, negative binomial or
+   normal distribution. In baseball the two probable starters' ERAs also shift
+   the game's standings prior.
 7. **Freeze** — the prediction is written to `history/<league>_ledger.csv` and
    never rewritten. Later runs read it back rather than recomputing.
 8. **Render** (`sportspred/render.py`) writes a data file per league plus a
@@ -114,6 +120,27 @@ what the last one learned:
   penalty and the blend weight, but new parameters are adopted only if they
   beat the incumbent on validation. A noisy hour cannot make the model worse.
   The Model tab lists what was adopted and why.
+- **The props ledger.** Every published prop is recorded in
+  `history/<league>_props.csv` and graded against the final box score. Once a
+  market has thirty graded props, its projections are corrected for
+  systematic bias and for outcomes scattering more or less than assumed,
+  phasing in with sample size. The Model tab shows the hit rate per market.
+- **Team-stat snapshots.** `history/<league>_team_stats.csv` records every
+  team's standings line each day, so historical games can eventually be paired
+  with the standings as they stood that morning — the leak-free version of a
+  season-statistics model.
+
+### Live signals
+
+- **Injuries** are fetched each run. A player listed as out is left off the
+  prop board; one listed as questionable is kept, marked, and projected a
+  little lower. The matchup panel lists who is unavailable on each side.
+- **Live box scores.** While a game is in progress, opening its props shows
+  each player's actual number so far next to the line it was priced against,
+  refreshed every thirty seconds; when the game ends, each prop is marked as
+  having gone over or under.
+- **Live scores** on the Today board refresh every thirty seconds during
+  games, and a frozen pick is graded the moment its final score lands.
 
 ---
 
@@ -127,13 +154,12 @@ python3 run_pipeline.py --no-tune       # reuse the stored Elo parameters
 python3 -m unittest discover -s tests   # the test suite
 ```
 
-Only the standard library is required. The R ingest needs `httr`, `jsonlite`
-and `dplyr`.
+Only the standard library is required.
 
-To refresh the source CSVs you also need the ingest step:
+A wider one-off backfill of past results:
 
 ```bash
-SP_LOOKBACK_DAYS=120 Rscript generate_mlb_predictions.R
+SP_LOOKBACK_DAYS=120 python3 run_pipeline.py mlb
 ```
 
 ---
@@ -147,9 +173,8 @@ SP_LOOKBACK_DAYS=120 Rscript generate_mlb_predictions.R
 | `assets/app.css`, `assets/app.js` | Shared front end, cached across all four sports |
 | `data/<league>.js` | Per-league payload the page renders from — one JSON object behind a `window.SP_DATA[...] =` assignment |
 | `data/<league>-history.js` | Older graded games, loaded only when the Results tab is opened |
-| `history/` | Game archive and prediction ledger — the long-term memory |
+| `history/` | Game archive, prediction ledger, props ledger, team-stat snapshots — the long-term memory |
 | `model_state/` | Tuned parameters, Elo snapshot, run log |
-| `generate_*_predictions.R` | ESPN ingest |
 | `tests/` | Test suite |
 
 ---

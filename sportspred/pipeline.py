@@ -8,7 +8,7 @@ from . import espn, model, props as props_mod
 from . import config
 from .config import LEAGUES
 from .glm import score
-from .learn import MODEL_VERSION, LeagueMemory
+from .learn import MODEL_VERSION, LeagueMemory, PropsLedger
 from .model import FEATURE_LABELS
 from .util import (Http, clamp, format_eastern, now_iso, num, parse_iso, read_csv,
                    read_json, short_name, today_utc, write_json)
@@ -16,6 +16,10 @@ from .util import (Http, clamp, format_eastern, now_iso, num, parse_iso, read_cs
 RECENT_DAYS = 21        # how far back the Results view can reach
 LIVE_RECENT_DAYS = 4    # finished games kept in the first-paint payload
 UPCOMING_DAYS = 14
+GRADE_CAP = 40          # box scores fetched per run to grade finished props
+STARTER_COEF = 0.12     # log-odds per run of ERA between probable starters
+STARTER_MIN_STARTS = 5
+STARTER_CAP = 0.35
 
 
 def started(game, now=None):
@@ -87,6 +91,15 @@ def run(league_key, fetch_props=True, http=None, tune=True):
     if ledger_cal:
         trained['calibration'] = ledger_cal.to_dict()
 
+    # ── live player and team signals ────────────────────────────────────────
+    http = http or (Http(budget_s=180) if fetch_props else None)
+    pool, pool_status = ({}, 'off')
+    injuries = {}
+    if fetch_props and http is not None:
+        pool, pool_status = load_pool(league_key, cfg, http)
+        injuries = load_injuries(league_key, cfg, http)
+    starter_edges = starter_edge_by_game(trained['records'], pool) if league_key == 'mlb' else {}
+
     # ── predict every game, then freeze the answer ──────────────────────────
     #
     # The model is refit every hour, and the standings model behind it is
@@ -99,7 +112,8 @@ def run(league_key, fetch_props=True, http=None, tune=True):
     now = datetime.now(timezone.utc)
     for rec in records:
         game = rec['game']
-        live = model.predict(rec, trained, cfg, league_key, trust_override)
+        live = model.predict(rec, trained, cfg, league_key, trust_override,
+                             prior_shift=starter_edges.get(game['game_id'], 0.0))
         live = {k: (round(v, 4) if isinstance(v, float) else v) for k, v in live.items()}
         rec['live_prediction'] = live
 
@@ -113,6 +127,7 @@ def run(league_key, fetch_props=True, http=None, tune=True):
                 'elo_prob': num(stored.get('p_elo'), live['elo_prob']),
                 'glm_prob': num(stored.get('p_glm'), live.get('glm_prob')),
                 'prior_prob': num(stored.get('p_prior'), live.get('prior_prob')),
+                'starter_edge': num(stored.get('starter_edge'), live.get('starter_edge')),
                 'trust': live.get('trust', 0.0),
             }
             rec['favored'] = favored
@@ -136,22 +151,36 @@ def run(league_key, fetch_props=True, http=None, tune=True):
     memory.grade()
     components, n_graded = memory.component_scores()
 
-    # ── player props ────────────────────────────────────────────────────────
-    prop_board, prop_status = {}, 'off'
-    if fetch_props:
-        prop_board, prop_status = build_props(league_key, cfg, records, trained,
-                                              http or Http(budget_s=180))
+    # ── player props: grade what has finished, then price what is coming ────
+    props_ledger = PropsLedger(league_key)
+    prop_board, prop_status = {}, pool_status
+    graded_props = 0
+    if fetch_props and http is not None:
+        graded_props = grade_props(league_key, cfg, props_ledger, records, http)
+        props_tuning = props_ledger.tune()
+        if pool:
+            prop_board = price_props(league_key, cfg, records, pool,
+                                     injuries, props_tuning, http)
+            record_props(props_ledger, records, prop_board)
+    else:
+        props_tuning = props_ledger.tune()
+    props_record = props_ledger.scorecard()
 
     payload = build_payload(league_key, cfg, trained, memory, components,
-                            n_graded, ledger_trust, prop_board, prop_status)
+                            n_graded, ledger_trust, prop_board, prop_status,
+                            injuries=injuries, props_record=props_record,
+                            props_tuning=props_tuning)
 
     memory.save_archive()
     memory.save_ledger()
+    props_ledger.save()
     memory.save_state({
         'elo': trained['engine'].snapshot(),
         'last_metrics': trained.get('metrics'),
         'ledger': {'graded': n_graded, 'components': components,
                    'trust': ledger_trust},
+        'props': {'graded_this_run': graded_props, 'record': props_record,
+                  'tuning': props_tuning},
         'archive_size': len(memory.archive),
         'new_games_this_run': added,
     })
@@ -159,18 +188,14 @@ def run(league_key, fetch_props=True, http=None, tune=True):
 
 
 # ─────────────────────────────────────────────────────────────────────────────
-#  Props
+#  Live player signals: pool, injuries, starters, props
 # ─────────────────────────────────────────────────────────────────────────────
-def build_props(league_key, cfg, records, trained, http):
-    """Fetch the player pool and price props for today's and upcoming games.
-
-    Falls back to the previous run's cached pool whenever the feed is
-    unavailable, so a blip upstream does not blank the prop board.
-    """
+def load_pool(league_key, cfg, http):
+    """Fetch the player pool, falling back to the previous run's cached copy
+    whenever the feed is unavailable so a blip upstream does not blank props."""
     sport, league = cfg['espn_path'].split('/')
     cache_path = os.path.join(config.DATA_DIR, f'{league_key}_players.json')
     status = 'live'
-
     pool = {}
     try:
         pool = espn.fetch_athlete_stats(http, sport, league)
@@ -189,10 +214,72 @@ def build_props(league_key, cfg, records, trained, http):
         status = 'cached' if pool else 'unavailable'
     else:
         write_json(cache_path, {'updated': now_iso(), 'pool': pool}, indent=None)
+    return pool, status
 
+
+def load_injuries(league_key, cfg, http):
+    sport, league = cfg['espn_path'].split('/')
+    cache_path = os.path.join(config.DATA_DIR, f'{league_key}_injuries.json')
+    try:
+        report = espn.fetch_injuries(http, sport, league)
+    except Exception:                        # noqa: BLE001
+        report = {}
+    if report:
+        write_json(cache_path, {'updated': now_iso(), 'report': report}, indent=None)
+        return report
+    cached = read_json(cache_path, {})
+    # A stale injury list is worse than none: only reuse a same-day cache.
+    if (cached.get('updated') or '')[:10] == str(today_utc()):
+        return cached.get('report') or {}
+    return {}
+
+
+def pool_index(pool):
+    """athlete id -> player record, across every team in the pool."""
+    out = {}
+    for roster in (pool or {}).values():
+        for p in roster:
+            if p.get('id'):
+                out[str(p['id'])] = p
+    return out
+
+
+def starter_edge_by_game(records, pool):
+    """Log-odds shift for the home side from the two probable starters' ERA.
+
+    The single biggest per-game factor in baseball, and one the standings
+    model cannot see. Applied to the standings prior with a documented
+    coefficient and recorded in the ledger, so once enough graded games exist
+    the coefficient can be checked rather than assumed.
+    """
     if not pool:
-        return {}, status
+        return {}
+    by_id = pool_index(pool)
+    out = {}
+    for rec in records:
+        row = rec['game']['row']
+        away_id = str(row.get('away_probable_id') or '')
+        home_id = str(row.get('home_probable_id') or '')
+        if not away_id or not home_id:
+            continue
+        a, h = by_id.get(away_id), by_id.get(home_id)
+        if not a or not h:
+            continue
+        a_rates = props_mod.per_game(a.get('stats') or {})
+        h_rates = props_mod.per_game(h.get('stats') or {})
+        a_era, h_era = num(a_rates.get('era')), num(h_rates.get('era'))
+        a_gs = num(a_rates.get('starts')) or num(a_rates.get('gp')) or 0
+        h_gs = num(h_rates.get('starts')) or num(h_rates.get('gp')) or 0
+        if a_era is None or h_era is None or a_gs < STARTER_MIN_STARTS or h_gs < STARTER_MIN_STARTS:
+            continue
+        edge = clamp(STARTER_COEF * (a_era - h_era), -STARTER_CAP, STARTER_CAP)
+        out[rec['game']['game_id']] = edge
+    return out
 
+
+def price_props(league_key, cfg, records, pool, injuries, tuning, http):
+    """Price props for today's and upcoming games."""
+    sport, league = cfg['espn_path'].split('/')
     today = today_utc()
     horizon = today + timedelta(days=UPCOMING_DAYS)
     targets = [r for r in records
@@ -200,7 +287,7 @@ def build_props(league_key, cfg, records, trained, http):
                and today <= r['game']['date'] <= horizon
                and r['game']['game_id']]
     if not targets:
-        return {}, status
+        return {}
 
     starters = {}
     if sport == 'baseball':
@@ -217,17 +304,73 @@ def build_props(league_key, cfg, records, trained, http):
         try:
             out[game['game_id']] = props_mod.build_for_game(
                 game, pool, env, cfg, sport, rec['prediction']['prob'],
-                starters=starters.get(game['game_id']))
+                starters=starters.get(game['game_id']), injuries=injuries, tuning=tuning)
         except Exception:                    # noqa: BLE001
             continue
-    return out, status
+    return out
+
+
+def record_props(ledger, records, prop_board):
+    """Write every prop for a game that has not started to the props ledger."""
+    now = datetime.now(timezone.utc)
+    n = 0
+    for rec in records:
+        game = rec['game']
+        board = prop_board.get(game['game_id'])
+        if not board or game['final'] or started(game, now):
+            continue
+        for side in ('away', 'home'):
+            for player in board.get(side) or []:
+                for prop in player.get('props') or []:
+                    n += int(ledger.record(game, side, player, prop))
+    return n
+
+
+def grade_props(league_key, cfg, ledger, records, http):
+    """Grade finished games' props from their box scores, a bounded batch per run."""
+    sport, league = cfg['espn_path'].split('/')
+    finished = {r['game']['game_id'] for r in records if r['game']['final'] and r['game']['game_id']}
+    pending = ledger.ungraded_games(finished)[:GRADE_CAP]
+    graded = 0
+    for gid in pending:
+        summary = espn.fetch_summary(http, sport, league, gid)
+        if not summary:
+            continue
+        state, _ = espn.game_state(summary)
+        if state != 'final':
+            continue
+        box = espn.boxscore_player_stats(summary, sport)
+        if not box:
+            continue
+        graded += ledger.grade_game(gid, box)
+    return graded
+
+
+def injuries_for_game(game, injuries, pool, limit=6):
+    """Notable unavailable players on each side, for the matchup panel."""
+    if not injuries:
+        return None
+    by_id = pool_index(pool)
+    out = {}
+    for side, team in (('away', game['away']), ('home', game['home'])):
+        rows = []
+        for aid, rep in (injuries.get(espn.norm_team(team)) or {}).items():
+            player = by_id.get(aid) or {}
+            rows.append({'name': rep.get('name') or player.get('name', ''),
+                         'pos': rep.get('pos') or player.get('pos', ''),
+                         'status': rep.get('status', ''), 'level': rep.get('level', ''),
+                         'detail': (rep.get('detail') or '')[:80]})
+        rows.sort(key=lambda r: (0 if r['level'] == 'out' else 1, r['name']))
+        out[side] = rows[:limit]
+    return out if (out.get('away') or out.get('home')) else None
 
 
 # ─────────────────────────────────────────────────────────────────────────────
 #  Payload
 # ─────────────────────────────────────────────────────────────────────────────
 def build_payload(league_key, cfg, trained, memory, components, n_graded,
-                  ledger_trust, prop_board, prop_status):
+                  ledger_trust, prop_board, prop_status, injuries=None,
+                  props_record=None, props_tuning=None):
     today = today_utc()
     recent_cut = today - timedelta(days=RECENT_DAYS)
     horizon = today + timedelta(days=UPCOMING_DAYS)
@@ -243,7 +386,9 @@ def build_payload(league_key, cfg, trained, memory, components, n_graded,
             continue
         if g['date'] >= live_cut:
             games.append(game_json(rec, cfg, league_key,
-                                   prop_board.get(g['game_id']), trained))
+                                   prop_board.get(g['game_id']), trained,
+                                   injuries=injuries_for_game(g, injuries, _pool_cache(league_key))
+                                   if not g['final'] else None))
         elif g['final'] and not g.get('preseason') and g['date'] >= recent_cut:
             history.append(game_json(rec, cfg, league_key, None, trained))
     games.sort(key=lambda g: (g['date'], g['time'] or '', g['home']))
@@ -282,6 +427,8 @@ def build_payload(league_key, cfg, trained, memory, components, n_graded,
         },
         'stats': cfg['stats'],
         'props_status': prop_status,
+        'props_record': props_record or {},
+        'props_tuning': props_tuning or {},
         'preseason_excluded': sum(
             1 for r in trained['records']
             if r['game'].get('preseason') and r['game']['final']),
@@ -292,7 +439,17 @@ def build_payload(league_key, cfg, trained, memory, components, n_graded,
     }
 
 
-def game_json(rec, cfg, league_key, props, trained):
+_POOL_CACHE = {}
+
+
+def _pool_cache(league_key):
+    if league_key not in _POOL_CACHE:
+        cached = read_json(os.path.join(config.DATA_DIR, f'{league_key}_players.json'), {})
+        _POOL_CACHE[league_key] = cached.get('pool') or {}
+    return _POOL_CACHE[league_key]
+
+
+def game_json(rec, cfg, league_key, props, trained, injuries=None):
     g = rec['game']
     row = g['row']
     pred = rec.get('prediction') or {}
@@ -358,6 +515,10 @@ def game_json(rec, cfg, league_key, props, trained):
     }
     if props:
         out['props'] = props
+    if injuries:
+        out['injuries'] = injuries
+    if pred.get('starter_edge'):
+        out['starter_edge'] = round(pred['starter_edge'], 3)
     return out
 
 

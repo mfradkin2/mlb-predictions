@@ -24,7 +24,7 @@ concurrency:
 jobs:
   update:
     runs-on: ubuntu-latest
-    timeout-minutes: 45
+    timeout-minutes: 30
     permissions:
       contents: write
 
@@ -32,71 +32,23 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      # ── Ingest: R pulls standings and schedules from ESPN ─────────────────
-      - name: Set up R
-        uses: r-lib/actions/setup-r@v2
-        with:
-          r-version: '4.3'
-          use-public-rspm: true
-
-      - name: Install system dependencies for R
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y libcurl4-openssl-dev libssl-dev libxml2-dev
-
-      - name: Cache R packages
-        uses: actions/cache@v4
-        with:
-          path: ${{ env.R_LIBS_USER }}
-          key: ${{ runner.os }}-r43-${{ hashFiles('.github/workflows/update.yml') }}
-          restore-keys: ${{ runner.os }}-r43-
-
-      - name: Install R packages
-        run: |
-          Rscript -e 'options(repos = c(CRAN = "https://packagemanager.posit.co/cran/__linux__/jammy/latest")); \
-                      need <- setdiff(c("httr","jsonlite","dplyr"), rownames(installed.packages())); \
-                      if (length(need)) install.packages(need)'
-          Rscript -e 'for (p in c("httr","jsonlite","dplyr")) if (!requireNamespace(p, quietly = TRUE)) stop("Failed to install ", p)'
-
-      # One league failing (off-season, an ESPN hiccup) must not stop the rest.
-      - name: Fetch MLB
-        run: Rscript generate_mlb_predictions.R
-        continue-on-error: true
-        env:
-          SP_LOOKBACK_DAYS: ${{ github.event.inputs.lookback_days }}
-
-      - name: Fetch NHL
-        run: Rscript generate_nhl_predictions.R
-        continue-on-error: true
-        env:
-          SP_LOOKBACK_DAYS: ${{ github.event.inputs.lookback_days }}
-
-      - name: Fetch NBA
-        run: Rscript generate_nba_predictions.R
-        continue-on-error: true
-        env:
-          SP_LOOKBACK_DAYS: ${{ github.event.inputs.lookback_days }}
-
-      - name: Fetch NFL
-        run: Rscript generate_nfl_predictions.R
-        continue-on-error: true
-        env:
-          SP_LOOKBACK_DAYS: ${{ github.event.inputs.lookback_days }}
-
-      # ── Model, props and site build ───────────────────────────────────────
       - name: Set up Python
         uses: actions/setup-python@v5
         with:
           python-version: '3.11'
 
+      # The whole build is standard-library Python: no packages to install.
       - name: Run tests
-        run: python3 -m unittest discover -s tests -v
+        run: python3 -m unittest discover -s tests
 
-      - name: Train models, project props and rebuild the site
+      # Ingest from ESPN, learn, predict, price props, render. A league whose
+      # feed is down keeps its previous data; the site is rebuilt regardless.
+      - name: Ingest, train, project props and rebuild the site
+        env:
+          SP_LOOKBACK_DAYS: ${{ github.event.inputs.lookback_days }}
         run: |
           python3 run_pipeline.py ${{ github.event.inputs.skip_props == 'true' && '--no-props' || '' }}
 
-      # ── Publish ───────────────────────────────────────────────────────────
       - name: Commit and push
         run: |
           git config user.name  "github-actions[bot]"

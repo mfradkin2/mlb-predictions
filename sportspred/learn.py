@@ -20,6 +20,7 @@ scheduled run starts from everything the previous runs learned:
 """
 from __future__ import annotations
 
+import math
 import os
 
 from . import config
@@ -34,7 +35,7 @@ ARCHIVE_FIELDS = ['game_id', 'game_date', 'away_team', 'home_team',
                   'away_score', 'home_score', 'winner', 'first_seen']
 LEDGER_FIELDS = ['game_id', 'game_date', 'away_team', 'home_team', 'predicted_at',
                  'model_version', 'pregame', 'preseason',
-                 'p_final', 'p_elo', 'p_glm', 'p_prior',
+                 'p_final', 'p_elo', 'p_glm', 'p_prior', 'starter_edge',
                  'favored_team', 'away_score', 'home_score', 'winner',
                  'graded', 'correct']
 
@@ -163,6 +164,7 @@ class LeagueMemory:
             'p_elo': round(parts['elo_prob'], 4) if parts.get('elo_prob') is not None else '',
             'p_glm': round(parts['glm_prob'], 4) if parts.get('glm_prob') is not None else '',
             'p_prior': round(parts['prior_prob'], 4) if parts.get('prior_prob') is not None else '',
+            'starter_edge': round(parts['starter_edge'], 4) if parts.get('starter_edge') is not None else '',
             'favored_team': favored,
             'away_score': '', 'home_score': '', 'winner': '',
             'graded': '0', 'correct': '',
@@ -333,3 +335,171 @@ class LeagueMemory:
             points.append({'date': d, 'correct': c, 'n': n,
                            'cum_acc': round(run_c / run_n, 4)})
         return points
+
+
+# ─────────────────────────────────────────────────────────────────────────────
+#  Player-prop ledger: the same discipline, applied to every projection
+# ─────────────────────────────────────────────────────────────────────────────
+PROP_FIELDS = ['game_id', 'game_date', 'athlete_id', 'player', 'side', 'key', 'label',
+               'stat', 'dist', 'line', 'proj', 'season', 'over', 'pick', 'conf',
+               'recorded_at', 'actual', 'played', 'graded', 'hit', 'push']
+PROP_TUNING_MIN = 30       # graded props of one kind before its parameters move
+PROP_TUNING_FULL = 200     # ... and the sample size at which they move fully
+
+
+class PropsLedger:
+    """Every published prop, graded against the final box score.
+
+    Two things come out of it: an honest hit rate per market and confidence
+    tier for the site, and per-market corrections — a bias multiplier on the
+    projection and a scale on the spread — that ``props.py`` applies once a
+    market has enough graded history. Rows are never rewritten.
+    """
+
+    def __init__(self, league_key, history_dir=None):
+        history_dir = history_dir or config.HISTORY_DIR
+        self.league = league_key
+        self.path = os.path.join(history_dir, f'{league_key}_props.csv')
+        self.rows = {self._key(r): r for r in read_csv(self.path)}
+
+    @staticmethod
+    def _key(r):
+        return '|'.join([str(r.get('game_id') or ''), str(r.get('athlete_id') or ''),
+                         str(r.get('key') or '')])
+
+    def record(self, game, side, player, prop):
+        if not game.get('game_id') or not player.get('id'):
+            return False
+        row = {
+            'game_id': game['game_id'], 'game_date': str(game['date']),
+            'athlete_id': player['id'], 'player': player.get('name', ''), 'side': side,
+            'key': prop['key'], 'label': prop['label'], 'stat': prop.get('stat', ''),
+            'dist': prop.get('dist', ''), 'line': prop['line'], 'proj': prop['proj'],
+            'season': prop['season'], 'over': prop['over'], 'pick': prop['pick'],
+            'conf': prop['conf'], 'recorded_at': now_iso(),
+            'actual': '', 'played': '', 'graded': '0', 'hit': '', 'push': '',
+        }
+        k = self._key(row)
+        if k in self.rows:
+            return False
+        self.rows[k] = row
+        return True
+
+    def ungraded_games(self, finished_ids):
+        """Game ids that have finished and still hold ungraded props."""
+        wanted = set()
+        for r in self.rows.values():
+            if r.get('graded') != '1' and r.get('game_id') in finished_ids:
+                wanted.add(r['game_id'])
+        return sorted(wanted)
+
+    def grade_game(self, game_id, box):
+        """Grade every prop for one game from ``boxscore_player_stats`` output."""
+        graded = 0
+        for r in self.rows.values():
+            if r.get('game_id') != game_id or r.get('graded') == '1':
+                continue
+            entry = box.get(str(r.get('athlete_id')))
+            r['graded'] = '1'
+            if not entry or not entry.get('played', True):
+                r['played'] = '0'
+                r['actual'] = ''
+                r['hit'] = ''
+                graded += 1
+                continue
+            stat_key = (r.get('stat') or '')[:-3] if (r.get('stat') or '').endswith('_pg') else r.get('stat')
+            actual = entry['stats'].get(stat_key)
+            r['played'] = '1'
+            if actual is None:
+                r['actual'] = ''
+                r['hit'] = ''
+                graded += 1
+                continue
+            line = num(r.get('line'))
+            r['actual'] = round(actual, 2)
+            if line is not None and abs(actual - line) < 1e-9:
+                r['push'] = '1'
+                r['hit'] = ''
+            else:
+                went_over = actual > (line if line is not None else 0)
+                r['push'] = '0'
+                r['hit'] = '1' if (went_over == (r.get('pick') == 'over')) else '0'
+            graded += 1
+        return graded
+
+    def graded(self):
+        return [r for r in self.rows.values()
+                if r.get('graded') == '1' and r.get('played') == '1'
+                and r.get('actual') not in ('', None) and r.get('push') != '1']
+
+    def scorecard(self):
+        """Hit rate by market and by confidence tier — for the Model tab."""
+        rows = self.graded()
+        by_key, by_conf = {}, {}
+        for r in rows:
+            hit = r.get('hit')
+            if hit not in ('0', '1'):
+                continue
+            k = by_key.setdefault(r['key'], {'label': r.get('label', r['key']), 'n': 0, 'hit': 0})
+            k['n'] += 1
+            k['hit'] += int(hit)
+            c = by_conf.setdefault(r.get('conf', 'low'), {'n': 0, 'hit': 0})
+            c['n'] += 1
+            c['hit'] += int(hit)
+        for d in list(by_key.values()) + list(by_conf.values()):
+            d['pct'] = round(d['hit'] / d['n'], 4) if d['n'] else None
+        total = sum(v['n'] for v in by_conf.values())
+        hits = sum(v['hit'] for v in by_conf.values())
+        return {'total': total, 'hit': hits,
+                'pct': round(hits / total, 4) if total else None,
+                'by_key': by_key, 'by_conf': by_conf}
+
+    def tune(self):
+        """Per-market corrections from the graded history.
+
+        ``bias``   multiplier on the projection (actual / projected, shrunk
+                   toward 1 by sample size);
+        ``spread`` multiplier on the distribution's spread, from how the
+                   residuals actually scattered versus what the distribution
+                   assumed. Both are clamped so a strange month cannot swing
+                   a market by more than a third.
+        """
+        buckets = {}
+        for r in self.graded():
+            proj, actual = num(r.get('proj')), num(r.get('actual'))
+            if proj is None or actual is None or proj <= 0:
+                continue
+            buckets.setdefault(r['key'], []).append((proj, actual, r.get('dist', '')))
+        tuned = {}
+        for key, pairs in buckets.items():
+            n = len(pairs)
+            if n < PROP_TUNING_MIN:
+                continue
+            weight = clamp((n - PROP_TUNING_MIN) / float(PROP_TUNING_FULL - PROP_TUNING_MIN), 0.0, 1.0)
+            sum_p = sum(p for p, _, _ in pairs)
+            sum_a = sum(a for _, a, _ in pairs)
+            raw_bias = (sum_a / sum_p) if sum_p > 0 else 1.0
+            bias = 1.0 + weight * (clamp(raw_bias, 0.67, 1.5) - 1.0)
+            # Observed scatter vs the model's own assumed scatter.
+            dist = pairs[0][2]
+            resid = [a - p * raw_bias for p, a, _ in pairs]
+            obs_var = sum(x * x for x in resid) / max(n - 1, 1)
+            if dist == 'normal':
+                assumed = sum((p * raw_bias) for p, _, _ in pairs) / n
+                # Spread rules grow roughly with the mean; compare against a
+                # mean-scaled reference so the multiplier is unit-free.
+                ref_var = max(assumed, 1e-6)
+            else:
+                ref_var = max(sum_a / n, 1e-6)           # Poisson reference
+            raw_spread = math.sqrt(obs_var / ref_var) if ref_var > 0 else 1.0
+            spread = 1.0 + weight * (clamp(raw_spread, 0.67, 1.5) - 1.0)
+            tuned[key] = {'bias': round(bias, 4), 'spread': round(spread, 4), 'n': n,
+                          'raw_bias': round(raw_bias, 4)}
+        return tuned
+
+    def save(self):
+        rows = sorted(self.rows.values(),
+                      key=lambda r: (r.get('game_date', ''), r.get('game_id', ''),
+                                     r.get('athlete_id', ''), r.get('key', '')))
+        if rows:
+            write_csv(self.path, rows, PROP_FIELDS)

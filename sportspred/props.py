@@ -323,22 +323,41 @@ def confidence(prob):
     return 'low'
 
 
-def project_player(player, sport, group, factor, max_props=6):
+def project_player(player, sport, group, factor, max_props=6, tuning=None):
     """Every prop we can price for one player, best signal first."""
     rates = derive(sport, per_game(player.get('stats') or {}))
     gp = rates.get('gp') or 0
     out = []
-    for spec in props_for(sport, group):
+    for raw_spec in props_for(sport, group):
+        spec, bias = apply_tuning(raw_spec, tuning)
         base = num(rates.get(spec['stat']))
         if base is None or base <= 0:
             continue
-        projection = base * factor
+        projection = base * factor * bias
         if projection < spec.get('min_proj', 0.0):
             continue
         out.append(_price(spec, base, projection))
     # Most popular first, but let a genuinely strong read jump the queue.
     out.sort(key=lambda p: (p['rank'] - (3 if p['conf'] == 'high' else 0)))
     return out[:max_props], gp
+
+
+LIMITED_FACTOR = 0.92      # a questionable / day-to-day player's projection
+
+
+def apply_tuning(spec, tuning):
+    """A copy of ``spec`` with the ledger's corrections folded in."""
+    t = (tuning or {}).get(spec['key'])
+    if not t:
+        return spec, 1.0
+    out = dict(spec)
+    spread = float(t.get('spread', 1.0))
+    if spec.get('dist') == 'normal' and 'sigma' in spec:
+        base_sigma = spec['sigma']
+        out['sigma'] = lambda mu, _b=base_sigma, _s=spread: _b(mu) * _s
+    elif spec.get('dist') == 'negbin':
+        out['disp'] = max(float(spec.get('disp', 1.3)) * spread * spread, 1.0)
+    return out, float(t.get('bias', 1.0))
 
 
 def _price(spec, baseline, projection):
@@ -371,6 +390,8 @@ def _price(spec, baseline, projection):
         'edge': round(edge, 3),
         'line_gap': round(line_gap, 2),
         'rank': spec.get('rank', 99),
+        'stat': spec.get('stat', ''),
+        'dist': spec.get('dist', ''),
     }
 
 
@@ -401,8 +422,13 @@ def _sort_key(sport, group, rates):
 
 
 def build_for_game(game_row, pool, env, cfg, sport, home_win_prob,
-                   max_players=8, starters=None):
-    """Prop board for one game: {'home': [...], 'away': [...]}."""
+                   max_players=8, starters=None, injuries=None, tuning=None):
+    """Prop board for one game: {'home': [...], 'away': [...]}.
+
+    ``injuries`` is ``{team: {athlete_id: report}}`` from the injury feed. A
+    player listed as out is left off the board; one listed as questionable is
+    kept, marked, and projected a little lower.
+    """
     home = game_row['home']
     away = game_row['away']
     exp = expected_scores(env, home, away, home_win_prob, cfg)
@@ -410,16 +436,26 @@ def build_for_game(game_row, pool, env, cfg, sport, home_win_prob,
 
     for side, team, is_home in (('away', away, False), ('home', home, True)):
         roster = pool.get(norm_team(team)) or []
+        team_injuries = (injuries or {}).get(norm_team(team)) or {}
         by_group = {}
+        sidelined = []
         for player in roster:
             group = player_group(sport, player.get('pos', ''))
             if not group:
+                continue
+            report = team_injuries.get(str(player.get('id') or ''))
+            if report and report.get('level') == 'out':
+                sidelined.append({'name': player.get('name', ''), 'pos': player.get('pos', ''),
+                                  'status': report.get('status', 'Out'),
+                                  'detail': report.get('detail', '')})
                 continue
             rates = derive(sport, per_game(player.get('stats') or {}))
             if (rates.get('gp') or 0) < 1:
                 continue
             factor = matchup_factor('', sport, group, exp, env, home, away, is_home)
-            props, gp = project_player(player, sport, group, factor)
+            if report and report.get('level') == 'limited':
+                factor *= LIMITED_FACTOR
+            props, gp = project_player(player, sport, group, factor, tuning=tuning)
             if not props:
                 continue
             # Re-price each prop with its own matchup factor.
@@ -429,9 +465,12 @@ def build_for_game(game_row, pool, env, cfg, sport, home_win_prob,
                 if spec is None:
                     priced.append(p)
                     continue
+                spec, bias = apply_tuning(spec, tuning)
                 f = matchup_factor(p['key'], sport, group, exp, env, home, away, is_home)
-                priced.append(_price(spec, p['season'], p['season'] * f))
-            by_group.setdefault(group, []).append({
+                if report and report.get('level') == 'limited':
+                    f *= LIMITED_FACTOR
+                priced.append(_price(spec, p['season'], p['season'] * f * bias))
+            entry = {
                 'id': player.get('id', ''),
                 'name': player.get('name', ''),
                 'short': player.get('short', '') or player.get('name', ''),
@@ -441,7 +480,11 @@ def build_for_game(game_row, pool, env, cfg, sport, home_win_prob,
                 'headshot': player.get('headshot', ''),
                 'props': priced,
                 '_rank': _sort_key(sport, group, rates),
-            })
+            }
+            if report and report.get('level') == 'limited':
+                entry['status'] = report.get('status', 'Questionable')
+                entry['status_detail'] = report.get('detail', '')
+            by_group.setdefault(group, []).append(entry)
 
         # Fill a fixed number of slots per position group, then top up from
         # whoever is left so a thin roster still produces a full board.
@@ -477,6 +520,9 @@ def build_for_game(game_row, pool, env, cfg, sport, home_win_prob,
         for e in entries:
             e.pop('_rank', None)
         out[side] = entries
+        # Listed-out players from this team's pool, most prominent first, so
+        # the matchup panel can say who is missing.
+        out[f'{side}_out'] = sidelined[:6]
 
     out['expected'] = {'home': round(exp['home'], 2), 'away': round(exp['away'], 2)}
     return out

@@ -1,20 +1,22 @@
 #!/usr/bin/env python3
-"""Build the Sports Predictions site.
+"""Build the Sports Predictions site — ingest, learn, predict, render.
 
     python3 run_pipeline.py                 # every league, with player props
     python3 run_pipeline.py mlb nfl         # just these leagues
+    python3 run_pipeline.py --no-ingest     # build from the CSVs already on disk
     python3 run_pipeline.py --no-props      # skip the player-stat fetch
     python3 run_pipeline.py --no-tune       # reuse the stored Elo parameters
 
 Each league is independent: one failing does not stop the others, and the site
-is rewritten from whatever succeeded.
+is rewritten from whatever succeeded. An ingest that cannot reach ESPN keeps
+the previous CSV, so a feed outage degrades to stale data rather than no site.
 """
 from __future__ import annotations
 
 import sys
 import traceback
 
-from sportspred import pipeline, render
+from sportspred import ingest, pipeline, render
 from sportspred.config import LEAGUE_ORDER, LEAGUES
 from sportspred.util import Http
 
@@ -24,6 +26,7 @@ def main(argv):
     flags = {a for a in argv if a.startswith('--')}
     leagues = [a.lower() for a in args if a.lower() in LEAGUES] or list(LEAGUE_ORDER)
     fetch_props = '--no-props' not in flags
+    do_ingest = '--no-ingest' not in flags
     tune = '--no-tune' not in flags
 
     http = Http(budget_s=240) if fetch_props else None
@@ -31,6 +34,13 @@ def main(argv):
 
     for key in leagues:
         print(f'\n=== {LEAGUES[key]["name"]} ===')
+        if do_ingest:
+            try:
+                ingest.run(key, http=Http(timeout=15, retries=2, pause=0.15, budget_s=600))
+            except Exception as exc:                 # noqa: BLE001
+                print(f'  ingest failed ({type(exc).__name__}: {exc}); '
+                      'building from the previous CSV')
+                traceback.print_exc(limit=2)
         try:
             payload, trained, memory = pipeline.run(
                 key, fetch_props=fetch_props, http=http, tune=tune)
