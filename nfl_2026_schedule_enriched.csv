@@ -63,7 +63,7 @@
 "2026-09-13","Washington Commanders","Philadelphia Eagles","Final","Philadelphia Eagles","Philadelphia Eagles",0.3089,0.6911,"401872929","22","24","0-1","1-0",0,1,-2,2,340,340,340,340,0,0,"08:25 PM ET"
 "2026-09-13","Arizona Cardinals","Los Angeles Chargers","Final","Arizona Cardinals","Arizona Cardinals",0.7658,0.2342,"401872926","26","14","1-0","0-1",1,0,12,-12,340,340,340,340,0,0,"08:25 PM ET"
 "2026-09-13","Dallas Cowboys","New York Giants","Final","New York Giants","New York Giants",0.3138,0.6862,"401872930","20","28","0-1","1-0",0,1,-8,8,340,340,340,340,0,0,"12:20 AM ET"
-"2026-09-14","Denver Broncos","Kansas City Chiefs","Scheduled","","Denver Broncos",0.552,0.448,"401872931","0","0","0-0","0-0",0.5,0.5,0,0,340,340,340,340,0,0,"12:15 AM ET"
+"2026-09-14","Denver Broncos","Kansas City Chiefs","Scheduled","","Denver Broncos",0.552,0.448,"401872931","10","31","0-0","0-0",0.5,0.5,0,0,340,340,340,340,0,0,"12:15 AM ET"
 "2026-09-17","Detroit Lions","Buffalo Bills","Scheduled","","Detroit Lions",0.5539,0.4461,"401872932","0","0","1-0","1-0",1,1,1,5,340,340,340,340,0,0,"12:15 AM ET"
 "2026-09-20","Carolina Panthers","Atlanta Falcons","Scheduled","","Carolina Panthers",0.559,0.441,"401872933","0","0","0-1","0-1",0,0,-22,-7,340,340,340,340,0,0,"05:00 PM ET"
 "2026-09-20","Minnesota Vikings","Chicago Bears","Scheduled","","Minnesota Vikings",0.5543,0.4457,"401872937","0","0","1-0","1-0",1,1,17,22,340,340,340,340,0,0,"05:00 PM ET"
@@ -127,3 +127,4 @@
 "2026-10-11","San Francisco 49ers","Seattle Seahawks","Scheduled","","San Francisco 49ers",0.544,0.456,"401872992","0","0","1-0","1-0",1,1,20,3,340,340,340,340,0,0,"08:25 PM ET"
 "2026-10-11","Baltimore Ravens","Atlanta Falcons","Scheduled","","Baltimore Ravens",0.7655,0.2345,"401872993","0","0","1-0","0-1",1,0,18,-7,340,340,340,340,0,0,"12:20 AM ET"
 "2026-10-12","Buffalo Bills","Los Angeles Rams","Scheduled","","Buffalo Bills",0.7655,0.2345,"401872994","0","0","1-0","0-1",1,0,5,-20,340,340,340,340,0,0,"12:15 AM ET"
+"2026-10-15","Seattle Seahawks","Denver Broncos","Scheduled","","Seattle Seahawks",0.6712,0.3288,"401872995","0","0","1-0","0-0",1,0.5,3,0,340,340,340,340,0,0,"12:15 AM ET"
