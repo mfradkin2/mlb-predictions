@@ -101,7 +101,7 @@ n_teams <- length(unique(sapply(team_stats, `[[`, "id")))
 cat(sprintf("  Loaded stats for %d teams\n", n_teams))
 
 # ── 2. Fetch Schedule ─────────────────────────────────────────────────────
-cat("[2/4] Fetching NBA schedule (last 60 days + next 14 days)…\n")
+cat("[2/4] Fetching NBA schedule (window set by SP_LOOKBACK_DAYS / SP_FORWARD_DAYS)…\n")
 
 lookup <- function(name, id = NULL) {
   if (!is.null(id) && !is.null(team_stats[[as.character(id)]])) return(team_stats[[as.character(id)]])
@@ -175,6 +175,8 @@ parse_day <- function(date_str) {
       last_game_date[[home_name]] <<- date_str
     }
 
+    # game_time below is formatted in UTC but labelled ET; game_start_utc
+    # carries the unambiguous timestamp so the site can localise it properly.
     game_time <- tryCatch({
       dt <- as.POSIXct(ev$date %||% "", format = "%Y-%m-%dT%H:%MZ", tz = "UTC")
       format(dt, "%I:%M %p ET")
@@ -205,6 +207,7 @@ parse_day <- function(date_str) {
       away_pace            = if (!is.null(at)) at$pace     else NA,
       home_pace            = if (!is.null(ht)) ht$pace     else NA,
       rest_advantage       = rest_adv,
+      game_start_utc       = as.character(ev$date %||% ""),
       game_time            = game_time,
       stringsAsFactors     = FALSE
     )
@@ -214,9 +217,16 @@ parse_day <- function(date_str) {
   bind_rows(out)
 }
 
+# The Python layer keeps a permanent archive of completed games, so the
+# window here only needs to cover what is new. Widen it with
+# SP_LOOKBACK_DAYS for a one-off backfill of earlier results.
+LOOKBACK <- as.integer(Sys.getenv("SP_LOOKBACK_DAYS", "60"))
+FORWARD  <- as.integer(Sys.getenv("SP_FORWARD_DAYS", "14"))
+if (is.na(LOOKBACK)) LOOKBACK <- 60
+if (is.na(FORWARD))  FORWARD  <- 14
 today <- Sys.Date()
 all_games <- list()
-for (i in seq(-60, 14)) {
+for (i in seq(-LOOKBACK, FORWARD)) {
   d     <- format(today + i, "%Y-%m-%d")
   games <- tryCatch(parse_day(d), error = function(e) data.frame())
   if (nrow(games) > 0) all_games[[length(all_games) + 1]] <- games

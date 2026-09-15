@@ -109,6 +109,69 @@ walk_groups(standings)
 n_teams <- length(unique(sapply(team_stats, `[[`, "id")))
 cat(sprintf("  Loaded stats for %d teams\n", n_teams))
 
+# ── 1b. Fetch Team Offensive / Defensive Statistics ───────────────────────
+# ESPN's standings payload carries record and points but not yardage or
+# turnovers, so those five columns were previously left at their defaults for
+# every team. Pull them from the per-team statistics endpoint instead, and
+# leave the defaults in place for anything the feed does not return.
+cat("[1b/4] Fetching NFL team statistics…\n")
+
+unique_ids <- unique(sapply(Filter(function(x) nchar(x$id) > 0, team_stats), `[[`, "id"))
+stat_hits  <- 0
+
+pick_stat <- function(data, wanted) {
+  # wanted: lowercase stat names to look for, in priority order
+  found <- NA_real_
+  for (cat_node in data$splits$categories %||% list()) {
+    for (st in cat_node$stats %||% list()) {
+      nm <- tolower(st$name %||% "")
+      ab <- tolower(st$abbreviation %||% "")
+      for (w in wanted) {
+        if (nm == w || ab == w) {
+          v <- suppressWarnings(as.numeric(st$value %||% st$displayValue %||% NA))
+          if (!is.na(v)) { found <- v; break }
+        }
+      }
+      if (!is.na(found)) break
+    }
+    if (!is.na(found)) break
+  }
+  found
+}
+
+for (tid in unique_ids) {
+  url  <- paste0("https://site.api.espn.com/apis/site/v2/sports/football/nfl/teams/",
+                 tid, "/statistics")
+  resp <- tryCatch(GET(url, timeout(10)), error = function(e) NULL)
+  if (is.null(resp) || status_code(resp) != 200) { Sys.sleep(0.15); next }
+  data <- tryCatch(content(resp, "parsed"), error = function(e) NULL)
+  if (is.null(data)) { Sys.sleep(0.15); next }
+
+  yds_off <- pick_stat(data, c("totalyardspergame", "yardspergame",
+                               "netyardspergame", "totalyards"))
+  giveaway <- pick_stat(data, c("totalgiveaways", "giveaways", "turnovers"))
+  takeaway <- pick_stat(data, c("totaltakeaways", "takeaways"))
+
+  got <- FALSE
+  for (key in names(team_stats)) {
+    if (!identical(team_stats[[key]]$id, tid)) next
+    gp_t <- team_stats[[key]]$gp
+    if (!is.na(yds_off)) {
+      # A season total rather than a per-game average: normalise it.
+      if (yds_off > 1000 && gp_t > 0) yds_off <- yds_off / gp_t
+      team_stats[[key]]$ypg_off <<- round(yds_off, 1)
+      got <- TRUE
+    }
+    if (!is.na(giveaway) && !is.na(takeaway) && gp_t > 0) {
+      team_stats[[key]]$to_margin <<- round((takeaway - giveaway) / gp_t, 2)
+      got <- TRUE
+    }
+  }
+  if (got) stat_hits <- stat_hits + 1
+  Sys.sleep(0.15)
+}
+cat(sprintf("  Team statistics fetched for %d / %d teams\n", stat_hits, length(unique_ids)))
+
 # ── 2. Fetch Schedule ─────────────────────────────────────────────────────
 cat("[2/4] Fetching NFL schedule…\n")
 
@@ -168,6 +231,8 @@ parse_day <- function(date_str) {
       if (!is.na(aw) && !is.na(hw)) winner <- if (aw > hw) away_name else home_name
     }
 
+    # game_time below is formatted in UTC but labelled ET; game_start_utc
+    # carries the unambiguous timestamp so the site can localise it properly.
     game_time <- tryCatch({
       dt <- as.POSIXct(ev$date %||% "", format = "%Y-%m-%dT%H:%MZ", tz = "UTC")
       format(dt, "%I:%M %p ET")
@@ -197,6 +262,7 @@ parse_day <- function(date_str) {
       home_ypg_def         = if (!is.null(ht)) ht$ypg_def    else NA,
       away_to_margin       = if (!is.null(at)) at$to_margin  else NA,
       home_to_margin       = if (!is.null(ht)) ht$to_margin  else NA,
+      game_start_utc       = as.character(ev$date %||% ""),
       game_time            = game_time,
       stringsAsFactors     = FALSE
     )
@@ -207,11 +273,18 @@ parse_day <- function(date_str) {
 }
 
 # NFL: try current season window (Sep–Feb) + upcoming weeks
+# The Python layer keeps a permanent archive of completed games, so the
+# window here only needs to cover what is new. Widen it with
+# SP_LOOKBACK_DAYS for a one-off backfill of earlier results.
+LOOKBACK <- as.integer(Sys.getenv("SP_LOOKBACK_DAYS", "180"))
+FORWARD  <- as.integer(Sys.getenv("SP_FORWARD_DAYS", "30"))
+if (is.na(LOOKBACK)) LOOKBACK <- 180
+if (is.na(FORWARD))  FORWARD  <- 30
 today <- Sys.Date()
 all_games <- list()
 
 # Try last 180 days for completed season games + next 30 days for upcoming
-for (i in seq(-180, 30)) {
+for (i in seq(-LOOKBACK, FORWARD)) {
   d     <- format(today + i, "%Y-%m-%d")
   games <- tryCatch(parse_day(d), error = function(e) data.frame())
   if (nrow(games) > 0) all_games[[length(all_games) + 1]] <- games

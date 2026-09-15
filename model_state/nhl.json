@@ -1,0 +1,42 @@
+{
+ "archive_size": 0,
+ "elo": {
+  "games_seen": {},
+  "params": {
+   "hfa": 34.0,
+   "k": 6.0,
+   "mov": 0.7,
+   "regress": 0.3,
+   "scale": 400.0
+  },
+  "ratings": {}
+ },
+ "last_metrics": {},
+ "league": "nhl",
+ "ledger": {
+  "components": {},
+  "graded": 0,
+  "trust": null
+ },
+ "model_version": 3,
+ "new_games_this_run": 0,
+ "runs": [
+  {
+   "adopted": false,
+   "at": "2026-09-15T20:24:06Z",
+   "metrics": {},
+   "model_version": 3,
+   "notes": "0 completed games",
+   "reason": "challenger produced no validation score"
+  },
+  {
+   "adopted": false,
+   "at": "2026-09-15T20:24:33Z",
+   "metrics": {},
+   "model_version": 3,
+   "notes": "0 completed games",
+   "reason": "challenger produced no validation score"
+  }
+ ],
+ "updated": "2026-09-15T20:24:33Z"
+}

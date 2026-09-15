@@ -1,0 +1,42 @@
+{
+ "archive_size": 0,
+ "elo": {
+  "games_seen": {},
+  "params": {
+   "hfa": 62.0,
+   "k": 18.0,
+   "mov": 1.0,
+   "regress": 0.25,
+   "scale": 400.0
+  },
+  "ratings": {}
+ },
+ "last_metrics": {},
+ "league": "nba",
+ "ledger": {
+  "components": {},
+  "graded": 0,
+  "trust": null
+ },
+ "model_version": 3,
+ "new_games_this_run": 0,
+ "runs": [
+  {
+   "adopted": false,
+   "at": "2026-09-15T20:24:06Z",
+   "metrics": {},
+   "model_version": 3,
+   "notes": "0 completed games",
+   "reason": "challenger produced no validation score"
+  },
+  {
+   "adopted": false,
+   "at": "2026-09-15T20:24:33Z",
+   "metrics": {},
+   "model_version": 3,
+   "notes": "0 completed games",
+   "reason": "challenger produced no validation score"
+  }
+ ],
+ "updated": "2026-09-15T20:24:33Z"
+}
