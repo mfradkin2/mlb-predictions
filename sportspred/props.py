@@ -118,7 +118,9 @@ def derive(sport, rates):
         r['runs_pg'] = g('runs')
         r['sb_pg'] = g('sb')
         has_split = any(k in r for k in ('doubles', 'triples', 'hr'))
-        if has_split:
+        if 'tb' in r and g('tb') > 0:
+            r['tb_pg'] = g('tb')              # the feed's own total-bases column
+        elif has_split:
             r['tb_pg'] = singles + 2 * g('doubles') + 3 * g('triples') + 4 * g('hr')
         else:
             # Without the extra-base breakdown, scale hits by the league-typical

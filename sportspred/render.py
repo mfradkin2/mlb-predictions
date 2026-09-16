@@ -142,10 +142,12 @@ def write_site(payloads):
     default = pick_default(payloads)
     written = []
 
+    # The hub opens on the cross-sport overview; the league most likely to
+    # have games today is preloaded so its board paints immediately.
     index = _shell(
         title=f'{SITE_NAME} — MLB, NFL, NBA & NHL',
         description=f'{TAGLINE} for MLB, NFL, NBA and NHL, refreshed hourly.',
-        version=version, default_league=default, leagues=leagues, preload=default)
+        version=version, default_league='all', leagues=leagues, preload=default)
     _write(os.path.join(config.BASE, 'index.html'), index)
     written.append('index.html')
 

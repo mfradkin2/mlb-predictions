@@ -70,6 +70,22 @@ button { font: inherit; color: inherit; background: none; border: none; cursor: 
 .live-pill.on { color: var(--good); border-color: color-mix(in srgb, var(--good) 45%, transparent); }
 
 .sports { display: flex; gap: 2px; padding: 0 10px; overflow-x: auto; scrollbar-width: none; }
+.view-tab .vi { display: none; }
+.lg-chip { font-size: 12px; margin-right: 5px; }
+.lock { font-size: 11px; opacity: .8; }
+.count-inline { font-weight: 500; color: var(--faint); margin-left: 4px; }
+.game.done .row-bar { opacity: .7; }
+
+/* Overview strip */
+.strip { display: grid; grid-template-columns: repeat(auto-fill, minmax(168px, 1fr)); gap: 8px; margin-bottom: 6px; }
+.pick-card {
+  background: var(--bg1); border: 1px solid var(--line); border-radius: 10px; padding: 10px 12px;
+  cursor: pointer; transition: border-color .15s;
+}
+.pick-card:hover { border-color: var(--accent); }
+.pc-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; }
+.pc-team { font-weight: 700; font-size: 14px; }
+.pc-sub { font-size: 11.5px; color: var(--faint); margin-top: 2px; }
 .sports::-webkit-scrollbar { display: none; }
 .sport {
   flex: 1 0 auto; min-width: 74px; padding: 8px 12px 9px; text-align: center;
@@ -306,13 +322,31 @@ table.grid tr:last-child td { border-bottom: none; }
   .t-short { display: inline; }
 
   .brand { padding: 8px 14px 6px; }
-  .sport { min-width: 0; padding: 10px 14px 11px; font-size: 13.5px; }
-  .sport .em { margin-right: 4px; }
-  .views { padding: 6px 8px; gap: 3px; -webkit-overflow-scrolling: touch; }
-  .view-tab {
-    padding: 9px 11px; min-height: 40px; display: flex; align-items: center;
-    font-size: 12.5px; flex: 1 0 auto; justify-content: center;
+  .sports { gap: 6px; padding: 4px 12px 8px; }
+  .sport {
+    flex: 0 0 auto; min-width: 0; padding: 0 13px; min-height: 36px; font-size: 13px;
+    border: 1px solid var(--line); border-radius: 999px; background: var(--bg2);
+    border-bottom-width: 1px;
   }
+  .sport[aria-selected="true"] { background: var(--accent); border-color: var(--accent); color: #fff; }
+  .sport .em { margin-right: 4px; }
+
+  /* Views move to a thumb-reachable bottom bar. */
+  .views {
+    position: fixed; left: 0; right: 0; bottom: 0; z-index: 60;
+    background: var(--bg1); border-top: 1px solid var(--line); border-bottom: none;
+    padding: 4px 4px calc(4px + env(safe-area-inset-bottom, 0px)); gap: 0;
+    justify-content: space-around;
+  }
+  .view-tab {
+    flex: 1 1 0; min-height: 50px; padding: 4px 2px; border-radius: 8px;
+    display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 2px;
+    font-size: 10.5px; font-weight: 600;
+  }
+  .view-tab .vi { display: block; font-size: 17px; line-height: 1; }
+  .view-tab[aria-selected="true"] { background: none; color: var(--accent); }
+  .wrap { padding-bottom: calc(76px + env(safe-area-inset-bottom, 0px)) !important; }
+  .strip { grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); }
 
   /* Filters fold away: they were taller than the first game on the board. */
   .filter-toggle {

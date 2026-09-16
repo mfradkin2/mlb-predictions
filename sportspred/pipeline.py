@@ -224,6 +224,8 @@ def load_pool(league_key, cfg, http):
     else:
         fill_games_played(league_key, pool)
         write_json(cache_path, {'updated': now_iso(), 'pool': pool}, indent=None)
+    if league_key == 'mlb' and pool:
+        _TEAM_ERA['mlb'] = team_era_from_pool(pool)
     return pool, status
 
 
@@ -273,6 +275,26 @@ def load_injuries(league_key, cfg, http):
     if (cached.get('updated') or '')[:10] == str(today_utc()):
         return cached.get('report') or {}
     return {}
+
+
+def team_era_from_pool(pool):
+    """Team ERA = 9 * earned runs / innings, summed over the team's pitchers.
+    The team-statistics endpoint returns no ERA from the runner, but the
+    pitcher listing carries every arm's line, which is the same number."""
+    out = {}
+    for key, roster in (pool or {}).items():
+        er = ip = 0.0
+        for p in roster:
+            st = p.get('stats') or {}
+            innings = num(st.get('ip'))
+            if innings is None or innings <= 0:
+                continue
+            whole = int(innings)
+            ip += whole + (innings - whole) * 10 / 3.0        # 6.1 IP = 6⅓
+            er += num(st.get('p_er'), 0.0) or 0.0
+        if ip >= 30:
+            out[key] = round(9.0 * er / ip, 2)
+    return out
 
 
 def pool_index(pool):
@@ -524,6 +546,7 @@ def build_payload(league_key, cfg, trained, memory, components, n_graded,
 
 
 _POOL_CACHE = {}
+_TEAM_ERA = {}
 
 
 def _pool_cache(league_key):
@@ -550,9 +573,13 @@ def game_json(rec, cfg, league_key, props, trained, injuries=None):
     # Values only, in the order of payload['stats']; the labels and formats
     # live once at the league level rather than on all few-hundred games.
     team_stats = []
+    eras = _TEAM_ERA.get(league_key) or {}
     for s in cfg['stats']:
         av = num(row.get(f'away_{s["key"]}'))
         hv = num(row.get(f'home_{s["key"]}'))
+        if s['key'] == 'era' and eras:
+            av = av if av is not None else espn.find_team(eras, g['away'])
+            hv = hv if hv is not None else espn.find_team(eras, g['home'])
         team_stats.append([av, hv])
     if all(a is None and h is None for a, h in team_stats):
         team_stats = []

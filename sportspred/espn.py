@@ -106,7 +106,7 @@ def is_average_name(name):
 PITCHING_ALIASES = {
     'gp': ['gamesplayed', 'gp', 'g', 'appearances'],
     'starts': ['gamesstarted', 'gs'],
-    'ip': ['inningspitched', 'ip'],
+    'ip': ['inningspitched', 'innings', 'ip'],
     'p_so': ['strikeouts', 'so', 'k'],
     'p_er': ['earnedruns', 'er'],
     'p_h': ['hits', 'h', 'hitsallowed'],
@@ -142,15 +142,18 @@ def extract_stats(sport, names, values, category=''):
     avg_keys = []
     for name, value in zip(names or [], values or []):
         key = amap.get(norm(name))
-        if key is None or key in stats:
+        if key is None:
             continue
+        avg = is_average_name(name)
+        if key in stats and not (avg and key not in avg_keys):
+            continue                          # keep the first, unless this is the average
         v = num(value)
         if v is None and isinstance(value, str) and ':' in value:
             v = _clock_to_minutes(value)
         if v is None:
             continue
         stats[key] = v
-        if is_average_name(name):
+        if avg and key not in avg_keys:
             avg_keys.append(key)
     if avg_keys:
         stats['__avg__'] = avg_keys

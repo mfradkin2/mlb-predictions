@@ -568,3 +568,44 @@ class TestHostFallback(unittest.TestCase):
         url = 'https://site.api.espn.com/apis/site/v2/sports/x'
         self.assertIsNone(h.get_json(url))
         self.assertIn('alt host', h.why(url))
+
+
+class TestLiveColumnNames(unittest.TestCase):
+    """Field names as the live feeds actually spell them (from the dumps)."""
+
+    def test_hockey_general_block(self):
+        st = espn.extract_stats('hockey', ['games', 'plusMinus', 'timeOnIcePerGame'],
+                                ['82', '17', '22:59'])
+        self.assertEqual(st['gp'], 82)
+        self.assertAlmostEqual(st['toi'], 22.98, places=1)
+        off = espn.extract_stats('hockey', ['goals', 'assists', 'points', 'shotsTotal'],
+                                 ['48', '90', '138', '306'])
+        self.assertEqual(off['sog'], 306)
+
+    def test_baseball_pitching_uses_innings(self):
+        st = espn.extract_stats('baseball', ['gamesPlayed', 'gamesStarted', 'ERA', 'innings',
+                                             'earnedRuns', 'strikeouts'],
+                                ['30', '30', '2.91', '180.2', '58', '210'], category='pitching')
+        self.assertEqual(st['ip'], 180.2)
+        self.assertEqual(st['p_so'], 210)
+        self.assertEqual(st['starts'], 30)
+
+    def test_baseball_total_bases_column_is_used(self):
+        st = espn.extract_stats('baseball', ['gamesPlayed', 'hits', 'totalBases', 'homeRuns'],
+                                ['150', '160', '290', '30'])
+        rates = props.derive('baseball', props.per_game(st))
+        self.assertAlmostEqual(rates['tb_pg'], 290 / 150, places=4)
+
+    def test_average_column_outranks_a_total_for_the_same_key(self):
+        st = espn.extract_stats('basketball', ['gamesPlayed', 'rebounds', 'avgRebounds'],
+                                ['71', '492', '6.9'])
+        self.assertEqual(st['reb'], 6.9)
+        self.assertIn('reb', st['__avg__'])
+
+    def test_team_era_from_pitchers(self):
+        pool = {'angels': [{'stats': {'ip': 100.0, 'p_er': 40}}, {'stats': {'ip': 50.1, 'p_er': 20}}],
+                'thin': [{'stats': {'ip': 10.0, 'p_er': 5}}]}
+        eras = pipeline.team_era_from_pool(pool)
+        # 150⅓ innings, 60 ER -> 3.59
+        self.assertAlmostEqual(eras['angels'], round(9 * 60 / (150 + 1 / 3), 2), places=2)
+        self.assertNotIn('thin', eras)

@@ -46,9 +46,6 @@ jobs:
       - name: Ingest, train, project props and rebuild the site
         env:
           SP_LOOKBACK_DAYS: ${{ github.event.inputs.lookback_days }}
-          # Keep the first raw response per endpoint so live feed shapes can
-          # be inspected from the committed data directory.
-          SP_DEBUG_DUMP: data/debug
         run: |
           python3 run_pipeline.py ${{ github.event.inputs.skip_props == 'true' && '--no-props' || '' }}
 
