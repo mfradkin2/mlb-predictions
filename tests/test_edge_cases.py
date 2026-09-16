@@ -247,13 +247,17 @@ class TestLedgerRobustness(unittest.TestCase):
         mem = LeagueMemory('mlb', history_dir=self.dir, state_dir=self.dir)
         self.assertEqual(mem.previous_best(), {})
 
-    def test_an_entry_recorded_twice_keeps_the_first(self):
+    def test_an_entry_refreshes_before_kickoff_and_freezes_after(self):
         mem = LeagueMemory('mlb', history_dir=self.dir, state_dir=self.dir)
         game = {'game_id': '5', 'date': '2026-05-01', 'home': 'B', 'away': 'A', 'final': False}
         parts = {'prob': 0.6, 'elo_prob': 0.6, 'glm_prob': None, 'prior_prob': None}
-        self.assertTrue(mem.record(game, parts, 'B'))
-        self.assertFalse(mem.record(game, {**parts, 'prob': 0.9}, 'A'))
-        self.assertEqual(float(list(mem.ledger.values())[0]['p_final']), 0.6)
+        self.assertTrue(mem.record(game, parts, 'B', pregame=True))
+        # A later pre-game forecast replaces it (lineups, injuries).
+        self.assertTrue(mem.record(game, {**parts, 'prob': 0.7}, 'B', pregame=True))
+        self.assertEqual(float(list(mem.ledger.values())[0]['p_final']), 0.7)
+        # Once the game has started nothing can touch it.
+        self.assertFalse(mem.record(game, {**parts, 'prob': 0.95}, 'A', pregame=False))
+        self.assertEqual(float(list(mem.ledger.values())[0]['p_final']), 0.7)
 
     def test_a_ledger_round_trips_through_disk(self):
         mem = LeagueMemory('mlb', history_dir=self.dir, state_dir=self.dir)

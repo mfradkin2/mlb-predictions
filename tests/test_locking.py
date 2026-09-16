@@ -98,10 +98,31 @@ class TestPredictionsAreFrozen(PipelineHarness):
         b = {g['id']: g['home_prob'] for g in second['games']}
         self.assertEqual(a, b)
 
-    def test_games_are_marked_locked_once_stored(self):
+    def test_started_games_are_locked_and_future_games_are_not(self):
         self.run_pipeline()
         payload, _, _ = self.run_pipeline()
-        self.assertTrue(all(g['locked'] for g in payload['games']))
+        finals = [g for g in payload['games'] if g['final']]
+        future = [g for g in payload['games'] if g['date'] > payload['today']]
+        self.assertTrue(finals and future)
+        self.assertTrue(all(g['locked'] for g in finals))
+        self.assertTrue(all(not g['locked'] for g in future))
+
+    def test_a_future_game_may_still_refresh(self):
+        """Lineups and injuries land right up to first pitch; only kickoff freezes."""
+        payload, _, mem = self.run_pipeline()
+        future = next(g for g in payload['games'] if g['date'] > payload['today'])
+        entry = mem.entry_for({'game_id': future['id'], 'date': future['date'],
+                               'away': future['away'], 'home': future['home']})
+        self.assertEqual(entry['pregame'], '1')
+        # Swing the standings prior for that game and re-run: pre-kickoff it moves.
+        rows = read_csv(self.csv)
+        for r in rows:
+            if r['game_id'] == future['id']:
+                r['home_win_probability'], r['away_win_probability'] = '0.97', '0.03'
+        write_csv(self.csv, rows)
+        payload2, _, _ = self.run_pipeline()
+        again = next(g for g in payload2['games'] if g['id'] == future['id'])
+        self.assertNotEqual(again['home_prob'], future['home_prob'])
 
     def test_verified_record_counts_only_pre_game_forecasts(self):
         self.run_pipeline()
@@ -228,3 +249,51 @@ class TestPreseasonIsExcluded(PipelineHarness):
 
 if __name__ == '__main__':
     unittest.main()
+
+
+class TestPropsFreeze(unittest.TestCase):
+    """Prop boards refresh until first pitch, then never change."""
+
+    def setUp(self):
+        from sportspred.learn import FrozenBoards
+        self.dir = tempfile.mkdtemp()
+        self.boards = FrozenBoards('mlb', history_dir=self.dir)
+        self.game = {'game_id': 'g9', 'date': date.today()}
+
+    def tearDown(self):
+        shutil.rmtree(self.dir, ignore_errors=True)
+
+    def test_pre_kickoff_board_is_replaced_by_a_newer_one(self):
+        self.boards.store(self.game, {'home': [{'id': 'p', 'props': [{'key': 'hits', 'line': 0.5}]}]}, frozen=False)
+        self.boards.store(self.game, {'home': [{'id': 'p', 'props': [{'key': 'hits', 'line': 1.5}]}]}, frozen=False)
+        self.assertEqual(self.boards.get('g9')['home'][0]['props'][0]['line'], 1.5)
+
+    def test_frozen_board_cannot_be_replaced(self):
+        self.boards.store(self.game, {'home': [{'id': 'p', 'props': [{'key': 'hits', 'line': 0.5, 'proj': 1.1}]}]}, frozen=False)
+        self.boards.freeze('g9')
+        self.boards.store(self.game, {'home': [{'id': 'p', 'props': [{'key': 'hits', 'line': 2.5, 'proj': 3.0}]}]}, frozen=False)
+        prop = self.boards.get('g9')['home'][0]['props'][0]
+        self.assertEqual((prop['line'], prop['proj']), (0.5, 1.1))
+
+    def test_outcomes_are_written_onto_the_frozen_board(self):
+        self.boards.store(self.game, {'home': [{'id': 'p', 'props': [{'key': 'hits', 'line': 0.5}]}]}, frozen=True)
+        rows = [{'game_id': 'g9', 'athlete_id': 'p', 'key': 'hits', 'graded': '1',
+                 'actual': '2', 'played': '1', 'hit': '1', 'push': '0'}]
+        self.boards.annotate('g9', rows)
+        prop = self.boards.get('g9')['home'][0]['props'][0]
+        self.assertEqual(prop['actual'], 2)
+        self.assertTrue(prop['hit'])
+
+    def test_old_boards_are_pruned(self):
+        self.boards.store({'game_id': 'old', 'date': date.today() - timedelta(days=30)}, {}, frozen=True)
+        self.boards.store(self.game, {}, frozen=False)
+        self.boards.prune(date.today())
+        self.assertNotIn('old', self.boards.boards)
+        self.assertIn('g9', self.boards.boards)
+
+    def test_round_trips_through_disk(self):
+        from sportspred.learn import FrozenBoards
+        self.boards.store(self.game, {'home': []}, frozen=True)
+        self.boards.save()
+        again = FrozenBoards('mlb', history_dir=self.dir)
+        self.assertTrue(again.is_frozen('g9'))

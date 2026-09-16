@@ -540,3 +540,31 @@ class TestRealFeedShapes(unittest.TestCase):
         h = Boom()
         self.assertIsNone(h.get_json('http://x'))
         self.assertIn('403', h.why('http://x'))
+
+
+class TestHostFallback(unittest.TestCase):
+    def test_second_host_answers_when_the_first_fails(self):
+        from sportspred import util
+        calls = []
+        class H(util.Http):
+            def _get_json(self, url, cache=True):
+                calls.append(url)
+                if 'site.web.api' in url:
+                    return {'ok': 1}
+                self.errors[url] = 'HTTP 403'
+                return None
+        h = H()
+        self.assertEqual(h.get_json('https://site.api.espn.com/apis/site/v2/sports/x'), {'ok': 1})
+        self.assertEqual(len(calls), 2)
+        self.assertIn('site.web.api.espn.com', calls[1])
+
+    def test_both_hosts_failing_records_both_reasons(self):
+        from sportspred import util
+        class H(util.Http):
+            def _get_json(self, url, cache=True):
+                self.errors[url] = 'HTTP 403'
+                return None
+        h = H()
+        url = 'https://site.api.espn.com/apis/site/v2/sports/x'
+        self.assertIsNone(h.get_json(url))
+        self.assertIn('alt host', h.why(url))

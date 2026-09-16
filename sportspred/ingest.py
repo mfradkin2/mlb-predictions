@@ -402,8 +402,14 @@ def _probable(c):
     return {'id': str(ath.get('id') or ''), 'name': ath.get('displayName') or ''}
 
 
-def parse_event(ev, league_key, teams, last_game_date):
-    """One scoreboard event -> one CSV row, in the R column order."""
+def parse_event(ev, league_key, teams, last_game_date, query_date=None):
+    """One scoreboard event -> one CSV row, in the R column order.
+
+    ``game_date`` is the calendar date the scoreboard was queried for, not the
+    UTC date of first pitch: a 10pm Pacific start is past midnight UTC, and
+    filing it under tomorrow would move it off today's board and distort rest
+    days. ``game_start_utc`` keeps the exact instant.
+    """
     spec = LEAGUE_INGEST[league_key]
     comp = dig(ev, 'competitions', 0) or {}
     stype = dig(comp, 'status', 'type', 'name') or ''
@@ -421,7 +427,7 @@ def parse_event(ev, league_key, teams, last_game_date):
     away_rec = str(dig(away_c, 'records', 0, 'summary') or '')
     home_rec = str(dig(home_c, 'records', 0, 'summary') or '')
 
-    date_str = str(ev.get('date') or '')[:10]
+    date_str = query_date or str(ev.get('date') or '')[:10]
     game_date = parse_date(date_str)
     if not game_date or not away_name or not home_name:
         return None
@@ -497,7 +503,7 @@ def fetch_window(http, league_key, teams, lookback=None, forward=None):
             continue
         days_hit += 1
         for ev in data.get('events') or []:
-            row = parse_event(ev, league_key, teams, last_game_date)
+            row = parse_event(ev, league_key, teams, last_game_date, f'{d:%Y-%m-%d}')
             if row:
                 rows.append(row)
     # De-duplicate on (date, away, home) as the R scripts did.
@@ -530,11 +536,13 @@ def refit_prior(rows, league_key):
     """
     spec = LEAGUE_INGEST[league_key]
     cols = list(spec['refit'])
-    lower = list(spec.get('refit_lower_better') or ())
-    if spec.get('rest_term'):
-        cols_rest = True
-    else:
-        cols_rest = False
+    finals_rows = [r for r in rows if r.get('status') == 'Final' and r.get('winner')]
+    # A term nobody has (the team-statistics feed returned nothing) is left
+    # out rather than blocking the whole refit — the R has_era test.
+    lower = [c for c in (spec.get('refit_lower_better') or ())
+             if any(num(r.get(f'away_{c}')) is not None for r in finals_rows)
+             and any(num(r.get(f'home_{c}')) is not None for r in finals_rows)]
+    cols_rest = bool(spec.get('rest_term'))
 
     def vector(r):
         v = []

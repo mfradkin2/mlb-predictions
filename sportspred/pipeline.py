@@ -8,7 +8,7 @@ from . import espn, model, props as props_mod
 from . import config
 from .config import LEAGUES
 from .glm import score
-from .learn import MODEL_VERSION, LeagueMemory, PropsLedger
+from .learn import MODEL_VERSION, FrozenBoards, LeagueMemory, PropsLedger
 from .model import FEATURE_LABELS
 from .util import (Http, clamp, format_eastern, now_iso, num, parse_iso, read_csv,
                    read_json, short_name, today_utc, write_json)
@@ -118,7 +118,10 @@ def run(league_key, fetch_props=True, http=None, tune=True):
         rec['live_prediction'] = live
 
         stored = memory.entry_for(game) if game['game_id'] else None
-        if stored and num(stored.get('p_final')) is not None:
+        has_started = game['final'] or started(game, now)
+        frozen = bool(stored and num(stored.get('p_final')) is not None
+                      and (has_started or stored.get('pregame') != '1'))
+        if frozen:
             prob = clamp(num(stored['p_final']), 0.0, 1.0)
             favored = stored.get('favored_team') or (
                 game['home'] if prob >= 0.5 else game['away'])
@@ -140,7 +143,7 @@ def run(league_key, fetch_props=True, http=None, tune=True):
             rec['favored'] = favored
             # Anything we are seeing for the first time after it kicked off is
             # marked as such, so it never counts toward the model's record.
-            pregame = not game['final'] and not started(game, now)
+            pregame = not has_started
             rec['locked'] = False
             rec['pregame'] = pregame
             rec['locked_at'] = ''
@@ -153,6 +156,7 @@ def run(league_key, fetch_props=True, http=None, tune=True):
 
     # ── player props: grade what has finished, then price what is coming ────
     props_ledger = PropsLedger(league_key)
+    boards = FrozenBoards(league_key)
     prop_board, prop_status = {}, pool_status
     graded_props = 0
     if fetch_props and http is not None:
@@ -160,10 +164,14 @@ def run(league_key, fetch_props=True, http=None, tune=True):
         props_tuning = props_ledger.tune()
         if pool:
             prop_board = price_props(league_key, cfg, records, pool,
-                                     injuries, props_tuning, http)
-            record_props(props_ledger, records, prop_board)
+                                     injuries, props_tuning, http, boards)
+            record_props(props_ledger, records, prop_board, boards)
     else:
         props_tuning = props_ledger.tune()
+    # Started games keep the board they went in with, whether or not the
+    # feed was reachable this run; finished ones carry their outcomes.
+    prop_board = frozen_boards_for(records, boards, props_ledger, prop_board)
+    boards.prune(today_utc())
     props_record = props_ledger.scorecard()
 
     payload = build_payload(league_key, cfg, trained, memory, components,
@@ -174,6 +182,7 @@ def run(league_key, fetch_props=True, http=None, tune=True):
     memory.save_archive()
     memory.save_ledger()
     props_ledger.save()
+    boards.save()
     memory.save_state({
         'elo': trained['engine'].snapshot(),
         'last_metrics': trained.get('metrics'),
@@ -309,13 +318,19 @@ def starter_edge_by_game(records, pool):
     return out
 
 
-def price_props(league_key, cfg, records, pool, injuries, tuning, http):
-    """Price props for today's and upcoming games."""
+def price_props(league_key, cfg, records, pool, injuries, tuning, http, boards=None):
+    """Price props for games that have not started yet.
+
+    A game that has already started is never re-priced: its board was frozen
+    at first pitch (see ``frozen_boards_for``).
+    """
     sport, league = cfg['espn_path'].split('/')
     today = today_utc()
+    now = datetime.now(timezone.utc)
     horizon = today + timedelta(days=UPCOMING_DAYS)
     targets = [r for r in records
                if not r['game']['final']
+               and not started(r['game'], now)
                and today <= r['game']['date'] <= horizon
                and r['game']['game_id']]
     if not targets:
@@ -334,16 +349,52 @@ def price_props(league_key, cfg, records, pool, injuries, tuning, http):
     for rec in targets:
         game = rec['game']
         try:
-            out[game['game_id']] = props_mod.build_for_game(
+            board = props_mod.build_for_game(
                 game, pool, env, cfg, sport, rec['prediction']['prob'],
                 starters=starters.get(game['game_id']), injuries=injuries, tuning=tuning)
         except Exception:                    # noqa: BLE001
             continue
+        out[game['game_id']] = board
+        # Keep the boards of games starting soon so the one in force at first
+        # pitch survives even if the next run cannot reach the feed.
+        if boards is not None and (game['date'] - today).days <= FrozenBoards.STORE_AHEAD_DAYS:
+            boards.store(game, board, frozen=False)
     return out
 
 
-def record_props(ledger, records, prop_board):
-    """Write every prop for a game that has not started to the props ledger."""
+def frozen_boards_for(records, boards, ledger, live_boards):
+    """Boards for games that have started: the stored pre-kickoff board, frozen
+    now if it was not already, with graded outcomes written on."""
+    now = datetime.now(timezone.utc)
+    today = today_utc()
+    out = dict(live_boards)
+    for rec in records:
+        game = rec['game']
+        gid = game['game_id']
+        if not gid or gid in out:
+            continue
+        if not (game['final'] or started(game, now)):
+            continue
+        if (today - game['date']).days > LIVE_RECENT_DAYS:
+            continue
+        board = boards.get(gid)
+        if not board:
+            continue
+        boards.freeze(gid)
+        boards.annotate(gid, ledger.rows.values())
+        board = dict(boards.get(gid))
+        board['locked'] = True
+        out[gid] = board
+    return out
+
+
+def record_props(ledger, records, prop_board, boards=None):
+    """Write every prop for a game that has not started to the props ledger.
+
+    Rows for a game are replaced each run until first pitch, so the ledger
+    holds the board the game actually went in with; started games are never
+    touched.
+    """
     now = datetime.now(timezone.utc)
     n = 0
     for rec in records:
@@ -351,6 +402,7 @@ def record_props(ledger, records, prop_board):
         board = prop_board.get(game['game_id'])
         if not board or game['final'] or started(game, now):
             continue
+        ledger.replace_game(game['game_id'])
         for side in ('away', 'home'):
             for player in board.get(side) or []:
                 for prop in player.get('props') or []:
@@ -547,6 +599,7 @@ def game_json(rec, cfg, league_key, props, trained, injuries=None):
     }
     if props:
         out['props'] = props
+        out['props_locked'] = bool(props.get('locked'))
     if injuries:
         out['injuries'] = injuries
     if pred.get('starter_edge'):

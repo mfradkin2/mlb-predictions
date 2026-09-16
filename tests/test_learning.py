@@ -90,12 +90,13 @@ class TestLedger(unittest.TestCase):
         self.assertEqual(self.mem.graded_rows(pregame_only=True), [])
         self.assertEqual(len(self.mem.graded_rows()), 1)
 
-    def test_the_first_forecast_is_the_one_we_are_held_to(self):
-        """Re-running the hour must not quietly improve yesterday's call."""
-        self.mem.record(self.game, self.parts, 'B')
-        self.mem.record(self.game, {**self.parts, 'prob': 0.95}, 'B')
-        entry = list(self.mem.ledger.values())[0]
-        self.assertEqual(float(entry['p_final']), 0.62)
+    def test_the_last_pre_kickoff_forecast_is_the_one_we_are_held_to(self):
+        """Refreshing before the game is fine; after it, nothing may move."""
+        self.mem.record(self.game, self.parts, 'B', pregame=True)
+        self.mem.record(self.game, {**self.parts, 'prob': 0.66}, 'B', pregame=True)
+        self.assertEqual(float(list(self.mem.ledger.values())[0]['p_final']), 0.66)
+        self.mem.record(self.game, {**self.parts, 'prob': 0.95}, 'B', pregame=False)
+        self.assertEqual(float(list(self.mem.ledger.values())[0]['p_final']), 0.66)
 
     def test_grading_marks_a_correct_pick(self):
         self.mem.record(self.game, self.parts, 'B')

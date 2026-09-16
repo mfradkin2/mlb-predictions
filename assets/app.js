@@ -65,6 +65,15 @@
   }
   function cur() { return DATA[state.league] || null; }
 
+  // ESPN serves the same documents from two hosts; fall back to the second
+  // when the first refuses, as it does from some networks.
+  function espnFetch(path) {
+    var a = 'https://site.api.espn.com/apis/site/v2/sports/' + path;
+    var b = 'https://site.web.api.espn.com/apis/site/v2/sports/' + path;
+    return fetch(a).then(function (r) { if (!r.ok) throw new Error(r.status); return r.json(); })
+      .catch(function () { return fetch(b).then(function (r) { return r.ok ? r.json() : null; }); });
+  }
+
   // ── data loading ─────────────────────────────────────────────────────────
   function loadScript(key, src, done) {
     if (state.loading[key]) { state.loading[key].push(done); return; }
@@ -996,8 +1005,7 @@
     var d = cur();
     if (!d) return;
     var stamp = new Date().toISOString().slice(0, 10).replace(/-/g, '');
-    fetch('https://site.api.espn.com/apis/site/v2/sports/' + d.espn_path + '/scoreboard?dates=' + stamp)
-      .then(function (r) { return r.ok ? r.json() : null; })
+    espnFetch(d.espn_path + '/scoreboard?dates=' + stamp)
       .then(function (json) { applyLive(json); })
       .catch(function () {
         var pill = el('live-pill');
@@ -1151,8 +1159,7 @@
     if (!d || !gameEl) return;
     var id = gameEl.dataset.id;
     var sport = (d.espn_path || '').split('/')[0];
-    fetch('https://site.api.espn.com/apis/site/v2/sports/' + d.espn_path + '/summary?event=' + id)
-      .then(function (r) { return r.ok ? r.json() : null; })
+    espnFetch(d.espn_path + '/summary?event=' + id)
       .then(function (summary) {
         if (!summary) return;
         var box = parseBox(summary, sport);

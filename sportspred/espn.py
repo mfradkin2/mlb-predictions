@@ -235,6 +235,7 @@ def _parse_byathlete(data, sport):
         names = cat.get('names') or cat.get('labels') or []
         if names:
             top_names[cname] = names
+    _dump_names(sport, top_names)
 
     out = []
     for entry in data.get('athletes') or []:
@@ -259,6 +260,25 @@ def _parse_byathlete(data, sport):
         if player['name']:
             out.append(player)
     return out
+
+
+def _dump_names(sport, top_names):
+    """With SP_DEBUG_DUMP set, record each category's column names once, so an
+    unrecognised column (a games-played field under an unexpected name) can be
+    read back from a cloud run without shipping the whole response."""
+    import json
+    import os
+    d = os.environ.get('SP_DEBUG_DUMP', '').strip()
+    if not d or not top_names:
+        return
+    try:
+        os.makedirs(d, exist_ok=True)
+        path = os.path.join(d, f'{sport}_byathlete_columns.json')
+        if not os.path.exists(path):
+            with open(path, 'w', encoding='utf-8') as f:
+                json.dump(top_names, f, indent=1)
+    except OSError:
+        pass
 
 
 def _athlete_meta(ath):

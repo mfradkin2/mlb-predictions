@@ -135,13 +135,15 @@ class LeagueMemory:
                      'home_team': game.get('home')})
 
     def record(self, game, parts, favored, pregame=True, preseason=False):
-        """Log a forecast, once.
+        """Log a forecast.
 
-        Existing entries are never overwritten. A prediction published before
-        kickoff is the one we are held to, and re-running the model afterwards
-        must not quietly rewrite it — otherwise a finished game can change who
-        it says was favoured, because the standings model behind it now knows
-        the result.
+        Until kickoff the forecast may be refreshed — a late lineup change or
+        injury report should count — so a pre-game entry is replaced by a
+        newer pre-game one. From first pitch it is frozen: re-running the
+        model afterwards must not rewrite it, otherwise a finished game can
+        change who it says was favoured, because the standings model behind
+        it now knows the result. The last forecast published before the game
+        started is the one we are held to.
 
         ``pregame`` records whether the forecast beat the first pitch. Only
         pre-game rows are used to score the model; back-filled rows, and
@@ -149,8 +151,12 @@ class LeagueMemory:
         number.
         """
         k = self._key_for(game)
-        if k in self.ledger and (self.ledger[k].get('p_final') or '') != '':
-            return False
+        existing = self.ledger.get(k)
+        if existing and (existing.get('p_final') or '') != '':
+            # Frozen once the game has started; a pre-game entry can only be
+            # replaced by another pre-game entry.
+            if not pregame or existing.get('graded') == '1':
+                return False
         self.ledger[k] = {
             'game_id': game['game_id'],
             'game_date': str(game['date']),
@@ -367,6 +373,16 @@ class PropsLedger:
         return '|'.join([str(r.get('game_id') or ''), str(r.get('athlete_id') or ''),
                          str(r.get('key') or '')])
 
+    def replace_game(self, game_id):
+        """Drop a game's rows so a fresh pre-kickoff pricing can replace them.
+        Never called once the game has started; graded rows are never touched."""
+        for k in [k for k, r in self.rows.items()
+                  if r.get('game_id') == game_id and r.get('graded') != '1']:
+            del self.rows[k]
+
+    def has_game(self, game_id):
+        return any(r.get('game_id') == game_id for r in self.rows.values())
+
     def record(self, game, side, player, prop):
         if not game.get('game_id') or not player.get('id'):
             return False
@@ -503,3 +519,80 @@ class PropsLedger:
                                      r.get('athlete_id', ''), r.get('key', '')))
         if rows:
             write_csv(self.path, rows, PROP_FIELDS)
+
+
+class FrozenBoards:
+    """The prop board each game went into first pitch with.
+
+    Props are re-priced every run while a game is still to come, so the last
+    pre-kickoff board is the one that gets frozen here. From then on the page
+    shows this board — the live box score may be drawn over it, but no line,
+    projection or probability changes — and once graded, each prop carries
+    its outcome. Boards are kept only for games starting within two days and
+    for a few days after they finish, so the file stays small.
+    """
+
+    KEEP_DAYS_AFTER = 4
+    STORE_AHEAD_DAYS = 2
+
+    def __init__(self, league_key, history_dir=None):
+        history_dir = history_dir or config.HISTORY_DIR
+        self.path = os.path.join(history_dir, f'{league_key}_boards.json')
+        self.boards = read_json(self.path, {}) or {}
+
+    def get(self, game_id):
+        entry = self.boards.get(str(game_id))
+        return entry.get('board') if entry else None
+
+    def is_frozen(self, game_id):
+        entry = self.boards.get(str(game_id))
+        return bool(entry and entry.get('frozen'))
+
+    def store(self, game, board, frozen):
+        """Keep a pre-kickoff board (replacing the previous one), or mark the
+        stored board frozen once the game has started."""
+        gid = str(game.get('game_id') or '')
+        if not gid:
+            return
+        existing = self.boards.get(gid)
+        if existing and existing.get('frozen'):
+            return
+        self.boards[gid] = {'date': str(game.get('date')), 'board': board,
+                            'frozen': bool(frozen), 'updated': now_iso()}
+
+    def freeze(self, game_id):
+        entry = self.boards.get(str(game_id))
+        if entry:
+            entry['frozen'] = True
+
+    def annotate(self, game_id, ledger_rows):
+        """Write graded outcomes back onto the frozen board's props."""
+        entry = self.boards.get(str(game_id))
+        if not entry:
+            return
+        graded = {(r.get('athlete_id'), r.get('key')): r for r in ledger_rows
+                  if r.get('game_id') == str(game_id) and r.get('graded') == '1'}
+        for side in ('away', 'home'):
+            for player in entry['board'].get(side) or []:
+                for prop in player.get('props') or []:
+                    row = graded.get((player.get('id'), prop.get('key')))
+                    if not row:
+                        continue
+                    prop['actual'] = num(row.get('actual'))
+                    prop['played'] = row.get('played') == '1'
+                    prop['hit'] = (None if row.get('hit') not in ('0', '1')
+                                   else row.get('hit') == '1')
+                    prop['push'] = row.get('push') == '1'
+
+    def prune(self, today):
+        keep = {}
+        for gid, entry in self.boards.items():
+            d = parse_date(entry.get('date'))
+            if d is None:
+                continue
+            if (today - d).days <= self.KEEP_DAYS_AFTER:
+                keep[gid] = entry
+        self.boards = keep
+
+    def save(self):
+        write_json(self.path, self.boards, indent=None)

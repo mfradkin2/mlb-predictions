@@ -269,6 +269,11 @@ def write_json(path, obj, indent=1):
 
 
 # ── HTTP ─────────────────────────────────────────────────────────────────────
+# ESPN serves the same documents from two hosts. From GitHub's runners the
+# first refuses or fails while the second answers, so every request to the
+# first is retried on the second before it is called a failure.
+ALT_HOSTS = {'site.api.espn.com': 'site.web.api.espn.com'}
+
 _UA = ('Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) '
        'Chrome/124.0 Safari/537.36')
 _SESSION_CACHE: dict[str, object] = {}
@@ -297,6 +302,23 @@ class Http:
         return self.budget_s is not None and (time.time() - self.started) > self.budget_s
 
     def get_json(self, url, cache=True):
+        data = self._get_json(url, cache)
+        if data is not None:
+            return data
+        for host, alt in ALT_HOSTS.items():
+            if f'//{host}/' in url:
+                alt_url = url.replace(f'//{host}/', f'//{alt}/', 1)
+                data = self._get_json(alt_url, cache)
+                if data is not None:
+                    self.errors.pop(url, None)
+                    if cache:
+                        _SESSION_CACHE[url] = data
+                    return data
+                self.errors[url] = (self.errors.get(url, '') + ' | alt host: '
+                                    + self.errors.get(alt_url, 'no answer'))
+        return None
+
+    def _get_json(self, url, cache=True):
         if cache and url in _SESSION_CACHE:
             return _SESSION_CACHE[url]
         if self.out_of_budget():

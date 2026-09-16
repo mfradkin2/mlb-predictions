@@ -100,7 +100,7 @@ LEAGUE_ORDER = ['mlb', 'nfl', 'nba', 'nhl']
 # ─────────────────────────────────────────────────────────────────────────────
 STAT_ALIASES = {
     'basketball': {
-        'gp':      ['gamesplayed', 'gp'],
+        'gp':      ['gamesplayed', 'gp', 'games'],
         'min':     ['avgminutes', 'minutespergame', 'minutes', 'min', 'mpg'],
         'pts':     ['avgpoints', 'pointspergame', 'points', 'pts', 'ppg'],
         'reb':     ['avgrebounds', 'reboundspergame', 'rebounds', 'reb', 'totalrebounds', 'rpg'],
@@ -140,7 +140,7 @@ STAT_ALIASES = {
         'starts':  ['gamesstarted', 'gs'],
     },
     'football': {
-        'gp':        ['gamesplayed', 'gp'],
+        'gp':        ['gamesplayed', 'gp', 'games'],
         'pass_yds':  ['passingyards', 'passyards', 'yds', 'netpassingyards'],
         'pass_td':   ['passingtouchdowns', 'passtouchdowns', 'td'],
         'pass_att':  ['passingattempts', 'attempts', 'att'],
@@ -157,7 +157,7 @@ STAT_ALIASES = {
         'sacks':     ['sacks'],
     },
     'hockey': {
-        'gp':      ['gamesplayed', 'gp'],
+        'gp':      ['gamesplayed', 'gp', 'games', 'gamesplayedtotal', 'gamesskated'],
         'goals':   ['goals', 'g'],
         'assists': ['assists', 'a'],
         'points':  ['points', 'pts'],

@@ -211,6 +211,32 @@ class TestScoreboardWindow(unittest.TestCase):
         self.assertEqual(row['rest_advantage'], 3 - 1)
 
 
+class TestParityFixes(unittest.TestCase):
+    def test_game_date_is_the_queried_day_not_the_utc_day(self):
+        t = {1: fx.team(1, 'A', 'A'), 2: fx.team(2, 'B', 'B')}
+        d = date(2026, 7, 17)
+        ev = fx.event(1, d, t[1], t[2], iso_time='02:10Z')       # 10pm Pacific
+        ev['date'] = '2026-07-18T02:10Z'
+        row = ingest.parse_event(ev, 'mlb', {}, {}, query_date='2026-07-17')
+        self.assertEqual(row['game_date'], '2026-07-17')
+        self.assertEqual(row['game_start_utc'], '2026-07-18T02:10Z')
+
+    def test_refit_runs_without_era_when_no_team_has_one(self):
+        rows = []
+        for i in range(60):
+            strong = i % 2 == 0
+            rows.append({'status': 'Final', 'winner': 'H' if strong else 'A',
+                         'home_team': 'H', 'away_team': 'A',
+                         'home_pyth_pct': 0.6 if strong else 0.4, 'away_pyth_pct': 0.5,
+                         'home_win_pct': 0.6 if strong else 0.4, 'away_win_pct': 0.5,
+                         'home_run_diff_pg': 1.0 if strong else -1.0, 'away_run_diff_pg': 0.0,
+                         'home_rs_pg': 5.0, 'away_rs_pg': 4.5,
+                         'home_era': None, 'away_era': None,
+                         'home_win_probability': 0.5, 'away_win_probability': 0.5,
+                         'favored_team': ''})
+        self.assertEqual(ingest.refit_prior(rows, 'mlb'), 60)
+
+
 class TestRefit(unittest.TestCase):
     def test_refit_needs_thirty_games(self):
         rows = []
