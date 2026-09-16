@@ -17,6 +17,8 @@ RECENT_DAYS = 21        # how far back the Results view can reach
 LIVE_RECENT_DAYS = 4    # finished games kept in the first-paint payload
 UPCOMING_DAYS = 14
 GRADE_CAP = 40          # box scores fetched per run to grade finished props
+PROPS_AHEAD_DAYS = 2    # price props only this close to kickoff: further out the
+                        # lineups are guesses and the payload balloons
 STARTER_COEF = 0.12     # log-odds per run of ERA between probable starters
 STARTER_MIN_STARTS = 5
 STARTER_CAP = 0.35
@@ -350,10 +352,11 @@ def price_props(league_key, cfg, records, pool, injuries, tuning, http, boards=N
     today = today_utc()
     now = datetime.now(timezone.utc)
     horizon = today + timedelta(days=UPCOMING_DAYS)
+    near = today + timedelta(days=PROPS_AHEAD_DAYS)
     targets = [r for r in records
                if not r['game']['final']
                and not started(r['game'], now)
-               and today <= r['game']['date'] <= horizon
+               and today <= r['game']['date'] <= min(horizon, near)
                and r['game']['game_id']]
     if not targets:
         return {}

@@ -438,10 +438,15 @@ def fetch_team_index(http, sport, league):
 # ─────────────────────────────────────────────────────────────────────────────
 #  Injuries
 # ─────────────────────────────────────────────────────────────────────────────
-OUT_STATUSES = ('out', 'injured reserve', 'ir', 'suspended', 'suspension',
-                'season', 'doubtful', 'inactive', 'reserve')
+OUT_STATUSES = ('out', 'injured reserve', 'suspended', 'suspension',
+                'season', 'doubtful', 'inactive', 'reserve', 'injured list',
+                'non-roster', 'paternity', 'bereavement')
 LIMITED_STATUSES = ('questionable', 'day-to-day', 'day to day', 'probable',
                     'game time decision', 'gtd', 'limited')
+# Baseball's statuses are IL stints: "10-Day-IL", "15-Day IL", "60-Day-IL".
+# Hockey and football use "IR" and "IR-R". Matched as whole tokens so a
+# name like "Wilson" cannot trip them.
+_LIST_TOKENS = re.compile(r'(?:^|[\s\-/])(il|ir|ir-r|pup|nfi|ltir)(?:$|[\s\-/])')
 
 
 def fetch_injuries(http, sport, league):
@@ -462,6 +467,12 @@ def fetch_injuries(http, sport, league):
         for e in entries or []:
             ath = e.get('athlete') or {}
             aid = str(ath.get('id') or '')
+            if not aid:
+                for link in ath.get('links') or []:
+                    m = re.search(r'/id/(\d+)', str(link.get('href') or ''))
+                    if m:
+                        aid = m.group(1)
+                        break
             if not aid:
                 continue
             status = str(e.get('status') or dig(e, 'type', 'description') or '').strip()
@@ -489,7 +500,7 @@ def classify_status(status):
         return 'active'
     if any(w in s for w in LIMITED_STATUSES):
         return 'limited'
-    if any(w in s for w in OUT_STATUSES):
+    if any(w in s for w in OUT_STATUSES) or _LIST_TOKENS.search(s):
         return 'out'
     return 'active'
 

@@ -335,7 +335,7 @@ def confidence(prob):
     return 'low'
 
 
-def project_player(player, sport, group, factor, max_props=6, tuning=None):
+def project_player(player, sport, group, factor, max_props=5, tuning=None):
     """Every prop we can price for one player, best signal first."""
     rates = derive(sport, per_game(player.get('stats') or {}))
     gp = rates.get('gp') or 0
@@ -434,7 +434,7 @@ def _sort_key(sport, group, rates):
 
 
 def build_for_game(game_row, pool, env, cfg, sport, home_win_prob,
-                   max_players=8, starters=None, injuries=None, tuning=None):
+                   max_players=7, starters=None, injuries=None, tuning=None):
     """Prop board for one game: {'home': [...], 'away': [...]}.
 
     ``injuries`` is ``{team: {athlete_id: report}}`` from the injury feed. A

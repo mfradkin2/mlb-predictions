@@ -124,8 +124,22 @@ class TestInjuries(unittest.TestCase):
         for status, want in (('Out', 'out'), ('Injured Reserve', 'out'), ('Suspended', 'out'),
                              ('Out For Season', 'out'), ('Questionable', 'limited'),
                              ('Day-To-Day', 'limited'), ('Probable', 'limited'),
-                             ('Active', 'active'), ('', 'active')):
+                             ('Active', 'active'), ('', 'active'),
+                             # the statuses the live feeds actually carry
+                             ('10-Day-IL', 'out'), ('15-Day IL', 'out'), ('60-Day-IL', 'out'),
+                             ('suspension', 'out'), ('IR', 'out'), ('IR-R', 'out'),
+                             ('PUP', 'out'), ('Wilson', 'active')):
             self.assertEqual(espn.classify_status(status), want, status)
+
+    def test_athlete_id_falls_back_to_the_player_card_link(self):
+        payload = {'injuries': [{'id': '29', 'displayName': 'Arizona Diamondbacks', 'injuries': [
+            {'status': '60-Day-IL', 'shortComment': 'Nelson (elbow) ...',
+             'athlete': {'displayName': 'Ryne Nelson',
+                         'links': [{'rel': ['playercard'], 'href': 'https://www.espn.com/mlb/player/_/id/4916269'}]}}]}]}
+        rep = espn.fetch_injuries(fx.FakeHttp([('/injuries', payload)]), 'baseball', 'mlb')
+        team = rep[espn.norm_team('Arizona Diamondbacks')]
+        self.assertIn('4916269', team)
+        self.assertEqual(team['4916269']['level'], 'out')
 
     def test_outage_yields_empty(self):
         self.assertEqual(espn.fetch_injuries(fx.FakeHttp([]), 'baseball', 'mlb'), {})

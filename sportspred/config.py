@@ -321,7 +321,7 @@ PROPS = {
 # single ranking buries the hitters behind the pitchers (and the skaters behind
 # the goalie), because their headline numbers are on different scales.
 GROUP_QUOTA = {
-    'baseball': [('pitcher', 2), ('batter', 6)],
+    'baseball': [('pitcher', 1), ('batter', 6)],
     'hockey': [('goalie', 1), ('skater', 6)],
     'basketball': [('skater', 7)],
     'football': [('qb', 1), ('rb', 2), ('wr', 3), ('def', 1)],
