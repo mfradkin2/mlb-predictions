@@ -1,12 +1,12 @@
 {
- "archive_size": 15,
+ "archive_size": 16,
  "best": {
-  "adopted_at": "2026-09-15T20:49:23Z",
+  "adopted_at": "2026-09-16T00:14:39Z",
   "metrics": {
-   "acc": 0.6,
-   "brier": 0.241,
-   "logloss": 0.675,
-   "n": 15
+   "acc": 0.625,
+   "brier": 0.2376,
+   "logloss": 0.6681,
+   "n": 16
   },
   "params": {
    "blend_w": 0.0,
@@ -24,7 +24,7 @@
    },
    "l2": null
   },
-  "reason": "first fit"
+  "reason": "log loss 0.6750 -> 0.6681"
  },
  "elo": {
   "games_seen": {
@@ -49,12 +49,14 @@
    "Los Angeles Rams": 1,
    "Miami Dolphins": 1,
    "Minnesota Vikings": 1,
+   "New England Patriots": 1,
    "New Orleans Saints": 1,
    "New York Giants": 1,
    "New York Jets": 1,
    "Philadelphia Eagles": 1,
    "Pittsburgh Steelers": 1,
    "San Francisco 49ers": 1,
+   "Seattle Seahawks": 1,
    "Tampa Bay Buccaneers": 1,
    "Tennessee Titans": 1,
    "Washington Commanders": 1
@@ -88,22 +90,24 @@
    "Los Angeles Rams": 1464.6,
    "Miami Dolphins": 1477.14,
    "Minnesota Vikings": 1524.4,
+   "New England Patriots": 1488.3,
    "New Orleans Saints": 1494.15,
    "New York Giants": 1518.55,
    "New York Jets": 1530.68,
    "Philadelphia Eagles": 1509.28,
    "Pittsburgh Steelers": 1517.56,
    "San Francisco 49ers": 1535.4,
+   "Seattle Seahawks": 1511.7,
    "Tampa Bay Buccaneers": 1483.57,
    "Tennessee Titans": 1469.32,
    "Washington Commanders": 1490.72
   }
  },
  "last_metrics": {
-  "acc": 0.6,
-  "brier": 0.241,
-  "logloss": 0.675,
-  "n": 15
+  "acc": 0.625,
+  "brier": 0.2376,
+  "logloss": 0.6681,
+  "n": 16
  },
  "league": "nfl",
  "ledger": {
@@ -112,7 +116,7 @@
   "trust": null
  },
  "model_version": 3,
- "new_games_this_run": 0,
+ "new_games_this_run": 1,
  "props": {
   "graded_this_run": 0,
   "record": {
@@ -202,7 +206,20 @@
    "model_version": 3,
    "notes": "15 completed games",
    "reason": "kept incumbent (challenger 0.6750 vs 0.6750)"
+  },
+  {
+   "adopted": true,
+   "at": "2026-09-16T00:14:39Z",
+   "metrics": {
+    "acc": 0.625,
+    "brier": 0.2376,
+    "logloss": 0.6681,
+    "n": 16
+   },
+   "model_version": 3,
+   "notes": "16 completed games",
+   "reason": "log loss 0.6750 -> 0.6681"
   }
  ],
- "updated": "2026-09-15T21:23:27Z"
+ "updated": "2026-09-16T00:14:42Z"
 }

@@ -1,0 +1,45 @@
+{
+ "general": [
+  "gamesPlayed",
+  "avgMinutes",
+  "avgFouls",
+  "flagrantFouls",
+  "technicalFouls",
+  "ejections",
+  "doubleDouble",
+  "tripleDouble",
+  "minutes",
+  "rebounds",
+  "fouls",
+  "avgRebounds"
+ ],
+ "offensive": [
+  "avgPoints",
+  "avgFieldGoalsMade",
+  "avgFieldGoalsAttempted",
+  "fieldGoalPct",
+  "avgThreePointFieldGoalsMade",
+  "avgThreePointFieldGoalsAttempted",
+  "threePointFieldGoalPct",
+  "avgFreeThrowsMade",
+  "avgFreeThrowsAttempted",
+  "freeThrowPct",
+  "avgAssists",
+  "avgTurnovers",
+  "points",
+  "fieldGoalsMade",
+  "fieldGoalsAttempted",
+  "threePointFieldGoalsMade",
+  "threePointFieldGoalsAttempted",
+  "freeThrowsMade",
+  "freeThrowsAttempted",
+  "assists",
+  "turnovers"
+ ],
+ "defensive": [
+  "avgSteals",
+  "avgBlocks",
+  "steals",
+  "blocks"
+ ]
+}
